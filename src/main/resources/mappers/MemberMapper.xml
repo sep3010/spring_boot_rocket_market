@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+<mapper namespace="edu.kosmo.krm.mapper.MemberMapper">
+
+	<resultMap id="memberMap" type="edu.kosmo.krm.vo.MemberVO">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="nickname" column="nickname" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="postcode" column="postcode" />
+		<result property="address" column="address" />
+		<result property="birth" column="birth" />
+		<result property="grade" column="grade" />
+		<result property="email" column="email" />			
+		<result property="point" column="point" />
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap id="authMap" type="edu.kosmo.krm.vo.AuthVO">
+		<result property="member_id" column="member_id" />
+		<result property="authority" column="authority" />
+	</resultMap>
+
+  			
+   <select id="getMember" resultMap="memberMap">
+	   <![CDATA[
+	      SELECT * FROM member , authority
+	      WHERE member.id = authority.member_id AND member.username = #{username}
+	   ]]>
+   </select>  
+   
+   <insert id="insertMember">
+   		<![CDATA[
+	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{username}, #{password}, 
+	      #{nickname}, #{name}, #{phone}, #{postcode}, #{address}, #{birth}, 'A', #{email}, 0)
+	   ]]>
+   </insert>
+   
+
+   
+</mapper>
