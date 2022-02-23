@@ -18,7 +18,22 @@
 			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
 			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
 		</p>
+		
+		<table width="500" cellpadding="0" cellspacing="0" border="1">
+			<tr>
+				<td>상품이름</td>
+				<td>가격</td>
+			</tr>	
+		  	<c:forEach var="discount" items="${discount}">
+		  	<tr>
+				<td>${discount.name}</td>
+				<td>${discount.price}</td>
+			</tr>	
+			</c:forEach>	
+		</table>
 	</sec:authorize>
+	
+	
 	<!-- 로그인을 했다면 -->
 	<sec:authorize access="isAuthenticated()">
 		<form:form action="${pageContext.request.contextPath}/logout"
