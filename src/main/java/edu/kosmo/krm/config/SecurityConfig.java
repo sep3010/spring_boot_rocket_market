@@ -1,5 +1,6 @@
 package edu.kosmo.krm.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
 	private MemberCustomDetailsService customDetailsService;
 	
 	@Override
