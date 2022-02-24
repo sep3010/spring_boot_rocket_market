@@ -19,9 +19,11 @@ public class HomeController {
 	public ModelAndView getHome(ModelAndView view) {
 		log.info("getHome()..");
 		view.setViewName("/home");
-		
-		view.addObject("discount", productService.getDiscountProductList());
-		
+				
+		//할인상품목록 
+		view.addObject("discountList", productService.getDiscountProductList());
+		//신상품목록
+		view.addObject("newList", productService.getNewProductList());
 		
 		return view;
 	}

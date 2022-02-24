@@ -20,6 +20,7 @@ TYPE                   VARCHAR2(20)
 PACKAGING              VARCHAR2(20)  
 DISCOUNT               NUMBER(10)    
 DELIVERY_TYPE          VARCHAR2(20)  
+ENABLED                NUMBER(10)    
  */
 
 @AllArgsConstructor
@@ -40,5 +41,6 @@ public class ProductVO {
 	private String packaging;
 	private int discount;
 	private String delivery_type;
+	private int enabled;
 
 }
