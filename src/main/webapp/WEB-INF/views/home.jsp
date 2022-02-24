@@ -18,35 +18,7 @@
 			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
 			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
 		</p>
-		<h1>오늘 할인해요!</h1>
-		<table width="500" cellpadding="0" cellspacing="0" border="1">
-			<tr>
-				<td>상품이름</td>
-				<td>가격</td>
-			</tr>	
-		  	<c:forEach var="discount" items="${discountList}">
-		  	<tr>
-				<td>${discount.name}</td>
-				<td>${discount.price}</td>
-			</tr>	
-			</c:forEach>	
-		</table>
-		<h1>새로 나왔어요!</h1>
-		<table width="500" cellpadding="0" cellspacing="0" border="1">
-			<tr>
-				<td>상품이름</td>
-				<td>가격</td>
-			</tr>	
-		  	<c:forEach var="newList" items="${newList}">
-		  	<tr>
-				<td>${newList.name}</td>
-				<td>${newList.price}</td>
-			</tr>	
-			</c:forEach>	
-		</table>
 	</sec:authorize>
-	
-	
 	<!-- 로그인을 했다면 -->
 	<sec:authorize access="isAuthenticated()">
 		<form:form action="${pageContext.request.contextPath}/logout"
@@ -58,6 +30,36 @@
 			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
 			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
 		</p>
-	</sec:authorize>	
+	</sec:authorize>		
+
+
+	<!-- 접근가능페이지코드 -->		
+	<h1>오늘 할인해요!</h1>
+	<table width="500" cellpadding="0" cellspacing="0" border="1">
+		<tr>
+			<td>상품이름</td>
+			<td>가격</td>
+		</tr>	
+	  	<c:forEach var="discount" items="${discountList}">
+	  	<tr>
+			<td>${discount.name}</td>
+			<td>${discount.price}</td>
+		</tr>	
+		</c:forEach>	
+	</table>
+	<h1>새로 나왔어요!</h1>
+	<table width="500" cellpadding="0" cellspacing="0" border="1">
+		<tr>
+			<td>상품이름</td>
+			<td>가격</td>
+		</tr>	
+	  	<c:forEach var="newList" items="${newList}">
+		  <tr>
+			<td>${newList.name}</td>
+			<td>${newList.price}</td>
+		</tr>	
+		</c:forEach>	
+	</table>
+	
 </body>
 </html>
