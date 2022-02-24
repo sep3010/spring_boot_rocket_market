@@ -24,6 +24,7 @@
 			method="POST">
 			<input type="submit" value="로그아웃" />
 		</form:form>
+		<br><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a>
 	</sec:authorize>	
 </body>
 </html>
