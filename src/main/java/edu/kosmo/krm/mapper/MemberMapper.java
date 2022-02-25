@@ -27,6 +27,9 @@ public interface MemberMapper {
 	// 회원가입
 	public void insertMember(MemberVO memberVO);
 	
+	@Select("SELECT count(*) FROM member WHERE username = #{username}")
+	public int idCheck(String username); //아이디중복체크
+	
 	// 처음 회원가입시 user로 권한 설정
 	@Insert("INSERT INTO authority VALUES (#{id}, 'ROLE_USER')")
 	public void insertAuthority(int id);

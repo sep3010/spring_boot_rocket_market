@@ -52,8 +52,16 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.insertMember(memberVO);
 		int id = memberMapper.getId(memberVO.getUsername());
 		memberMapper.insertAuthority(id);
+	}
+	
+	//아이디 중복체크
+	@Override
+	public int idCheck(String username) {
+		log.info("idCheck.. : " + username);
+		int count = memberMapper.idCheck(username);
 		
-		
+		log.info("count"+count);
+		return count;
 	}
 
 

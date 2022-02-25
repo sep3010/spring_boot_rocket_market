@@ -1,10 +1,16 @@
 package edu.kosmo.krm.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +40,20 @@ public class LoginController {
 		view.setViewName("/addMemberForm");
 		return view;
 	}
+	
+	//회원가입페이지 아이디중복체크
+	@PostMapping("/addMemberForm/idCheck")
+    public Map<String, Object> idCheck(@RequestBody MemberVO memberVO) {
+        log.info("idCheck 컨트롤러 도착 ㅋ" + memberVO);
+        int count = 0;
+        Map<String, Object> map = new HashMap<String, Object>();
+ 
+        String username = memberVO.getUsername();
+        count = memberService.idCheck(username);
+        map.put("idCount", count);
+ 
+        return map;
+    }
 	
 	
 	//회원가입완료 후 로그인페이지 이동
