@@ -17,10 +17,14 @@
 			<input type="submit" value="로그아웃" />
 		</form:form>
 		
+		
 		<h1>관리목록</h1>
-		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>
+		<!--유빈 : 상품 관리 -->
+		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>		
 		
-		
+		<!--세윤 : 회원 리스트  -->
+		<br><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a>
+	</sec:authorize>	
 
 </body>
 </html>
