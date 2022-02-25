@@ -4,9 +4,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -30,7 +29,29 @@
 		xhr.setRequestHeader(header, token);
 	});
 
-</script> 	
+</script> 
+
+<script>
+	window.onload = () => {
+		let loginForm = document.getElementById("loginForm")
+		
+		loginForm.onsubmit = () => {
+			if(document.getElementById("username").value == ""){
+				alert("아이디를 입력하세요");
+				return false;
+			}
+			else if(document.getElementById("password").value == ""){
+				alert("비밀번호를 입력하세요");
+				return false;
+			}
+			else{
+				alert("로그인 성공");
+				return true;
+			}
+		} //end onsubmit()
+	}//end window.onload
+
+</script>	
  	
 </head>
 
@@ -39,7 +60,7 @@
 	
 	<c:url value="/login" var="loginUrl" />
 	
-	<form:form name="f" action="${loginUrl}" method="POST">
+	<form:form id="loginForm" action="${loginUrl}" method="POST">
 	    <c:if test="${param.error != null}">
 	        <p>아이디와 비밀번호가 잘못되었습니다.</p>
 	    </c:if>
