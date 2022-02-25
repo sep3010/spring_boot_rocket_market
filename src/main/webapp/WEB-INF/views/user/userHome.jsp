@@ -9,12 +9,17 @@
 <title>userHome</title>
 </head>
 <body>
-	<h1>userHome</h1>
+
+	<!-- 메인으로 가는 버튼 -->
+	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
+	<h1>User Home</h1>
+	
 	<!-- 로그인을 안했다면 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="${pageContext.request.contextPath}/loginForm">로그인</a>
 			<a href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+			<a href="${pageContext.request.contextPath}/">Home</a>
 		</p>
 	</sec:authorize>
 	<!-- 로그인을 했다면 -->
@@ -23,6 +28,9 @@
 			method="POST">
 			<input type="submit" value="로그아웃" />
 		</form:form>	
+		<br>
+		<a href="${pageContext.request.contextPath}/">Home</a>
+		
 		<br><a href="${pageContext.request.contextPath}/user/myPage_view">회원 정보 수정</a>
 	</sec:authorize>	
 </body>

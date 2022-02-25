@@ -5,6 +5,7 @@
 <head>
 <title>회원 리스트</title>
 <!-- 회원 정보를 볼 수 있는 페이지 -->
+
 <style>
 #submit-button {
 	width: 100px;
@@ -20,8 +21,10 @@
 </script>
 </head>
 <body>
-
+	
 	<h1>회원 정보 확인</h1>
+	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
+	
 	<table width="500 cellpadding=" 0" cellspacing="0" border="1">
 		<form action="modify" method="get">
 			<input type="hidden" name="id" value="${memberInfo_view.id}">
@@ -80,19 +83,25 @@
 			</tr>
 
 			<tr>
-				<td>등급</td>
-				<td>
-				<label><input type="radio" name="grade" value="일반" checked>일반</label>
-				<label><input type="radio" name="grade" value="로얄">로얄</label>
-				<label><input type="radio" name="grade" value="VIP">VIP</label>
-				</td>
+				<td>적립금</td>
+				<td><input type="text" name="point"
+					value="${memberInfo_view.point}"></td>
 			</tr>
-			
+
+			<tr>
+				<td>등급</td>
+				<td><label><input type="radio" name="grade" value="일반"
+						checked>일반</label> <label><input type="radio" name="grade"
+						value="로얄">로얄</label> <label><input type="radio"
+						name="grade" value="VIP">VIP</label></td>
+			</tr>
 	</table>
 
 	<div>
 		<input type="submit" id="submit-button" value="회원정보수정">
 		<a href="delete?id=${memberInfo_view.id}">삭제</a>
+		<a href="${pageContext.request.contextPath}/admin/memberList">목록</a>
+				
 	</div>
 
 	</form>

@@ -16,6 +16,9 @@ public interface MemberInfoMapper {
 
 	// 페이징 한 회원 리스트 불러오기
 	List<MemberVO> getListWithPaging(Criteria criteria);
+	
+	// 회원 리스트 불러오기
+	List<MemberVO> getList();
 
 	// 회원 정보 조회 코드
 	MemberVO read(int id);

@@ -1,5 +1,7 @@
 package edu.kosmo.krm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,43 +23,42 @@ import edu.kosmo.krm.vo.MemberVO;
 @Slf4j
 @Controller
 public class MemberInfoController {
-	
+
 	@Autowired
 	private MemberInfoService memberInfoService;
-	
+
 	// 회원 정보 리스트 컨트롤러
-	@GetMapping(value = "/admin/memberList")
+	@GetMapping("/admin/memberList")
 	public String memberList(Criteria criteria, Model model) {
 		log.info("memberList()...");
 		log.info("criteria: " + criteria);
 		model.addAttribute("ListPaging", memberInfoService.getList(criteria));
-		
+
 		int total = memberInfoService.getTotal();
 		log.info("total: " + total);
-		PageVO pageVO = new PageVO(criteria, total); 
+		PageVO pageVO = new PageVO(criteria, total);
 		model.addAttribute("pageMaker", pageVO);
 		log.info("pageVO : " + pageVO);
 		return "/admin/memberList";
 	}
-	
-	// 회원 정보
-	@GetMapping(value = "/admin/memberInfo_view")
+
+	// 회원 정보 조회 (admin)
+	@GetMapping("/admin/memberInfo_view")
 	public String memberInfo_view(MemberVO memberVO, Model model) {
 		log.info("memberInfo_view()...");
 		log.info("memberVO: " + memberVO);
-		
+
 		int id = memberVO.getId();
 		model.addAttribute("memberInfo_view", memberInfoService.get(id));
-		
+
 		return "/admin/memberInfo_view";
 	}
 
-
 	// 회원 정보 수정 컨트롤러
-	@GetMapping(value = "/admin/modify")
+	@GetMapping("/admin/modify")
 	public String modify(MemberVO memberVO) {
 		log.info("modify()...");
-		memberInfoService.modify(memberVO);		
+		memberInfoService.modify(memberVO);
 		return "redirect:memberList";
 	}
 }

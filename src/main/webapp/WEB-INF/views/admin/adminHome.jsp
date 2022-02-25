@@ -10,7 +10,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>admin</h1>
+
+	<!-- 메인으로 가는 버튼 -->
+	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
+	<h1>Admin Home</h1>
+	
 	<!-- 로그인을 안했다면 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
@@ -18,13 +22,17 @@
 			<a href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
 		</p>
 	</sec:authorize>
+	
 	<!-- 로그인을 했다면 -->
 	<sec:authorize access="isAuthenticated()">
 		<form:form action="${pageContext.request.contextPath}/logout"
 			method="POST">
 			<input type="submit" value="로그아웃" />
 		</form:form>
+		<br>
+		
 		<h1>관리목록</h1>
+		
 		<!--유빈: 상품관리-->
 		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>
 

@@ -42,7 +42,7 @@
 
 <body>    
 	
-<h1>회원가입</h1>
+<h1>마이페이지</h1>
 
 <c:url value="/addMember" var="addUMemberUrl" />
 
