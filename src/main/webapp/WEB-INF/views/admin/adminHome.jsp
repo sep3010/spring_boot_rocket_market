@@ -10,21 +10,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>ADMIN</h1>
-
+	<h1>admin</h1>
+	<!-- 로그인을 안했다면 -->
+	<sec:authorize access="isAnonymous()">
+		<p>
+			<a href="${pageContext.request.contextPath}/loginForm">로그인</a>
+			<a href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+		</p>
+	</sec:authorize>
+	<!-- 로그인을 했다면 -->
+	<sec:authorize access="isAuthenticated()">
 		<form:form action="${pageContext.request.contextPath}/logout"
 			method="POST">
 			<input type="submit" value="로그아웃" />
 		</form:form>
-		
-		
 		<h1>관리목록</h1>
-		<!--유빈 : 상품 관리 -->
-		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>		
-		
-		<!--세윤 : 회원 리스트  -->
+		<!--유빈: 상품관리-->
+		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>
+
+		<!--세윤: 회원리스트-->
 		<br><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a>
 	</sec:authorize>	
-
 </body>
 </html>
