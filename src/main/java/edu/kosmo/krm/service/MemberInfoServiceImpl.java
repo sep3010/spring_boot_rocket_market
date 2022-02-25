@@ -46,4 +46,11 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 
 	}
 
+	@Override
+	public void modify_user(MemberVO memberVO) {
+		log.info("modify_user()...");
+		memberInfoMapper.update(memberVO);
+		
+	}
+
 }

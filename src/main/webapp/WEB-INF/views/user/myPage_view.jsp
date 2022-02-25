@@ -2,11 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal" var="principal"/>
-</sec:authorize>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,49 +36,75 @@
 
 
 <body>    
-	
-<h1>마이페이지</h1>
+	<!-- 메인으로 가는 버튼 -->
+	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
+	<h1>회원 정보 확인</h1>
 
-<c:url value="/addMember" var="addUMemberUrl" />
+	<table width="500 cellpadding=" 0" cellspacing="0" border="1">
+		<form action="modify" method="get">
+			<input type="hidden" name="id" value="${myPage_view.id}">
 
-<form:form name="addForm" action="${addUMemberUrl}" method="POST">
-    <p>
-        <label for="username">아이디</label>
-        <input type="text"  name="username" readonly/>
-    </p>
-    <p>
-        <label for="password">비밀번호</label>
-        <input type="password" name="password"/>
-    </p>
-    <p>
-        <label for="nickname">닉네임</label>
-        <input type="text" name="nickname"/>
-    </p>
-    <p>
-        <label for="name">이름</label>
-        <input type="text" name="name"/>
-    </p>
-    <p>
-        <label for="birth">생년월일</label>
-        <input type="date" name="birth"/>
-    </p>
-    <p>
-        <label for="phone">연락처</label>
-        <input type="tel" name="phone"/>
-    </p>
-    <p>
-        <label for="email">이메일</label>
-        <input type="email" name="email">
-    </p>
-    <p>
-        <label for="postcode">우편번호</label>
-        <input type="text" name="postcode"/>
-    </p>
-    <p>
-        <label for="address">주소</label>
-        <input type="text" name="address"/>
-    </p>
-    <button type="submit" class="btn" id="submit">가입하기</button>
-</form:form>
+			<tr>
+				<td>아이디</td>
+				<td><sec:authentication property="principal.memberVO.username"/></td>
+			</tr>
+
+			<tr>
+				<td>닉네임</td>
+				<td><input type="text" name="name"
+					value=<sec:authentication property="principal.memberVO.username"/>></td>
+			</tr>
+
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name"
+					value=<sec:authentication property="principal.memberVO.name"/>></td>
+			</tr>
+
+			<tr>
+				<td>연락처</td>
+				<td><input type="text" name="phone"
+					value=<sec:authentication property="principal.memberVO.phone"/>></td>
+			</tr>
+
+			<tr>
+				<td>우편 번호</td>
+				<td><input type="text" name="postcode"
+					value=<sec:authentication property="principal.memberVO.postcode"/>></td>
+			</tr>
+
+			<tr>
+				<td>주소</td>
+				<td><input type="text" name="address"
+					value=<sec:authentication property="principal.memberVO.address"/>></td>
+
+			</tr>
+
+			<tr>
+				<td>생일</td>
+				<td><input type="date" name="birth"
+					value=<sec:authentication property="principal.memberVO.birth"/>></td>
+			</tr>
+
+			<tr>
+				<td>이메일 주소</td>
+				<td><input type="email" name="email"
+					value=<sec:authentication property="principal.memberVO.email"/>></td>
+			</tr>
+
+
+	</table>
+
+	<div>
+		<br>
+		<input type="submit" id="submit-button" value="회원정보수정">
+		<a href="delete?id=${memberInfo_view.id}">회원 탈퇴</a>
+		<a href="${pageContext.request.contextPath}/admin/memberList">목록</a>
+				
+	</div>
+
+	</form>
+
+
 </body>
 </html>

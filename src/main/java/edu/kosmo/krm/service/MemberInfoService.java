@@ -21,4 +21,7 @@ public interface MemberInfoService {
 
 	// 회원 정보 수정하는 함수
 	void modify(MemberVO memberVO);
+	
+	// 회원 정보 수정하는 함수
+	void modify_user(MemberVO memberVO);
 }

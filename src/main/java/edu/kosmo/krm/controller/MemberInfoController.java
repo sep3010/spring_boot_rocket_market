@@ -1,9 +1,13 @@
 package edu.kosmo.krm.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.PageVO;
 import edu.kosmo.krm.service.MemberInfoService;
 import lombok.extern.slf4j.Slf4j;
+import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 
 // 회원 관리 컨트롤러(회원 정보 리스트, 회원 정보 조회, 회원 정보 수정, 회원 삭제)
@@ -26,6 +31,7 @@ public class MemberInfoController {
 
 	@Autowired
 	private MemberInfoService memberInfoService;
+	private MemberCustomDetails customDetails;
 
 	// 회원 정보 리스트 컨트롤러
 	@GetMapping("/admin/memberList")
@@ -53,12 +59,31 @@ public class MemberInfoController {
 
 		return "/admin/memberInfo_view";
 	}
+	
+	// 회원 정보 조회 (user)
+	@GetMapping("/user/myPage_view")
+	public String myPage_view(MemberVO memberVO, Authentication authentication, Principal principal, Model model) {
+		
+	      String user_id = principal.getName();
+	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	      user_id = auth.getName();
 
-	// 회원 정보 수정 컨트롤러
+	      UserDetails userDetails = (UserDetails) auth.getPrincipal();
+	      System.out.println(userDetails.getUsername());
+	        
+	      int id = memberVO.getId();
+	      model.addAttribute("myPage_view", memberInfoService.get(id));
+			
+		return "/user/myPage_view";
+	}
+
+	// 회원 정보 수정 컨트롤러 (admin)
 	@GetMapping("/admin/modify")
 	public String modify(MemberVO memberVO) {
 		log.info("modify()...");
 		memberInfoService.modify(memberVO);
 		return "redirect:memberList";
 	}
+	
+
 }
