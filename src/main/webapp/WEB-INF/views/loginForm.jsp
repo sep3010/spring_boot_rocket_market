@@ -80,6 +80,10 @@
 	    <a href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
 	   
 	</form:form>
+	
+	<p>
+		<a href="${kakaoLoginURL}">카카오 로그인</a>
+	</p>
 
 </body>
 </html>
