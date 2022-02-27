@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.kosmo.krm.vo.KakaoAuth;
+import edu.kosmo.krm.vo.KakaoProfile;
 import lombok.extern.slf4j.Slf4j;
 
 /*소은*/
@@ -116,8 +117,35 @@ public class KakaoService {
 		return null;
 	}
 	
+	// 로그인한 사용자의 프로필 정보를 요청하기 위한 주소
+	private final static String KAKAO_PROFILE_URI = "https://kapi.kakao.com/v2/user/me";
 	
-	
+	public KakaoProfile getKakaoProfile(String access_token) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		headers.add("Authorization", "Bearer " + access_token);
+		
+		HttpEntity<MultiValueMap<String, String>> requestProfile = new HttpEntity<MultiValueMap<String,String>>(null, headers);
+		
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://kapi.kakao.com/v2/user/me", requestProfile, String.class);
+		log.info("responseEntity kakao profile(JSON) : " + responseEntity.getBody());
+		// http://www.jsonschema2pojo.org/ 사이트에서 사용자 프로필 정보(JSON)를 저장할 객체 생성하기.	
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		if(responseEntity.getStatusCode() == HttpStatus.OK) {
+			try {
+				KakaoProfile kakaoProfile = objectMapper.readValue(responseEntity.getBody(), KakaoProfile.class);
+				
+				return kakaoProfile;
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+		
+		return null;
+	}
 	
 
 }

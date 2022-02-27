@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import edu.kosmo.krm.service.KakaoService;
 import edu.kosmo.krm.vo.KakaoAuth;
+import edu.kosmo.krm.vo.KakaoProfile;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -29,9 +30,13 @@ public class SocialController {
 		log.info("state : " + state);
 		KakaoAuth kakaoAuth = kakaoService.getkakaoTokenInfo(code, state);
 		log.info("kakaoAuth : " + kakaoAuth);
-	
 		
-		return "카카오 로그인 중";
+		KakaoProfile kakaoProfile = kakaoService.getKakaoProfile(kakaoAuth.getAccess_token());
+		model.addAttribute("kakaoMember", kakaoProfile);
+		
+		session.setAttribute("access_token", kakaoAuth.getAccess_token());
+			
+		return "/";
 	}
 	
 	
