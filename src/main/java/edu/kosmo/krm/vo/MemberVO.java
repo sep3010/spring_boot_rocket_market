@@ -10,20 +10,21 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
-이름       널?       유형            
--------- -------- ------------- 
-ID       NOT NULL NUMBER(30)    
-USERNAME          VARCHAR2(50)  
-PASSWORD          VARCHAR2(500) 
-NICKNAME          VARCHAR2(50)  
-NAME              VARCHAR2(50)  
-PHONE             VARCHAR2(50)  
-POSTCODE          VARCHAR2(20)  
-ADDRESS           VARCHAR2(300) 
-BIRTH             DATE          
-GRADE             VARCHAR2(10)  
-EMAIL             VARCHAR2(100) 
-POINT             NUMBER(20) 
+이름            널?       유형            
+------------- -------- ------------- 
+ID            NOT NULL NUMBER(30)    
+USERNAME               VARCHAR2(50)  
+PASSWORD               VARCHAR2(500) 
+NICKNAME               VARCHAR2(50)  
+NAME                   VARCHAR2(50)  
+PHONE                  VARCHAR2(50)  
+POSTCODE               VARCHAR2(20)  
+ADDRESS                VARCHAR2(300) 
+BIRTH                  DATE          
+GRADE                  VARCHAR2(10)  
+EMAIL                  VARCHAR2(100) 
+POINT                  NUMBER(20)    
+PLATFORM_TYPE          VARCHAR2(20)
 */
 
 @AllArgsConstructor
@@ -45,6 +46,7 @@ public class MemberVO {
 	private String grade;
 	private String email;
 	private int point;
+	private String platform_type;
 	
 	//private String birth2;
 	

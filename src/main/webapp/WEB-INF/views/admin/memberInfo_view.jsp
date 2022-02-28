@@ -22,78 +22,91 @@
 <body>
 
 	<h1>회원 정보 확인</h1>
-	<table width="500 cellpadding=" 0" cellspacing="0" border="1">
-		<form action="modify" method="get">
-			<input type="hidden" name="id" value="${memberInfo_view.id}">
+	<form action="modify" method="get">
+		<input type="hidden" name="id" value="${memberInfo_view.id}">
+		<table width="500 cellpadding=" 0" cellspacing="0" border="1">
 
-			<tr>
-				<td>유저 번호</td>
-				<td>${memberInfo_view.id}</td>
-			</tr>
-
-			<tr>
-				<td>유저 아이디</td>
-				<td>${memberInfo_view.username}</td>
-			</tr>
-
-			<tr>
-				<td>닉네임</td>
-				<td><input type="text" name="nickname"
-					value="${memberInfo_view.nickname}"></td>
-			</tr>
-
-			<tr>
-				<td>이름</td>
-				<td><input type="text" name="name"
-					value="${memberInfo_view.name}"></td>
-			</tr>
-
-			<tr>
-				<td>연락처</td>
-				<td><input type="text" name="phone"
-					value="${memberInfo_view.phone}"></td>
-			</tr>
-
-			<tr>
-				<td>우편 번호</td>
-				<td><input type="text" name="postcode"
-					value="${memberInfo_view.postcode}"></td>
-			</tr>
-
-			<tr>
-				<td>주소</td>
-				<td><input type="text" name="address"
-					value="${memberInfo_view.address}"></td>
-
-			</tr>
-
-			<tr>
-				<td>생일</td>
-				<td><input type="date" name="birth"
-					value="${memberInfo_view.birth}"></td>
-			</tr>
-
-			<tr>
-				<td>이메일 주소</td>
-				<td><input type="email" name="email"
-					value="${memberInfo_view.email}"></td>
-			</tr>
-
-			<tr>
-				<td>등급</td>
-				<td>
-				<label><input type="radio" name="grade" value="일반" checked>일반</label>
-				<label><input type="radio" name="grade" value="로얄">로얄</label>
-				<label><input type="radio" name="grade" value="VIP">VIP</label>
-				</td>
-			</tr>
-			
-	</table>
-
-	<div>
-		<input type="submit" id="submit-button" value="회원정보수정">
-		<a href="delete?id=${memberInfo_view.id}">삭제</a>
-	</div>
+				<tr>
+					<td>유저 번호</td>
+					<td>${memberInfo_view.id}</td>
+				</tr>
+	
+				<tr>
+					<td>유저 아이디</td>
+					<td>${memberInfo_view.username}</td>
+				</tr>
+	
+				<tr>
+					<td>닉네임</td>
+					<td><input type="text" name="nickname"
+						value="${memberInfo_view.nickname}"></td>
+				</tr>
+	
+				<tr>
+					<td>이름</td>
+					<td><input type="text" name="name"
+						value="${memberInfo_view.name}"></td>
+				</tr>
+	
+				<tr>
+					<td>연락처</td>
+					<td><input type="text" name="phone"
+						value="${memberInfo_view.phone}"></td>
+				</tr>
+	
+				<tr>
+					<td>우편 번호</td>
+					<td><input type="text" name="postcode"
+						value="${memberInfo_view.postcode}"></td>
+				</tr>
+	
+				<tr>
+					<td>주소</td>
+					<td><input type="text" name="address"
+						value="${memberInfo_view.address}"></td>
+	
+				</tr>
+	
+				<tr>
+					<td>생일</td>
+					<td><input type="date" name="birth"
+						value="${memberInfo_view.birth}"></td>
+				</tr>
+	
+				<tr>
+					<td>이메일 주소</td>
+					<td><input type="email" name="email"
+						value="${memberInfo_view.email}"></td>
+				</tr>
+	
+				<tr>
+					<td>등급</td>
+					<td>
+					<label><input type="radio" name="grade" value="일반" checked>일반</label>
+					<label><input type="radio" name="grade" value="로얄">로얄</label>
+					<label><input type="radio" name="grade" value="VIP">VIP</label>
+					</td>
+				</tr>
+				<tr>
+					<td>소셜 가입</td>
+					<td>
+						<c:choose>
+							<c:when test="${empty memberInfo_view.platform_type}">
+							 	X
+							</c:when>
+							<c:otherwise>
+								${memberInfo_view.platform_type}
+							</c:otherwise>				
+						</c:choose>
+					</td>
+				</tr>
+				
+		</table>
+	
+		<div>
+			<input type="submit" id="submit-button" value="회원정보수정">
+			<a href="delete?id=${memberInfo_view.id}">삭제</a>
+		</div>
 
 	</form>
 
