@@ -22,6 +22,7 @@ public class SocialController {
 	@Autowired
 	KakaoService kakaoService;
 	
+	
 	@GetMapping("/auth/kakao/callback")
 	public String kakcoCallback(String code, String state, Model model, HttpSession session) {
 		log.info("kakcoCallback()..");
@@ -36,7 +37,7 @@ public class SocialController {
 		
 		session.setAttribute("access_token", kakaoAuth.getAccess_token());
 			
-		return "/";
+		return "/home";
 	}
 	
 	

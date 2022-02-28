@@ -129,7 +129,7 @@ public class KakaoService {
 		
 		HttpEntity<MultiValueMap<String, String>> requestProfile = new HttpEntity<MultiValueMap<String,String>>(null, headers);
 		
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://kapi.kakao.com/v2/user/me", requestProfile, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity(KAKAO_PROFILE_URI, requestProfile, String.class);
 		log.info("responseEntity kakao profile(JSON) : " + responseEntity.getBody());
 		// http://www.jsonschema2pojo.org/ 사이트에서 사용자 프로필 정보(JSON)를 저장할 객체 생성하기.	
 		
@@ -146,6 +146,11 @@ public class KakaoService {
 		
 		return null;
 	}
+	
+	
+	// 카카오 로그인한 사용자 정보로 기존 가입 여부 확인 후, 강제 가입 또는 강제 로그인 진행
+	
+	
 	
 
 }
