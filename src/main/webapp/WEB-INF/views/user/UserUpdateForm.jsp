@@ -44,7 +44,7 @@
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
 	<h1>회원 정보 확인</h1>
 	
-	<form action="<c:url value='/user/modify'/>" method="get">
+	<form action="<c:url value='/user/modify'/>" method="post">
 		<input type="hidden" name="id" value=<sec:authentication property="principal.memberVO.id"/>>
 						
 			<table width="500 cellpadding=" 0" cellspacing="0" border="1">
@@ -56,8 +56,8 @@
 	
 				<tr>
 					<td>닉네임</td>
-					<td><input type="text" name="name"
-						value=<sec:authentication property="principal.memberVO.username"/>></td>
+					<td><input type="text" name="nickname"
+						value=<sec:authentication property="principal.memberVO.nickname"/>></td>
 				</tr>
 	
 				<tr>
