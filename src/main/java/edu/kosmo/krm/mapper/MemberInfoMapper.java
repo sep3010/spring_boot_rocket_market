@@ -7,6 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
 
+//회원 관리 매퍼(회원 불러오기 (페이징), 회원 정보 조회, 정보 수정)
+//2022-2-23 ~
+//양세윤 코드 작성
+
 @Mapper
 public interface MemberInfoMapper {
 
@@ -25,4 +29,7 @@ public interface MemberInfoMapper {
 
 	// 회원 정보 수정 코드
 	MemberVO update(MemberVO memberVO);
+	
+	// 회원 정보 수정 코드
+	MemberVO updateuser(MemberVO memberVO);
 }

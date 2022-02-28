@@ -31,7 +31,7 @@
 		<br>
 		<a href="${pageContext.request.contextPath}/">Home</a>
 		
-		<br><a href="${pageContext.request.contextPath}/user/myPage_view">회원 정보 수정</a>
+		<br><a href="${pageContext.request.contextPath}/user/UserUpdateForm">회원 정보 수정</a>
 	</sec:authorize>	
 </body>
 </html>

@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
 
+//회원 관리 컨트롤러(회원 정보 리스트, 회원 정보 조회, 회원 정보 수정, 회원 삭제)
+//2022-2-23 ~
+//양세윤 코드 작성
+
 @Service
 public interface MemberInfoService {
 
@@ -23,5 +27,5 @@ public interface MemberInfoService {
 	void modify(MemberVO memberVO);
 	
 	// 회원 정보 수정하는 함수
-	void modify_user(MemberVO memberVO);
+	void updateuser(MemberVO memberVO);
 }

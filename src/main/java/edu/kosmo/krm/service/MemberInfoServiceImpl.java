@@ -10,6 +10,10 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
+//회원 관리 컨트롤러(회원 정보 리스트, 회원 정보 조회, 회원 정보 수정, 회원 삭제)
+//2022-2-23 ~
+//양세윤 코드 작성
+
 @Slf4j
 @Service
 public class MemberInfoServiceImpl implements MemberInfoService {
@@ -47,9 +51,9 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 	}
 
 	@Override
-	public void modify_user(MemberVO memberVO) {
-		log.info("modify_user()...");
-		memberInfoMapper.update(memberVO);
+	public void updateuser(MemberVO memberVO) {
+		log.info("updateuser()...");
+		memberInfoMapper.updateuser(memberVO);
 		
 	}
 

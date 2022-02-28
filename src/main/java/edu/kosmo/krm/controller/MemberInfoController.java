@@ -4,15 +4,25 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.PageVO;
@@ -31,7 +41,7 @@ public class MemberInfoController {
 
 	@Autowired
 	private MemberInfoService memberInfoService;
-	private MemberCustomDetails customDetails;
+	private PasswordEncoder encoder;
 
 	// 회원 정보 리스트 컨트롤러
 	@GetMapping("/admin/memberList")
@@ -59,31 +69,48 @@ public class MemberInfoController {
 
 		return "/admin/memberInfo_view";
 	}
-	
-	// 회원 정보 조회 (user)
-	@GetMapping("/user/myPage_view")
-	public String myPage_view(MemberVO memberVO, Authentication authentication, Principal principal, Model model) {
-		
-	      String user_id = principal.getName();
-	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	      user_id = auth.getName();
 
-	      UserDetails userDetails = (UserDetails) auth.getPrincipal();
-	      System.out.println(userDetails.getUsername());
-	        
-	      int id = memberVO.getId();
-	      model.addAttribute("myPage_view", memberInfoService.get(id));
-			
-		return "/user/myPage_view";
+	// 회원 정보 수정 페이지 (user)
+	@RequestMapping(method = RequestMethod.GET, path = "/user/UserUpdateForm")
+	public String UserUpdateForm(Authentication authentication, MemberVO memberVO, Principal principal, Model model) {
+
+		String user_id = principal.getName();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		user_id = auth.getName();
+
+		UserDetails userDetails = (UserDetails) auth.getPrincipal();
+		System.out.println(userDetails.getUsername());
+
+		int id = memberVO.getId();
+		
+		System.out.println(principal);
+		
+		
+		model.addAttribute("myPage_view", principal.getName());
+
+		return "/user/UserUpdateForm";
 	}
 
 	// 회원 정보 수정 컨트롤러 (admin)
-	@GetMapping("/admin/modify")
-	public String modify(MemberVO memberVO) {
-		log.info("modify()...");
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/modify_admin")
+	public String modify_admin(MemberVO memberVO) {
+		log.info("modify_admin()...");
 		memberInfoService.modify(memberVO);
 		return "redirect:memberList";
 	}
 	
+	// 회원 정보 수정 컨트롤러 (user)
+	@GetMapping("/user/modify")
+	public String modify(MemberVO memberVO, Principal principal) {
+		log.info("modify()...");
+		memberInfoService.updateuser(memberVO);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String user_id = auth.getName();
+
+		UserDetails userDetails = (UserDetails) auth.getPrincipal();
+		System.out.println(userDetails.getUsername());
+		log.info("================================" + "memberVO");
+		return "/";
+	}
 
 }

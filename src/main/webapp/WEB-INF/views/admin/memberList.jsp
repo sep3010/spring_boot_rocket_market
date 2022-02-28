@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>회원 리스트</title>
+<!-- 회원 목록 리스트 -->
 </head>
 <body>
 	<h1>회원목록</h1>
