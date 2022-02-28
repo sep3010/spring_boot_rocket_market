@@ -19,6 +19,7 @@
          <td>등급</td>
          <td>이메일</td>
          <td>적립금</td>
+         <td>소셜 가입</td>
       </tr>
       
       <c:forEach items="${ListPaging}" var="ListPaging">
@@ -36,6 +37,16 @@
          <td>${ListPaging.grade}</td>
          <td>${ListPaging.email}</td>
          <td>${ListPaging.point}</td>
+         <td>
+	         <c:choose>
+				<c:when test="${empty ListPaging.platform_type}">
+				 	X
+				</c:when>
+				<c:otherwise>
+					${ListPaging.platform_type}
+				</c:otherwise>				
+			</c:choose>
+		</td>
       </tr>
       </c:forEach>
 	</table>

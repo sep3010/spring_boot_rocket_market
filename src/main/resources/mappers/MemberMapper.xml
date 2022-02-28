@@ -18,6 +18,7 @@
 		<result property="grade" column="grade" />
 		<result property="email" column="email" />			
 		<result property="point" column="point" />
+		<result property="platform_type" column="platform_type" />
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
@@ -37,7 +38,14 @@
    <insert id="insertMember">
    		<![CDATA[
 	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{username}, #{password}, 
-	      #{nickname}, #{name}, #{phone}, #{postcode}, #{address}, #{birth}, 'A', #{email}, 0)
+	      #{nickname}, #{name}, #{phone}, #{postcode}, #{address}, #{birth}, '일반', #{email}, 0, null)
+	   ]]>
+   </insert>
+   
+   <insert id="insertKakaoMember">
+   		<![CDATA[
+	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{id}, null, 
+	      #{nickname}, null, null, null, null, null, '일반', #{email}, 0, 'kakao')
 	   ]]>
    </insert>
    

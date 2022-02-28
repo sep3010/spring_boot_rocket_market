@@ -30,8 +30,14 @@
 			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
 			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
 		</p>
-	</sec:authorize>		
-
+	</sec:authorize>	
+	
+	<!-- 카카오 로그인을 했다면 -->
+<!-- <c:if test="${not empty kakaoMember}">
+	 	<p>${kakaoMember.kakao_account.profile.nickname}님</p>
+		<a href="/kakao/logout">로그아웃</a>
+	</c:if>	
+	-->
 
 	<!-- 접근가능페이지코드 -->		
 	<h1>오늘 할인해요!</h1>
