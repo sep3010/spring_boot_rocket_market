@@ -23,18 +23,68 @@
 
 <title>마이페이지</title>
 <!-- 마이페이지 조회 -->
-	
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/javascript">
-	// csrf
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
+
+//csrf
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
+//Ajax spring security header..
+$(document).ajaxSend(function(e, xhr, options){
+	xhr.setRequestHeader(header, token);
+});
+
+
+
+
+ 	$(document).ready(function(){
+		$("#updateSubmit").click(function(event){
+			event.preventDefault();
+			
+			const id = <sec:authentication property="principal.memberVO.id"/>;
+			let nickname = $("#nickname").val();
+			let name = $("#name").val();
+			let phone = $("#phone").val();
+			let postcode = $("#postcode").val();
+			let address = $("#address").val();
+			let birth = $("#birth").val();
+			let email = $("#email").val();
+					
+			
+			let param = {
+					id: id,
+					nickname: nickname,
+					name: name,
+					phone: phone,
+					postcode: postcode,
+					address: address,
+					birth: birth,
+					email: email
+			};
+			
+			console.log(JSON.stringify(param));
+			
+		       $.ajax({
+		            type:'POST',
+		            data: JSON.stringify(param),
+		            cache : false,
+		            url:"/modify",
+		            contentType: "application/json; charset='UTF-8'",
+		            success : function(data) {  
+		            	if(data == "SUCCESS"){
+		            		alert("수정되었습니다");
+		            		}
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                alert("ERROR : " + textStatus + " : " + errorThrown);
+		            }
+			}); //end ajax
+		}); //end click()
+	}); // end ready()
 	
-	//Ajax spring security header..
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(header, token);
-	});
-
-
 </script>	
 </head>
 
@@ -44,71 +94,58 @@
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
 	<h1>회원 정보 확인</h1>
 	
-	<form action="<c:url value='/user/modify'/>" method="post">
+	<c:url value="/modify" var="modifyUrl"/>
+	
+	<form:form name="/modifyForm" action="${modifyUrl}" method="POST">
 		<input type="hidden" name="id" value=<sec:authentication property="principal.memberVO.id"/>>
 						
 			<table width="500 cellpadding=" 0" cellspacing="0" border="1">
-
+				
 				<tr>
-					<td>아이디</td>
-					<td><sec:authentication property="principal.memberVO.username"/></td>
+				
+					<td><label for="username">아이디</label></td>
+					<td><label><sec:authentication property="principal.memberVO.username"/></label></td>
+				</tr>
+			 
+				<tr>
+					<td><label for="name">이름</label></td>
+					<td> <input type="text" id="name" name="name" value=<sec:authentication property="principal.memberVO.name"/>></td>
+				</tr>
+			        
+				<tr>
+					<td><label for="nickname">닉네임</label></td>
+					<td> <input type="text" id="nickname" name="nickname" value=<sec:authentication property="principal.memberVO.nickname"/>></td>
 				</tr>
 	
 				<tr>
-					<td>닉네임</td>
-					<td><input type="text" name="nickname"
-						value=<sec:authentication property="principal.memberVO.nickname"/>></td>
+					<td><label for="phone">연락처</label></td>
+					<td> <input type="text" id="phone" name="phone" value=<sec:authentication property="principal.memberVO.phone"/>></td>
 				</tr>
 	
 				<tr>
-					<td>이름</td>
-					<td><input type="text" name="name"
-						value=<sec:authentication property="principal.memberVO.name"/>></td>
+					<td><label for="postcode">우편번호</label></td>
+					<td> <input type="text" id="postcode" name="postcode" value=<sec:authentication property="principal.memberVO.postcode"/>></td>
 				</tr>
 	
 				<tr>
-					<td>연락처</td>
-					<td><input type="text" name="phone"
-						value=<sec:authentication property="principal.memberVO.phone"/>></td>
-				</tr>
-	
-				<tr>
-					<td>우편 번호</td>
-					<td><input type="text" name="postcode"
-						value=<sec:authentication property="principal.memberVO.postcode"/>></td>
-				</tr>
-	
-				<tr>
-					<td>주소</td>
-					<td><input type="text" name="address"
-						value=<sec:authentication property="principal.memberVO.address"/>></td>
-	
-				</tr>
-	
-				<tr>
-					<td>생일</td>
-					<td><input type="date" name="birth"
-						value=<sec:authentication property="principal.memberVO.birth"/>></td>
-				</tr>
-	
-				<tr>
-					<td>이메일 주소</td>
-					<td><input type="email" name="email"
-						value=<sec:authentication property="principal.memberVO.email"/>></td>
+					<td><label for="address">주소</label></td>
+					<td> <input type="text" id="address" name="address" value=<sec:authentication property="principal.memberVO.address"/>></td>
 				</tr>
 
-
+				<tr>
+					<td><label for="birth">생일</label></td>
+					<td> <input type="text" id="birth" name="birth" value=<sec:authentication property="principal.memberVO.birth"/>></td>
+				</tr>	
+				
+				<tr>
+					<td><label for="email">이메일</label></td>
+					<td> <input type="text" id="email" name="email" value=<sec:authentication property="principal.memberVO.email"/>></td>
+				</tr>
 			</table>
-
-			<div>
 				<br>
-				<input type="submit" id="btn-update" class="btn btn-primary" value="회원정보 수정">
+				<button type="submit" id="updateSubmit" class="btn">회원정보 수정</button>
 				<a href="delete?id=${memberInfo_view.id}">회원 탈퇴</a>
-				<a href="${pageContext.request.contextPath}/admin/memberList">목록</a>
-						
-			</div>
-
-			</form>
+			</form:form>
 
 	</body>
 </html>

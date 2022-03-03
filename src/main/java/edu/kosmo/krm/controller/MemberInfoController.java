@@ -3,6 +3,9 @@ package edu.kosmo.krm.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
@@ -38,7 +44,7 @@ import edu.kosmo.krm.vo.MemberVO;
 // 양세윤 코드 작성
 
 @Slf4j
-@Controller
+@RestController
 public class MemberInfoController {
 
 	@Autowired
@@ -47,34 +53,42 @@ public class MemberInfoController {
 
 	// 회원 정보 리스트 컨트롤러
 	@GetMapping("/admin/memberList")
-	public String memberList(Criteria criteria, Model model) {
+	public ModelAndView memberList(Criteria criteria, ModelAndView view) {
 		log.info("memberList()...");
-		log.info("criteria: " + criteria);
-		model.addAttribute("ListPaging", memberInfoService.getList(criteria));
-
+		
+		// 전체 회원 목록
+		view.addObject("ListPaging", memberInfoService.getList(criteria));
 		int total = memberInfoService.getTotal();
-		log.info("total: " + total);
-		PageVO pageVO = new PageVO(criteria, total);
-		model.addAttribute("pageMaker", pageVO);
-		log.info("pageVO : " + pageVO);
-		return "/admin/memberList";
+		
+		view.addObject("pageMaker", new PageVO(criteria, total));
+		
+		view.setViewName("/admin/memberList");
+		return view;
 	}
 
 	// 회원 정보 조회 (admin)
 	@GetMapping("/admin/memberInfo_view")
-	public String memberInfo_view(MemberVO memberVO, Model model) {
-		log.info("memberInfo_view()...");
+	public ModelAndView memberInfo_view(MemberVO memberVO, ModelAndView view) {
 		log.info("memberVO: " + memberVO);
 
 		int id = memberVO.getId();
-		model.addAttribute("memberInfo_view", memberInfoService.get(id));
-
-		return "/admin/memberInfo_view";
+		view.addObject("memberInfo_view", memberInfoService.get(id));
+		view.setViewName("/admin/memberInfo_view");
+		return view;
 	}
 
-	// 회원 정보 수정 페이지 (user)
-	@RequestMapping(method = RequestMethod.GET, path = "/user/UserUpdateForm")
-	public String UserUpdateForm(Authentication authentication, MemberVO memberVO, Principal principal, Model model) {
+	// 회원 정보 수정 컨트롤러 (admin)
+	@RequestMapping(method = RequestMethod.POST, path = "/admin/modify_admin")
+	public ModelAndView modify_admin(ModelAndView view, MemberVO memberVO) {
+		log.info("modify_admin()...");
+		memberInfoService.modify(memberVO);
+		view.setViewName("redirect:memberList");
+		return view;
+	}
+	
+	// 회원 정보 수정 페이지 (user) - VIEW
+	@GetMapping("/user/UserUpdateForm")
+	public ModelAndView UserUpdateForm(ModelAndView view, Authentication authentication, MemberVO memberVO, Principal principal) {
 
 		String user_id = principal.getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -87,31 +101,52 @@ public class MemberInfoController {
 
 		System.out.println(principal);
 
-		model.addAttribute("myPage_view", principal.getName());
-
-		return "/user/UserUpdateForm";
+		view.addObject("myPage_view", principal.getName());
+		view.setViewName("/user/UserUpdateForm");
+		return view;
 	}
-
-	// 회원 정보 수정 컨트롤러 (admin)
-	@RequestMapping(method = RequestMethod.GET, path = "/admin/modify_admin")
-	public String modify_admin(MemberVO memberVO) {
-		log.info("modify_admin()...");
-		memberInfoService.modify(memberVO);
-		return "redirect:memberList";
-	}
-
+	
 	// 회원 정보 수정 컨트롤러 (user)
-	@PostMapping("/user/modify")
-	public String modify(MemberVO memberVO, Principal principal) {
-		log.info("====================================modify()...");
-		memberInfoService.updateuser(memberVO);
+	@RequestMapping(method=RequestMethod.POST, value = "/modify")
+	public ResponseEntity<String> modify(HttpSession session, @RequestBody MemberVO memberVO) {
+		log.info("modify()...");
+			
+		ResponseEntity<String> entity = null;
+		
+		try {
+			memberInfoService.updateuser(memberVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			// 세션 등록
+//	        Authentication authentication = authenticationManager.authenticate
+//	        		(new UsernamePasswordAuthenticationToken(memberVO.getUsername(), memberVO.getPassword()));
+//	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	        
+			CustomUser userDetails = (CustomUser)userDetailsService.loadUserByUsername(memberVO.getId());
+			
+		    Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, secret, Collections
+				    .singletonList(new SimpleGrantedAuthority(userDetails.getDto().getAuthoritiesDTO().getAuthority())));
 
-//		// 세션 등록
-//        Authentication authentication = authenticationManager.authenticate
-//        		(new UsernamePasswordAuthenticationToken(memberVO.getUsername(), memberVO.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
+		    // userDetails로 loadUserByUsername(user.getId()를 꺼내온다.
+		    
+		    SecurityContext securityContext = SecurityContextHolder.getContext();
+		    securityContext.setAuthentication(authentication);
+		    
+		    HttpSession session = request.getSession(true);
+		    session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
-		return "/home";
+		    // SPRING_SECURITY_CONTEXT 이게 올라가서 
+	        
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+
+
+		return entity;
 	}
+
+
+
 
 }

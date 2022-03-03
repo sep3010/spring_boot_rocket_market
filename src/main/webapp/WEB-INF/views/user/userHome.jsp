@@ -22,16 +22,17 @@
 			<a href="${pageContext.request.contextPath}/">Home</a>
 		</p>
 	</sec:authorize>
+	
 	<!-- 로그인을 했다면 -->
 	<sec:authorize access="isAuthenticated()">
 		<form:form action="${pageContext.request.contextPath}/logout"
 			method="POST">
 			<input type="submit" value="로그아웃" />
 		</form:form>	
+		<br><a href="${pageContext.request.contextPath}/user/UserUpdateForm">회원 정보 수정</a>
 		<br>
 		<a href="${pageContext.request.contextPath}/">Home</a>
 		
-		<br><a href="${pageContext.request.contextPath}/user/UserUpdateForm">회원 정보 수정</a>
 	</sec:authorize>	
 </body>
 </html>

@@ -1,34 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <title>회원 리스트</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 회원 정보를 볼 수 있는 페이지 -->
 
-<style>
-#submit-button {
-	width: 100px;
-	height: 50px;
-	background-color: #98fb98;
-	color: black;
-	border: 3px dashed pink;
-	border-radius: 5px;
-}
-</style>
 <script>
     let msg = '${msg}';
     if(msg === '비밀번호를 다시 확인해 주세요.') {
         alert("비밀번호를 다시 확인해 주세요.");
     }
+    
 </script>
+
 </head>
 <body>
 	
 	<h1>회원 정보 확인</h1>
 	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
 	
-	<form action="modify_admin">
+	<form id="form" method="post">
 		<input type="hidden" name="id" value="${memberInfo_view.id}">
 			<table width="500 cellpadding=" 0" cellspacing="0" border="1">
 		
@@ -101,17 +96,26 @@
 				</tr>
 		</table>
 
+		
+
+		</form>
+		
 		<div>
-			<input type="submit" id="submit-button" value="회원정보수정">
+			<input type="button" id="btn-update" class="btn btn-primary" value="회원정보수정">
 			<a href="delete?id=${memberInfo_view.id}">삭제</a>
 			<a href="${pageContext.request.contextPath}/admin/memberList">목록</a>
 					
 		</div>
 
-		</form>
-
-
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+		<script type="text/javascript">
+        $("#btn-update").on("click", function(){
+            let form = $("#form")[0];
+            form.action = "/admin/modify_admin";
+            form.submit();
+        });
+		</script>
 
 
 
