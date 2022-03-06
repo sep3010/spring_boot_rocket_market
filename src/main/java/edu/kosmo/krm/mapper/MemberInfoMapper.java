@@ -14,7 +14,9 @@ import edu.kosmo.krm.vo.MemberVO;
 @Mapper
 public interface MemberInfoMapper {
 
-
+	// 회원 가져오는 코드
+	public MemberVO getUser(String username);
+	
 	// 페이징 관련 코드
 	int getTotalCount();
 

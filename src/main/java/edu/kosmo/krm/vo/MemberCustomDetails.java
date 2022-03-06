@@ -107,6 +107,11 @@ public class MemberCustomDetails implements UserDetails {
 		return enabled;
 	}
 
+	public static MemberVO loadUserByUsername(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	   
 	
 }

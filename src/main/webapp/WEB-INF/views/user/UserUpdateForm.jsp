@@ -37,9 +37,6 @@ $(document).ajaxSend(function(e, xhr, options){
 	xhr.setRequestHeader(header, token);
 });
 
-
-
-
  	$(document).ready(function(){
 		$("#updateSubmit").click(function(event){
 			event.preventDefault();

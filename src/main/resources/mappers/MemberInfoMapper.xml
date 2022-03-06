@@ -64,6 +64,13 @@
 	]]>
 	</select>
 	
+	<!-- 회원 정보 조회하는 역할 -->
+	<select id="getUser" resultType="edu.kosmo.krm.vo.MemberVO">
+	<![CDATA[
+		SELECT * FROM member where username = #{username}
+	]]>
+	</select>
+	
 
 	<!-- 회원 정보 수정을 위한 부분 (admin) -->
 	<select id="update" resultType="edu.kosmo.krm.vo.MemberVO">

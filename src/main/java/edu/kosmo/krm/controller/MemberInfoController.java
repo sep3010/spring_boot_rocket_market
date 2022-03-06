@@ -1,6 +1,7 @@
 package edu.kosmo.krm.controller;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,19 +52,19 @@ public class MemberInfoController {
 
 	@Autowired
 	private MemberInfoService memberInfoService;
-    private AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 
 	// 회원 정보 리스트 컨트롤러
 	@GetMapping("/admin/memberList")
 	public ModelAndView memberList(Criteria criteria, ModelAndView view) {
 		log.info("memberList()...");
-		
+
 		// 전체 회원 목록
 		view.addObject("ListPaging", memberInfoService.getList(criteria));
 		int total = memberInfoService.getTotal();
-		
+
 		view.addObject("pageMaker", new PageVO(criteria, total));
-		
+
 		view.setViewName("/admin/memberList");
 		return view;
 	}
@@ -85,10 +88,11 @@ public class MemberInfoController {
 		view.setViewName("redirect:memberList");
 		return view;
 	}
-	
+
 	// 회원 정보 수정 페이지 (user) - VIEW
 	@GetMapping("/user/UserUpdateForm")
-	public ModelAndView UserUpdateForm(ModelAndView view, Authentication authentication, MemberVO memberVO, Principal principal) {
+	public ModelAndView UserUpdateForm(ModelAndView view, Authentication authentication, MemberVO memberVO,
+			Principal principal) {
 
 		String user_id = principal.getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -105,48 +109,45 @@ public class MemberInfoController {
 		view.setViewName("/user/UserUpdateForm");
 		return view;
 	}
-	
+
 	// 회원 정보 수정 컨트롤러 (user)
-	@RequestMapping(method=RequestMethod.POST, value = "/modify")
-	public ResponseEntity<String> modify(HttpSession session, @RequestBody MemberVO memberVO) {
+	@RequestMapping(method = RequestMethod.POST, value = "/modify")
+	public ResponseEntity<String> modify(HttpSession session, HttpServletRequest request,
+			@RequestBody MemberVO memberVO) {
 		log.info("modify()...");
-			
+
 		ResponseEntity<String> entity = null;
-		
-		try {
-			memberInfoService.updateuser(memberVO);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-			
-			// 세션 등록
-//	        Authentication authentication = authenticationManager.authenticate
-//	        		(new UsernamePasswordAuthenticationToken(memberVO.getUsername(), memberVO.getPassword()));
-//	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        
-			CustomUser userDetails = (CustomUser)userDetailsService.loadUserByUsername(memberVO.getId());
-			
-		    Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, secret, Collections
-				    .singletonList(new SimpleGrantedAuthority(userDetails.getDto().getAuthoritiesDTO().getAuthority())));
+		memberInfoService.updateuser(memberVO);
+		entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 
-		    // userDetails로 loadUserByUsername(user.getId()를 꺼내온다.
-		    
-		    SecurityContext securityContext = SecurityContextHolder.getContext();
-		    securityContext.setAuthentication(authentication);
-		    
-		    HttpSession session = request.getSession(true);
-		    session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-
-		    // SPRING_SECURITY_CONTEXT 이게 올라가서 
-	        
-		} catch (Exception e) {
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-
+		// 세션 관련 코드 '월' 선생님한테 질문하고 수정 예정
+//		try {
+//			memberInfoService.updateuser(memberVO);
+//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//
+//			// 세션 등록
+//
+//			CustomUser userDetails = (CustomUser) userDetailsService.loadUserByUsername(memberVO.getId());
+//
+//			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, secret,
+//					Collections.singletonList(
+//							new SimpleGrantedAuthority(userDetails.getDto().getAuthoritiesDTO().getAuthority())));
+//
+//			// userDetails로 loadUserByUsername(user.getId()를 꺼내온다.
+//
+//			SecurityContext securityContext = SecurityContextHolder.getContext();
+//			securityContext.setAuthentication(authentication);
+//
+//			HttpSession session = request.getSession(true);
+//			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+//
+//			// SPRING_SECURITY_CONTEXT 이게 올라가서
+//
+//		} catch (Exception e) {
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
 
 		return entity;
 	}
-
-
-
 
 }
