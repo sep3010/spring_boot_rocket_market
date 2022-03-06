@@ -15,11 +15,28 @@
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}
       ]]>
 	</select>
-
+	
+	<insert id="insertProduct">
+		INSERT INTO product VALUES (PRODUCT_SEQ.nextval, 
+			#{name}, #{price}, #{capacity}, 
+			#{brand}, #{stock}, #{unit}, 
+			#{type}, #{packaging}, #{discount}, #{delivery_type}, 1)	
+	</insert>
+	
+	<insert id="insertProductImage">
+		INSERT INTO product_image VALUES (PRODUCT_IMAGE_SEQ.nextval, 
+			#{product_id}, #{extension}, #{name}, #{information_type},
+			#{path})
+	</insert>
+	
+	
+	<!--  
 	<select id="getProductTotalCount" resultType="int">
 	<![CDATA[
 		select count(*) from product
 	]]>
 	</select>
+	-->
+	
 
 </mapper>

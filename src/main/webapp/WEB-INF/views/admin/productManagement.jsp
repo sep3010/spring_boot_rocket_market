@@ -85,6 +85,8 @@
 
 	</c:forEach>
 	</table>
+	
+	<p><a href="${pageContext.request.contextPath}/admin/addProduct">상품등록</a></p>
 
 	<c:if test="${pageMaker.pre}">
 		<a href="${pageContext.request.contextPath}/admin/productManagement${pageMaker.makeQuery(pageMaker.startPage - 1) }">
@@ -100,7 +102,12 @@
 		<a href="${pageContext.request.contextPath}/admin/productManagement${pageMaker.makeQuery(pageMaker.endPage +1) }">
 		»</a>
 	</c:if>	
-		
+	
+	<!-- 이미지 경로 처리가 잘 됐는지 확인하기 위한 코드 (수정 예정)-->
+	<c:forEach var="image" items="${mainImages}">
+		<img src="${image.path}${image.name}">
+	</c:forEach>	
+	
 
 </body>
 </html>

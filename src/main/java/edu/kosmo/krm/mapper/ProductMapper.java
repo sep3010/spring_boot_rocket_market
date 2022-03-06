@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 
 @Mapper
@@ -14,9 +15,13 @@ public interface ProductMapper {
 	
 	// 전체상품목록 (관리자용, 페이징)====================================
 	public List<ProductVO> getProductListWithPaging(Criteria criteria);
+	
+	@Select("select count(*) from product")
 	public int getProductTotalCount(); //개수
+	
 	@Update("UPDATE product SET stock = #{stock} WHERE id = #{id}")
 	public void updateProductStock(ProductVO product); //재고량 수정
+	
 	@Select("SELECT * FROM product WHERE id = #{id}") 
 	public ProductVO getProduct(int id);//상품한개
 	
@@ -31,12 +36,25 @@ public interface ProductMapper {
 	// 베스트상품목록
 	
 	
-	
 	// 상품 등록(관리자)
+	public void insertProduct(ProductVO productVO);
+	
+	// 상품 이름으로 상품 번호 가져오기
+	@Select("SELECT id FROM product WHERE name = #{name}")
+	public int getProductId(String name);
+	
+	// 상품 이미지 등록(관리자)
+	public void insertProductImage(ProductImageVO imageVO);
+	
+	
+	// 상품들의 메인이미지 목록 가져오기
+	@Select("SELECT * FROM product_image WHERE information_type = 'main'")
+	public List<ProductImageVO> getProductMainImage();
 	
 	
 	// 상품 정보 수정(관리자)
 	
 	
 	// 상품 삭제 
+	
 }

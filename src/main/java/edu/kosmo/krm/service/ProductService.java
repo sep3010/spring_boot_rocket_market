@@ -2,11 +2,13 @@ package edu.kosmo.krm.service;
 
 
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 
 @Service
@@ -24,6 +26,12 @@ public interface ProductService {
 	
 	//신상품목록 (상품번호 기준)======================================
 	public List<ProductVO> getNewProductList();
-
+	
+	
+	// 상품과 상품이미지 등록하기
+	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
+	
+	// 상품들의 메인이미지 목록 가져오기
+	public List<ProductImageVO> getProductMainImage();
 	
 }
