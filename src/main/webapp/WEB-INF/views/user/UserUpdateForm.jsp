@@ -42,6 +42,7 @@ $(document).ajaxSend(function(e, xhr, options){
 			event.preventDefault();
 			
 			const id = <sec:authentication property="principal.memberVO.id"/>;
+			let username = $("#username").val();
 			let nickname = $("#nickname").val();
 			let name = $("#name").val();
 			let phone = $("#phone").val();
@@ -53,6 +54,7 @@ $(document).ajaxSend(function(e, xhr, options){
 			
 			let param = {
 					id: id,
+					username:username,
 					nickname: nickname,
 					name: name,
 					phone: phone,
@@ -94,12 +96,11 @@ $(document).ajaxSend(function(e, xhr, options){
 	<c:url value="/modify" var="modifyUrl"/>
 	
 	<form:form name="/modifyForm" action="${modifyUrl}" method="POST">
-		<input type="hidden" name="id" value=<sec:authentication property="principal.memberVO.id"/>>
-						
+		<input type="hidden" id="username" name="username" value="<sec:authentication property="principal.memberVO.username"/>">
+		
 			<table width="500 cellpadding=" 0" cellspacing="0" border="1">
 				
 				<tr>
-				
 					<td><label for="username">아이디</label></td>
 					<td><label><sec:authentication property="principal.memberVO.username"/></label></td>
 				</tr>
@@ -131,7 +132,7 @@ $(document).ajaxSend(function(e, xhr, options){
 
 				<tr>
 					<td><label for="birth">생일</label></td>
-					<td> <input type="text" id="birth" name="birth" value=<sec:authentication property="principal.memberVO.birth"/>></td>
+					<td> <input type="date" id="birth" name="birth" value=<sec:authentication property="principal.memberVO.birth"/>></td>
 				</tr>	
 				
 				<tr>

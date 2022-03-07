@@ -29,9 +29,9 @@ public interface MemberInfoMapper {
 	// 회원 정보 조회 코드
 	MemberVO read(int id);
 
-	// 회원 정보 수정 코드
+	// 회원 정보 수정 코드 (admin)
 	MemberVO update(MemberVO memberVO);
 	
-	// 회원 정보 수정 코드
+	// 회원 정보 수정 코드 (user)
 	MemberVO updateuser(MemberVO memberVO);
 }
