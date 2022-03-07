@@ -106,6 +106,8 @@ public class MemberCustomDetails implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
+
+
 	   
 	
 }

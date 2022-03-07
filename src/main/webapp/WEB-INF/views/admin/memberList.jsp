@@ -4,8 +4,12 @@
 <html>
 <head>
 <title>회원 리스트</title>
+<!-- 회원 목록 리스트 -->
 </head>
 <body>
+	<h1>회원목록</h1>
+	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
+	
 	<table width="1300" cellpadding="0" cellspacing="0" border="1">
 	  <tr>
          <td>회원번호</td>
