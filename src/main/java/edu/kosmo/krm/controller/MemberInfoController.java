@@ -18,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.PageVO;
+import edu.kosmo.krm.security.MemberCustomDetailsService;
 import edu.kosmo.krm.service.MemberInfoService;
 import lombok.extern.slf4j.Slf4j;
 import edu.kosmo.krm.vo.MemberCustomDetails;
@@ -52,8 +54,10 @@ public class MemberInfoController {
 
 	@Autowired
 	private MemberInfoService memberInfoService;
-	private AuthenticationManager authenticationManager;
-
+	@Autowired
+	private MemberCustomDetailsService memberCustomDetailsService;
+	
+	
 	// 회원 정보 리스트 컨트롤러
 	@GetMapping("/admin/memberList")
 	public ModelAndView memberList(Criteria criteria, ModelAndView view) {
@@ -112,40 +116,36 @@ public class MemberInfoController {
 
 	// 회원 정보 수정 컨트롤러 (user)
 	@RequestMapping(method = RequestMethod.POST, value = "/modify")
-	public ResponseEntity<String> modify(HttpSession session, HttpServletRequest request,
-			@RequestBody MemberVO memberVO) {
+	public ResponseEntity<String> modify(HttpSession session, HttpServletRequest request,  @RequestBody MemberVO memberVO) {
+		
 		log.info("modify()...");
-
 		ResponseEntity<String> entity = null;
-		memberInfoService.updateuser(memberVO);
-		entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		
+		try {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 
-		// 세션 관련 코드 '월' 선생님한테 질문하고 수정 예정
-//		try {
-//			memberInfoService.updateuser(memberVO);
-//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-//
-//			// 세션 등록
-//
-//			CustomUser userDetails = (CustomUser) userDetailsService.loadUserByUsername(memberVO.getId());
-//
-//			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, secret,
-//					Collections.singletonList(
-//							new SimpleGrantedAuthority(userDetails.getDto().getAuthoritiesDTO().getAuthority())));
-//
-//			// userDetails로 loadUserByUsername(user.getId()를 꺼내온다.
-//
-//			SecurityContext securityContext = SecurityContextHolder.getContext();
-//			securityContext.setAuthentication(authentication);
-//
-//			HttpSession session = request.getSession(true);
-//			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-//
-//			// SPRING_SECURITY_CONTEXT 이게 올라가서
-//
-//		} catch (Exception e) {
-//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//		}
+			// 수정하는 코드
+			memberInfoService.updateuser(memberVO);
+			log.info("==============memverVO: " + memberVO);
+			
+			
+			// 세션 등록
+			MemberCustomDetails memberCustomDetails = (MemberCustomDetails) memberCustomDetailsService.loadUserByUsername(memberVO.getUsername());
+			// MemberCustonDetails를 리턴해 memberVO의 username을 가지고 온다.
+			
+			Authentication authentication = new UsernamePasswordAuthenticationToken(memberCustomDetails, 
+					memberCustomDetails.getPassword(),memberCustomDetails.getAuthorities());
+			// UsernamePasswordAuthenticationToken에서 principal, password, authority를 토큰으로 세 개 가지고 오고, authentication에 담는다.
+			
+			SecurityContext securityContext = SecurityContextHolder.getContext();
+			securityContext.setAuthentication(authentication);
+			// 세션 안에 수정한 내용을 넣는 코드
+			
+			session = request.getSession(true);
+			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 
 		return entity;
 	}
