@@ -4,13 +4,12 @@ package edu.kosmo.krm.service;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.mapper.ProductMapper;
@@ -18,6 +17,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
 @Repository
@@ -29,9 +29,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	//전체상품목록====================================================
 	@Override
-	public List<ProductVO> getProductList(Criteria criteria) {
+	public List<ProductVO> getAdminProductList(Criteria criteria) {
 		log.info("getProductList..");
-		return productMapper.getProductListWithPaging(criteria);
+		return productMapper.getAdminProductList(criteria);
 	}
 	
 	// 전체 상품 개수
@@ -74,7 +74,8 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(rollbackFor = Exception.class)
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath) {
 		log.info("insertProductAndImage..");
-		// String savePath = "C:\\RocketMarket\\product-image";
+		// 이 주소를 쓰면 절대 주소가 되어 다른 팀원들이 본인 컴퓨터로 서버를 돌려 파일을 저장하게 되면 경로가 다르기 때문에 오류가 발생할 거 같다.
+		// 그래서 상대 주소로 설정 변경
 		// String savePath = "C:\\Users\\samsung\\Documents\\workspace-sts-3.9.18.RELEASE\\spring_boot_rocket_market\\src\\main\\resources\\static\\product-image";
 		
 		productMapper.insertProduct(productVO);
@@ -89,27 +90,70 @@ public class ProductServiceImpl implements ProductService {
 			String information_type = file.getKey();			
 			
 			// 파일 이름
-			String name = file.getValue().getOriginalFilename();
+			String originalName = file.getValue().getOriginalFilename();
+			
+			// 혹시 파일 이름이 중복되면 기존에 있던 파일이 덮어쓰기 될 수 있기 때문에 
+			// 그걸 방지하기 위해 UUID를 사용.
+			// UUID는 랜덤으로 32개의 문자(4개의 하이픈으로 구성된 총 5개의 그룹)를 생성 
+			// 예시: 550e8400-e29b-41d4-a716-446655440000
+			// a~f까지의 알파벳 값들이 대문자인지 소문자인지는 중요하지 않다.(16진수)
+			// 128비트의 값이다.
+			String uuid = UUID.randomUUID().toString();
+			
+			String fileName = uuid + "_" + originalName;
 			
 			// 파일 형태 (예시: image/jpeg)
 			String extension = file.getValue().getContentType();
 			
+			// 서버에서 저장된 이미지를 불러오기 위한 기본 경로
+			String basePath = "http://localhost:8282/resources/product-image/";
 			
-			File saveFile = new File(savePath, name);
+			
+			
+			File saveFile = new File(savePath, fileName);
 			try {
 				// 실제로 파일 저장하기
 				file.getValue().transferTo(saveFile);
+				
+				/* 메인 상품 이미지를 추가로 썸네일 버전 만들어 저장하기 */
+				if(information_type == "main") {
+					// 썸네일 파일 이름
+					String thumbnailName = "s_" + fileName;
+					
+					// 썸네일을 저장하기 위한 File 객체 생성
+					File thumbnailFile = new File(savePath, thumbnailName);
+					
+					// thumbnailaotr 라이브러리를 사용해 썸네일 만들기
+					Thumbnails.of(saveFile)
+							.size(100, 100)
+							.toFile(thumbnailFile);
+					
+					// 저장한 썸네일 DB product_image 테이블에 저장하기
+					productImageVO.setProduct_id(product_id);
+					productImageVO.setName(thumbnailName);
+					productImageVO.setExtension(extension);
+					productImageVO.setInformation_type("thumbnail");
+					
+					String thumbnailPath = basePath + thumbnailName;
+					productImageVO.setPath(thumbnailPath);
+					log.info("thumbnailImageVO : " + productImageVO);
+					productMapper.insertProductImage(productImageVO);
+								
+				} // if end
+				
+				
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
-			
+			// ProductImageVO에 값 넣기
 			productImageVO.setProduct_id(product_id);
-			productImageVO.setName(name);
+			productImageVO.setName(fileName);
 			productImageVO.setExtension(extension);
 			productImageVO.setInformation_type(information_type);
 			
-			// 서버에서 저장된 이미지를 불러오기 위한 경로로 DB에 저장.
-			String loadImagePath = "http://localhost:8282/resources/product-image/";
+			// 각 파일 별로 저장되는 폴더 경로에 + 파일 이름으로 경로를 DB에 저장해서 
+			// view 페이지에서 해당 이이지를 편리하게 불러오기 위한 설정
+			String loadImagePath = basePath + fileName;
 			productImageVO.setPath(loadImagePath);
 			
 			log.info("productImageVO : " + productImageVO);
@@ -120,11 +164,11 @@ public class ProductServiceImpl implements ProductService {
 	
 	}
 	
-	// 상품들의 메인이미지 목록 가져오기
+	// 상품들의 썸네일 이미지 목록 가져오기
 	@Override
-	public List<ProductImageVO> getProductMainImage() {
+	public List<ProductImageVO> getProductThumbnailImage() {
 		log.info("getProductMainImage()..");
-		return productMapper.getProductMainImage();
+		return productMapper.getProductThumbnailImage();
 	}
 	
 	

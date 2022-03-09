@@ -1,26 +1,19 @@
 package edu.kosmo.krm.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.kosmo.krm.mapper.ProductMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.vo.ProductVO;
@@ -35,20 +28,15 @@ public class ProductInfoController {
 	private ProductService productService;
 	
 	 
-
 	// admin - 전체상품목록페이지
 	@GetMapping("/admin/productManagement")
 	public ModelAndView productManagement(Criteria criteria, ModelAndView view) {
 		log.info("productManagement(Paging)..");
 
 		// 전체상품목록
-		view.addObject("productList", productService.getProductList(criteria));
+		view.addObject("productList", productService.getAdminProductList(criteria));
 		int total = productService.getProductTotal();
 		view.addObject("pageMaker", new PageVO(criteria, total));
-		
-		// 상품메인 이미지 목록
-		view.addObject("mainImages", productService.getProductMainImage());
-
 
 		view.setViewName("/admin/productManagement");
 		return view;

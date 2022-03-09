@@ -1,5 +1,7 @@
 package edu.kosmo.krm.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,5 +44,7 @@ public class ProductVO {
 	private int discount;
 	private String delivery_type;
 	private int enabled;
+	
+	private List<ProductImageVO> productImages;
 
 }

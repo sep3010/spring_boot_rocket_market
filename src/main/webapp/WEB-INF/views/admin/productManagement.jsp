@@ -55,6 +55,7 @@
 	<table width="950" cellpadding="0" cellspacing="0" border="1">
 	<tr>
 		<td>상품번호</td>
+		<td>대표 이미지</td>
 		<td>상품명</td>
 		<td>할인율</td>
 		<td>가격</td>
@@ -66,6 +67,17 @@
 	<c:forEach var="product" items="${productList}">
 		<tr>
 			<td>${product.id}</td>
+			<c:choose>
+				<c:when test="${not empty product.productImages}">
+					<c:forEach var="thumbnail" items="${product.productImages}">
+						<td><img src="${thumbnail.path}"></td>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td>대표 이미지 없음</td>
+				</c:otherwise>
+			</c:choose>
+
 			<td>&nbsp;[ ${product.brand} ] 
 			<a href="product_view?id=${product.id}">${product.name}</a></td>
 			<td>${product.discount} %</td>
@@ -104,8 +116,8 @@
 	</c:if>	
 	
 	<!-- 이미지 경로 처리가 잘 됐는지 확인하기 위한 코드 (수정 예정)-->
-	<c:forEach var="image" items="${mainImages}">
-		<img src="${image.path}${image.name}">
+	<c:forEach var="thumbnail" items="${thumbnails}">
+		<img src="${thumbnail.path}">
 	</c:forEach>	
 	
 

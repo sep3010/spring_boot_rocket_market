@@ -15,7 +15,7 @@ import edu.kosmo.krm.vo.ProductVO;
 public interface ProductService {
 	
 	// 전체상품목록 가져오기=========================================
-	public List<ProductVO> getProductList(Criteria criteria);
+	public List<ProductVO> getAdminProductList(Criteria criteria);
 	public int getProductTotal(); //개수
 	public void updateProductStock(ProductVO product); //재고량수정
 	public ProductVO getProduct(int id); //상품한개 정보
@@ -32,6 +32,6 @@ public interface ProductService {
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
 	
 	// 상품들의 메인이미지 목록 가져오기
-	public List<ProductImageVO> getProductMainImage();
+	public List<ProductImageVO> getProductThumbnailImage();
 	
 }

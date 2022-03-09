@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.kosmo.krm.mapper.MemberInfoMapper;
 import edu.kosmo.krm.page.Criteria;
@@ -51,6 +52,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void updateuser(MemberVO memberVO) {
 		log.info("updateuser()...");
 		memberInfoMapper.updateuser(memberVO);

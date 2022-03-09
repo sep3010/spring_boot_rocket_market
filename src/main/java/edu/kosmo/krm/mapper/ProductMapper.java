@@ -13,8 +13,8 @@ import edu.kosmo.krm.vo.ProductVO;
 @Mapper
 public interface ProductMapper {
 	
-	// 전체상품목록 (관리자용, 페이징)====================================
-	public List<ProductVO> getProductListWithPaging(Criteria criteria);
+	// 전체상품목록 (관리자용, 페이징) & 상품 썸네일 이미지만 ====================================
+	public List<ProductVO> getAdminProductList(Criteria criteria);
 	
 	@Select("select count(*) from product")
 	public int getProductTotalCount(); //개수
@@ -47,9 +47,9 @@ public interface ProductMapper {
 	public void insertProductImage(ProductImageVO imageVO);
 	
 	
-	// 상품들의 메인이미지 목록 가져오기
-	@Select("SELECT * FROM product_image WHERE information_type = 'main'")
-	public List<ProductImageVO> getProductMainImage();
+	// 상품들의 썸네일 이미지 목록 가져오기
+	@Select("SELECT * FROM product_image WHERE information_type = 'thumbnail'")
+	public List<ProductImageVO> getProductThumbnailImage();
 	
 	
 	// 상품 정보 수정(관리자)
