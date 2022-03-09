@@ -1,0 +1,71 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>HOME</h1>
+	<!-- 로그인을 안했다면 -->
+	<sec:authorize access="isAnonymous()">
+		<p>
+			<a href="${pageContext.request.contextPath}/loginForm">로그인</a>
+			<a href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
+			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
+		</p>
+	</sec:authorize>
+	<!-- 로그인을 했다면 -->
+	<sec:authorize access="isAuthenticated()">
+		<form:form action="${pageContext.request.contextPath}/logout"
+			method="POST">
+			<input type="submit" value="로그아웃" />
+		</form:form>
+		
+		<p>
+			<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
+			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
+		</p>
+	</sec:authorize>	
+	
+	<!-- 카카오 로그인을 했다면 -->
+<!-- <c:if test="${not empty kakaoMember}">
+	 	<p>${kakaoMember.kakao_account.profile.nickname}님</p>
+		<a href="/kakao/logout">로그아웃</a>
+	</c:if>	
+	-->
+
+	<!-- 접근가능페이지코드 -->		
+	<h1>오늘 할인해요!</h1>
+	<table width="500" cellpadding="0" cellspacing="0" border="1">
+		<tr>
+			<td>상품이름</td>
+			<td>가격</td>
+		</tr>	
+	  	<c:forEach var="discount" items="${discountList}">
+	  	<tr>
+			<td>${discount.name}</td>
+			<td>${discount.price}</td>
+		</tr>	
+		</c:forEach>	
+	</table>
+	<h1>새로 나왔어요!</h1>
+	<table width="500" cellpadding="0" cellspacing="0" border="1">
+		<tr>
+			<td>상품이름</td>
+			<td>가격</td>
+		</tr>	
+	  	<c:forEach var="newList" items="${newList}">
+		  <tr>
+			<td>${newList.name}</td>
+			<td>${newList.price}</td>
+		</tr>	
+		</c:forEach>	
+	</table>
+	
+</body>
+</html>
