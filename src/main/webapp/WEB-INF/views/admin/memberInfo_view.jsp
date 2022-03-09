@@ -23,7 +23,7 @@
 	<h1>회원 정보 확인</h1>
 	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
 	
-	<form id="form" method="post">
+	<form:form id="form" method="post">
 		<input type="hidden" name="id" value="${memberInfo_view.id}">
 			<table width="500" cellpadding="0" cellspacing="0" border="1">
 		
@@ -98,7 +98,7 @@
 
 		
 
-		</form>
+		</form:form>
 		
 		<div>
 			<input type="button" id="btn-update" class="btn btn-primary" value="회원정보수정">
