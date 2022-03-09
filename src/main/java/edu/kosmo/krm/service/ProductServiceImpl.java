@@ -84,7 +84,9 @@ public class ProductServiceImpl implements ProductService {
 		
 		ProductImageVO productImageVO;
 		/*상품 이미지 업로드하기(대표 이미지, 상품정보 이미지, 상품상세 이미지 순서대로)*/
-		// entrySet 방식으로 반복문 돌리기	
+		// entrySet 방식으로 반복문 돌리기
+		// map.entrySet() 메소드는 해당 map의  key와 value를 가지는 Set 객체를 리턴
+		// 따라서 해당 set 객체를 foreach문으로 돌려 map의 key와 value값을 모두 뽑아낼 수 있다.
 		for(Map.Entry<String, MultipartFile> file : files.entrySet()) {
 			productImageVO = new ProductImageVO();
 			String information_type = file.getKey();			
@@ -107,8 +109,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			// 서버에서 저장된 이미지를 불러오기 위한 기본 경로
 			String basePath = "http://localhost:8282/resources/product-image/";
-			
-			
+						
 			
 			File saveFile = new File(savePath, fileName);
 			try {
@@ -167,7 +168,7 @@ public class ProductServiceImpl implements ProductService {
 	// 상품들의 썸네일 이미지 목록 가져오기
 	@Override
 	public List<ProductImageVO> getProductThumbnailImage() {
-		log.info("getProductMainImage()..");
+		log.info("getProductThumbnailImage()..");
 		return productMapper.getProductThumbnailImage();
 	}
 	
