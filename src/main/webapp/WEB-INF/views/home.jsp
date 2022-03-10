@@ -241,15 +241,15 @@
 <body>
 
 <header>
-      <div>
-        <nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
-            >배너 이벤트</a
-          >
+	<!-- ======================== 배너 =========================== -->
+	<div>
+    	<nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
         </nav>
-      </div>
+    </div>
 
-      <div class="container pb-2">
+	<!-- ======================== 상단 메뉴 =========================== -->
+    <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
           <button
             class="navbar-toggler"
@@ -258,62 +258,62 @@
             data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          
           <div
             class="collapse navbar-collapse d-flex justify-content-between"
-            id="navbarNavAltMarkup"
-          >
+            id="navbarNavAltMarkup">
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="#">공지사항</a>
               <a class="nav-link" href="#">문의</a>
               <a class="nav-link" href="#">이벤트</a>
             </div>
-            	<!-- 로그인을 안했다면 -->
+            
+            <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
             <sec:authorize access="isAnonymous()">
               <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}">회원가입</a>
-              <a class="nav-link" href="#">마이페이지</a>
-              <a class="nav-link" href="#">장바구니</a>
-              
+              <a class="nav-link" href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
              </sec:authorize>
-            </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
-            </div><!-- collapse navbar-collapse -->
-             <p class="float right">
-              <a href="${pageContext.request.contextPath}/user/userHome">유저</a>
-			  <a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
-             </p>
-             
-             <!-- 로그인을 했다면 -->
+ 
+            <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
-				<form:form action="${pageContext.request.contextPath}/logout"
-					method="POST">
-					<input type="submit" value="로그아웃" />
-				</form:form>
-				
-				<p>
-					<a href="${pageContext.request.contextPath}/user/userHome">유저</a>
-					<a href="${pageContext.request.contextPath}/admin/adminHome">관리자</a>
-				</p>
-			</sec:authorize>	
-			
-			
-	
-			<!-- 접근가능페이지코드 -->	
-			
-			
-          <center><!--로고 -->
-            <div id="logo" style="width: 12rem">
+			  <!-- 관리자 -->
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+					<!-- 로그아웃자리 -->
+					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+
+                </sec:authorize>				
+			  <!-- 회원 -->
+			    <sec:authorize access="hasRole('ROLE_USER')">
+			    	<sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+					<!-- 로그아웃자리 -->
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+              		<a class="nav-link" href="#">위시리스트</a>
+              		<a class="nav-link" href="#">장바구니</a>
+                </sec:authorize>
+			</sec:authorize>             
+             
+            </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
+        </div><!-- collapse navbar-collapse -->
+
+
+		<!-- ======================== 로고 =========================== -->
+        <center>
+        	<div id="logo" style="width: 12rem">
               <img src="./imgs/locketlogo.png" class="card-img-top" alt="..." />
             </div>
-          </center><!--로고 -->
-        </nav>
-      </div><!-- container -->
+        </center>
+	</nav>
+  </div><!-- container -->
       
-    </header>
+</header>
 
 
 	
