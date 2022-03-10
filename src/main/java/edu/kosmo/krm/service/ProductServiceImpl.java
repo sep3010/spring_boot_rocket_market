@@ -164,13 +164,8 @@ public class ProductServiceImpl implements ProductService {
 		} // end for()
 	
 	}
-	
-	// 상품들의 썸네일 이미지 목록 가져오기
-	@Override
-	public List<ProductImageVO> getProductThumbnailImage() {
-		log.info("getProductThumbnailImage()..");
-		return productMapper.getProductThumbnailImage();
-	}
+
+
 	
 	
 

@@ -47,11 +47,6 @@ public interface ProductMapper {
 	public void insertProductImage(ProductImageVO imageVO);
 	
 	
-	// 상품들의 썸네일 이미지 목록 가져오기
-	@Select("SELECT * FROM product_image WHERE information_type = 'thumbnail'")
-	public List<ProductImageVO> getProductThumbnailImage();
-	
-	
 	// 상품 정보 수정(관리자)
 	
 	
