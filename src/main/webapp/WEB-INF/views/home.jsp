@@ -316,7 +316,7 @@
 </header>
 
 
-	
+	<!-- ======================== 제품 메뉴 =========================== -->
 	<div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
@@ -398,6 +398,7 @@
       </div>
     </div>
 
+	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -434,9 +435,9 @@
       </button>
     </div>
     
+    <!-- ======================== 사이드바 =========================== -->
 	<main>
-      <!-- 사이드바 -->
-
+	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
@@ -458,7 +459,7 @@
           </div>
         </div>
         
-        <!-- 챗봇버튼 -->
+        <!-- ======= 챗봇 ======= -->
         <div class="text-center mt-3 mb-3" id="chatbox">
           <div id="chat-container">
             <script src="./js/chatbot-ui.js"></script>
@@ -475,7 +476,7 @@
               );
             </script>
           </div>
-
+		  <!-- ======= 상단 페이지 이동버튼 ======= -->
           <div class="text-center mt-2" id="pagebox">
             <input
               id="pagebtn"
@@ -483,12 +484,14 @@
               alt=""
               value="Top ↑"
               onclick="clickme()"
-            /><!-- 상단 페이지 버튼 -->
+            />
           </div>
         </div>
       </div>
-      <!-- 사이드바 -->
+      
 
+
+	  <!-- ======================== 메인페이지 상품표시 =========================== -->
       <div class="container pt-5">
 
         <h2 class="text-center pb-3" style="font-weight: bold">오늘의 할인</h2>
@@ -547,10 +550,11 @@
           </div> <!-- card-deck --> 
          </div> <!-- container -->
          
-         
-         
+                
     </main>
-   
+    
+    
+    <!-- ======================== 하단 메뉴 =========================== -->
 	<hr class="m-0" />
     <div class="container">
       <footer class="pt-0">
