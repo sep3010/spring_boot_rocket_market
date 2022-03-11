@@ -30,8 +30,7 @@
 			<input type="submit" value="로그아웃" />
 		</form:form>	
 		<br><a href="${pageContext.request.contextPath}/user/UserUpdateForm">회원 정보 수정</a>
-		<br>
-		<a href="${pageContext.request.contextPath}/">Home</a>
+		<br><a href="${pageContext.request.contextPath}/user/orderhistory">MY 쇼핑</a>
 		
 	</sec:authorize>	
 </body>
