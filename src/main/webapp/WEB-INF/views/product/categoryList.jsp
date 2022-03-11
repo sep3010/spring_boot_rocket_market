@@ -69,8 +69,6 @@
          </div> <!-- card-deck -->
      </div>
 			
-	${pageName}
-	
 	<!-- 페이징번호 -->
 	<c:if test="${pageMaker.pre}">
 		<a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(pageMaker.startPage - 1) }">

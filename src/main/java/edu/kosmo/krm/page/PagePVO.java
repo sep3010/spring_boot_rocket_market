@@ -27,7 +27,7 @@ public class PagePVO {
 	private int total; // 전체 게시판 글 수
 	
 	private CriteriaP cri; // CriteriaP.java 안의 변수 두 개 (pageNum, amount)
-	
+
 	public PagePVO(CriteriaP criteriaP, int total) {
 		this.cri = criteriaP; // Criteria에서 정한 (1, 12)
 		this.total = total;
@@ -58,7 +58,7 @@ public class PagePVO {
 				.queryParam("amount", cri.getAmount()) // pageNum=3&amount=10
 				.build(); // ?pageNum=3&amount=10
 		return uriComponentsBuilder.toUriString(); // ?pageNum=3&amount=10 리턴
-		//return "?pageNum=" + 3 + "&amount="+cri.getAmount();
-		
+		//return "?pageNum=" + 3 + "&amount="+cri.getAmount();	
 	}
+
 }

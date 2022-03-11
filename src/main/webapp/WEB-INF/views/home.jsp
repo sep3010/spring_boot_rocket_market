@@ -41,15 +41,43 @@
 	
 		<!-- ============== 상품목록페이지 이동 ================ -->
         <div id="categorymenu">
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" 
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/newProduct" 
           role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" 
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/bestProduct" 
           role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct"
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/saleProduct"
           role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct"
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/subscribeProduct"
           role="button" id="categorybtn">정기배송상품</a>
         </div>	
+        
+        
+        <div id="categorymenu">
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/vegetable" 
+          role="button" id="categorybtn">채소/과일</a>
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/meat" 
+          role="button" id="categorybtn">육류</a>
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/side"
+          role="button" id="categorybtn">국/반찬</a>
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/snack"
+          role="button" id="categorybtn">간식/과자</a>
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/dairy"
+          role="button" id="categorybtn">유제품</a>
+          <a class="btn btn-light" 
+          href="${pageContext.request.contextPath}/categoryProduct/instant"
+          role="button" id="categorybtn">즉석식품</a>          
+        </div>	
+        
+        
 
 	<!-- 접근가능페이지코드 -->		
 	<h1>오늘 할인해요!</h1>

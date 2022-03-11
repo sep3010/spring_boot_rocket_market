@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,6 +99,7 @@ public class ProductInfoController {
 	public ModelAndView newProduct(CriteriaP criteriaP, ModelAndView view) {
 		log.info("newProduct()..");
 		
+		view.addObject("pageName","newProduct");
 		view.addObject("name", "신상품");
 		view.addObject("productList", productService.getNewProductList(criteriaP));
 		int total = productService.getProductTotal();
@@ -106,11 +108,12 @@ public class ProductInfoController {
 		view.setViewName("/product/list");
 		return view;
 	}
-	//베스트상품 ===========================판매수량=================
+	//베스트상품
 	@GetMapping("/bestProduct")
 	public ModelAndView bestProduct(CriteriaP criteriaP, ModelAndView view) {
 		log.info("bestProduct()..");
 
+		view.addObject("pageName","bestProduct");
 		view.addObject("name", "베스트상품");
 		view.addObject("productList", productService.getBestProductList(criteriaP));
 		int total = productService.getBestProductTotal();
@@ -125,6 +128,7 @@ public class ProductInfoController {
 	public ModelAndView saleProduct(CriteriaP criteriaP, ModelAndView view) {
 		log.info("saleProduct()..");
 
+		view.addObject("pageName","saleProduct");
 		view.addObject("name", "할인상품");
 		view.addObject("productList", productService.getSaleProductList(criteriaP));
 		int total = productService.getSaleProductTotal();
@@ -133,17 +137,49 @@ public class ProductInfoController {
 		view.setViewName("/product/list");
 		return view;
 	}
+	
 	//정기배송상품
 	@GetMapping("/subscribeProduct")
 	public ModelAndView subscribeProduct(CriteriaP criteriaP, ModelAndView view) {
 		log.info("subscribeProduct()..");
 
+		view.addObject("pageName","subscribeProduct");
 		view.addObject("name", "정기배송상품");
 		view.addObject("productList", productService.getSubscribeProductList(criteriaP));
 		int total = productService.getSubscribeProductTotal();
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/list");
+		return view;
+	}
+	
+	//카테고리별상품
+	@GetMapping("/categoryProduct/{etype}")
+	public ModelAndView categoryProduct(CriteriaP criteriaP, ModelAndView view) {
+		log.info("categoryProduct().." + criteriaP);
+		
+		String type ="";
+		String etype = criteriaP.getEtype();
+		log.info("etype : " +etype);
+
+		if(etype.equals("vegetable")) {
+			type = "채소/과일";
+		}
+		else if(etype.equals("meat")) {type = "육류";}
+		else if(etype.equals("side")) {type = "국/반찬";}
+		else if(etype.equals("snack")) {type = "간식/과자";}
+		else if(etype.equals("dairy")) {type = "유제품";}
+		else if(etype.equals("instant")) {type = "즉석식품";}
+		
+		criteriaP.setEtype(type);
+
+		view.addObject("pageName","categoryProduct/"+etype);
+		view.addObject("name", type);
+		view.addObject("productList", productService.getCategoryProductList(criteriaP));
+		int total = productService.getCategoryProductTotal(type);
+		view.addObject("pageMaker", new PagePVO(criteriaP, total));
+		
+		view.setViewName("/product/categoryList");
 		return view;
 	}
 	

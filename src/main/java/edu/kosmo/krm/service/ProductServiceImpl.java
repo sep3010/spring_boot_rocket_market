@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getNewProductList(criteria);
 	}
 	
-	//정기배송상품목록((배송타입이 '정기')==================================
+	//정기배송상품목록 (배송타입이 '정기')==================================
 	@Override
 	public List<ProductVO> getSubscribeProductList(CriteriaP criteria) {
 		log.info("getSubscribeProductList..");
@@ -97,6 +97,17 @@ public class ProductServiceImpl implements ProductService {
 	public int getSubscribeProductTotal() {
 		log.info("getSubscribeProductTotal..");
 		return productMapper.getSubscribeProductTotalCount();
+	}
+	//카테고리 상품목록 (상품종류)========================================
+	@Override
+	public List<ProductVO> getCategoryProductList(CriteriaP criteria) {
+		log.info("getCategoryProductList.." + criteria.getEtype());
+		return productMapper.getCategoryProductList(criteria);
+	}
+	@Override
+	public int getCategoryProductTotal(String type) {
+		log.info("getCategoryProductTotal..");
+		return productMapper.getCategoryProductTotalCount(type);
 	}
 
 	// 상품과 상품이미지 등록하기
@@ -195,8 +206,5 @@ public class ProductServiceImpl implements ProductService {
 	
 	}
 
-
-	
-	
 
 }

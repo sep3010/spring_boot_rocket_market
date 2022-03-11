@@ -10,6 +10,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
+import lombok.extern.slf4j.Slf4j;
 
 @Mapper
 public interface ProductMapper {
@@ -33,7 +34,7 @@ public interface ProductMapper {
 	
 	// 할인상품목록 (할인율이 제일 큰 순서로)===========================
 	public List<ProductVO> getSaleProductList(CriteriaP criteria);
-	@Select("select count(*) from product where discount > 0")
+	@Select("SELECT COUNT(*) FROM product WHERE discount > 0")
 	public int getSaleProductTotalCount(); //할인상품 개수
 	
 	// 신상품목록 (상품번호 기준)===================================
@@ -41,9 +42,14 @@ public interface ProductMapper {
 
 	// 정기배송상품목록 (배송타입이 '정기'인 제품)=======================
 	public List<ProductVO> getSubscribeProductList(CriteriaP criteria);
-	@Select("select count(*) from product where delivery_type = '정기'")
+	@Select("SELECT COUNT(*) FROM product WHERE delivery_type = '정기'")
 	public int getSubscribeProductTotalCount(); //정기배송상품 개수
 	
+	// 상품카테고리별 목록 (상품종류마다 다름)==========================
+	public List<ProductVO> getCategoryProductList(CriteriaP criteria);
+	@Select("SELECT COUNT(*) FROM product WHERE type = #{type}")
+	public int getCategoryProductTotalCount(String type); //카테고리상품상품 개수
+			
 	// 상품 등록(관리자)
 	public void insertProduct(ProductVO productVO);
 	
