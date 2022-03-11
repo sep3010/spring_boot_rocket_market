@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.page.CriteriaP;
+import edu.kosmo.krm.page.PagePVO;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.page.PageVO;
@@ -86,6 +88,62 @@ public class ProductInfoController {
 		productService.insertProductAndImage(productVO, files, savePath);
 		view.setViewName("redirect:/admin/productManagement");
 		
+		return view;
+	}
+	
+	/*유빈*/	
+	// ============== 상품 목록 페이지로 이동 ===================
+	//신상품
+	@GetMapping("/newProduct")
+	public ModelAndView newProduct(CriteriaP criteriaP, ModelAndView view) {
+		log.info("newProduct()..");
+		
+		view.addObject("name", "신상품");
+		view.addObject("productList", productService.getNewProductList(criteriaP));
+		int total = productService.getProductTotal();
+		view.addObject("pageMaker", new PagePVO(criteriaP, total));
+		
+		view.setViewName("/product/list");
+		return view;
+	}
+	//베스트상품 ===========================판매수량=================
+	@GetMapping("/bestProduct")
+	public ModelAndView bestProduct(CriteriaP criteriaP, ModelAndView view) {
+		log.info("bestProduct()..");
+
+		view.addObject("name", "베스트상품");
+		view.addObject("productList", productService.getBestProductList(criteriaP));
+		int total = productService.getBestProductTotal();
+		view.addObject("pageMaker", new PagePVO(criteriaP, total));
+		
+		view.setViewName("/product/list");
+		return view;
+	}
+
+	//할인상품
+	@GetMapping("/saleProduct")
+	public ModelAndView saleProduct(CriteriaP criteriaP, ModelAndView view) {
+		log.info("saleProduct()..");
+
+		view.addObject("name", "할인상품");
+		view.addObject("productList", productService.getSaleProductList(criteriaP));
+		int total = productService.getSaleProductTotal();
+		view.addObject("pageMaker", new PagePVO(criteriaP, total));
+		
+		view.setViewName("/product/list");
+		return view;
+	}
+	//정기배송상품
+	@GetMapping("/subscribeProduct")
+	public ModelAndView subscribeProduct(CriteriaP criteriaP, ModelAndView view) {
+		log.info("subscribeProduct()..");
+
+		view.addObject("name", "정기배송상품");
+		view.addObject("productList", productService.getSubscribeProductList(criteriaP));
+		int total = productService.getSubscribeProductTotal();
+		view.addObject("pageMaker", new PagePVO(criteriaP, total));
+		
+		view.setViewName("/product/list");
 		return view;
 	}
 	

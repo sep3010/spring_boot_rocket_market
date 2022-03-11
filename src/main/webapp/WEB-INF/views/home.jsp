@@ -38,6 +38,18 @@
 		<a href="/kakao/logout">로그아웃</a>
 	</c:if>	
 	-->
+	
+		<!-- ============== 상품목록페이지 이동 ================ -->
+        <div id="categorymenu">
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" 
+          role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" 
+          role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct"
+          role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct"
+          role="button" id="categorybtn">정기배송상품</a>
+        </div>	
 
 	<!-- 접근가능페이지코드 -->		
 	<h1>오늘 할인해요!</h1>
