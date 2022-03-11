@@ -281,9 +281,17 @@
  
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
+			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+			  <a 
+			  class="nav-link" 
+			  onclick="document.getElementById('logout-form').submit();"
+			  >로그아웃</a>
+			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+				  <input type="hidden"/>
+			  </form:form>
+			  
 			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+				<sec:authorize access="hasRole('ROLE_ADMIN')">					
 					<!-- 로그아웃자리 -->
 					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
@@ -292,7 +300,7 @@
                 </sec:authorize>				
 			  <!-- 회원 -->
 			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+			    	
 					<!-- 로그아웃자리 -->
               		<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
               		<a class="nav-link" href="#">위시리스트</a>
@@ -335,7 +343,6 @@
               ><img
                 class="mr-2"
                 src="vegetable.png"
-                alt=""
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
@@ -343,7 +350,6 @@
               ><img
                 class="mr-2"
                 src="meat.png"
-                alt=""
                 style="width: 21px; height: 21px"
               />육류</a
             >
@@ -351,7 +357,6 @@
               ><img
                 class="mr-2"
                 src="rise.png"
-                alt=""
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
@@ -367,7 +372,6 @@
               ><img
                 class="mr-2"
                 src="cheese.png"
-                alt=""
                 style="width: 21px; height: 21px"
               />유제품</a
             >
@@ -375,25 +379,16 @@
               ><img
                 class="mr-2"
                 src="instant.png"
-                alt=""
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn"
-            >신상품</a
-          >
-          <a class="btn btn-light" href="#" role="button" id="categorybtn"
-            >베스트상품</a
-          >
-          <a class="btn btn-light" href="#" role="button" id="categorybtn"
-            >특가상품</a
-          >
-          <a class="btn btn-light" href="#" role="button" id="categorybtn"
-            >정기배송상품</a
-          >
+          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
