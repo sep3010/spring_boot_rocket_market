@@ -20,6 +20,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./css/chatbot-ui.css" />
+    <link rel="stylesheet" href="./css/font.css" />
 
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -29,30 +30,7 @@
     
     <style>
 
-      @font-face {
-          font-family: 'GmarketSansMedium';
-          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-          font-weight: normal;
-          font-style: normal;
-      }
-
-      @font-face {
-          font-family: 'GmarketSansLight';
-          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-          font-weight: normal;
-          font-style: normal;
-      }
-
-      @font-face {
-      font-family: 'Pretendard-Regular';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-     } 
-
-     *{
-      font-family: 'Pretendard-Regular';
-     }
+    
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -281,7 +259,9 @@
  
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.
+			<div style="align-self:center">
+			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+			</div>
 			  <a 
 			  class="nav-link" 
 			  onclick="document.getElementById('logout-form').submit();"
@@ -292,17 +272,13 @@
 			  
 			  <!-- 관리자 -->
 				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<!-- 로그아웃자리 -->
 					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
               		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-
                 </sec:authorize>				
 			  <!-- 회원 -->
 			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	
-					<!-- 로그아웃자리 -->
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
               		<a class="nav-link" href="#">위시리스트</a>
               		<a class="nav-link" href="#">장바구니</a>
                 </sec:authorize>
@@ -332,9 +308,9 @@
             <button class="dropbtn">
               <img
                 class="mr-2"
-                src="category.png"
+                src="./imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px"
+                style="width: 21px; height: 17px" text
               />전체 카테고리
             </button>
           </div>
@@ -342,28 +318,28 @@
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="vegetable.png"
+                src="./imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="meat.png"
+                src="./imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="rise.png"
+                src="./imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="snack.png"
+                src="./imgs/snack.png"
                 alt=""
                 style="width: 21px; height: 21px"
               />간식/과자</a
@@ -371,14 +347,14 @@
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="cheese.png"
+                src="./imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="instant.png"
+                src="./imgs/instant.png"
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
