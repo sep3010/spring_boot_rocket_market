@@ -27,7 +27,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class JoinOrderHistory {
+public class JoinOrderHistoryVO {
 
 	
 	// Member_Order Table

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
-import edu.kosmo.krm.joinVO.JoinOrderHistory;
+import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,9 +19,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderMapper ordermapper;
 
-
+	// 주문 내역 가져오는 코드
 	@Override
-	public List<JoinOrderHistory> order_History_getList(Criteria criteria, MemberVO memberVO) {
+	public List<JoinOrderHistoryVO> order_History_getList(Criteria criteria, MemberVO memberVO) {
 		log.info("order_History_getList()...");
 		return ordermapper.getOrderHistoryList(criteria, memberVO);
 	}
