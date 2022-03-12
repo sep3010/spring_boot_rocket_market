@@ -11,17 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import edu.kosmo.krm.oauth.CustomOAuth2UserService;
 import edu.kosmo.krm.security.MemberCustomDetailsService;
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Autowired
-	private MemberCustomDetailsService customDetailsService;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
@@ -34,14 +35,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginProcessingUrl("/login")
 			.defaultSuccessUrl("/")
 			.failureUrl("/loginForm")
-			.and().logout();
+			.and().logout()
+			.and()
+			.oauth2Login();
+		
 	}
 	
-
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 	
 	/*
 	@Override

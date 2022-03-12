@@ -4,61 +4,44 @@ package edu.kosmo.krm.vo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import edu.kosmo.krm.social.OAuth2UserInfo;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
 @Setter
-public class MemberCustomDetails implements UserDetails {
+@ToString
+public class MemberCustomDetails implements UserDetails, OAuth2User {
 	
-	
-	//=================================================================================================
-	@Setter(onMethod_ = @Autowired)
 	private MemberVO memberVO;
 	
-	
-	//=================================================================================================
-	private String password;
-	private final String username;
-	private final Collection<? extends GrantedAuthority> authorities;
-	private final boolean accountNonExpired;
-	private final boolean accountNonLocked;
-	private final boolean credentialsNonExpired;
-	private final boolean enabled;
+	// 소셜 로그인을 위한 처리
+	private OAuth2UserInfo oAuth2UserInfo;
 
 	
-	//생성자(Constructors)=======================================================================================
+	//생성자(Constructors)
+	// Form 로그인시 사용
 	public MemberCustomDetails(MemberVO memberVO) {
-		this(memberVO.getUsername(), memberVO.getPassword(), true, true, true, true, getAuth(memberVO));
 		this.memberVO = memberVO;
 	}
 	
-	public MemberCustomDetails(String username, String password, boolean enabled,
-			boolean accountNonExpired, boolean credentialsNonExpired,
-			boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-		
-		if (((username == null) || "".equals(username)) || (password == null)) {
-			throw new IllegalArgumentException(
-					"Cannot pass null or empty values to constructor");
-		}
-	
-		this.username = username;
-		this.password = password;
-		this.enabled = enabled; // true로 설정
-		this.accountNonExpired = accountNonExpired; // true로 설정
-		this.credentialsNonExpired = credentialsNonExpired; // true로 설정
-		this.accountNonLocked = accountNonLocked; // true로 설정
-		this.authorities = authorities;
-		
-	}	
+	//OAuth2User : OAuth2 로그인 시 사용
+    public MemberCustomDetails(MemberVO memberVO, OAuth2UserInfo oAuth2UserInfo) {
+        //CustomOAuth2UserService 참고
+    	this.memberVO = memberVO;
+        this.oAuth2UserInfo = oAuth2UserInfo;   
+    }
 	
 	
 	//유저가 가지고 있는 권한 목록
@@ -74,37 +57,48 @@ public class MemberCustomDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+		return getAuth(memberVO);
 	}
 
 	@Override
 	public String getPassword() {
-		return password;
+		return memberVO.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return username;
+		return memberVO.getUsername();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return accountNonExpired;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return accountNonLocked;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return credentialsNonExpired;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return enabled;
+		return true;
+	}
+	
+	/*OAuth2User 구현*/
+	@Override
+	public Map<String, Object> getAttributes() {
+		return oAuth2UserInfo.getAttributes();
+	}
+
+	@Override
+	public String getName() {
+		return oAuth2UserInfo.getProviderId();
 	}
 
 
