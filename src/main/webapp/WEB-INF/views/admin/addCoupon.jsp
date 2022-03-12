@@ -13,25 +13,20 @@
 
 </head>
 <body>
-	<h1>상품목록</h1>
-	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
-	<table width="500" cellpadding="0" cellspacing="0" border="1">
-	<tr>
-		<td>쿠폰번호</td>
-		<td>쿠폰명</td>
-		<td>할인율</td>
-	</tr>			
-	<c:forEach var="coupon" items="${couponList}">
-		<tr>
-			<td>${coupon.id}</td>
-			<td>${coupon.name}</td>
-			<td>${coupon.discount}</td>	
-		</tr>	
-	</c:forEach>
-
-	</table>
-	
-	<p><a href="${pageContext.request.contextPath}/admin/addCoupon"> 쿠폰등록 </a></p>
+	<h1>쿠폰등록</h1>
+   <form:form class="addCoupon" action="${pageContext.request.contextPath}/admin/insertCoupon" method="post">
+      <table width="950" cellpadding="0" cellspacing="0" border="1">
+         <tr>
+            <td>쿠폰명</td>
+            <td><input type="text" id="name" name="name"></td>
+         </tr>
+         <tr>
+            <td>할인율</td>
+            <td><input type="number" id="discount" name="discount" value="0">%</td>
+         </tr>
+      </table>
+      <button type="submit">상품 등록</button>
+   </form:form>
 
 </body>
 </html>

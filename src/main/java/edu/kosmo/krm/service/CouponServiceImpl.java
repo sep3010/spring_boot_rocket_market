@@ -26,5 +26,11 @@ public class CouponServiceImpl implements CouponService {
 		return couponMapper.getCouponList();
 	}
 
+	//쿠폰등록====================================================
+	public void insertCoupon(CouponVO couponVO) {
+		log.info("insertCoupon..");
+		couponMapper.insertCoupon(couponVO);
+	}
 
+	
 }
