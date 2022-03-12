@@ -5,15 +5,16 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.ReviewMapper">
 
-	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
+	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
 	
-		<result property="status" column="status" />
-		<result property="brand" column="brand" />
-		<result property="product_name" column="product_name" />
-		<result property="amount" column="amount" />
-		<result property="order_id" column="order_id" />	
-		<result property="order_date" column="order_date"/>
-		<result property="img_id" column="img_id" />
+		<result property="nickname" column="nickname" />
+		<result property="board_id" column="board_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="board_date" column="board_date" />	
+		<result property="hit" column="hit"/>
+		<result property="score" column="score" />
+		<result property="order_id" column="order_id" />
 	</resultMap>
 	
 	
@@ -23,38 +24,36 @@
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
                        SELECT
-							        MEMBER.NICKNAME,
-							        BOARD.ID AS board_id,
-							        BOARD.TITLE,
-							        BOARD.CONTENT,
-							        BOARD.BOARD_DATE,
-							        BOARD.HIT,
-							        BOARD.SCORE,
-							        MEMBER_ORDER.ID AS order_id
+							        M.NICKNAME,
+							        B.ID AS board_id,
+							        B.TITLE,
+							        B.CONTENT,
+							        B.BOARD_DATE,
+							        B.HIT,
+							        B.SCORE,
+							        MO.ID AS order_id
                          FROM
-							        MEMBER,
-							        BOARD,
-							        BOARD_CATEGORY,
-							        MEMBER_ORDER,
-							        ORDER_DETAIL,
-							        ORDER_DETAIL_BOARD,
-							        PRODUCT
-						WHERE
-						        MEMBER.ID = BOARD.MEMBER_ID
-						AND
-						        BOARD.BOARD_CATEGORY_ID = BOARD_CATEGORY.ID
-						AND
-						        MEMBER.ID = MEMBER_ORDER.MEMBER_ID
-						AND
-						        MEMBER_ORDER.ID = ORDER_DETAIL.ORDER_ID
-						AND
-						        ORDER_DETAIL.ID = ORDER_DETAIL_BOARD.ORDER_DETAIL_ID
-						AND
-						        PRODUCT.ID = ORDER_DETAIL.ORDER_ID
-						AND
-						        BOARD_CATEGORY_ID = 3
-						AND
-                              	MEMBER.ID = #{memberVO.id}
+							        MEMBER M,
+							        BOARD B,
+							        BOARD_CATEGORY BC,
+							        MEMBER_ORDER MO,
+							        ORDER_DETAIL OD,
+							        ORDER_DETAIL_BOARD ODB,
+							        PRODUCT P
+                         WHERE
+                                    M.ID = B.MEMBER_ID
+                            AND
+                                    B.BOARD_CATEGORY_ID = BC.ID
+                            AND
+                                    M.ID = MO.MEMBER_ID
+                            AND
+                                    MO.ID = OD.ORDER_ID
+                            AND
+                                    OD.ID = ODB.ORDER_DETAIL_ID
+                            AND
+                                    OD.PRODUCT_ID = P.ID
+                            AND
+                              		M.ID = #{memberVO.id}
               ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
          	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}
 	   ]]>
@@ -64,29 +63,27 @@
 	   <![CDATA[
 						SELECT count(*)
 						FROM
-							        MEMBER,
-							        BOARD,
-							        BOARD_CATEGORY,
-							        MEMBER_ORDER,
-							        ORDER_DETAIL,
-							        ORDER_DETAIL_BOARD,
-							        PRODUCT
-						WHERE
-						        MEMBER.ID = BOARD.MEMBER_ID
-						AND
-						        BOARD.BOARD_CATEGORY_ID = BOARD_CATEGORY.ID
-						AND
-						        MEMBER.ID = MEMBER_ORDER.MEMBER_ID
-						AND
-						        MEMBER_ORDER.ID = ORDER_DETAIL.ORDER_ID
-						AND
-						        ORDER_DETAIL.ID = ORDER_DETAIL_BOARD.ORDER_DETAIL_ID
-						AND
-						        PRODUCT.ID = ORDER_DETAIL.ORDER_ID
-						AND
-						        BOARD_CATEGORY_ID = 3
-						AND
-                              	MEMBER.ID = #{id}
+							        MEMBER M,
+							        BOARD B,
+							        BOARD_CATEGORY BC,
+							        MEMBER_ORDER MO,
+							        ORDER_DETAIL OD,
+							        ORDER_DETAIL_BOARD ODB,
+							        PRODUCT P
+                            WHERE
+                                    M.ID = B.MEMBER_ID
+                            AND
+                                    B.BOARD_CATEGORY_ID = BC.ID
+                            AND
+                                    M.ID = MO.MEMBER_ID
+                            AND
+                                    MO.ID = OD.ORDER_ID
+                            AND
+                                    OD.ID = ODB.ORDER_DETAIL_ID
+                            AND
+                                    OD.PRODUCT_ID = P.ID
+                            AND
+                              	M.ID = #{id}
 	   ]]>
 	</select>
 
