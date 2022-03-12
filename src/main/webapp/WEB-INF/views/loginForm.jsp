@@ -280,9 +280,10 @@
 	    <!-- 여기서 부터 로그인 -->
 
       <div class="container">
+      
+      <div class="d-flex justify-content-center h-100" id="loginbox">
       <c:url value="/login" var="loginUrl" />
 	  <form:form id="loginForm" action="${loginUrl}" method="POST">
-      <div class="d-flex justify-content-center h-100" id="loginbox">
 
       <div class="card">
       
@@ -294,7 +295,7 @@
 	    </c:if> --%>
 	    
         <div id="social_login">
-          <a href=""><img src="./icon/kakao_icon_color.png" onmouseover="this.src='./icon/kakao_icon.png'" onmouseout="this.src='./icon/kakao_icon_color.png'" alt="" id="kakao"></a>
+          <a href="${kakaoLoginURL}"><img src="./icon/kakao_icon_color.png" onmouseover="this.src='./icon/kakao_icon.png'" onmouseout="this.src='./icon/kakao_icon_color.png'" alt="" id="kakao"></a>
           <a href=""><img src="./icon/naver_icon_color.png" onmouseover="this.src='./icon/naver_icon.png'" onmouseout="this.src='./icon/naver_icon_color.png'" alt="" id="naver"></a>
           <a href=""><img src="./icon/google_icon_color.png" onmouseover="this.src='./icon/google_icon.png'" onmouseout="this.src='./icon/google_icon_color.png'" alt="" id="google"></a>
         </div>

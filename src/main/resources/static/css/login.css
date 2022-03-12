@@ -1,15 +1,10 @@
-
 #loginbox {
-  width: 400px;
   padding-top: 9rem;
   padding-bottom: 9rem;
 }
 
 .card {
-  flex: content;
   height: 370px;
-  margin-top: auto;
-  margin-bottom: auto;
   width: 400px;
   background-color: rgb(201, 176, 144);
 }
