@@ -188,5 +188,18 @@ public class ProductInfoController {
 		return view;
 	}
 	
-
+	/*유빈*/	
+	// ================= 상품 상세 페이지 =========================
+	//선택한 상품 상세 페이지로 이동
+	@GetMapping("/product/productView/{id}")
+	public ModelAndView productView(ProductVO productVO, ModelAndView view) {
+		log.info("productView()..상품번호 : " + productVO.getId());
+		
+		view.addObject("productInfo", productService.getProductInfo(productVO));
+		
+		view.setViewName("/product/productView");
+		return view;
+	}
+	
+	
 }

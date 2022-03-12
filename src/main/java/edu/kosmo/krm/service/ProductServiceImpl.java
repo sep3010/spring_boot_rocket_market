@@ -109,6 +109,13 @@ public class ProductServiceImpl implements ProductService {
 		log.info("getCategoryProductTotal..");
 		return productMapper.getCategoryProductTotalCount(type);
 	}
+	
+	//상품상세 (상품별 상세내용)========================================
+	@Override
+	public List<ProductVO> getProductInfo(ProductVO product) {
+		log.info("getProductInfo..");
+		return productMapper.getProductDetail(product);
+	}
 
 	// 상품과 상품이미지 등록하기
 	@Override
