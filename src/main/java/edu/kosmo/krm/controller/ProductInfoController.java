@@ -103,6 +103,7 @@ public class ProductInfoController {
 		view.addObject("name", "신상품");
 		view.addObject("productList", productService.getNewProductList(criteriaP));
 		int total = productService.getProductTotal();
+		view.addObject("productTotal", total); //상품총개수
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/list");
@@ -117,6 +118,7 @@ public class ProductInfoController {
 		view.addObject("name", "베스트상품");
 		view.addObject("productList", productService.getBestProductList(criteriaP));
 		int total = productService.getBestProductTotal();
+		view.addObject("productTotal", total); //상품총개수
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/list");
@@ -132,6 +134,7 @@ public class ProductInfoController {
 		view.addObject("name", "할인상품");
 		view.addObject("productList", productService.getSaleProductList(criteriaP));
 		int total = productService.getSaleProductTotal();
+		view.addObject("productTotal", total); //상품총개수
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/list");
@@ -147,6 +150,7 @@ public class ProductInfoController {
 		view.addObject("name", "정기배송상품");
 		view.addObject("productList", productService.getSubscribeProductList(criteriaP));
 		int total = productService.getSubscribeProductTotal();
+		view.addObject("productTotal", total); //상품총개수
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/list");
@@ -173,10 +177,11 @@ public class ProductInfoController {
 		
 		criteriaP.setEtype(type);
 
-		view.addObject("pageName","categoryProduct/"+etype);
-		view.addObject("name", type);
+		view.addObject("pageName","categoryProduct/"+etype);//페이징용url설정
+		view.addObject("name", type);//카테고리명
 		view.addObject("productList", productService.getCategoryProductList(criteriaP));
 		int total = productService.getCategoryProductTotal(type);
+		view.addObject("productTotal", total); //상품총개수
 		view.addObject("pageMaker", new PagePVO(criteriaP, total));
 		
 		view.setViewName("/product/categoryList");
