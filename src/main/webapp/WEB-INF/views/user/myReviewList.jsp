@@ -26,7 +26,9 @@
             <td>${review.content}</td>
             <td>${review.board_date}</td>
             <td>${review.hit}</td>    
-            <td>${review.score}</td>                   
+			<td>
+				<c:forEach var="score" items="${ scoreOptions }" varStatus="status" begin="1" end="${ review.score }">★</c:forEach>
+			</td>                  
          </tr>
       </c:forEach>
 

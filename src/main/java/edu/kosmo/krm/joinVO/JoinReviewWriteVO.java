@@ -1,12 +1,11 @@
 /* 
-== 주문 내역에서 사용할 Join 테이블들 ==
+== 리뷰에서 사용할 Join 테이블들 ==
         MEMBER,
         BOARD,
         BOARD_CATEGORY,
         MEMBER_ORDER,
         ORDER_DETAIL,
-        ORDER_DETAIL_BOARD,
-        PRODUCT
+        ORDER_DETAIL_BOARD
 */
 
 package edu.kosmo.krm.joinVO;
@@ -39,5 +38,5 @@ public class JoinReviewWriteVO {
 	private int score;
 	private int order_id;
 	private int order_detail_id;
-
+	private int order_detail_board_id;
 }

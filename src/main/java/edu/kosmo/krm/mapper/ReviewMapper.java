@@ -20,4 +20,7 @@ public interface ReviewMapper {
 	// 내가 쓴 리뷰 조회
 	List<JoinReviewWriteVO> getReviewList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	int getReviewTotalCount(MemberVO memberVO);
+	
+	// 리뷰 작성
+	JoinReviewWriteVO reviewInsert(JoinReviewWriteVO joinReviewWriteVO);
 }

@@ -55,9 +55,21 @@ public class ReviewController {
 		log.info("criteria:" + criteria);
 		log.info("total:" + total);
 		
+		Map scoreOptions = new HashMap();
+		scoreOptions.put(0, "☆☆☆☆☆");
+		scoreOptions.put(1, "★☆☆☆☆");
+		scoreOptions.put(2, "★★☆☆☆");
+		scoreOptions.put(3, "★★★☆☆");
+		scoreOptions.put(4, "★★★★☆");
+		scoreOptions.put(5, "★★★★★");
+		
+		view.addObject("scoreOptions", scoreOptions);
+		
 		view.setViewName("/user/myReviewList");
 		return view;
 	}
+	
+
 
 
 
