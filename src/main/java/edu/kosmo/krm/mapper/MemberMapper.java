@@ -35,11 +35,12 @@ public interface MemberMapper {
 	public void insertAuthority(int id);
 	
 	// 카카오 로그인시 강제 회원가입
-	public void insertKakaoMember(@Param("id") String id, 
-			@Param("nickname") String nikname, @Param("email") String email);
+	public void insertSocialMember(
+			@Param("user_id") String user_id, 
+			@Param("password") String password, 
+			@Param("nickname") String nikname,
+			@Param("email") String email, 
+			@Param("provider") String provider);
 	
-	// 카카오 로그인시 기존에 가입된 회원인지 확인하기
-	@Select("SELECT * FROM member WHERE username = #{id} AND platform_type = 'kakao'")
-	public MemberVO checkKakaoMember(String id);
-
+	
 }
