@@ -122,7 +122,7 @@
 
 <body>
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
-
+	<!-- 모달수정부탁 -->
 	<!-- ==================================== 상품 네비게이션 ====================================== -->
     <div class="body__container">
       <main>
