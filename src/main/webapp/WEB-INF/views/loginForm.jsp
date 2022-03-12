@@ -287,11 +287,11 @@
       <div class="card">
       
 	   <c:if test="${param.error != null}">
-	        <p>아이디와 비밀번호가 잘못되었습니다.</p>
+	        <p class="text-center mb-0">아이디와 비밀번호가 잘못되었습니다.</p>
 	    </c:if>
-	    <c:if test="${param.logout != null}">
-	        <p>로그아웃 하였습니다.</p>
-	    </c:if>
+	    <%-- <c:if test="${param.logout != null}">
+	        <p class="text-center mb-0">로그아웃 되었습니다.</p>
+	    </c:if> --%>
 	    
         <div id="social_login">
           <a href=""><img src="./icon/kakao_icon_color.png" onmouseover="this.src='./icon/kakao_icon.png'" onmouseout="this.src='./icon/kakao_icon_color.png'" alt="" id="kakao"></a>
