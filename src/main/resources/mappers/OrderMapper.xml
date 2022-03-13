@@ -5,7 +5,7 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.OrderMapper">
 
-	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinOrderHistory">
+	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
 	
 		<result property="status" column="status" />
 		<result property="brand" column="brand" />
@@ -18,37 +18,36 @@
 	
 	
 
-	<select id="getOrderHistoryList" resultType="edu.kosmo.krm.joinVO.JoinOrderHistory">
+	<select id="getOrderHistoryList" resultType="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
-                       SELECT
-                             MEMBER_ORDER.STATUS,
-                             PRODUCT.BRAND,
-                             PRODUCT.NAME as product_name,
-                             MEMBER_ORDER.ID as order_id,
-                             MEMBER_ORDER.AMOUNT,
-                             MEMBER_ORDER.ORDER_DATE,
-                             PRODUCT_IMAGE.ID as img_id
-                         FROM
-                                    MEMBER,
-                                    MEMBER_ORDER,
-                                    DELIVERY,
-                                    ORDER_DETAIL,
-                                    PRODUCT,
-                                    PRODUCT_IMAGE
-                        WHERE
-                                             MEMBER.ID = MEMBER_ORDER.MEMBER_ID
-                        AND
-                                             MEMBER_ORDER.ID = DELIVERY.ORDER_ID
-                        AND
-                                             MEMBER_ORDER.ID = ORDER_DETAIL.ORDER_ID
-                        AND
-                                             ORDER_DETAIL.PRODUCT_ID = PRODUCT.ID
-                        AND
-                                             PRODUCT.ID = PRODUCT_IMAGE.PRODUCT_ID
-                        AND
-                                             MEMBER.ID = #{memberVO.id}
+										SELECT
+										        MO.STATUS,
+										        P.BRAND,
+										        P.NAME as product_name,
+										        MO.ID as order_id,
+										        MO.AMOUNT,
+										        MO.ORDER_DATE,
+										        P.ID
+										FROM 
+										        MEMBER M,
+										        MEMBER_ORDER MO,
+										        ORDER_DETAIL OD,
+										        PRODUCT P,
+                                                PRODUCT_IMAGE PI
+										WHERE
+										        M.ID = MO.MEMBER_ID
+										AND
+										        MO.ID = OD.ORDER_ID
+										AND
+										        od.product_id = P.ID
+										AND
+                                                P.ID = PI.PRODUCT_ID
+                                        AND
+                                                PI.INFORMATION_TYPE = 'thumbnail'
+                                        AND
+                                           		M.ID = #{memberVO.id}
               ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
          	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}
 	   ]]>
@@ -58,24 +57,21 @@
 	   <![CDATA[
 						SELECT count(*)
 						FROM
-						        MEMBER,
-						        MEMBER_ORDER,
-						        DELIVERY,
-						        ORDER_DETAIL,
-						        PRODUCT,
-						        PRODUCT_IMAGE
+						        MEMBER M,
+						        MEMBER_ORDER MO,
+						        DELIVERY D,
+						        ORDER_DETAIL OD,
+						        PRODUCT P
 						WHERE
-						        MEMBER.ID = MEMBER_ORDER.MEMBER_ID
+						        M.ID = MO.MEMBER_ID
 						AND
-						        MEMBER_ORDER.ID = DELIVERY.ORDER_ID
+						        MO.ID = D.ORDER_ID
 						AND
-						        MEMBER_ORDER.ID = ORDER_DETAIL.ORDER_ID
+						        MO.ID = OD.ORDER_ID
 						AND
-						        ORDER_DETAIL.PRODUCT_ID = PRODUCT.ID
+						        OD.PRODUCT_ID = P.ID
 						AND
-						        PRODUCT.ID = PRODUCT_IMAGE.PRODUCT_ID				
-						AND
-						        MEMBER.ID = #{id}
+						        M.ID = #{id}
 	   ]]>
 	</select>
 

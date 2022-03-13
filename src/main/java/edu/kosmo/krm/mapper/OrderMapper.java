@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
-import edu.kosmo.krm.joinVO.JoinOrderHistory;
+import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
 
@@ -19,6 +19,6 @@ import edu.kosmo.krm.vo.ProductVO;
 public interface OrderMapper {
 
 	// 주문 내역 가져오는 코드 (with 페이징)
-	List<JoinOrderHistory> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
+	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	int getOrderHistoryTotalCount(MemberVO memberVO);
 }

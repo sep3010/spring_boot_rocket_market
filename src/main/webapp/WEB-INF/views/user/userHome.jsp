@@ -31,6 +31,7 @@
 		</form:form>	
 		<br><a href="${pageContext.request.contextPath}/user/UserUpdateForm">회원 정보 수정</a>
 		<br><a href="${pageContext.request.contextPath}/user/orderhistory">MY 쇼핑</a>
+		<br><a href="${pageContext.request.contextPath}/user/myReviewList">구매 후기</a>
 		
 	</sec:authorize>	
 </body>

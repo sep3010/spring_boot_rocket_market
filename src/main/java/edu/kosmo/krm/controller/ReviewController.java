@@ -1,5 +1,7 @@
 package edu.kosmo.krm.controller;
 
+// 리뷰 관리 컨트롤러 세윤
+
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
+import edu.kosmo.krm.service.ReviewService;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinReviewWriteVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
@@ -29,31 +33,43 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class OrderController {
+public class ReviewController {
 
 	@Autowired
-	private OrderService orderService;
+	private ReviewService reviewService;
 	 
-	// 주문 내역 리스트
-	@GetMapping("/user/orderhistory")
+	// 리뷰 내역 리스트
+	@GetMapping("/user/myReviewList")
 	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, Criteria criteria, ModelAndView view) {
 		log.info("orderhistory()..");
 		
 		// List 불러 오는 함수
-		List<JoinOrderHistoryVO> join = orderService.order_History_getList(criteria, memberCustomDetails.getMemberVO());
-		log.info("orderhistory().. 갯수" + join.size());
-		view.addObject("orderList", join); 
+		List<JoinReviewWriteVO> join = reviewService.review_getList(criteria, memberCustomDetails.getMemberVO());
+		log.info("review().. 갯수" + join.size());
+		view.addObject("reviewList", join); 
 		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
 
-		int total = orderService.order_History_getTotal(memberCustomDetails.getMemberVO());
+		int total = reviewService.review_getTotal(memberCustomDetails.getMemberVO());
 		log.info("=============total: " + total);
 		view.addObject("pageMaker", new PageVO(criteria, total));
 		log.info("criteria:" + criteria);
 		log.info("total:" + total);
 		
-		view.setViewName("/user/orderhistory");
+		Map scoreOptions = new HashMap();
+		scoreOptions.put(0, "☆☆☆☆☆");
+		scoreOptions.put(1, "★☆☆☆☆");
+		scoreOptions.put(2, "★★☆☆☆");
+		scoreOptions.put(3, "★★★☆☆");
+		scoreOptions.put(4, "★★★★☆");
+		scoreOptions.put(5, "★★★★★");
+		
+		view.addObject("scoreOptions", scoreOptions);
+		
+		view.setViewName("/user/myReviewList");
 		return view;
 	}
+	
+
 
 
 
