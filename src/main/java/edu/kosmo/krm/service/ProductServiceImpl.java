@@ -205,6 +205,12 @@ public class ProductServiceImpl implements ProductService {
 		} // end for()
 	
 	}
+	
+	// 하나의 상품 상세 내용(이미지 포함)
+	@Override
+	public ProductVO getProductContent(ProductVO productVO) {
+		return productMapper.getProductContent(productVO);
+	}
 
 
 }

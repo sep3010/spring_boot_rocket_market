@@ -22,9 +22,27 @@
 	$(document).ajaxSend(function(e, xhr, options){
 		xhr.setRequestHeader(header, token);
 	});
+	
 
 	$(document).ready(function(){
 		
+		
+		// 상품 상세 팝업 띄우기
+		$(".productPopUp").on("click", function(event){
+			event.preventDefault();
+			
+			let popURL = $(this).attr("href");
+			console.log("popURL : " + popURL);
+			
+			let popUp = window.open(popURL, '상품 상세',
+					'top=20, left=300, width=800px, height=700px, scrollbars=yes');
+			
+			
+			
+		});
+		
+		
+		// 재고량 수정하기
 		$(".updateStock").submit(function(event){
 			event.preventDefault();
 			
@@ -74,7 +92,8 @@
 		<td>상품종류</td>	
 		<td>배송타입</td>	
 		<td>재고량</td>
-		<td>판매상태(1=활성화,0=비활성화)</td>
+		<td>판매상태</td>
+		<!-- (1=활성화,0=비활성화) -->
 	</tr>			
 	<c:forEach var="product" items="${productList}">
 		<tr>
@@ -92,7 +111,7 @@
 
 			<td>
 				&nbsp;[ ${product.brand} ] 
-				<a class="productPopUP" href="product_view?id=${product.id}">${product.name}</a>
+				<a class="productPopUp" href="product_view/${product.id}">${product.name}</a>
 			</td>
 			<td>${product.discount} %</td>
 			<td><fmt:formatNumber value="${product.price}" pattern="#,###" /></td>
@@ -106,7 +125,14 @@
 				  <input type="submit" value="재고량수정">
 				</form:form>
 			</td>
-			<td>${product.enabled}</td>
+			<c:choose>
+				<c:when test="${product.enabled == 1}">
+					<td>판매중</td>
+				</c:when>
+				<c:otherwise>
+					<td>판매종료</td>
+				</c:otherwise>
+			</c:choose>
 		</tr>	
 
 	</c:forEach>

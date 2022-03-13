@@ -93,6 +93,14 @@ public class ProductInfoController {
 	}
 	
 	// 상품 상세 내역 띄우기(관리자)
+	@GetMapping("/admin/product_view/{id}")
+	public ModelAndView adminProductView(ModelAndView view, ProductVO productVO) {
+		log.info("adminProductView()..");
+		view.addObject("product", productService.getProductContent(productVO));
+
+		view.setViewName("/admin/product_view");
+		return view;
+	}
 	
 	
 	/*유빈*/	

@@ -48,19 +48,6 @@
          	) WHERE RNUM > (#{pageNum}-1) * #{amount}
       ]]>
 	</select>
-
-	<!-- 
-	<select id="getProductListWithPaging" parameterType="map"
-		resultType="edu.kosmo.krm.vo.ProductVO">
-	  <![CDATA[
-               SELECT * FROM (
-              SELECT ROWNUM AS RNUM, A.* FROM (
-                       SELECT * FROM product ORDER BY id DESC 
-             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
-         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
-      ]]>
-	</select>
-	-->
 	
 	<insert id="insertProduct">
 		INSERT INTO product VALUES (PRODUCT_SEQ.nextval, 
@@ -74,6 +61,17 @@
 			#{product_id}, #{extension}, #{name}, #{information_type},
 			#{path})
 	</insert>
+	
+	<select id="getProductContent" parameterType="map"
+		resultMap="productMap">
+	  SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image) i
+                        ON p.id = i.product_id WHERE p.id = #{id}
+	</select>
+	
+	
 	
 	<!-- 신상품목록 페이지에서 신상품 리스트와 해당상품 이미지 불러오기 -->
 	<select id="getNewProductList" parameterType="map"

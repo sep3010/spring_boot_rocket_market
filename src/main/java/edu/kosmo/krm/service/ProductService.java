@@ -21,6 +21,9 @@ public interface ProductService {
 	public void updateProductStock(ProductVO product); //재고량수정
 	public ProductVO getProduct(int id); //상품한개 정보
 	
+	// 상품상세 정보 가져오기
+	public ProductVO getProductContent(ProductVO productVO);
+	
 	/*유빈*/
 	// 베스트상품목록 (판매수량이 많은 순)==============================
 	public List<ProductVO> getBestProductList(CriteriaP criteria);

@@ -60,6 +60,9 @@ public interface ProductMapper {
 	// 상품 이미지 등록(관리자)
 	public void insertProductImage(ProductImageVO imageVO);
 	
+	// 상품 상세 정보 가져오기(관리자)
+	public ProductVO getProductContent(ProductVO productVO);
+	
 	
 	// 상품 정보 수정(관리자)
 	
