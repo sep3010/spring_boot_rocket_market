@@ -83,7 +83,8 @@
 	
 	<!-- /oauth2/authorization/{registrationId}에 요청이 들어오면, 
     스프링 시큐리티가 자동으로 해당 provider의 authorization-uri로 요청을 전달한다-->
-	<a href="/oauth2/authorization/kakao">카카오 로그인</a>
+	<a href="/oauth2/authorization/kakao">카카오 로그인</a><br/>
+	<a href="/oauth2/authorization/google">구글 로그인</a>
     
 
 </body>
