@@ -92,6 +92,9 @@ public class ProductInfoController {
 		return view;
 	}
 	
+	// 상품 상세 내역 띄우기(관리자)
+	
+	
 	/*유빈*/	
 	// ============== 상품 목록 페이지로 이동 ===================
 	//신상품

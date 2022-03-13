@@ -14,59 +14,68 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <script type="text/javascript">
-let idCheck = 0;
-
-$(document).ready(function(){
+	//csrf
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
 	
-	$("#idCheck").click(function() {
+	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+	
+	
+	let idCheck = 0;
+	
+	$(document).ready(function(){
 		
-		let userId = $("#username").val();
-		
-		let data = {
-			username : userId
-		};
-		
-		console.log(JSON.stringify(data));
-		
-		$.ajax({
-			type: "POST",
-			url : "${pageContext.request.contextPath}/addMemberForm/idCheck",
-			cache : false,
-			contentType:"application/json; charset='UTF-8'",
-			data : JSON.stringify(data),
-			success : function(jsonData){
-				if(jsonData.idCount > 0){
-					alert("아이디가 존재합니다! 다른 아이디를 입력해주세요");
-					$("#username").focus();
+		$("#idCheck").click(function() {
+			
+			let userId = $("#username").val();
+			
+			let data = {
+				username : userId
+			};
+			
+			console.log(JSON.stringify(data));
+			
+			$.ajax({
+				type: "POST",
+				url : "${pageContext.request.contextPath}/addMemberForm/idCheck",
+				cache : false,
+				contentType:"application/json; charset='UTF-8'",
+				data : JSON.stringify(data),
+				success : function(jsonData){
+					if(jsonData.idCount > 0){
+						alert("아이디가 존재합니다! 다른 아이디를 입력해주세요");
+						$("#username").focus();
+					}
+					else{
+						alert("사용가능한 아이디입니다.");
+						$("#password").focus();
+						idCheck = 1;
+					}
+				},
+				error : function(e){
+					console.log(e);
+					alert("error : " + e);
 				}
-				else{
-					alert("사용가능한 아이디입니다.");
-					$("#password").focus();
-					idCheck = 1;
-				}
-			},
-			error : function(e){
-				console.log(e);
-				alert("error : " + e);
-			}
-
-		}) //end ajax
+	
+			}) //end ajax
+			
+		}); //end #idCheck.click();
 		
-	}); //end #idCheck.click();
-	
-	
-}); //end ready()
+		
+	}); //end ready()
 
 
 </script>
 
-
-
-
-
 </head>
-
 
 <body>    
 	
