@@ -25,7 +25,7 @@
             <td><input type="number" id="discount" name="discount" value="0">%</td>
          </tr>
       </table>
-      <button type="submit">상품 등록</button>
+      <button type="submit">쿠폰 등록</button>
    </form:form>
 
 </body>
