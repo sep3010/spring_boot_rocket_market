@@ -253,7 +253,7 @@
             <div class="navbar-nav" id="topmenu_right">
             <sec:authorize access="isAnonymous()">
               <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
              </sec:authorize>
  

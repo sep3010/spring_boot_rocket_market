@@ -1,0 +1,47 @@
+#signup_box {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.card {
+  height: 690px;
+  width: 570px !important;
+  background-color: rgb(201, 176, 144);
+}
+
+input:focus {
+  outline: 0 0 0 5 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.input-group-prepend span {
+  width: 50px;
+  background-color: rgb(128, 101, 66);
+  color: black;
+  border: 0 !important;
+}
+
+.sign_btn {
+  color: black;
+  background-color: rgb(128, 101, 66);
+  width: 100px;
+}
+
+.sign_btn:hover {
+  color: black;
+  background-color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(66, 53, 35);
+}
+
+h3,
+h5 {
+  font-weight: bold;
+}

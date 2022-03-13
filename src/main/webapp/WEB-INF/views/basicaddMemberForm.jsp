@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,15 +12,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/font.css" />
-<link rel="stylesheet" href="./css/login.css" />
+<link rel="stylesheet" href="./css/basic_sign_up.css" />
 
-<!-- csrf meta tag -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-
-
-<title>ROCKET MARKET 로그인</title>
+<title>ROCKET MARKET 회원가입</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
     
@@ -112,41 +109,6 @@
       }
 </style>
 
-
-<script type="text/javascript">
-	// csrf
-   var token = $("meta[name='_csrf']").attr("content");
-   var header = $("meta[name='_csrf_header']").attr("content");
-   
- 	//Ajax spring security header..
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(header, token);
-	});
-
-</script> 
-
-<script>
-	window.onload = () => {
-		let loginForm = document.getElementById("loginForm")
-		
-		loginForm.onsubmit = () => {
-			if(document.getElementById("username").value == ""){
-				alert("아이디를 입력하세요");
-				return false;
-			}
-			else if(document.getElementById("password").value == ""){
-				alert("비밀번호를 입력하세요");
-				return false;
-			}
-			else{
-				alert("로그인 성공");
-				return true;
-			}
-		} //end onsubmit()
-	}//end window.onload
-
-</script>	
- 	
 </head>
 <body>
 
@@ -275,74 +237,39 @@
     </div>
 
 
-	
-<!-- ======================== 로그인 =========================== -->
+<!-- ======================== 회원가입 선택 =========================== -->
 
-      <div class="container">
-      
-      <div class="d-flex justify-content-center h-100" id="loginbox">
-      <c:url value="/login" var="loginUrl" />
-	  <form:form id="loginForm" action="${loginUrl}" method="POST">
 
-      <div class="card">
-      
-	   <c:if test="${param.error != null}">
-	        <p class="text-center mb-0">아이디와 비밀번호가 잘못되었습니다.</p>
-	    </c:if>
-	    <%-- <c:if test="${param.logout != null}">
-	        <p class="text-center mb-0">로그아웃 되었습니다.</p>
-	    </c:if> --%>
-	    
-        <div id="social_login">
-          <a href="${kakaoLoginURL}"><img src="./icon/kakao_icon_color.png" onmouseover="this.src='./icon/kakao_icon.png'" onmouseout="this.src='./icon/kakao_icon_color.png'" alt="" id="kakao"></a>
-          <a href=""><img src="./icon/naver_icon_color.png" onmouseover="this.src='./icon/naver_icon.png'" onmouseout="this.src='./icon/naver_icon_color.png'" alt="" id="naver"></a>
-          <a href=""><img src="./icon/google_icon_color.png" onmouseover="this.src='./icon/google_icon.png'" onmouseout="this.src='./icon/google_icon_color.png'" alt="" id="google"></a>
-        </div>
+<div class="container">
+
+
+      <center>
+          <div id="centerbox">
+          <h1>회원가입</h1>
+
+          <h4>♥ 회원 가입 후 혜택을 누리세요! ♥</h4>
+          
+          <div class="card" id="joinbox">
+             <a href="${pageContext.request.contextPath}/addMemberForm"><img src="./imgs/public_join.png" class="card-img-top" alt="..." id="public_join"></a>
+             <br/>
+             <a href="#"><img src="./imgs/kakao_join.png" class="card-img-top" alt="..." id="kakao_join"></a>
+             <a href="#"><img src="./imgs/naver_join.png" class="card-img-top" alt="..." id="naver_join"></a>
+             <a href="#"><img src="./imgs/google_join.png" class="card-img-top" alt="..." id="google_join"></a>
+          </div>
+
+          <div><h5>기존 회원이시라면 ><a href="${pageContext.request.contextPath}/loginForm"> 로그인 하기</a></h5></div>
+
         
-        <div class="card-header" style="color: white;">
-          <h3>로그인</h3>
-		</div>
-		
-        <div class="card-body">
-         
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <img src="./icon/id_icon.png" alt="" style="width: 20px; height: 20px;">
-                 </span>
-              </div><!-- input-group-prepend -->
-              <input type="text" id="username" name="username" class="form-control" placeholder="ID" />
-            </div><!-- input-group form-group -->
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <img src="./icon/pw_icon.png" alt="" style="width: 25px; height: 25px;">
-                  </span>
-              </div>
-              <input type="password" id="password" name="password" class="form-control" placeholder="PW" />
-            </div><!-- input-group form-group -->
-            <!--<div class="row align-items-center remember">
-              <input type="checkbox" />Remember Me
-            </div>  기억하는거-->
-            <div class="form-group">
-              <input
-                type="submit"
-                value="Login"
-                class="btn float-right login_btn"
-              />
-            </div>
-      
-        </div>
-        <div class="card-footer">
-          <small style="color: white;"><SPAN>아직 가입을 안하셨다면 👉 <a href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a></SPAN></small>
-        </div>
 
-      </div>  
-      </div><!-- loginbox -->
+        </div> <!-- centerbox -->
+      </center>
 
-      	</form:form>
-    </div><!-- container -->
-    <!-- ======================== 하단 메뉴 =========================== -->
+
+    </div> <!-- container -->
+   
+
+
+<!-- ======================== 하단 메뉴 =========================== -->
 	<hr class="m-0" />
     <div class="container">
       <footer class="pt-0">
