@@ -94,7 +94,7 @@ public class MemberInfoController {
 	}
 
 	// 회원 정보 수정 페이지 (user) - VIEW
-	@GetMapping("/user/UserUpdateForm")
+	@GetMapping("/user/userUpdateForm")
 	public ModelAndView UserUpdateForm(ModelAndView view, Authentication authentication, MemberVO memberVO,
 			Principal principal) {
 
@@ -110,7 +110,7 @@ public class MemberInfoController {
 		System.out.println(principal);
 
 		view.addObject("myPage_view", principal.getName());
-		view.setViewName("/user/UserUpdateForm");
+		view.setViewName("/user/userUpdateForm");
 		return view;
 	}
 
