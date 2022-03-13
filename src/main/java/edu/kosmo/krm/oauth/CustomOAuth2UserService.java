@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.mapper.MemberMapper;
+import edu.kosmo.krm.social.GoogleUserInfo;
 import edu.kosmo.krm.social.KakaoUserInfo;
 import edu.kosmo.krm.social.OAuth2UserInfo;
 import edu.kosmo.krm.vo.MemberCustomDetails;
@@ -43,6 +44,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
 			log.info("kakao : " + oAuth2UserInfo);
 		}
+		else if(provider.equals("google")) {
+			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+			log.info("google : " + oAuth2UserInfo);
+		}
 		
 		String providerId = oAuth2UserInfo.getProviderId();
 		// 회원가입 처리나 있는 회원인지 확인하기 위한 아이디 생성해서 DB에 넣어주기
@@ -56,12 +61,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		
 		// 아이디로 DB에 해당 아이디로 검색해서 가져오기
 		MemberVO memberVO = memberMapper.getMember(user_id);
-		// 여기서 계속 java.lang.NullPointerException: null 에러 발생하며 아래의 if문을 타지 않음.
-		// 위의 로그는 정상적으로 찍힘
-		
+
 		// DB에 없는 사용자라면 회원가입처리
 		if(memberVO == null) {
-			log.info("if문 실행!");
 			// 임의의 비밀번호를 생성
 			String uuid = UUID.randomUUID().toString();
 			String password = passwordEncoder.encode(uuid);
