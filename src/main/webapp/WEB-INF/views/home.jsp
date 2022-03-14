@@ -32,13 +32,6 @@
 		</p>
 	</sec:authorize>	
 	
-	<!-- 카카오 로그인을 했다면 -->
-<!-- <c:if test="${not empty kakaoMember}">
-	 	<p>${kakaoMember.kakao_account.profile.nickname}님</p>
-		<a href="/kakao/logout">로그아웃</a>
-	</c:if>	
-	-->
-	
 		<!-- ============== 상품목록페이지 이동 ================ -->
         <div id="categorymenu">
           <a class="btn btn-light" 
@@ -99,8 +92,8 @@
 			<td>상품이름</td>
 			<td>가격</td>
 		</tr>	
-	  	<c:forEach var="newList" items="${newList}">
-		  <tr>
+	  	<c:forEach var="newList" items="${newList}" begin="0" end="3">
+		<tr>
 			<td>${newList.name}</td>
 			<td>${newList.price}</td>
 		</tr>	

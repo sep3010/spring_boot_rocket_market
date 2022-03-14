@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,6 +98,16 @@ public class ProductInfoController {
 		view.addObject("product", productService.getProductContent(productVO));
 
 		view.setViewName("/admin/product_view");
+		return view;
+	}
+	
+	// 상품 수정 페이지(관리자)
+	@GetMapping("/admin/modifyView/{id}")
+	public ModelAndView productModifyView(ModelAndView view, ProductVO productVO) {
+		log.info("productModifyView()..");
+		view.addObject("product", productService.getProductContent(productVO));
+
+		view.setViewName("/admin/addProduct");
 		return view;
 	}
 	

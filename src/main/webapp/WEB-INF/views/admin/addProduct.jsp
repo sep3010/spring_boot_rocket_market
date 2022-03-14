@@ -31,25 +31,133 @@
 		
 		return inputTag;
 	}
+	
+	// 수정 페이지로 접근시 input 태그에 value를 넣어주기 위한 설정
+	function makeInputValue(){
+		
+		// 변수 설정
+		let id = '${product.id}';
+		let name = '${product.name}';
+		let price = '${product.price}';
+		let capacity = '${product.capacity}';
+		let brand = '${product.brand}';
+		let stock = '${product.stock}';
+		let unit = '${product.unit}';
+		let type = '${product.type}';
+		let packaging = '${product.packaging}';
+		let discount = '${product.discount}';
+		let delivery_type = '${product.delivery_type}';
+		let enabled	= '${product.enabled}';
+		let main;
+		let info;
+		let detail;
+		<c:forEach var="image" items="${product.productImages}">
+			<c:if test="${image.information_type == 'main'}">
+				main = '${image.path}';
+			</c:if>
+			<c:if test="${image.information_type == 'info'}">
+				info = '${image.path}';
+			</c:if>
+			<c:if test="${image.information_type == 'detail'}">
+				detail = '${image.path}';
+			</c:if>
+		</c:forEach>
+		
+		// 동적으로 태그 만들어주기
+		let inputId = '<tr><td>상품번호</td><td>' + id + '</td></tr>';
+		$("#table").prepend(inputId);
+		
+		 $("#name").attr("value", name);
+		 $("#price").attr("value", price);
+		 $("#brand").attr("value", brand);
+		 $("#stock").attr("value", stock);
+		 $("#discount").attr("value", discount);
+		 
+		 // capacity에서 숫자만 분리하기
+		 let capacity_part1 = capacity.replace(/[^0-9]/g,'');
+		 console.log("capacity_part1 : " + capacity_part1);
+		 $("#capacity_part1").attr("value", capacity_part1);
+		 
+		// capacity에서 문자만 분리하기
+		 let capacity_part2 = capacity.replace(/[0-9]/g,'');
+		 console.log("capacity_part2 : " + capacity_part2);
+		 $("#capacity_part2").val(capacity_part2).prop("selected", true);
+		 
+		 
+		 
+		// capacity에서 숫자만 분리하기
+		 let unit_part1 = unit.replace(/[^0-9]/g,'');
+		 console.log("unit_part1 : " + unit_part1);
+		 $("#unit_part1").attr("value", unit_part1);
+		 
+		// capacity에서 문자만 분리하기
+		 let unit_part2 = unit.replace(/[0-9]/g,'');
+		 console.log("unit_part2 : " + unit_part2);
+		 $("#unit_part2").val(unit_part2).prop("selected", true);
+		
+		 
+		 $("#type").val(type).prop("selected", true);
+		 
+		 
+		 $("input:radio[name='packaging']").prop('checked', false);
+		 $("input:radio[name='packaging']").val(packaging).prop('checked', true);
+		 
+		 
+		 		 
+		 $("input:radio[name='delivery_type']").prop('checked', false);
+		 $("input:radio[name='delivery_type']").val(delivery_type).prop('checked', true);
+		
+		 
+		 
+		 $("#mainImage").empty();
+		 $("#mainImage").prepend("<img src=" + main + ">");
+		 $("#mainImage").append("<span>X</span>");
+		 
+		 $("#infoImage").empty();
+		 $("#infoImage").prepend("<img src=" + info + ">");
+		 $("#infoImage").append("<span>X</span>");
+		 
+		 $("#detailImage").empty();
+		 $("#detailImage").prepend("<img src=" + detail + ">");
+		 $("#detailImage").append("<span>X</span>");
+		 
+
+		return console.log("수정 페이지 로딩 완료");
+		
+	}
+	
 
 	$(document).ready(function(){
 		// 페이지 접속시 상품명 입력칸에 커서를 위치시킨다.
 		$("#name").focus();
 		
+		// 수정 페이지로 접근시 input 태그에 value를 넣어주기 위한 설정
+		if(${product != null}){
+			
+			let makeModifyPage = makeInputValue();
+			
+			// 상품 수정 경로로 바꾸기
+			$(".addProduct").attr("action", "${pageContext.request.contextPath}/admin/modifyProduct");
+			$("#submit").remove();
+			$(".link").remove();
+			// 수정 버튼 만들어주기
+			$("#table").after('<input id=modify type=submit value=수정하기>');
+			
+		}
+		
+		$("#submit").on('click', function(){
+			
+			
+		});
+			
+		
 		$("#submit").on('click', function(){
 			
 			// DB에 들어갈 capacity(용량)과 unit(판매단위)를 
 			// 하나의 문자로 만들어 주기위한 작업		
-			let capacity;
-			if($("#capacity_part3").val() == 0){
-				capacity = $("#capacity_part1").val() + $("#capacity_part2").val();
-			}
-			else{
-				capacity = $("#capacity_part1").val() + $("#capacity_part2").val() 
-							+ " x " + $("#capacity_part3").val() + "개입";  
-			}
+			let capacity = $("#capacity_part1").val() + $("#capacity_part2").val();
 			
-						
+							
 			let unit;
 			if($("#unit_part2").val() == '기타'){
 				unit = $("#unit_part1").val()
@@ -86,7 +194,7 @@
 	<form:form class="addProduct" 
 		action="${pageContext.request.contextPath}/admin/insertProduct" 
 			enctype="multipart/form-data" method="post">
-		<table width="950" cellpadding="0" cellspacing="0" border="1">
+		<table id="table" width="950" cellpadding="0" cellspacing="0" border="1">
 			<tr>
 				<td>상품명</td>
 				<td><input type="text" id="name" name="name"></td>
@@ -106,9 +214,6 @@
 							<option value="ml">ml</option>
 							<option value="L">L</option>
 						</select>
-					</p>
-					<p>
-						<input type="number" id="capacity_part3" name="capacity_part3" value="0">개입
 					</p>
 				</td>
 			</tr>
@@ -131,18 +236,17 @@
 						<option value="개">개</option>
 						<option value="병">병</option>
 						<option value="통">통</option>
-						<option value="기타">직접입력</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>상품종류</td>
 				<td>
-					<select name="type">
+					<select id="type" name="type">
 						<option value="채소/과일">채소/과일</option>
 						<option value="국/반찬">국/반찬</option>
 						<option value="육류">육류</option>
-						<option value="간식/과자">간식/과자</option>
+						<option value="간식/과자">간식/과자</oㅣption>
 						<option value="유제품">유제품</option>
 						<option value="즉석식품">즉석식품</option>
 					</select>
@@ -164,22 +268,21 @@
 				<td>배송타입</td>
 				<td>
 					<input type="radio" name="delivery_type" value="단순" checked="checked">단순
-					<input type="radio" name="delivery_type" value="단기">단기
 					<input type="radio" name="delivery_type" value="정기">정기
 				</td>
 			</tr>
 			<tr>
 				<!-- accept="image/*"는 이미지 형태의 파일만 허용하겠다는 의미 -->
 				<td>상품 대표 이미지</td>
-				<td><input type="file" id="main" name="main" accept="image/*"></td>
+				<td id="mainImage"><input type="file" id="main" name="main" accept="image/*"></td>
 			</tr>
 			<tr>
 				<td>상품정보 이미지</td>
-				<td><input type="file" id="info" name="info" accept="image/*"></td>
+				<td id="infoImage"><input type="file" id="info" name="info" accept="image/*"></td>
 			</tr>
 			<tr>
 				<td>상품상세 이미지</td>
-				<td><input type="file" id="detail" name="detail" accept="image/*"></td>
+				<td id="detailImage"><input type="file" id="detail" name="detail" accept="image/*"></td>
 			</tr>					
 
 		</table>
@@ -187,9 +290,8 @@
 	</form:form>
 	
 	
-
-	<p><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
-	<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품목록</a></p>
+	<p class="link"><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
+	<p class="link"><a href="${pageContext.request.contextPath}/admin/productManagement">상품목록</a></p>
 
 </body>
 </html>

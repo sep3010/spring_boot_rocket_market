@@ -31,5 +31,4 @@ public class ProductImageVO {
 	private String information_type;
 	private String path;
 
-
 }
