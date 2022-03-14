@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements Serializable {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
 	@Override
