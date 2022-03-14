@@ -38,7 +38,10 @@
 		<p><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></p>
 
 		<!--세윤: 회원리스트-->
-		<br><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a>
+		<p><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a></p>
+		
+		<!--용원: 쿠폰관리-->
+		<p><a href="${pageContext.request.contextPath}/admin/couponManagement">쿠폰관리</a></p>
 	</sec:authorize>	
 </body>
 </html>

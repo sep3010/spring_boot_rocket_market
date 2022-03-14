@@ -18,7 +18,7 @@
 
 <title>ROCKET MARKET 회원가입</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     
 <style>
@@ -159,7 +159,7 @@
 		<!-- ======================== 로고 =========================== -->
         <center>
         	<div id="logo" style="width: 12rem">
-              <img src="./imgs/locketlogo.png" class="card-img-top" alt="..." />
+              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
 	</nav>
@@ -172,12 +172,12 @@
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
-            <button class="dropbtn">
+            <button class="dropbtn d-flex justify-content-start">
               <img
-                class="mr-2"
+                class="mr-2 mt-1"
                 src="./imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px" text
+                style="width: 21px; height: 17px"
               />전체 카테고리
             </button>
           </div>
@@ -185,28 +185,28 @@
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/vegetable.png"
+                src="${pageContext.request.contextPath}/imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/meat.png"
+                src="${pageContext.request.contextPath}/imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/rise.png"
+                src="${pageContext.request.contextPath}/imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/snack.png"
+                src="${pageContext.request.contextPath}/imgs/snack.png"
                 alt=""
                 style="width: 21px; height: 21px"
               />간식/과자</a
@@ -214,24 +214,24 @@
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/cheese.png"
+                src="${pageContext.request.contextPath}/imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/instant.png"
+                src="${pageContext.request.contextPath}/imgs/instant.png"
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
@@ -252,9 +252,9 @@
           <div class="card" id="joinbox">
              <a href="${pageContext.request.contextPath}/addMemberForm"><img src="./imgs/public_join.png" class="card-img-top" alt="..." id="public_join"></a>
              <br/>
-             <a href="#"><img src="./imgs/kakao_join.png" class="card-img-top" alt="..." id="kakao_join"></a>
-             <a href="#"><img src="./imgs/naver_join.png" class="card-img-top" alt="..." id="naver_join"></a>
-             <a href="#"><img src="./imgs/google_join.png" class="card-img-top" alt="..." id="google_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/kakao_join.png" class="card-img-top" alt="..." id="kakao_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/naver_join.png" class="card-img-top" alt="..." id="naver_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/google_join.png" class="card-img-top" alt="..." id="google_join"></a>
           </div>
 
           <div><h5>기존 회원이시라면 ><a href="${pageContext.request.contextPath}/loginForm"> 로그인 하기</a></h5></div>
@@ -293,7 +293,7 @@
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>

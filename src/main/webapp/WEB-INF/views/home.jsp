@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -21,16 +22,14 @@
     />
     <link rel="stylesheet" href="./css/chatbot-ui.css" />
     <link rel="stylesheet" href="./css/font.css" />
-
+          
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
-
-
-    
-    <style>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
     
+<style>
+
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -216,6 +215,7 @@
 
     </script>
   </head>
+  
 <body>
 
 <header>
@@ -291,80 +291,80 @@
 		<!-- ======================== 로고 =========================== -->
         <center>
         	<div id="logo" style="width: 12rem">
-              <img src="./imgs/locketlogo.png" class="card-img-top" alt="..." />
+              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
 	</nav>
   </div><!-- container -->
       
 </header>
-
-
-	<!-- ======================== 제품 메뉴 =========================== -->
+    
+<!-- ======================== 하단 메뉴 =========================== -->
+	
 	<div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
-            <button class="dropbtn">
+            <button class="dropbtn d-flex justify-content-start">
               <img
-                class="mr-2"
+                class="mr-2 mt-1"
                 src="./imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px" text
+                style="width: 21px; height: 17px"
               />전체 카테고리
             </button>
           </div>
           <div class="dropdown-content">
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/vegetable"
               ><img
                 class="mr-2"
-                src="./imgs/vegetable.png"
+                src="${pageContext.request.contextPath}/imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/meat"
               ><img
                 class="mr-2"
-                src="./imgs/meat.png"
+                src="${pageContext.request.contextPath}/imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/side"
               ><img
                 class="mr-2"
-                src="./imgs/rise.png"
+                src="${pageContext.request.contextPath}/imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/snack"
               ><img
                 class="mr-2"
-                src="./imgs/snack.png"
+                src="${pageContext.request.contextPath}/imgs/snack.png"
                 alt=""
                 style="width: 21px; height: 21px"
               />간식/과자</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/dairy"
               ><img
                 class="mr-2"
-                src="./imgs/cheese.png"
+                src="${pageContext.request.contextPath}/imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/instant"
               ><img
                 class="mr-2"
-                src="./imgs/instant.png"
+                src="${pageContext.request.contextPath}/imgs/instant.png"
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
@@ -377,13 +377,13 @@
     >
       <div class="carousel-inner">
         <div class="carousel-item active" data-interval="10000">
-          <img src="./imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
         </div>
         <div class="carousel-item" data-interval="2000">
-          <img src="./imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
         </div>
         <div class="carousel-item">
-          <img src="./imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
         </div>
       </div>
       <button
@@ -460,7 +460,8 @@
         </div>
       </div>
       
-
+	
+	      
 
 	  <!-- ======================== 메인페이지 상품표시 =========================== -->
       <div class="container pt-5">
@@ -470,7 +471,9 @@
         <div class="card-deck pb-5">
           <c:forEach var="discount" items="${discountList}" varStatus="status" begin="0" end="3">
           <div class="card">
-          	<a href=""><img src="파스타.jpg" class="card-img-top" alt="..." /></a>
+          	<c:forEach var="image" items="${discount.productImages}">
+             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
+             </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${discount.brand}]${discount.name}</h6>
               <p class="card-text">
@@ -490,7 +493,9 @@
         <div class="card-deck pb-5">
           <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
           <div class="card">
-             <a href=""><img src="파스타.jpg" class="card-img-top" alt="..." /></a>
+          	<c:forEach var="image" items="${newList.productImages}">
+             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
+             </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
               <p class="card-text">
@@ -508,7 +513,9 @@
         <div class="card-deck pb-5">
           <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
           <div class="card">
-             <a href=""><img src="파스타.jpg" class="card-img-top" alt="..." /></a>
+             <c:forEach var="image" items="${newList.productImages}">
+             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
+             </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
               <p class="card-text">
@@ -549,7 +556,7 @@
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>

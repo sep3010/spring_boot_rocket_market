@@ -12,13 +12,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/font.css" />
 <link rel="stylesheet" href="./css/sign_up.css" />
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <title>ROCKET MARKET 회원가입</title>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
+
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     
 <style>
@@ -111,6 +113,16 @@
 
 
 <script type="text/javascript">
+	//csrf
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+
+
 let idCheck = 0;
 
 $(document).ready(function(){
@@ -156,23 +168,6 @@ $(document).ready(function(){
 
 
 </script>
-
-
- <script type="text/javascript">
-    function test() {
-      var p1 = document.getElementById('password').value;
-      var p2 = document.getElementById('passwordcheck').value;
-      if( p1 != p2 ) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else{
-        alert("비밀번호가 일치합니다");
-        return true;
-      }
-
-    }
-  </script>
-
 
 
 </head>
@@ -225,7 +220,7 @@ $(document).ready(function(){
 		<!-- ======================== 로고 =========================== -->
         <center>
         	<div id="logo" style="width: 12rem">
-              <img src="./imgs/locketlogo.png" class="card-img-top" alt="..." />
+              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
 	</nav>
@@ -240,12 +235,12 @@ $(document).ready(function(){
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
-            <button class="dropbtn">
+            <button class="dropbtn d-flex justify-content-start">
               <img
-                class="mr-2"
+                class="mr-2 mt-1"
                 src="./imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px" text
+                style="width: 21px; height: 17px"
               />전체 카테고리
             </button>
           </div>
@@ -253,28 +248,28 @@ $(document).ready(function(){
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/vegetable.png"
+                src="${pageContext.request.contextPath}/imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/meat.png"
+                src="${pageContext.request.contextPath}/imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/rise.png"
+                src="${pageContext.request.contextPath}/imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/snack.png"
+                src="${pageContext.request.contextPath}/imgs/snack.png"
                 alt=""
                 style="width: 21px; height: 21px"
               />간식/과자</a
@@ -282,14 +277,14 @@ $(document).ready(function(){
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/cheese.png"
+                src="${pageContext.request.contextPath}/imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
             <a class="dropdown-item" href="#"
               ><img
                 class="mr-2"
-                src="./imgs/instant.png"
+                src="${pageContext.request.contextPath}/imgs/instant.png"
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
@@ -311,18 +306,16 @@ $(document).ready(function(){
 <div class="container">
 
       <div class="d-flex justify-content-center h-100" id="signup_box">
-
+	<c:url value="/addMember" var="addUMemberUrl" />
+	<form:form name="addForm" action="${addUMemberUrl}" method="POST">
       <div class="card">
         <div class="card-header" style="color: white;">
           <h3 class="title">회원가입</h3>
         </div>
         <div class="card-body">
-	<c:url value="/addMember" var="addUMemberUrl" />
-	<form:form name="addForm" action="${addUMemberUrl}" method="POST">
-
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/id_icon.png" alt="" style="width: 20px; height: 20px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/id_icon.png" alt="" style="width: 20px; height: 20px;"></span>
 		</div>
 		<input type="text" id="username" name="username" class="form-control" placeholder="ID" />
 		<input type="button" id="idCheck" value="아이디중복확인"/>
@@ -330,63 +323,63 @@ $(document).ready(function(){
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="password" id="password" name="passwordcheck" class="form-control" placeholder="비밀번호 확인" />
 		</div>
    
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/star_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/star_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="text" name="nickname" class="form-control" placeholder="닉네입" />
 		</div>   
    
    		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/name_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/name_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="text" id="text" name="name" class="form-control" placeholder="이름" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/day_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/day_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="date" name="birth" class="form-control" placeholder="생년월일" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/phone_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/phone_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="tel" name="phone" class="form-control" placeholder="연락처" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/email_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/email_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="email" name="email" class="form-control" placeholder="이메일" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/map_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/map_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="text" name="postcode" class="form-control" placeholder="우편번호" />
 		</div>
 		
 		<div class="input-group form-group">
 		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="./icon/home_icon.png" alt="" style="width: 25px; height: 25px;"></span>
+		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/home_icon.png" alt="" style="width: 25px; height: 25px;"></span>
 		</div>
 		<input type="text" name="address" class="form-control" placeholder="주소" />
 		</div>
@@ -400,14 +393,14 @@ $(document).ready(function(){
         />
         </div>
         
-          </form:form>
+		</form:form>
         </div><!-- card-body -->
         <div class="card-footer">
           <h5 style="color: white;"><SPAN>기존 회원이시라면 👉<a href="${pageContext.request.contextPath}/loginForm">로그인 하기</a></SPAN></h5>
         </div>
 
       </div><!-- card -->
-
+    
     </div><!-- container -->
 
 
@@ -435,7 +428,7 @@ $(document).ready(function(){
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>
@@ -452,4 +445,8 @@ $(document).ready(function(){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
     -->
   </body>
+  
+  
+  
+  
 </html>

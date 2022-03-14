@@ -4,9 +4,15 @@
 }
 
 .card {
-  height: 690px;
+  height: 740px;
   width: 570px !important;
   background-color: rgb(201, 176, 144);
+  display:flex;
+}
+
+.card-footer{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 input:focus {
@@ -44,4 +50,8 @@ a:hover {
 h3,
 h5 {
   font-weight: bold;
+}
+
+h5{
+	margin:0;
 }

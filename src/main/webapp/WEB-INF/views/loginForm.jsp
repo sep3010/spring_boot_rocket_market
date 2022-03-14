@@ -21,7 +21,7 @@
 
 <title>ROCKET MARKET 로그인</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     
 <style>
@@ -150,6 +150,7 @@
 </head>
 <body>
 
+
 <header>
 	<!-- ======================== 배너 =========================== -->
 	<div>
@@ -157,6 +158,7 @@
           <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
         </nav>
     </div>
+
 
 	<!-- ======================== 상단 메뉴 =========================== -->
     <div class="container pb-2">
@@ -197,7 +199,7 @@
 		<!-- ======================== 로고 =========================== -->
         <center>
         	<div id="logo" style="width: 12rem">
-              <img src="./imgs/locketlogo.png" class="card-img-top" alt="..." />
+              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
 	</nav>
@@ -205,75 +207,75 @@
       
 </header>
 
-<!-- ======================== 제품 메뉴 =========================== -->
+<!-- ======================== 하단 메뉴 =========================== -->
+	
 	<div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
-            <button class="dropbtn">
+            <button class="dropbtn d-flex justify-content-start">
               <img
-                class="mr-2"
+                class="mr-2 mt-1"
                 src="./imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px" text
+                style="width: 21px; height: 17px"
               />전체 카테고리
             </button>
           </div>
           <div class="dropdown-content">
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/vegetable"
               ><img
                 class="mr-2"
-                src="./imgs/vegetable.png"
+                src="${pageContext.request.contextPath}/imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/meat"
               ><img
                 class="mr-2"
-                src="./imgs/meat.png"
+                src="${pageContext.request.contextPath}/imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/side"
               ><img
                 class="mr-2"
-                src="./imgs/rise.png"
+                src="${pageContext.request.contextPath}/imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/snack"
               ><img
                 class="mr-2"
-                src="./imgs/snack.png"
+                src="${pageContext.request.contextPath}/imgs/snack.png"
                 alt=""
                 style="width: 21px; height: 21px"
               />간식/과자</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/dairy"
               ><img
                 class="mr-2"
-                src="./imgs/cheese.png"
+                src="${pageContext.request.contextPath}/imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/instant"
               ><img
                 class="mr-2"
-                src="./imgs/instant.png"
+                src="${pageContext.request.contextPath}/imgs/instant.png"
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
-
 
 	
 <!-- ======================== 로그인 =========================== -->
@@ -289,14 +291,14 @@
 	   <c:if test="${param.error != null}">
 	        <p class="text-center mb-0">아이디와 비밀번호가 잘못되었습니다.</p>
 	    </c:if>
-	    <%-- <c:if test="${param.logout != null}">
+	    <c:if test="${param.logout != null}">
 	        <p class="text-center mb-0">로그아웃 되었습니다.</p>
-	    </c:if> --%>
+	    </c:if>
 	    
         <div id="social_login">
-          <a href="${kakaoLoginURL}"><img src="./icon/kakao_icon_color.png" onmouseover="this.src='./icon/kakao_icon.png'" onmouseout="this.src='./icon/kakao_icon_color.png'" alt="" id="kakao"></a>
-          <a href=""><img src="./icon/naver_icon_color.png" onmouseover="this.src='./icon/naver_icon.png'" onmouseout="this.src='./icon/naver_icon_color.png'" alt="" id="naver"></a>
-          <a href=""><img src="./icon/google_icon_color.png" onmouseover="this.src='./icon/google_icon.png'" onmouseout="this.src='./icon/google_icon_color.png'" alt="" id="google"></a>
+          <a href="/oauth2/authorization/kakao"><img src="${pageContext.request.contextPath}/icon/kakao_icon_color.png" onmouseover="this.src='${pageContext.request.contextPath}/icon/kakao_icon.png'" onmouseout="this.src='${pageContext.request.contextPath}/icon/kakao_icon_color.png'" alt="" id="kakao"></a>
+          <a href=""><img src="${pageContext.request.contextPath}/icon/naver_icon_color.png" onmouseover="this.src='${pageContext.request.contextPath}/icon/naver_icon.png'" onmouseout="this.src='${pageContext.request.contextPath}/icon/naver_icon_color.png'" alt="" id="naver"></a>
+          <a href="/oauth2/authorization/google"><img src="${pageContext.request.contextPath}/icon/google_icon_color.png" onmouseover="this.src='${pageContext.request.contextPath}/icon/google_icon.png'" onmouseout="this.src='${pageContext.request.contextPath}/icon/google_icon_color.png'" alt="" id="google"></a>
         </div>
         
         <div class="card-header" style="color: white;">
@@ -308,7 +310,7 @@
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <img src="./icon/id_icon.png" alt="" style="width: 20px; height: 20px;">
+                  <img src="${pageContext.request.contextPath}/icon/id_icon.png" alt="" style="width: 20px; height: 20px;">
                  </span>
               </div><!-- input-group-prepend -->
               <input type="text" id="username" name="username" class="form-control" placeholder="ID" />
@@ -316,7 +318,7 @@
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <img src="./icon/pw_icon.png" alt="" style="width: 25px; height: 25px;">
+                  <img src="${pageContext.request.contextPath}/icon/pw_icon.png" alt="" style="width: 25px; height: 25px;">
                   </span>
               </div>
               <input type="password" id="password" name="password" class="form-control" placeholder="PW" />
@@ -366,7 +368,7 @@
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>

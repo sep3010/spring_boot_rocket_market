@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.mapper.ProductMapper;
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -54,21 +55,61 @@ public class ProductServiceImpl implements ProductService {
 		log.info("getProduct..");
 		return productMapper.getProduct(id);
 	}
-
-	//할인상품목록(할인율이 제일 큰 순서로 - 변경가능)=========================
+	
+	//베스트상품목록(판매수량이 많은 순)===================================
 	@Override
-	public List<ProductVO> getDiscountProductList() {
-		log.info("getDiscountProductList..");
-		return productMapper.getDiscountProductList();
+	public List<ProductVO> getBestProductList(CriteriaP criteria) {
+		log.info("getBestProductList..");
+		return productMapper.getBestProductList(criteria);
+	}
+	@Override
+	public int getBestProductTotal() {
+		log.info("getBestProductTotal..");
+		return productMapper.getBestProductTotalCount();
+	}
+
+	//할인상품목록(할인율이 제일 큰 순서로)=================================
+	@Override
+	public List<ProductVO> getSaleProductList(CriteriaP criteria) {
+		log.info("getSaleProductList..");
+		return productMapper.getSaleProductList(criteria);
+	}
+	@Override
+	public int getSaleProductTotal() {
+		log.info("getSaleProductTotal..");
+		return productMapper.getSaleProductTotalCount();
 	}
 
 	//신상품목록 (상품번호 기준)=========================================
 	@Override
-	public List<ProductVO> getNewProductList(){
+	public List<ProductVO> getNewProductList(CriteriaP criteria){
 		log.info("getNewProductList..");
-		return productMapper.getNewProductList();
+		return productMapper.getNewProductList(criteria);
 	}
 	
+	//정기배송상품목록 (배송타입이 '정기')==================================
+	@Override
+	public List<ProductVO> getSubscribeProductList(CriteriaP criteria) {
+		log.info("getSubscribeProductList..");
+		return productMapper.getSubscribeProductList(criteria);
+	}
+	@Override
+	public int getSubscribeProductTotal() {
+		log.info("getSubscribeProductTotal..");
+		return productMapper.getSubscribeProductTotalCount();
+	}
+	//카테고리 상품목록 (상품종류)========================================
+	@Override
+	public List<ProductVO> getCategoryProductList(CriteriaP criteria) {
+		log.info("getCategoryProductList.." + criteria.getEtype());
+		return productMapper.getCategoryProductList(criteria);
+	}
+	@Override
+	public int getCategoryProductTotal(String type) {
+		log.info("getCategoryProductTotal..");
+		return productMapper.getCategoryProductTotalCount(type);
+	}
+
 	// 상품과 상품이미지 등록하기
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -164,14 +205,6 @@ public class ProductServiceImpl implements ProductService {
 		} // end for()
 	
 	}
-	
-	// 상품들의 썸네일 이미지 목록 가져오기
-	@Override
-	public List<ProductImageVO> getProductThumbnailImage() {
-		log.info("getProductThumbnailImage()..");
-		return productMapper.getProductThumbnailImage();
-	}
-	
-	
+
 
 }

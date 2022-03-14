@@ -42,10 +42,10 @@
 	   ]]>
    </insert>
    
-   <insert id="insertKakaoMember">
+   <insert id="insertSocialMember">
    		<![CDATA[
-	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{id}, null, 
-	      #{nickname}, null, null, null, null, null, '일반', #{email}, 0, 'kakao')
+	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{user_id}, #{password}, 
+	      #{nickname}, null, null, null, null, null, '일반', #{email}, 0, #{provider})
 	   ]]>
    </insert>
    

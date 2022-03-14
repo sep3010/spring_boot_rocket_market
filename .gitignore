@@ -160,5 +160,6 @@ Servers/
 /.settings/
 /.apt_generated_tests/
 
-#social login 보안을 위한 처리
+##social login 보안을 위한 처리
 application-oauth.properties
+

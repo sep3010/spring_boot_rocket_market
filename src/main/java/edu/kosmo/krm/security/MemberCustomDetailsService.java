@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.mapper.MemberMapper;
@@ -15,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class MemberCustomDetailsService implements UserDetailsService  {
+public class MemberCustomDetailsService implements UserDetailsService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper memberMapper;
@@ -30,6 +34,7 @@ public class MemberCustomDetailsService implements UserDetailsService  {
 		
 		return memberVO == null ? null : new MemberCustomDetails(memberVO);
 	}
+
 	
 	
 }

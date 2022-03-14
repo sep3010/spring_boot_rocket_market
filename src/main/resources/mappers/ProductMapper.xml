@@ -75,14 +75,100 @@
 			#{path})
 	</insert>
 	
-	
-	<!--  
-	<select id="getProductTotalCount" resultType="int">
-	<![CDATA[
-		select count(*) from product
-	]]>
+	<!-- 신상품목록 페이지에서 신상품 리스트와 해당상품 이미지 불러오기 -->
+	<select id="getNewProductList" parameterType="map"
+		resultMap="productMap">
+	  <![CDATA[
+            SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image  
+                        WHERE information_type = 'main') i
+                        ON p.id = i.product_id  
+                        ORDER BY p.id DESC 
+              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         	) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      ]]>
 	</select>
-	-->
 	
+	<!-- 베스트상품목록 페이지에서 정기배송상품 리스트와 해당상품 이미지 불러오기 -->
+	<select id="getBestProductList" parameterType="map"
+		resultMap="productMap">
+	  <![CDATA[
+            SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image  
+                        WHERE information_type = 'main') i
+                        ON p.id = i.product_id 
+                        LEFT JOIN (SELECT product_id, SUM(quantity) AS quantity
+                        FROM product_sales GROUP BY product_id ORDER BY quantity DESC) s
+                        ON p.id = s.product_id
+                        WHERE s.quantity IS NOT NULL
+                        ORDER BY s.quantity DESC 
+              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         	) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      ]]>
+	</select>	
+	
+	<!-- 할인상품목록 페이지에서 할인상품 리스트와 해당상품 이미지 불러오기 -->
+	<select id="getSaleProductList" parameterType="map"
+		resultMap="productMap">
+	  <![CDATA[
+            SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image  
+                        WHERE information_type = 'main') i
+                        ON p.id = i.product_id  
+                        WHERE p.discount > 0
+                        ORDER BY p.discount DESC 
+              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         	) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      ]]>
+	</select>
+	
+	<!-- 정기배송상품목록 페이지에서 정기배송상품 리스트와 해당상품 이미지 불러오기 -->
+	<select id="getSubscribeProductList" parameterType="map"
+		resultMap="productMap">
+	  <![CDATA[
+            SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image  
+                        WHERE information_type = 'main') i
+                        ON p.id = i.product_id 
+                        WHERE p.delivery_type = '정기'
+                        ORDER BY p.id DESC 
+              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         	) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      ]]>
+	</select>
+	
+	<!-- 상품카테고리별목록 페이지에서 해당상품 리스트와 이미지 불러오기 -->
+	<select id="getCategoryProductList" resultMap="productMap">
+	  <![CDATA[
+            SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT * FROM product p 
+                        LEFT JOIN (SELECT id AS image_id,
+                        product_id, extension, name AS image_name,
+                        information_type, path FROM product_image  
+                        WHERE information_type = 'main') i
+                        ON p.id = i.product_id  
+                        WHERE p.type = #{etype} 
+              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         	) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      ]]>
+	</select>
+
 
 </mapper>
