@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+<mapper namespace="edu.kosmo.krm.mapper.ProductBoardMapper">
+
+	<resultMap id="ProductBoardMap" type="edu.kosmo.krm.joinVO.JoinProductBoard">
+	
+		<result property="product_id" column="product_id" />
+		<result property="content" column="content" />
+		<result property="board_date" column="board_date" />
+		<result property="score" column="score" />
+		<result property="nickname" column="nickname" />	
+	</resultMap>
+	
+	<select id="getProductBoardList" resultType="edu.kosmo.krm.joinVO.JoinProductBoard">
+	   <![CDATA[
+              SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+				SELECT 
+        			order_detail.product_id,
+        			board.content,
+        			board.board_date,
+        			board.score,
+        			member.nickname
+				FROM
+        			order_detail,
+        			order_detail_board,
+        			board,
+        			member
+				WHERE 
+        			order_detail.id = order_detail_board.order_detail_id
+				AND
+        			order_detail_board.board_id = board.id
+				AND
+        			board.member_id = member.id
+				AND     
+        			order_detail.product_id = #{productVO.id}
+              ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+         	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}
+	   ]]>
+	</select>
+
+ 	<select id="getProductBoardTotalCount" resultType="int">
+	   <![CDATA[
+				SELECT 
+        			COUNT(*)
+				FROM
+        			order_detail,
+        			order_detail_board,
+        			board,
+        			member
+				WHERE 
+        			order_detail.id = order_detail_board.order_detail_id
+				AND
+        			order_detail_board.board_id = board.id
+				AND
+        			board.member_id = member.id
+				AND     
+        			order_detail.product_id = #{id}
+	   ]]>
+	</select>
+
+</mapper> 
