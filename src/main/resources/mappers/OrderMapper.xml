@@ -16,6 +16,26 @@
 		<collection property="productImages" resultMap="ProductImageMap"></collection>
 	</resultMap>
 	
+	<resultMap id="OrderpaymentMap" type="edu.kosmo.krm.joinVO.JoinOrderPaymentVO">
+		<result property="member_name" column="member_name" />
+		<result property="phone" column="phone" />
+		<result property="point" column="point" />
+		<result property="postcode" column="postcode" />
+		<result property="address" column="address" />
+		<result property="message" column="message" />
+		<result property="order_detail_id" column="order_detail_id" />
+		<result property="quantity" column="quantity" />
+		<result property="amount" column="amount" />
+		<result property="brand" column="brand" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="product_discount" column="product_discount" />
+		<result property="userCoupon_id" column="userCoupon_id" />
+		<result property="issue_date" column="issue_date" />
+		
+		<collection property="productImages" resultMap="ProductImageMap"></collection>
+		<collection property="coupons" resultMap="CouponsMap"></collection>
+	</resultMap>
 
 	<resultMap id="ProductImageMap" type="edu.kosmo.krm.vo.ProductImageVO">
 		<result property="id" column="product_image_id" />
@@ -26,6 +46,13 @@
 		<result property="path" column="path" />
 	</resultMap>
 
+	<resultMap id="CouponsMap" type="edu.kosmo.krm.vo.CouponVO">
+		<result property="coupon_id" column="coupon_id" />
+		<result property="coupon_name" column="coupon_name" />
+		<result property="coupon_discount" column="coupon_discount" />
+	</resultMap>
+	
+	
 	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
               SELECT * FROM (
@@ -94,6 +121,61 @@
 	   ]]>
 	</select>
 
-
+ 	<select id="getOrderPaymentList" resultMap="OrderpaymentMap">
+	   <![CDATA[
+					SELECT
+					        M.name as member_name,
+					        M.phone,
+					        M.point,
+					        D.postcode,
+					        D.address,
+					        D.message,
+					        OD.id as order_detail_id,
+					        OD.quantity,
+					        MO.AMOUNT,
+					        P.brand,
+					        P.name as product_name,
+					        P.price,
+					        P.discount as product_discount,
+					        UC.coupon_id,
+					        UC.issue_date,
+                            PI.ID as product_image_id,
+                            PI.EXTENSION,
+                            PI.NAME as product_image_name,
+                            PI.INFORMATION_TYPE,
+                            PI.PATH,
+					        C.id as coupon_id,
+					        C.name as coupon_name,
+					        C.discount as coupon_discount
+					        
+					FROM    
+					        MEMBER M,
+					        USER_COUPON UC,
+					        COUPON C,
+					        MEMBER_ORDER MO,
+					        DELIVERY D,
+					        ORDER_DETAIL OD,
+					        PRODUCT P,
+					        PRODUCT_IMAGE PI
+					WHERE
+					        M.ID = MO.MEMBER_ID
+					AND
+					        M.ID = UC.MEMBER_ID
+					AND
+					        UC.COUPON_ID = C.ID
+					AND
+					        MO.ID = D.ORDER_ID
+					AND
+					        MO.ID = OD.ORDER_ID
+					AND
+					        OD.PRODUCT_ID = P.ID
+					AND
+					        P.ID = PI.PRODUCT_ID
+					AND
+					        PI.INFORMATION_TYPE = 'thumbnail'
+					AND
+					        M.ID = #{memberVO.id}
+		]]>
+	</select>
 	
 </mapper> 

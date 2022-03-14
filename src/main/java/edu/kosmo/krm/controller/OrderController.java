@@ -21,6 +21,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
@@ -52,11 +53,15 @@ public class OrderController {
 	}
 	
 	// 주문 페이지
-	@GetMapping("/payment/payment_view")
-	public ModelAndView order(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
+	@GetMapping("/order/orderpayment_view")
+	public ModelAndView orderpayment_view(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
 		log.info("payment_view()..");
 
-		view.setViewName("/payment/payment_view");
+		log.info("memberVO().." + memberCustomDetails.getMemberVO());
+		
+		List<JoinOrderPaymentVO> join = orderService.orderPayment_getList(memberCustomDetails.getMemberVO());
+		view.addObject("orderpaymentList", join);
+		view.setViewName("/order/orderpayment_view");
 		return view;
 	}
 

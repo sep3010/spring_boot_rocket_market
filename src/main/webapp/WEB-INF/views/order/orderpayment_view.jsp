@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>주문결제 페이지</title>
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- iamport.payment.js -->
@@ -61,11 +61,49 @@
     <span>01 장바구니 > </span>
     <span style="font-weight: bold; color : red;">02 주문 | 결제 > </span>
     <span>03 주문 완료</span>
-    <div>
-    	<div>배송정보(회원정보)</div>
-    	<div>수령인: </div>
-    	<div>휴대폰: </div> 
-    </div>
+
+	<h1>배송 정보(회원 정보)</h1>
+	
+      <c:forEach items="${orderpaymentList}" var="orderpayment">
+		<div>수령인: ${orderpayment.member_name}</div>
+		<div>휴대폰: ${orderpayment.phone}</div>
+		<div>우편번호: ${orderpayment.postcode}</div>
+		<div>배송지: ${orderpayment.address}</div>
+		<div>배송 메시지: ${orderpayment.message}</div>
+		<hr>
+      </c:forEach>	
+      
+      <h1>주문 상품</h1>
+      
+	<table width="1300" cellpadding="0" cellspacing="0" border="1">
+	  <tr>
+         <td>주문 상세 번호</td>
+         <td>썸네일</td>
+         <td>상품 정보</td>
+         <td>개수</td>
+         <td>가격</td>
+      </tr>
+      
+      <c:forEach items="${orderpaymentList}" var="orderpayment">
+	      <tr>
+	         <td>${orderpayment.order_detail_id}</td>
+			<c:choose>
+				<c:when test="${not empty order.productImages}">
+					<c:forEach var="thumbnail" items="${order.productImages}">
+						<td><img src="${thumbnail.path}"></td>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td>대표 이미지 없음</td>
+				</c:otherwise>
+			</c:choose> 
+	         <td>${orderpayment.brand} ${orderpayment.product_name}</td>
+	         <td>${orderpayment.quantity}</td>
+	         <td>${orderpayment.price}</td>
+		  </tr>
+      </c:forEach>
+	</table>
+	
     <div>
           <button style="font-size:40px" id="iamportPayment" type="button">결제테스트</button>
         

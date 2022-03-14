@@ -23,9 +23,9 @@
 	</tr>			
 	<c:forEach var="coupon" items="${couponList}">
 		<tr>
-			<td>${coupon.id}</td>
-			<td>${coupon.name}</td>
-			<td>${coupon.discount}</td>	
+			<td>${coupon.coupon_id}</td>
+			<td>${coupon.coupon_name}</td>
+			<td>${coupon.coupon_discount}</td>	
 		</tr>	
 	</c:forEach>
 

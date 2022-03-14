@@ -31,17 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class PaymentController {
 
-	// 결제 모듈 페이지로 이동
-	@GetMapping("/payment/payment_view")
-	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
-		
-		
-		view.addObject("memberVO", memberCustomDetails.getMemberVO());
-		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
-		
-		view.setViewName("/payment/payment_view");
-		return view;
-	}
+
 
 
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +31,12 @@ public class OrderServiceImpl implements OrderService {
 	public int order_History_getTotal(MemberVO memberVO) {
 		log.info("order_History_getTotal()...");
 		return ordermapper.getOrderHistoryTotalCount(memberVO);
+	}
+
+	@Override
+	public List<JoinOrderPaymentVO> orderPayment_getList(MemberVO memberVO) {
+		log.info("orderPayment_getList()...");
+		return ordermapper.getOrderPaymentList(memberVO);
 	}
 
 
