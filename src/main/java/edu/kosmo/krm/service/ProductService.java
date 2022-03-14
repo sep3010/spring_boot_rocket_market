@@ -12,7 +12,7 @@ import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 
-@Service
+
 public interface ProductService {
 	
 	// 전체상품목록 가져오기=========================================

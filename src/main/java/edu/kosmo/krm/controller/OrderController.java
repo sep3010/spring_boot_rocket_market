@@ -41,15 +41,19 @@ public class OrderController {
 		
 		// List 불러 오는 함수
 		List<JoinOrderHistoryVO> join = orderService.order_History_getList(criteria, memberCustomDetails.getMemberVO());
-		log.info("orderhistory().. 갯수" + join.size());
 		view.addObject("orderList", join); 
-		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
+		log.info("memberVO().." + memberCustomDetails.getMemberVO());
+		
+		log.info("===================join:000000" + join);
+		
+		
+		for (JoinOrderHistoryVO joinOrderHistoryVO : join) {
+			log.info("===================join:000000 " + joinOrderHistoryVO.getOrder_id());
+		}
 
+		
 		int total = orderService.order_History_getTotal(memberCustomDetails.getMemberVO());
-		log.info("=============total: " + total);
 		view.addObject("pageMaker", new PageVO(criteria, total));
-		log.info("criteria:" + criteria);
-		log.info("total:" + total);
 		
 		view.setViewName("/user/orderhistory");
 		return view;

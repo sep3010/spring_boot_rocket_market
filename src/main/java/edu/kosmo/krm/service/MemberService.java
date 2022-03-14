@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.vo.MemberVO;
 
-@Service
+
 public interface MemberService {
 	
 	//회원정보를 불러올때

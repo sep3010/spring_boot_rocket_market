@@ -9,7 +9,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.MemberVO;
 
-@Service
+
 public interface OrderService {
 	
 	// 주문 내역 가져오는 코드

@@ -11,7 +11,7 @@ import edu.kosmo.krm.vo.MemberVO;
 //2022-2-23 ~
 //양세윤 코드 작성
 
-@Service
+
 public interface MemberInfoService {
 
 	// 페이징 처리 함수

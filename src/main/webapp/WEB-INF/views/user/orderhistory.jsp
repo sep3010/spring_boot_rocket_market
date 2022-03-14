@@ -21,16 +21,16 @@
          <tr>
             <td>${order.order_id}</td>
             <td>${order.order_date}</td>
- 			<c:choose>
-				<c:when test="${not empty order.img_id}">
-					<c:forEach var="thumbnail" items="${orderList}">
+			<c:choose>
+				<c:when test="${not empty order.productImages}">
+					<c:forEach var="thumbnail" items="${order.productImages}">
 						<td><img src="${thumbnail.path}"></td>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
 					<td>대표 이미지 없음</td>
 				</c:otherwise>
-			</c:choose>       
+			</c:choose>    
             <td>${order.brand}</td>
             <td>${order.product_name}</td>
             <td>${order.status}</td>    

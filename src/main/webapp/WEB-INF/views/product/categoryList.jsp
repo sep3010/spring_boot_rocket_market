@@ -14,6 +14,9 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
 
     <title>Rocket Market :: 신속배송</title>
     <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
@@ -23,6 +26,45 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
+    <script type="text/javascript">
+	// 결제모듈 코드
+    
+        //버튼 클릭하면 실행
+        function payment(data) {
+            //IMP.init('가맹점 식별코드');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+            IMP.init('imp90434583');// sjsong 개인 가맹점 식별 코드//www.import.kr -> 회원가입 -> 관리자 콘솔 로그인 -> 시스템설정-> 내정보
+            IMP.request_pay({// param
+                pg: "inicis", //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
+                pay_method: "card", //지불 방법
+                merchant_uid: "merchant_' + new Date().getTime()", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+                name: "두부", //결제창에 노출될 상품명
+                amount: 10, //금액
+                buyer_email : "${memberVO.email}",
+                buyer_name : "${memberVO.name}",
+                buyer_tel : "${memberVO.phone}",
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                    alert("결제가 완료되었습니다.");
+                    // "완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid
+                    msg += '고유ID : ' + rsp.imp_uid;
+                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    msg += '결제 금액 : ' + rsp.paid_amount;
+                    msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                } else {
+                    alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+                }
+            });
+        }
+      
+      //문서가 준비되면 제일 먼저 실행
+      $(document).ready(function(){
+         $("#iamportPayment").click(function(){
+            payment();//버튼 클릭하면 호출
+         });
+      });
+    </script>
+    
 	<style>
 		/* 공통사항 */
         .body__container {
@@ -246,7 +288,7 @@
                   </div><!-- product-information 끝 -->
                 
                   <div class="buttons d-flex justify-content-around">
-                    <div class="btn btn-outline-danger">찜하기</div>
+					<div id="iamportPayment" class="btn btn-outline-success opener">찜하기</div>
                     <div class="btn btn-outline-success opener">장바구니</div>
                   </div>
                 </div>     
@@ -276,7 +318,7 @@
         <!-- container -->
         <!-- Optional JavaScript; choose one of the two! -->
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
@@ -284,9 +326,8 @@
         </script>
         <!-- Option 2: Separate Popper and Bootstrap JS -->
         <!--
-            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
             -->
     </div> <!-- container 끝 -->
 
