@@ -29,33 +29,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class OrderController {
+public class PaymentController {
 
-	@Autowired
-	private OrderService orderService;
-	 
-	// 주문 내역 리스트
-	@GetMapping("/user/orderhistory")
-	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, Criteria criteria, ModelAndView view) {
-		log.info("orderhistory()..");
-		
-		// List 불러 오는 함수
-		List<JoinOrderHistoryVO> join = orderService.order_History_getList(criteria, memberCustomDetails.getMemberVO());
-		view.addObject("orderList", join); 
-		log.info("memberVO().." + memberCustomDetails.getMemberVO());
-		
-		int total = orderService.order_History_getTotal(memberCustomDetails.getMemberVO());
-		view.addObject("pageMaker", new PageVO(criteria, total));
-		
-		view.setViewName("/user/orderhistory");
-		return view;
-	}
-	
-	// 주문 페이지
+	// 결제 모듈 페이지로 이동
 	@GetMapping("/payment/payment_view")
-	public ModelAndView order(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
-		log.info("payment_view()..");
-
+	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
+		
+		
+		view.addObject("memberVO", memberCustomDetails.getMemberVO());
+		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
+		
 		view.setViewName("/payment/payment_view");
 		return view;
 	}

@@ -21,4 +21,5 @@ public interface OrderMapper {
 	// 주문 내역 가져오는 코드 (with 페이징)
 	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	int getOrderHistoryTotalCount(MemberVO memberVO);
+	
 }
