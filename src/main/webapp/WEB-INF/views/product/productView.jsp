@@ -70,7 +70,33 @@
 		</p> 
 	</c:forEach>
 	
+	==========================================================================
+	<c:forEach var="recommend" items="${recommendProduct}">
+	  <h5 class="product_name">[${recommend.brand}]${recommend.name}</h5>
+	  <c:choose>
+		<c:when test="${not empty recommend.productImages}">
+		  <c:forEach var="thumbnails" items="${recommend.productImages}">
+		    <a href="${pageContext.request.contextPath}/product/productView/${recommend.id}" id="image-title">
+			  <c:choose>
+				<c:when test="${not empty recommend.productImages}">
+					<c:forEach var="thumbnail" items="${recommend.productImages}">
+						<td><img src="${thumbnail.path}"></td>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td>대표 이미지 없음</td>
+				</c:otherwise>
+			  </c:choose>
+			</a>			
+		  </c:forEach>
+		</c:when>
+	    <c:otherwise>
+		   대표 이미지 없음
+	    </c:otherwise>
+	  </c:choose>
+	</c:forEach>
 	
+	===================================================================================================
 	후기~~!!!!
 	<c:forEach var="review" items="${productBoard}">
 	  <p>${review.content}</p>
@@ -79,19 +105,19 @@
 	  <p>${review.nickname}</p>
 	</c:forEach>
 	
-		<!-- 페이징번호 -->
-		<c:if test="${pageMaker.pre}">
-		  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.startPage - 1) }">
-		  «</a>
-		</c:if>
+	<!-- 페이징번호 -->
+	<c:if test="${pageMaker.pre}">
+	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.startPage - 1) }">
+	  «</a>
+	</c:if>
 
-		<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-		  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(idx)}">${idx}</a>
-		</c:forEach>
+	<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(idx)}">${idx}</a>
+	</c:forEach>
 
-		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-		  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.endPage +1) }">
-		  »</a>
-		</c:if>			
+	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.endPage +1) }">
+	  »</a>
+	</c:if>			
 </body>
 </html>

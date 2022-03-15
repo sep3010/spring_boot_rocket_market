@@ -116,6 +116,12 @@ public class ProductServiceImpl implements ProductService {
 		log.info("getProductInfo..");
 		return productMapper.getProductDetail(product);
 	}
+	@Override
+	public List<ProductVO> getRecommendProduct(ProductVO product){
+		log.info("getRecommendProduct..");
+		return productMapper.getRecommendProductList(product);
+	}
+	
 
 	// 상품과 상품이미지 등록하기
 	@Override

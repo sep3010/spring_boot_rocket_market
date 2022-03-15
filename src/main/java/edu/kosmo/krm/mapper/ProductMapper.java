@@ -72,6 +72,8 @@ public interface ProductMapper {
 	/*상품상세======================================================*/
 	// 상품 정보 + 상품이미지
 	public List<ProductVO> getProductDetail(ProductVO productVO);
+	public List<ProductVO> getRecommendProductList(ProductVO productVO);
+	
 	
 	
 	
