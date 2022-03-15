@@ -44,6 +44,7 @@ public class JoinOrderPaymentVO {
 	
 	private int amount;
 	
+	private int product_id;
 	private String brand;
 	private String product_name;
 	private int price;

@@ -25,4 +25,7 @@ public interface OrderMapper {
 	
 	// 결제주문
 	List<JoinOrderPaymentVO> getOrderPaymentList(@Param("memberVO") MemberVO memberVO);
+	
+	// 상품 번호로 상품 정보 가져오는 코드 (1개 가져옴)
+	List<JoinOrderPaymentVO> getProductId(int product_id);
 }

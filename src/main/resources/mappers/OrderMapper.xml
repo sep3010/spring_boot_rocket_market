@@ -27,12 +27,12 @@
 		<result property="quantity" column="quantity" />
 		<result property="amount" column="amount" />
 		<result property="brand" column="brand" />
+		<result property="product_id" column="product_id" />
 		<result property="product_name" column="product_name" />
 		<result property="price" column="price" />
 		<result property="product_discount" column="product_discount" />
 		<result property="userCoupon_id" column="userCoupon_id" />
 		<result property="issue_date" column="issue_date" />
-		
 		<collection property="productImages" resultMap="ProductImageMap"></collection>
 		<collection property="coupons" resultMap="CouponsMap"></collection>
 	</resultMap>
@@ -175,6 +175,31 @@
 					        PI.INFORMATION_TYPE = 'thumbnail'
 					AND
 					        M.ID = #{memberVO.id}
+		]]>
+	</select>
+	
+	 	<select id="getProductId" resultMap="OrderpaymentMap">
+	   <![CDATA[
+				SELECT
+				        P.ID as product_id,
+                        P.brand,
+                        P.name as product_name,
+                        P.price,
+                        P.discount as product_discount,
+                        PI.ID as product_image_id,
+                        PI.EXTENSION,
+                        PI.NAME as product_image_name,
+                        PI.INFORMATION_TYPE,
+                        PI.PATH                     
+				FROM
+				        PRODUCT P,
+				        PRODUCT_IMAGE PI
+				WHERE
+				        P.ID = PI.PRODUCT_ID
+				AND
+				        PI.INFORMATION_TYPE = 'thumbnail'
+				AND
+				        P.ID = #{product_id}		
 		]]>
 	</select>
 	

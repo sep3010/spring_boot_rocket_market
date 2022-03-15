@@ -19,4 +19,7 @@ public interface OrderService {
 	
 	// 결제주문 페이지
 	public List<JoinOrderPaymentVO> orderPayment_getList(MemberVO memberVo);
+	
+	// 상품 번호로 상품 정보 가져오는 코드
+	public List<JoinOrderPaymentVO> getProductId(int product_id);
 }

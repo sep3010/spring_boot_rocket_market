@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.nimbusds.jose.shaded.json.JSONObject;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.OrderService;
@@ -52,20 +55,27 @@ public class OrderController {
 		return view;
 	}
 	
-	// 주문 페이지
-	@GetMapping("/order/orderpayment_view")
-	public ModelAndView orderpayment_view(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view) {
-		log.info("payment_view()..");
-
-		log.info("memberVO().." + memberCustomDetails.getMemberVO());
-		
+	// 주문 페이지 (view)
+	@GetMapping("/order/orderPaymentOne")
+	public ModelAndView orderPaymentOne(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, JoinOrderPaymentVO joinOrderPaymentVO, ModelAndView view) {
+		// 주문자 정보 가져오기
+		log.info("orderPaymentOne()..");
 		List<JoinOrderPaymentVO> join = orderService.orderPayment_getList(memberCustomDetails.getMemberVO());
 		view.addObject("orderpaymentList", join);
-		view.setViewName("/order/orderpayment_view");
+		
+		// 상품 가져오기
+		log.info("orderPaymentOne()..");
+		int product_id = joinOrderPaymentVO.getProduct_id();
+		view.addObject("orderPaymentOne", orderService.getProductId(product_id));
+
+		JSONObject data = new JSONObject();
+		data.put("product", joinOrderPaymentVO);
+		log.info("product====" + joinOrderPaymentVO);
+		
+		
+		view.setViewName("/order/orderPaymentOne");
 		return view;
 	}
-
-
 
 	
 
