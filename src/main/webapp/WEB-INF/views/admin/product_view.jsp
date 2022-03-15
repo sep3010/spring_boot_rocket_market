@@ -65,13 +65,13 @@
 			<td>가격</td>
 			<td>${product.price}</td>
 			<td>할인율</td>
-			<td>${product.discount}</td>
+			<td>${product.discount}%</td>
 		</tr>
 		<tr>
 			<td>포장타입</td>
-			<td>${product.price}</td>
+			<td>${product.packaging}</td>
 			<td>배송타입</td>
-			<td>${product.discount}</td>
+			<td>${product.delivery_type}</td>
 		</tr>
 		<tr>
 			<td>재고량</td>

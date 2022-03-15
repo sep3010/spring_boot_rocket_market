@@ -53,7 +53,7 @@
 		INSERT INTO product VALUES (PRODUCT_SEQ.nextval, 
 			#{name}, #{price}, #{capacity}, 
 			#{brand}, #{stock}, #{unit}, 
-			#{type}, #{packaging}, #{discount}, #{delivery_type}, 1)	
+			#{type}, #{packaging}, #{discount}, #{delivery_type}, #{enabled})	
 	</insert>
 	
 	<insert id="insertProductImage">
@@ -61,6 +61,22 @@
 			#{product_id}, #{extension}, #{name}, #{information_type},
 			#{path})
 	</insert>
+		
+	<update id="updateProduct">
+		UPDATE product SET name = #{name},
+                price = #{price},
+                capacity = #{capacity},
+                brand = #{brand},
+                stock = #{stock},
+                unit = #{unit},
+                type = #{type},
+                packaging = #{packaging},
+                discount = #{discount},
+                delivery_type = #{delivery_type},
+                enabled = #{enabled}
+                WHERE id = #{id}
+	</update>
+	
 	
 	<select id="getProductContent" parameterType="map"
 		resultMap="productMap">

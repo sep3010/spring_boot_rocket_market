@@ -10,6 +10,9 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- fontawesome -->
+<script src="https://kit.fontawesome.com/b7ee8a4337.js" crossorigin="anonymous"></script>
+
 <!-- csrf meta tag -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -32,7 +35,28 @@
 		return inputTag;
 	}
 	
-	// 수정 페이지로 접근시 input 태그에 value를 넣어주기 위한 설정
+	function imageDelete(image_type){
+			
+		let inputFile = "<input type=file id=" 
+						+ image_type + " name=" + image_type + " accept=image/*>"
+		
+		if(image_type == 'main'){
+			$("#mainImage").empty();		
+			$("#mainImage").prepend(inputFile);
+		} 
+		else if(image_type == 'info'){
+			$("#infoImage").empty();		
+			$("#infoImage").prepend(inputFile);
+		}
+		else if(image_type == 'detail'){
+			$("#detailImage").empty();		
+			$("#detailImage").prepend(inputFile);
+		} 
+			
+			
+	}
+	
+	// 수정 페이지 경로로 접근시 input 태그에 value를 넣어주기 위한 설정
 	function makeInputValue(){
 		
 		// 변수 설정
@@ -64,9 +88,11 @@
 		</c:forEach>
 		
 		// 동적으로 태그 만들어주기
-		let inputId = '<tr><td>상품번호</td><td>' + id + '</td></tr>';
+		let inputId = '<tr><input type=hidden name=id value=' 
+						+ id + '><td>상품번호</td><td>' + id + '</td></tr>';
 		$("#table").prepend(inputId);
 		
+		// input 태그에 value 속성 값에 수정할 상품 정보 넣기
 		 $("#name").attr("value", name);
 		 $("#price").attr("value", price);
 		 $("#brand").attr("value", brand);
@@ -85,20 +111,21 @@
 		 
 		 
 		 
-		// capacity에서 숫자만 분리하기
+		// unit에서 숫자만 분리하기
 		 let unit_part1 = unit.replace(/[^0-9]/g,'');
 		 console.log("unit_part1 : " + unit_part1);
 		 $("#unit_part1").attr("value", unit_part1);
 		 
-		// capacity에서 문자만 분리하기
+		// unit에서 문자만 분리하기
 		 let unit_part2 = unit.replace(/[0-9]/g,'');
 		 console.log("unit_part2 : " + unit_part2);
 		 $("#unit_part2").val(unit_part2).prop("selected", true);
 		
 		 
+		 // select 태그의 option값 선택하기
 		 $("#type").val(type).prop("selected", true);
 		 
-		 
+		 // radio태그에서 값 선택하기
 		 $("input:radio[name='packaging']").prop('checked', false);
 		 $("input:radio[name='packaging']").val(packaging).prop('checked', true);
 		 
@@ -111,20 +138,20 @@
 		 
 		 $("#mainImage").empty();
 		 $("#mainImage").prepend("<img src=" + main + ">");
-		 $("#mainImage").append("<span>X</span>");
+		 $("#mainImage").append("<span onclick=imageDelete('main');><i class='fa fa-times fa-xl'></i></span>");
 		 
 		 $("#infoImage").empty();
 		 $("#infoImage").prepend("<img src=" + info + ">");
-		 $("#infoImage").append("<span>X</span>");
+		 $("#infoImage").append("<span onclick=imageDelete('info');><i class='fa fa-times fa-xl'></i></span>");
 		 
 		 $("#detailImage").empty();
 		 $("#detailImage").prepend("<img src=" + detail + ">");
-		 $("#detailImage").append("<span>X</span>");
+		 $("#detailImage").append("<span onclick=imageDelete('detail');><i class='fa fa-times fa-xl'></i></span>");
 		 
 
 		return console.log("수정 페이지 로딩 완료");
 		
-	}
+	} // end makeInputValue();
 	
 
 	$(document).ready(function(){
@@ -140,17 +167,17 @@
 			$(".addProduct").attr("action", "${pageContext.request.contextPath}/admin/modifyProduct");
 			$("#submit").remove();
 			$(".link").remove();
+			
+			$("h1").empty();
+			$("h1").prepend("상품 수정");
+			
 			// 수정 버튼 만들어주기
 			$("#table").after('<input id=modify type=submit value=수정하기>');
 			
 		}
 		
-		$("#submit").on('click', function(){
 			
-			
-		});
-			
-		
+		// 상품 등록 버튼
 		$("#submit").on('click', function(){
 			
 			// DB에 들어갈 capacity(용량)과 unit(판매단위)를 
@@ -189,7 +216,7 @@
 </head>
 <!-- 소은 -->
 <body>
-	<h1>상품등록</h1>
+	<h1>상품 등록</h1>
 	<!-- 파일 등록을 위해 enctype="multipart/form-data" 설정-->
 	<form:form class="addProduct" 
 		action="${pageContext.request.contextPath}/admin/insertProduct" 
@@ -246,7 +273,7 @@
 						<option value="채소/과일">채소/과일</option>
 						<option value="국/반찬">국/반찬</option>
 						<option value="육류">육류</option>
-						<option value="간식/과자">간식/과자</oㅣption>
+						<option value="간식/과자">간식/과자</option>
 						<option value="유제품">유제품</option>
 						<option value="즉석식품">즉석식품</option>
 					</select>
@@ -262,13 +289,20 @@
 			</tr>
 			<tr>
 				<td>할인율</td>
-				<td><input type="number" id="discount" name="discount" value="0"></td>
+				<td><input type="number" id="discount" name="discount" value="0">%</td>
 			</tr>
 			<tr>
 				<td>배송타입</td>
 				<td>
 					<input type="radio" name="delivery_type" value="단순" checked="checked">단순
 					<input type="radio" name="delivery_type" value="정기">정기
+				</td>
+			</tr>
+			<tr>
+				<td>판매상태</td>
+				<td>
+					<input type="radio" name="enabled" value="1" checked="checked">판매중
+					<input type="radio" name="enabled" value="0">판매종료
 				</td>
 			</tr>
 			<tr>

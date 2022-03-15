@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
-@Repository
 @Service
 public class ProductServiceImpl implements ProductService {
 	
@@ -209,7 +207,106 @@ public class ProductServiceImpl implements ProductService {
 	// 하나의 상품 상세 내용(이미지 포함)
 	@Override
 	public ProductVO getProductContent(ProductVO productVO) {
+		log.info("getProductContent..");
 		return productMapper.getProductContent(productVO);
+	}
+	
+	// 상품과 상품이미지 수정하기
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int updateProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath) {
+		log.info("updateProductAndImage..");
+		
+		productMapper.updateProduct(productVO);
+				
+		int product_id = productVO.getId();
+		
+		
+		if(files != null) {
+			if(files.get("main") != null) {
+				
+				
+				
+			}
+			
+			List<ProductImageVO> images = productMapper.getproductImages(product_id);
+			
+			for(Map.Entry<String, MultipartFile> file : files.entrySet()) {
+				
+				String information_type = file.getKey();			
+				
+				// 파일 이름
+				String originalName = file.getValue().getOriginalFilename();
+				
+				
+				// UUID는 랜덤으로 32개의 문자(4개의 하이픈으로 구성된 총 5개의 그룹)를 생성 
+				// 예시: 550e8400-e29b-41d4-a716-446655440000
+				String uuid = UUID.randomUUID().toString();
+				
+				String fileName = uuid + "_" + originalName;
+				
+				// 파일 형태 (예시: image/jpeg)
+				String extension = file.getValue().getContentType();
+				
+				// 서버에서 저장된 이미지를 불러오기 위한 기본 경로
+				String basePath = "http://localhost:8282/resources/product-image/";
+							
+				
+				File saveFile = new File(savePath, fileName);
+				try {
+					// 실제로 파일 저장하기
+					file.getValue().transferTo(saveFile);
+					
+					/* 메인 상품 이미지를 추가로 썸네일 버전 만들어 저장하기 */
+					if(information_type == "main") {
+						// 썸네일 파일 이름
+						String thumbnailName = "s_" + fileName;
+						
+						// 썸네일을 저장하기 위한 File 객체 생성
+						File thumbnailFile = new File(savePath, thumbnailName);
+						
+						// thumbnailaotr 라이브러리를 사용해 썸네일 만들기
+						Thumbnails.of(saveFile)
+								.size(100, 100)
+								.toFile(thumbnailFile);
+						
+						// 저장한 썸네일 DB product_image 테이블에 저장하기
+						productImageVO.setProduct_id(product_id);
+						productImageVO.setName(thumbnailName);
+						productImageVO.setExtension(extension);
+						productImageVO.setInformation_type("thumbnail");
+						
+						String thumbnailPath = basePath + thumbnailName;
+						productImageVO.setPath(thumbnailPath);
+						log.info("thumbnailImageVO : " + productImageVO);
+						productMapper.insertProductImage(productImageVO);
+									
+					} // if end
+					
+					
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+				// ProductImageVO에 값 넣기
+				productImageVO.setProduct_id(product_id);
+				productImageVO.setName(fileName);
+				productImageVO.setExtension(extension);
+				productImageVO.setInformation_type(information_type);
+				
+				// 각 파일 별로 저장되는 폴더 경로에 + 파일 이름으로 경로를 DB에 저장해서 
+				// view 페이지에서 해당 이이지를 편리하게 불러오기 위한 설정
+				String loadImagePath = basePath + fileName;
+				productImageVO.setPath(loadImagePath);
+				
+				log.info("productImageVO : " + productImageVO);
+				
+				productMapper.insertProductImage(productImageVO);
+				
+			} // end for()
+			
+		}
+				
+		return product_id;
 	}
 
 

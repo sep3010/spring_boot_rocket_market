@@ -111,6 +111,42 @@ public class ProductInfoController {
 		return view;
 	}
 	
+	// 상품과 이미지 수정하기
+	@PostMapping("/admin/modifyProduct")
+	public ModelAndView modifyProduct(ModelAndView view, HttpServletRequest request,
+			ProductVO productVO, @RequestParam("main") MultipartFile main,
+			@RequestParam("info") MultipartFile info, 
+			@RequestParam("detail") MultipartFile detail) {
+		log.info("modifyProduct()..");
+		log.info("productVO : " + productVO);
+		
+		Map<String, MultipartFile> files = new HashMap<>();
+		
+		if(main != null) {
+			files.put("main", main);
+		}
+		if(info != null) {
+			files.put("info", info);
+		}
+		if(detail != null) {
+			files.put("detail", detail);
+		}
+		
+		// 각 팀원들의 프로젝트 폴더 경로 설정(상대적 경로)을 위한 처리.
+		String savePath = request.getSession().getServletContext()
+							.getRealPath("/").concat("resources\\product-image");	
+		
+		log.info("savePath : " + savePath);
+		
+		// productService.insertProductAndImage(productVO, files, savePath);
+		
+		String viewURL = "redirect:/admin/product_view/" + productVO.getId();
+		log.info("viewURL : " + viewURL);
+		view.setViewName(viewURL);
+		
+		return view;
+	}
+	
 	
 	/*유빈*/	
 	// ============== 상품 목록 페이지로 이동 ===================

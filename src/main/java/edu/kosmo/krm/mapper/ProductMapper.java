@@ -2,6 +2,7 @@ package edu.kosmo.krm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -63,10 +64,16 @@ public interface ProductMapper {
 	// 상품 상세 정보 가져오기(관리자)
 	public ProductVO getProductContent(ProductVO productVO);
 	
-	
 	// 상품 정보 수정(관리자)
+	public void updateProduct(ProductVO productVO);
 	
+	// 상품번호의 이미지 전체 불러오기
+	@Select("SELECT * FROM product_image WHERE product_id = #{product_id}")
+	public List<ProductImageVO> getproductImages(int product_id);
 	
-	// 상품 삭제 
+	// 상품 이미지 삭제 
+	@Delete("DELETE FROM product_image WHERE product_id = #{product_id} "
+			+ "AND information_type = #{information_type}")
+	public void deleteImage(int product_id, String information_type);
 	
 }
