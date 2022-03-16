@@ -16,53 +16,124 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 
     <script type="text/javascript">
-        //버튼 클릭하면 실행
-        
-        function payment(data) {
-            //IMP.init('가맹점 식별코드');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
-            IMP.init('imp90434583');// sjsong 개인 가맹점 식별 코드//www.import.kr -> 회원가입 -> 관리자 콘솔 로그인 -> 시스템설정-> 내정보
-            IMP.request_pay({// param
-                pg: "inicis", //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
-                pay_method: "card", //지불 방법
-                merchant_uid: "merchant_' + new Date().getTime()", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-                name: "product.product_name", //결제창에 노출될 상품명
-                amount: 10, //금액
-                buyer_email : "${memberVO.email}",
-                buyer_name : "${memberVO.name}",
-                buyer_tel : "${memberVO.phone}",
-            }, function (rsp) { // callback
-                if (rsp.success) {
-                    
-                    jQuery.ajax({
-                        url: "/order/orderPaymentOne", // 예: https://www.myservice.com/payments/complete
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        data: {
-                            imp_uid: rsp.imp_uid,
-                            merchant_uid: rsp.merchant_uid
-                        }
-                        
-                	alert("결제가 완료되었습니다.");
-                    // "완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid
-                    msg += '고유ID : ' + rsp.imp_uid;
-                    msg += '상점 거래ID : ' + rsp.merchant_uid;
-                    msg += '결제 금액 : ' + rsp.paid_amount;
-                    msg += '카드 승인번호 : ' + rsp.apply_num;
 
-                } else {
-                    alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+  //csrf
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+    function drivePayment(seller_num, set_price) {
+        var seq = getMerchantSeq();
+        
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var mm = today.getMonth()+1;
+        var dd = today.getDate();
+        if(dd<10) {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) {
+            mm='0'+mm;
+        } 
+        
+        <sec:authorize access="isAnonymous()">
+           location.href = "/into/loginForm";
+        </sec:authorize>   
+     
+        <sec:authorize access="isAuthenticated()">
+           <sec:authentication var="principal" property="principal"/>
+           
+           let member_name = "${principal.memberVO.name}";
+           let email = "${principal.memberVO.email}";
+           let phone = "${principal.memberVO.phone}";
+           // 사용자 정보
+           
+           
+           let merchantid = 'merchant_' + new Date().getTime();
+           
+           var token = $("meta[name='_csrf']").attr("content");
+           var header = $("meta[name='_csrf_header']").attr("content");
+           
+           IMP.init("imp90434583");
+           IMP.request_pay({ 
+               pg: "html5_inicis",
+               pay_method: "card",
+               merchant_uid: merchantid,
+               name: product_name,
+               amount: amount,
+               buyer_email: email,
+               buyer_name: member_name,
+               buyer_tel: phone
+               
+           }, function(rsp) {   
+                  if(rsp.success) {
+                   
+                      $.ajax({
+                         url: "order/completePayment",
+                         type: 'POST',
+                         dataType: 'json',
+                         data: {
+                            merchant_uid: merchantid
+                         },
+                         beforeSend: function(xhr){
+                            xhr.setRequestHeader(header, token);
+                         }
+                      }).done(function(result){
+                         if(result.successPayment) {
+                            location.href = "/into/paymentComplete?merchant_uid="+merchantid; //결제완료페이지
+                         }else {
+                            if(result.hasSetPrice) {
+                               alerting("결제하신 금액과 판매자가 설정한 금액이 다릅니다.");
+                               var reason = "price not equals";
+                            }else {
+                               alerting("판매자가 구독을 비활성화 했습니다.");
+                               var reason = "price null";
+                            }
+                            
+                            (function() {
+                               $.ajax({
+                                  url: "order/orderPayment", // 이 주소의 컨트롤러로 데이터를 주는 것.
+                                  type: 'POST',
+                                  dataType: 'json',
+                                  data: {
+                                     merchant_uid: merchantid
+                                  },
+                                  beforeSend: function(xhr){
+                                     xhr.setRequestHeader(header, token);
+                                  }
+                               }).done(function(result2){
+                                  if(result2.code==0) {
+                                     alerting("자동으로 결제가 취소되었습니다.");
+                                  }else {
+                                     alerting("결제가 취소되지 않았습니다. 관리자에게 문의해주세요.")
+                                  }
+                               });
+                            })();
+                         }
+                      });
+                   
+                  }else {
+                      alerting("결제에 실패하셨습니다.");
+                   }
                 }
-            }); // request_pay 닫음
-        } // payment 닫음
-      
-      //문서가 준비되면 제일 먼저 실행
-      $(document).ready(function(){
-         $("#iamportPayment").click(function(){
-            payment();//버튼 클릭하면 호출
-         });
-      });
+           );
+        </sec:authorize>
+        
+     }
+    
+	    //문서가 준비되면 제일먼저 실행
+	    $(document).ready(function(){
+	       $("#iamportPayment").click(function(){
+	          payment();//버튼 클릭하면 호출
+	       });
+	    });
+
     </script>
 
 </head>
@@ -88,16 +159,16 @@
       
 	<table width="1300" cellpadding="0" cellspacing="0" border="1">
 	  <tr>
-         <td>주문 상세 번호</td>
+         <td>번호</td>
          <td>썸네일</td>
          <td>상품 정보</td>
          <td>개수</td>
          <td>가격</td>
       </tr>
       
-      <c:forEach items="${orderPaymentOne}" var="orderPaymentOne">
+      <c:forEach items="${orderpaymentList}" var="orderPaymentOne">
 	      <tr>
-	         <td>${orderPaymentOne.product_id}</td>
+	         <td>1</td>
 	         
 				<c:choose>
 					<c:when test="${not empty orderPaymentOne.productImages}">
@@ -116,6 +187,22 @@
 		  </tr>
       </c:forEach>
 	</table>
+	
+	<hr>
+	<h1>쿠폰 | 적립금</h1>
+	
+	      <c:forEach items="${couponList}" var="couponList">
+	      <tr>
+	         <td>쿠폰</td>
+		  </tr>
+		  	      
+	      <tr>
+	         <td>${couponList.coupon_name}</td>
+		  </tr>
+      </c:forEach>
+      
+	<div>쿠폰 : </div>
+	<div>적립금 : </div> 
 	
     <div>
     <br>

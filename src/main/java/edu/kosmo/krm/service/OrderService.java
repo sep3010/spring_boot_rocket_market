@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
+import edu.kosmo.krm.vo.CouponVO;
 import edu.kosmo.krm.vo.MemberVO;
 
 
@@ -18,8 +19,9 @@ public interface OrderService {
 	public int order_History_getTotal(MemberVO memberVO);
 	
 	// 결제주문 페이지
-	public List<JoinOrderPaymentVO> orderPayment_getList(MemberVO memberVo);
+	public List<JoinOrderPaymentVO> orderPayment_getList(MemberVO memberVO);
 	
-	// 상품 번호로 상품 정보 가져오는 코드
-	public List<JoinOrderPaymentVO> getProductId(int product_id);
+	// 쿠폰 목록 가져오기
+	public List<JoinOrderPaymentVO> getUserCouponList(MemberVO memberVO);
+	
 }

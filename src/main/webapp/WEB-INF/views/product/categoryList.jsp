@@ -206,7 +206,11 @@
           <div class="container product__container mt-5">
             <div class="row mb-5">
               <c:forEach var="product" items="${productList}">
-              	
+              <input type="hidden" id="product_name" name="product_name" value="${product.name }">
+              <input type="hidden" id="email" name="email" value="${memberVO.email }">
+              <input type="hidden" id="phone" name="phone" value="${memberVO.phone }">
+              <input type="hidden" id="amount" name="amount" value="${memberVO.amount }">
+              
               	<!-- 상품카드 정보 -->
                 <div id="product" class="col-sm-6 col-md-4 col-lg-3">
                   <a href="" id="image-title"><!-- 상품번호 넣어서 상품 상세 페이지로 이동 -->

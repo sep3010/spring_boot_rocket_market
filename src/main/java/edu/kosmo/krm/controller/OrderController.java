@@ -63,20 +63,27 @@ public class OrderController {
 		List<JoinOrderPaymentVO> join = orderService.orderPayment_getList(memberCustomDetails.getMemberVO());
 		view.addObject("orderpaymentList", join);
 		
-		// 상품 가져오기
-		log.info("orderPaymentOne()..");
-		int product_id = joinOrderPaymentVO.getProduct_id();
-		view.addObject("orderPaymentOne", orderService.getProductId(product_id));
+		List<JoinOrderPaymentVO> coupon = orderService.getUserCouponList(memberCustomDetails.getMemberVO());
+		view.addObject("couponList", coupon);
 
-		JSONObject data = new JSONObject();
-		data.put("product", joinOrderPaymentVO);
-		log.info("product====" + joinOrderPaymentVO);
+
 		
 		
 		view.setViewName("/order/orderPaymentOne");
 		return view;
 	}
-
 	
+//	// 주문 페이지
+//	@GetMapping("/order/orderPayment")
+//	public List<JoinOrderHistoryVO> orderPayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, JoinOrderPaymentVO joinOrderPaymentVO) {
+//		// 주문자 정보 가져오기
+//		log.info("orderPayment()..");
+//		List<JoinOrderPaymentVO> join = orderService.orderPayment_getList(memberCustomDetails.getMemberVO());
+//		
+//		
+//
+//		
+//		return ;
+//	}
 
 }

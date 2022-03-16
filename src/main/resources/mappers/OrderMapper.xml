@@ -19,6 +19,7 @@
 	<resultMap id="OrderpaymentMap" type="edu.kosmo.krm.joinVO.JoinOrderPaymentVO">
 		<result property="member_name" column="member_name" />
 		<result property="phone" column="phone" />
+		<result property="email" column="email" />
 		<result property="point" column="point" />
 		<result property="postcode" column="postcode" />
 		<result property="address" column="address" />
@@ -26,6 +27,7 @@
 		<result property="order_detail_id" column="order_detail_id" />
 		<result property="quantity" column="quantity" />
 		<result property="amount" column="amount" />
+		<result property="payment_number" column="payment_number" />
 		<result property="brand" column="brand" />
 		<result property="product_id" column="product_id" />
 		<result property="product_name" column="product_name" />
@@ -126,6 +128,7 @@
 					SELECT
 					        M.name as member_name,
 					        M.phone,
+					        M.email,
 					        M.point,
 					        D.postcode,
 					        D.address,
@@ -133,6 +136,7 @@
 					        OD.id as order_detail_id,
 					        OD.quantity,
 					        MO.AMOUNT,
+					        MO.payment_number,
 					        P.brand,
 					        P.name as product_name,
 					        P.price,
@@ -178,29 +182,24 @@
 		]]>
 	</select>
 	
-	 	<select id="getProductId" resultMap="OrderpaymentMap">
+	 	<select id="getUserCouponList" resultMap="OrderpaymentMap">
 	   <![CDATA[
 				SELECT
-				        P.ID as product_id,
-                        P.brand,
-                        P.name as product_name,
-                        P.price,
-                        P.discount as product_discount,
-                        PI.ID as product_image_id,
-                        PI.EXTENSION,
-                        PI.NAME as product_image_name,
-                        PI.INFORMATION_TYPE,
-                        PI.PATH                     
+				    *
 				FROM
-				        PRODUCT P,
-				        PRODUCT_IMAGE PI
+				        COUPON C,
+				        USER_COUPON UC,
+				        MEMBER M
 				WHERE
-				        P.ID = PI.PRODUCT_ID
+				        M.ID = UC.MEMBER_ID
 				AND
-				        PI.INFORMATION_TYPE = 'thumbnail'
+				        UC.COUPON_ID = C.ID
 				AND
-				        P.ID = #{product_id}		
+				        M.ID = #{id }
+        			
 		]]>
 	</select>
+	
+
 	
 </mapper> 

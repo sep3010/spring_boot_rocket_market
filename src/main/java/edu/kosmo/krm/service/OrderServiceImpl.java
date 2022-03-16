@@ -39,12 +39,14 @@ public class OrderServiceImpl implements OrderService {
 		return ordermapper.getOrderPaymentList(memberVO);
 	}
 
-	// 상품 번호로 상품 정보 가져오는 코드
 	@Override
-	public List<JoinOrderPaymentVO> getProductId(int product_id) {
-		log.info("getProductId()...");
-		return ordermapper.getProductId(product_id);
+	public List<JoinOrderPaymentVO> getUserCouponList(MemberVO memberVO) {
+		log.info("getUserCouponList()...");
+		return ordermapper.getUserCouponList(memberVO);
 	}
+	
+	
+
 
 
 }

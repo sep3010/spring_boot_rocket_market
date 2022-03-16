@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
+import edu.kosmo.krm.vo.CouponVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
 
@@ -26,6 +27,6 @@ public interface OrderMapper {
 	// 결제주문
 	List<JoinOrderPaymentVO> getOrderPaymentList(@Param("memberVO") MemberVO memberVO);
 	
-	// 상품 번호로 상품 정보 가져오는 코드 (1개 가져옴)
-	List<JoinOrderPaymentVO> getProductId(int product_id);
+	public List<JoinOrderPaymentVO> getUserCouponList(MemberVO memberVO);
+
 }

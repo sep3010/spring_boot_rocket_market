@@ -33,6 +33,7 @@ public class JoinOrderPaymentVO {
 	
 	private String member_name;
 	private String phone;
+	private String email;
 	private int point;
 	
 	private int postcode;
@@ -43,6 +44,7 @@ public class JoinOrderPaymentVO {
 	private int quantity;
 	
 	private int amount;
+	private int payment_number;
 	
 	private int product_id;
 	private String brand;
