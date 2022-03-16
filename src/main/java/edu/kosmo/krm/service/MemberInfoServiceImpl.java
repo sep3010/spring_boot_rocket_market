@@ -36,11 +36,18 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		return memberInfoMapper.getListWithPaging(criteria);
 	}
 
-	// 회원 정보 조회하는 함수
+	// 회원 정보 조회하는 함수 (회원번호)
 	@Override
 	public MemberVO get(int id) {
 		log.info("get()...");
 		return memberInfoMapper.read(id);
+	}
+	// 회원 정보 조회하는 함수 (회원아이디) - 유빈:장바구니때 사용
+
+	@Override
+	public MemberVO getCart(String username) {
+		log.info("get()...");
+		return memberInfoMapper.readCart(username);
 	}
 
 	// 회원 정보 수정하는 함수

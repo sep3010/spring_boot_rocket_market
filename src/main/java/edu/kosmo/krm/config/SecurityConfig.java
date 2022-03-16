@@ -40,14 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.oauth2Login();
 		
 	}
-	
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
+
 	/*
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

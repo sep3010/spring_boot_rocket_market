@@ -2,12 +2,14 @@ package edu.kosmo.krm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
 
@@ -19,6 +21,16 @@ import edu.kosmo.krm.vo.ProductVO;
 public interface OrderMapper {
 
 	// 주문 내역 가져오는 코드 (with 페이징)
-	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
-	int getOrderHistoryTotalCount(MemberVO memberVO);
+	public List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
+	public int getOrderHistoryTotalCount(MemberVO memberVO);
+	/*유빈*/
+	// 장바구니 상품넣기 ==================================================================
+	@Select("SELECT NVL(MAX(id),0) AS id FROM cart WHERE member_id = #{member_id}")
+	public int findCart(CartVO cartVO); //카트찾기
+	@Insert("INSERT INTO cart VALUES (cart_SEQ.NEXTVAL, #{member_id}, #{product_id}, #{quantity})")
+	public void insertCart(CartVO cartVO);
+	@Insert("INSERT INTO cart VALUES (#{id}, #{member_id}, #{product_id}, #{quantity})")
+	public void insertUserCart(CartVO cartVO);
+	@Select("SELECT * FROM cart WHERE member_id = ${member_id}")
+	public List<CartVO> getCart(CartVO member_id); //카트찾기
 }

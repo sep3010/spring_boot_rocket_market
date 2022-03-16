@@ -140,7 +140,7 @@
               	
               	<!-- 상품카드 정보 -->
                 <div id="product" class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="" id="image-title"><!-- 상품번호 넣어서 상품 상세 페이지로 이동 -->
+                  <a href="${pageContext.request.contextPath}/product/productView/${product.id}" id="image-title"><!-- 상품번호 넣어서 상품 상세 페이지로 이동 -->
                     <c:choose>
 					  <c:when test="${not empty product.productImages}">
 						<c:forEach var="main" items="${product.productImages}">

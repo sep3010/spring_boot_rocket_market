@@ -86,6 +86,7 @@
 	<a href="/oauth2/authorization/kakao">카카오 로그인</a><br/>
 	<a href="/oauth2/authorization/google">구글 로그인</a>
     
+    <h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
 
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +32,23 @@ public class OrderServiceImpl implements OrderService {
 		log.info("order_History_getTotal()...");
 		return ordermapper.getOrderHistoryTotalCount(memberVO);
 	}
-
+	
+	/*유빈*/
+	// 회원 장바구니 유무 확인
+	@Override
+	public int findCart(CartVO cartVO) {
+		log.info("findCart()...");
+		return ordermapper.findCart(cartVO);
+	}
+	// 새 장바구니 상품넣기
+	@Override
+	public void insertCart(CartVO cartVO) {
+		log.info("insertCart()...");
+		ordermapper.insertCart(cartVO);
+	}
+	public CartVO cartProduct(int member_id) {
+		log.info("cartProduct()...");
+		ordermapper.getCart(member_id);
+	}
 
 }

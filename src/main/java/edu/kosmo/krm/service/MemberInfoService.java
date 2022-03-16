@@ -22,7 +22,8 @@ public interface MemberInfoService {
 
 	// 회원 조회하는 함수
 	public MemberVO get(int id);
-
+	public MemberVO getCart(String username); //아이디로 회원번호가져오기 - 장바구니
+	
 	// 회원 정보 수정하는 함수
 	void modify(MemberVO memberVO);
 	
