@@ -138,7 +138,7 @@ public class ProductInfoController {
 		
 		log.info("savePath : " + savePath);
 		
-		// productService.insertProductAndImage(productVO, files, savePath);
+		productService.updateProductAndImage(productVO, files, savePath);
 		
 		String viewURL = "redirect:/admin/product_view/" + productVO.getId();
 		log.info("viewURL : " + viewURL);

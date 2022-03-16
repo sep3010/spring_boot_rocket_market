@@ -35,24 +35,20 @@
 		return inputTag;
 	}
 	
-	function imageDelete(image_type){
+	function imageDelete(){
 			
-		let inputFile = "<input type=file id=" 
-						+ image_type + " name=" + image_type + " accept=image/*>"
-		
-		if(image_type == 'main'){
-			$("#mainImage").empty();		
-			$("#mainImage").prepend(inputFile);
-		} 
-		else if(image_type == 'info'){
-			$("#infoImage").empty();		
-			$("#infoImage").prepend(inputFile);
-		}
-		else if(image_type == 'detail'){
-			$("#detailImage").empty();		
-			$("#detailImage").prepend(inputFile);
-		} 
-			
+
+		$("#mainImage").empty();		
+		$("#mainImage").prepend("<input type=file id=main name=main accept=image/*>");
+ 
+
+		$("#infoImage").empty();		
+		$("#infoImage").prepend("<input type=file id=info name=info accept=image/*>");
+	
+	
+		$("#detailImage").empty();		
+		$("#detailImage").prepend("<input type=file id=detail name=detail accept=image/*>");
+					
 			
 	}
 	
@@ -138,15 +134,15 @@
 		 
 		 $("#mainImage").empty();
 		 $("#mainImage").prepend("<img src=" + main + ">");
-		 $("#mainImage").append("<span onclick=imageDelete('main');><i class='fa fa-times fa-xl'></i></span>");
+		 $("#mainImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 		 $("#infoImage").empty();
 		 $("#infoImage").prepend("<img src=" + info + ">");
-		 $("#infoImage").append("<span onclick=imageDelete('info');><i class='fa fa-times fa-xl'></i></span>");
+		 $("#infoImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 		 $("#detailImage").empty();
 		 $("#detailImage").prepend("<img src=" + detail + ">");
-		 $("#detailImage").append("<span onclick=imageDelete('detail');><i class='fa fa-times fa-xl'></i></span>");
+		 $("#detailImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 
 		return console.log("수정 페이지 로딩 완료");
@@ -172,9 +168,39 @@
 			$("h1").prepend("상품 수정");
 			
 			// 수정 버튼 만들어주기
-			$("#table").after('<input id=modify type=submit value=수정하기>');
+			$("#table").after('<button id=modify>수정하기</button>');
 			
 		}
+		
+		// 상품 수정 버튼
+		$("#modify").on('click', function(){
+			
+			// DB에 들어갈 capacity(용량)과 unit(판매단위)를 
+			// 하나의 문자로 만들어 주기위한 작업		
+			let capacity = $("#capacity_part1").val() + $("#capacity_part2").val();
+			
+							
+			let unit;
+			if($("#unit_part2").val() == '기타'){
+				unit = $("#unit_part1").val()
+			}
+			else{
+				unit = $("#unit_part1").val() + $("#unit_part2").val();
+			}
+						
+			// 하나의 문자로 만들어준 값으로 바꿔 넣어준 뒤 전달
+			//$("#capacity").empty();
+			let finalCapacity = makeInputHidden('capacity', capacity);		
+			$("#capacity").prepend(finalCapacity);
+			
+			//$("#unit").empty();
+			let finalUnit = makeInputHidden('unit', unit);		
+			$("#unit").prepend(finalUnit);
+			
+			// 처리 완료 후 action 주소로 전달
+			document.$(".addProduct").submit();
+	
+		}); //end submit()
 		
 			
 		// 상품 등록 버튼
@@ -321,8 +347,7 @@
 
 		</table>
 		<button id="submit">상품 등록</button>
-	</form:form>
-	
+	</form:form> 
 	
 	<p class="link"><a href="${pageContext.request.contextPath}/admin/adminHome">이전(관리자홈)</a></p>
 	<p class="link"><a href="${pageContext.request.contextPath}/admin/productManagement">상품목록</a></p>

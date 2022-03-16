@@ -67,13 +67,16 @@ public interface ProductMapper {
 	// 상품 정보 수정(관리자)
 	public void updateProduct(ProductVO productVO);
 	
+	// 상품번호의 이미지 이미지 정보 타입에 해당되는 이미지 불러오기
+	@Select("SELECT * FROM product_image WHERE product_id = #{product_id} AND information_type = #{information_type}")
+	public ProductImageVO getImagesByInformation(int product_id, String information_type);
+	
 	// 상품번호의 이미지 전체 불러오기
 	@Select("SELECT * FROM product_image WHERE product_id = #{product_id}")
 	public List<ProductImageVO> getproductImages(int product_id);
 	
 	// 상품 이미지 삭제 
-	@Delete("DELETE FROM product_image WHERE product_id = #{product_id} "
-			+ "AND information_type = #{information_type}")
+	@Delete("DELETE FROM product_image WHERE product_id = #{product_id} AND information_type = #{information_type}")
 	public void deleteImage(int product_id, String information_type);
 	
 }

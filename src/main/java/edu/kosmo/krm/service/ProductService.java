@@ -46,5 +46,5 @@ public interface ProductService {
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
 	
 	// 상품과 상품이미지 수정하기
-	int updateProductAndImage(ProductVO productVO,Map<String, MultipartFile> files, String savePath);
+	void updateProductAndImage(ProductVO productVO,Map<String, MultipartFile> files, String savePath);
 }
