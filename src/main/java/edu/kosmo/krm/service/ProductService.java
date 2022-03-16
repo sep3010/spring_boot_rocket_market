@@ -42,6 +42,12 @@ public interface ProductService {
 	public List<ProductVO> getCategoryProductList(CriteriaP criteria);
 	public int getCategoryProductTotal(String type); //상품개수
 
+	/*유빈*/
+	// 상품상세 ==================================================
+	public List<ProductVO> getProductInfo(ProductVO product); //상품상세내용 가져오기
+	public List<ProductVO> getRecommendProduct(ProductVO productVO); //동일브랜드 상품목록추천
+	
+	
 	// 상품과 상품이미지 등록하기======================================
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
 	

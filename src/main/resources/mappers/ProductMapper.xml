@@ -184,5 +184,30 @@
       ]]>
 	</select>
 
+	<!-- 상품상세페이지에서 해당상품 정보와 이미지 불러오기 -->
+	<select id="getProductDetail" resultMap="productMap">
+	  <![CDATA[
+		SELECT * FROM product p 
+		LEFT JOIN (SELECT id AS image_id, product_id, extension, 
+		name AS image_name,information_type, path FROM product_image 
+		WHERE product_id = #{id}) i
+		ON p.id = i.product_id
+		WHERE p.id= #{id}	
+      ]]>
+	</select>
+	
+	
+	<!-- 상품상세페이지에서 동일브랜드 추천상품 가져오기 -->
+	<select id="getRecommendProductList" resultMap="productMap">
+	  <![CDATA[
+        SELECT * FROM product p 
+        LEFT JOIN (SELECT id AS image_id,
+        product_id, extension, name AS image_name,
+        information_type, path FROM product_image  
+        WHERE information_type = 'thumbnail') i
+        ON p.id = i.product_id 
+        WHERE p.brand = #{brand}	
+      ]]>
+	</select>
 
 </mapper>

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.page.PagePVO;
+import edu.kosmo.krm.service.ProductBoardService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.page.PageVO;
@@ -28,6 +29,8 @@ public class ProductInfoController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private ProductBoardService productBoardService;
 	
 	 
 	// admin - 전체상품목록페이지
@@ -244,5 +247,25 @@ public class ProductInfoController {
 		return view;
 	}
 	
+	/*유빈*/	
+	// ================= 상품 상세 페이지 =========================
+	//선택한 상품 상세 페이지로 이동 + 상품후기 불러오기
+	@GetMapping("/product/productView/{id}")
+	public ModelAndView productView(Criteria criteria, ProductVO productVO, ModelAndView view) {
+		log.info("productView()..상품번호 : " + productVO.getId());
 
+		view.addObject("productInfo", productService.getProductInfo(productVO));//상품정보
+		view.addObject("productBoard", productBoardService.getProductBoardList(criteria,productVO));//상품후기
+		int reviewTotal = productBoardService.getProductBoardTotal(productVO);
+		view.addObject("pageMaker", new PageVO(criteria, reviewTotal));//상품후기페이징
+		view.addObject("productNum", productVO.getId());//상품번호
+		
+		ProductVO Recommend = productService.getProduct(productVO.getId());//상품정보가져오기		
+		view.addObject("recommendProduct",productService.getRecommendProduct(Recommend));		
+		
+		view.setViewName("/product/productView");
+		return view;
+	}
+	
+	
 }
