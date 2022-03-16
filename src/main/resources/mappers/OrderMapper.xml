@@ -54,6 +54,21 @@
 		<result property="coupon_discount" column="coupon_discount" />
 	</resultMap>
 	
+	<resultMap id="CouponMap" type="edu.kosmo.krm.joinVO.JoinCoupon">
+		<result property="coupon_id" column="coupon_id" />
+		<result property="coupon_name" column="coupon_name" />
+		<result property="discount" column="discount" />
+		<result property="issue_date" column="issue_date" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+
+	<resultMap id="ProductMap" type="edu.kosmo.krm.vo.ProductVO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="capacity" column="capacity" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
 	
 	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
@@ -182,10 +197,15 @@
 		]]>
 	</select>
 	
-	 	<select id="getUserCouponList" resultMap="OrderpaymentMap">
+	 	<select id="getUserCouponList" resultMap="CouponMap">
 	   <![CDATA[
-				SELECT
-				    *
+				SELECT 
+                
+				    C.id as coupon_id,
+                    C.name as coupon_name,
+                    C.discount,
+                    UC.issue_date,
+                    M.id as member_id
 				FROM
 				        COUPON C,
 				        USER_COUPON UC,
@@ -194,12 +214,25 @@
 				        M.ID = UC.MEMBER_ID
 				AND
 				        UC.COUPON_ID = C.ID
-				AND
-				        M.ID = #{id }
+                AND
+                        M.ID = #{id }
         			
 		]]>
 	</select>
 	
-
+	 	<select id="getProduct" resultMap="CouponMap">
+	   <![CDATA[
+				SELECT
+					    PRODUCT.name,
+					    PRODUCT.id,
+					    PRODUCT.price,
+					    PRODUCT.discount				    	
+				FROM
+				        PRODUCT
+				WHERE
+				        PRODUCT.ID = #{id }
+        			
+		]]>
+	</select>
 	
 </mapper> 

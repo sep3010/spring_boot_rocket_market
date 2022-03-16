@@ -190,19 +190,24 @@
 	
 	<hr>
 	<h1>쿠폰 | 적립금</h1>
-	
+	   <table width="1000" cellpadding="0" cellspacing="0" border="1">
+	      <tr>
+	         <td>쿠폰 이름</td>
+	         <td>쿠폰 할인율</td>
+		  </tr>
+	      
 	      <c:forEach items="${couponList}" var="couponList">
-	      <tr>
-	         <td>쿠폰</td>
-		  </tr>
-		  	      
-	      <tr>
-	         <td>${couponList.coupon_name}</td>
-		  </tr>
-      </c:forEach>
+		      <tr>
+		         <td>${couponList.coupon_name}</td>
+		         <td>${couponList.discount}</td>
+			  </tr>
+     	 </c:forEach>
+      </table>
       
-	<div>쿠폰 : </div>
-	<div>적립금 : </div> 
+      <hr>
+		<div>
+			상품 금액 ${product}
+		</div>
 	
     <div>
     <br>

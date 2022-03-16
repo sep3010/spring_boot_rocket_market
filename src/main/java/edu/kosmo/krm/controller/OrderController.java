@@ -23,6 +23,7 @@ import com.nimbusds.jose.shaded.json.JSONObject;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
+import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
@@ -57,14 +58,21 @@ public class OrderController {
 	
 	// 주문 페이지 (view)
 	@GetMapping("/order/orderPaymentOne")
-	public ModelAndView orderPaymentOne(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, JoinOrderPaymentVO joinOrderPaymentVO, ModelAndView view) {
+	public ModelAndView orderPaymentOne(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, 
+										@RequestParam("product_id") int product_id, JoinOrderPaymentVO joinOrderPaymentVO, ModelAndView view) {
 		// 주문자 정보 가져오기
 		log.info("orderPaymentOne()..");
 		List<JoinOrderPaymentVO> join = orderService.orderPayment_getList(memberCustomDetails.getMemberVO());
 		view.addObject("orderpaymentList", join);
+		log.info("=============join" + join);
 		
-		List<JoinOrderPaymentVO> coupon = orderService.getUserCouponList(memberCustomDetails.getMemberVO());
+		// 쿠폰 가져오는 코드
+		List<JoinCoupon> coupon = orderService.getUserCouponList(memberCustomDetails.getMemberVO());
 		view.addObject("couponList", coupon);
+		
+		// 상품 번호로 상품 가져오는 코드
+		List<ProductVO> product = orderService.getProductList(product_id);
+		view.addObject("product", product);
 
 
 		

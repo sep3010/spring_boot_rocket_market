@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,9 +42,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<JoinOrderPaymentVO> getUserCouponList(MemberVO memberVO) {
+	public List<JoinCoupon> getUserCouponList(MemberVO memberVO) {
 		log.info("getUserCouponList()...");
 		return ordermapper.getUserCouponList(memberVO);
+	}
+
+	@Override
+	public List<ProductVO> getProductList(int product_id) {
+		log.info("getProductList()...");
+		return ordermapper.getProduct(product_id);
 	}
 	
 	
