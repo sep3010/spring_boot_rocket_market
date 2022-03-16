@@ -39,15 +39,15 @@
 			
 
 		$("#mainImage").empty();		
-		$("#mainImage").prepend("<input type=file id=main name=main accept=image/*>");
+		$("#mainImage").prepend("<input type=file id=main name=main accept=image/* required>");
  
 
 		$("#infoImage").empty();		
-		$("#infoImage").prepend("<input type=file id=info name=info accept=image/*>");
+		$("#infoImage").prepend("<input type=file id=info name=info accept=image/* required>");
 	
 	
 		$("#detailImage").empty();		
-		$("#detailImage").prepend("<input type=file id=detail name=detail accept=image/*>");
+		$("#detailImage").prepend("<input type=file id=detail name=detail accept=image/* required>");
 					
 			
 	}
@@ -173,7 +173,8 @@
 		}
 		
 		// 상품 수정 버튼
-		$("#modify").on('click', function(){
+		$("#modify").on('click', function(event){
+			
 			
 			// DB에 들어갈 capacity(용량)과 unit(판매단위)를 
 			// 하나의 문자로 만들어 주기위한 작업		
@@ -204,7 +205,7 @@
 		
 			
 		// 상품 등록 버튼
-		$("#submit").on('click', function(){
+		$("#submit").on('click', function(event){
 			
 			// DB에 들어갈 capacity(용량)과 unit(판매단위)를 
 			// 하나의 문자로 만들어 주기위한 작업		
@@ -334,15 +335,15 @@
 			<tr>
 				<!-- accept="image/*"는 이미지 형태의 파일만 허용하겠다는 의미 -->
 				<td>상품 대표 이미지</td>
-				<td id="mainImage"><input type="file" id="main" name="main" accept="image/*"></td>
+				<td id="mainImage"><input type="file" id="main" name="main" accept="image/*" required></td>
 			</tr>
 			<tr>
 				<td>상품정보 이미지</td>
-				<td id="infoImage"><input type="file" id="info" name="info" accept="image/*"></td>
+				<td id="infoImage"><input type="file" id="info" name="info" accept="image/*" required></td>
 			</tr>
 			<tr>
 				<td>상품상세 이미지</td>
-				<td id="detailImage"><input type="file" id="detail" name="detail" accept="image/*"></td>
+				<td id="detailImage"><input type="file" id="detail" name="detail" accept="image/*" required></td>
 			</tr>					
 
 		</table>
