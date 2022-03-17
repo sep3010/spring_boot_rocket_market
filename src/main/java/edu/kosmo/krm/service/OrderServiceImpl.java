@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
@@ -46,9 +47,11 @@ public class OrderServiceImpl implements OrderService {
 		log.info("insertCart()...");
 		ordermapper.insertCart(cartVO);
 	}
-	public CartVO cartProduct(int member_id) {
-		log.info("cartProduct()...");
-		ordermapper.getCart(member_id);
+	
+	public List<JoinCartProductListVO> cartProductList(int member_id) {
+		log.info("cartProductList()...");
+		return ordermapper.getCartProductList(member_id);
 	}
+	
 
 }

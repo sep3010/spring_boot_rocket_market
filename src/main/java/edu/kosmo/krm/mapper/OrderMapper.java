@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
@@ -29,8 +30,8 @@ public interface OrderMapper {
 	public int findCart(CartVO cartVO); //카트찾기
 	@Insert("INSERT INTO cart VALUES (cart_SEQ.NEXTVAL, #{member_id}, #{product_id}, #{quantity})")
 	public void insertCart(CartVO cartVO);
-	@Insert("INSERT INTO cart VALUES (#{id}, #{member_id}, #{product_id}, #{quantity})")
-	public void insertUserCart(CartVO cartVO);
-	@Select("SELECT * FROM cart WHERE member_id = ${member_id}")
+	@Select("SELECT * FROM cart WHERE member_id = #{member_id}")
 	public List<CartVO> getCart(CartVO member_id); //카트찾기
+	public List<JoinCartProductListVO> getCartProductList(int member_id);//장바구니 상품목록
+	
 }

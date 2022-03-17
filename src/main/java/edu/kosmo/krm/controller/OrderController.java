@@ -65,10 +65,10 @@ public class OrderController {
 	@GetMapping("/user/cart")
 	public ModelAndView cart(ModelAndView view, Principal principal) {
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
-		MemberVO memberVO = memberInfoService.getCart(principal.getName());
+		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
 		log.info("회원번호" + memberVO.getId());
 		
-		view.addObject("cartProduct", orderService.cartProduct(memberVO.getId()));
+		view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));
 
 		view.setViewName("/user/cart");
 		return view;

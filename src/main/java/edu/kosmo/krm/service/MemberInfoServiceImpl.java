@@ -45,7 +45,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 	// 회원 정보 조회하는 함수 (회원아이디) - 유빈:장바구니때 사용
 
 	@Override
-	public MemberVO getCart(String username) {
+	public MemberVO getForCart(String username) {
 		log.info("get()...");
 		return memberInfoMapper.readCart(username);
 	}
