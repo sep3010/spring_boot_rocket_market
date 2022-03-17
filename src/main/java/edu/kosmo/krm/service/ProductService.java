@@ -43,5 +43,5 @@ public interface ProductService {
 
 	// 상품과 상품이미지 등록하기======================================
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
-	
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCoupon;
+import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberVO;
@@ -47,10 +48,18 @@ public class OrderServiceImpl implements OrderService {
 		return ordermapper.getUserCouponList(memberVO);
 	}
 
+	// 상품 가져오는 코드
 	@Override
 	public List<ProductVO> getProductList(int product_id) {
 		log.info("getProductList()...");
-		return ordermapper.getProduct(product_id);
+		return ordermapper.getProductList(product_id);
+	}
+
+	// 회원 배송 정보 가져오는 코드
+	@Override
+	public List<JoinMemberDeliveryVO> getMemberDeliveryList(int member_id) {
+		log.info("getMemberDeliveryList()...");
+		return ordermapper.getMemberDeliveryList(member_id);
 	}
 	
 	

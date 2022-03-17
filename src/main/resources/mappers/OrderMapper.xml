@@ -64,11 +64,20 @@
 
 	<resultMap id="ProductMap" type="edu.kosmo.krm.vo.ProductVO">
 		<result property="id" column="id" />
-		<result property="name" column="name" />
+		<result property="product_name" column="product_name" />
 		<result property="price" column="price" />
 		<result property="capacity" column="capacity" />
 		<result property="member_id" column="member_id" />
 	</resultMap>
+	
+	<resultMap id="MemberDeliveryMap" type="edu.kosmo.krm.joinVO.JoinMemberDeliveryVO">
+		<result property="postcode" column="postcode" />
+		<result property="address" column="address" />
+		<result property="phone" column="phone" />
+		<result property="message" column="message" />
+		<result property="receiver" column="receiver" />
+	</resultMap>	
+	
 	
 	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
@@ -219,20 +228,47 @@
         			
 		]]>
 	</select>
-	
-	 	<select id="getProduct" resultMap="CouponMap">
+
+	 	<select id="getProductList" resultMap="OrderpaymentMap">
 	   <![CDATA[
-				SELECT
-					    PRODUCT.name,
-					    PRODUCT.id,
-					    PRODUCT.price,
-					    PRODUCT.discount				    	
-				FROM
-				        PRODUCT
-				WHERE
-				        PRODUCT.ID = #{id }
-        			
+						SELECT 
+							P.id as product_id,
+					        P.brand,
+					        P.name as product_name,
+					        P.price,
+					        P.discount as product_discount,
+					        PI.ID as product_image_id,
+                            PI.EXTENSION,
+                            PI.NAME as product_image_name,
+                            PI.INFORMATION_TYPE,
+                            PI.PATH
+						FROM
+                        PRODUCT P,
+                        PRODUCT_IMAGE PI
+            WHERE
+                        P.ID = PI.PRODUCT_ID
+            AND
+                        PI.INFORMATION_TYPE = 'thumbnail'
+            AND
+                        P.ID = #{product_id}
 		]]>
 	</select>
-	
+		
+	 	<select id="getMemberDeliveryList" resultMap="MemberDeliveryMap">
+	   <![CDATA[
+					SELECT
+					        D.postcode,
+					        D.address,
+					        D.phone,
+					        D.message,
+					        D.receiver
+					FROM
+					        MEMBER M,
+					        DELIVERY D
+					WHERE
+					        M.ID = D.MEMBER_ID
+					AND
+					        M.ID = #{member_id}
+		]]>
+	</select>		
 </mapper> 

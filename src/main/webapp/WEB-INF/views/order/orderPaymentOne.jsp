@@ -27,20 +27,8 @@
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     
-    function drivePayment(seller_num, set_price) {
-        var seq = getMerchantSeq();
-        
-        var today = new Date();
-        var yyyy = today.getFullYear();
-        var mm = today.getMonth()+1;
-        var dd = today.getDate();
-        if(dd<10) {
-            dd='0'+dd;
-        } 
+    function payment() {
 
-        if(mm<10) {
-            mm='0'+mm;
-        } 
         
         <sec:authorize access="isAnonymous()">
            location.href = "/into/loginForm";
@@ -52,9 +40,9 @@
            let member_name = "${principal.memberVO.name}";
            let email = "${principal.memberVO.email}";
            let phone = "${principal.memberVO.phone}";
-           // 사용자 정보
-           
-           
+
+           let discountAmount = "${discountAmount }";
+           let product_name = "${product_name }";
            let merchantid = 'merchant_' + new Date().getTime();
            
            var token = $("meta[name='_csrf']").attr("content");
@@ -66,7 +54,7 @@
                pay_method: "card",
                merchant_uid: merchantid,
                name: product_name,
-               amount: amount,
+               amount: discountAmount,
                buyer_email: email,
                buyer_name: member_name,
                buyer_tel: phone
@@ -75,7 +63,7 @@
                   if(rsp.success) {
                    
                       $.ajax({
-                         url: "order/completePayment",
+                         url: "/order/completePayment",
                          type: 'POST',
                          dataType: 'json',
                          data: {
@@ -86,13 +74,13 @@
                          }
                       }).done(function(result){
                          if(result.successPayment) {
-                            location.href = "/into/paymentComplete?merchant_uid="+merchantid; //결제완료페이지
+                            location.href = "/"; //결제완료페이지
                          }else {
                             if(result.hasSetPrice) {
-                               alerting("결제하신 금액과 판매자가 설정한 금액이 다릅니다.");
+                            	alert("결제하신 금액과 판매자가 설정한 금액이 다릅니다.");
                                var reason = "price not equals";
                             }else {
-                               alerting("판매자가 구독을 비활성화 했습니다.");
+                            	alert("판매자가 구매를 비활성화 했습니다.");
                                var reason = "price null";
                             }
                             
@@ -109,17 +97,16 @@
                                   }
                                }).done(function(result2){
                                   if(result2.code==0) {
-                                     alerting("자동으로 결제가 취소되었습니다.");
+                                     alert("자동으로 결제가 취소되었습니다.");
                                   }else {
-                                     alerting("결제가 취소되지 않았습니다. 관리자에게 문의해주세요.")
+                                	  alert("결제가 취소되지 않았습니다. 관리자에게 문의해주세요.")
                                   }
                                });
                             })();
                          }
                       });
-                   
                   }else {
-                      alerting("결제에 실패하셨습니다.");
+                	  alert("결제에 실패하셨습니다.");
                    }
                 }
            );
@@ -146,12 +133,12 @@
 
 	<h1>배송 정보(회원 정보)</h1>
 	
-      <c:forEach items="${orderpaymentList}" var="orderpayment">
-		<div>수령인: ${orderpayment.member_name}</div>
-		<div>휴대폰: ${orderpayment.phone}</div>
-		<div>우편번호: ${orderpayment.postcode}</div>
-		<div>배송지: ${orderpayment.address}</div>
-		<div>배송 메시지: ${orderpayment.message}</div>
+      <c:forEach items="${memberDeliveryInfoList}" var="memberDeliveryInfo">
+		<div>수령인: ${memberDeliveryInfo.receiver}</div>
+		<div>휴대폰: ${memberDeliveryInfo.phone}</div>
+		<div>우편번호: ${memberDeliveryInfo.postcode}</div>
+		<div>배송지: ${memberDeliveryInfo.address}</div>
+		<div>배송 메시지: ${memberDeliveryInfo.message}</div>
 		<hr>
       </c:forEach>	
       
@@ -166,9 +153,9 @@
          <td>가격</td>
       </tr>
       
-      <c:forEach items="${orderpaymentList}" var="orderPaymentOne">
+      <c:forEach items="${productList}" var="orderPaymentOne">
 	      <tr>
-	         <td>1</td>
+	         <td>${orderPaymentOne.product_id }</td>
 	         
 				<c:choose>
 					<c:when test="${not empty orderPaymentOne.productImages}">
@@ -190,24 +177,50 @@
 	
 	<hr>
 	<h1>쿠폰 | 적립금</h1>
-	   <table width="1000" cellpadding="0" cellspacing="0" border="1">
-	      <tr>
-	         <td>쿠폰 이름</td>
-	         <td>쿠폰 할인율</td>
-		  </tr>
-	      
-	      <c:forEach items="${couponList}" var="couponList">
-		      <tr>
-		         <td>${couponList.coupon_name}</td>
-		         <td>${couponList.discount}</td>
-			  </tr>
-     	 </c:forEach>
-      </table>
+
       
-      <hr>
-		<div>
-			상품 금액 ${product}
-		</div>
+			<c:choose>
+				<c:when test="${not empty couponList}">
+				   <table width="1000" cellpadding="0" cellspacing="0" border="1">
+				      <tr>
+				         <td>쿠폰 이름</td>
+				         <td>쿠폰 할인율</td>
+					  </tr>
+				      
+				      <c:forEach items="${couponList}" var="couponList">
+					      <tr>
+					         <td>${couponList.coupon_name}</td>
+					         <td>${couponList.discount}</td>
+						  </tr>
+			     	 </c:forEach>
+			      </table>
+				</c:when>
+				<c:otherwise>
+					<td>사용 가능 쿠폰 없음</td>
+				</c:otherwise>
+			</c:choose>      
+      
+    <hr>
+    
+
+		<c:forEach var="orderPaymentOne" items="${productList}">
+		
+			<c:set var="product_name" value="${orderPaymentOne.product_name}"/>
+			<c:set var="price" value="${orderPaymentOne.price}"/>
+			<c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
+			<c:set var="discountPrice" value="${orderPaymentOne.price * (orderPaymentOne.product_discount * 0.01)}" scope="session"/>
+	        <c:set var="discountAmount" value="${price * (1 - (discountPercent/100)) + 3000}" scope="session"/>
+		
+			<span>상품 가격: ${orderPaymentOne.price }</span>
+			-
+			<span>할인 금액: ${discountPrice }</span>			
+			+
+			<span>배송비: 3000</span>
+			=
+			<span>주문금액: ${discountAmount }</span>
+		</c:forEach>
+		
+
 	
     <div>
     <br>

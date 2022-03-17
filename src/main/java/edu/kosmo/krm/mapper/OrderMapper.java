@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCoupon;
+import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.CouponVO;
@@ -31,7 +32,10 @@ public interface OrderMapper {
 	// 쿠폰 리스트 가져오는 함수
 	public List<JoinCoupon> getUserCouponList(MemberVO memberVO);
 	
-	// 상품 번호로 상품 정보 가져오는 코드
-	public List<ProductVO> getProduct(int product_id);
+	// 상품 가져오는 함수
+	public List<ProductVO> getProductList(int product_id);
+	
+	// 회원 정보 가져오는 함수
+	public List<JoinMemberDeliveryVO> getMemberDeliveryList(int member_id);
 
 }
