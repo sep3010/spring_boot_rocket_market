@@ -41,6 +41,8 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ProductService productService;
 	
 	// 주문 내역 리스트
 	@GetMapping("/user/orderhistory")
@@ -77,6 +79,8 @@ public class OrderController {
 		view.addObject("productList", orderService.getProductList(product_id));
 		log.info("================product_id: " + product_id);
 		log.info("joinOrderPaymentVO:" + orderService.getProductList(product_id));
+		view.addObject("product", productService.getProduct(product_id));
+		log.info("@@@@@@@@@@@getProduct:" + productService.getProduct(product_id));
 
 		view.setViewName("/order/orderPaymentOne");
 		return view;

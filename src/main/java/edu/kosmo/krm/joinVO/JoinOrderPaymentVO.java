@@ -56,6 +56,8 @@ public class JoinOrderPaymentVO {
 	
 	private List<ProductImageVO> productImages;
 	private List<CouponVO> coupons;
-	
+
+	private int imp_uid;
+	private int merchant_uid;	
 
 }

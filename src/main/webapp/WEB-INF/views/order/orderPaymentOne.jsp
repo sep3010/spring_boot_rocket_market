@@ -42,7 +42,7 @@
            let phone = "${principal.memberVO.phone}";
 
            let discountAmount = "${discountAmount }";
-           let product_name = "${product_name }";
+           let product_name = "${product.name }";
            let merchantid = 'merchant_' + new Date().getTime();
            
            var token = $("meta[name='_csrf']").attr("content");
@@ -54,7 +54,7 @@
                pay_method: "card",
                merchant_uid: merchantid,
                name: product_name,
-               amount: discountAmount,
+               amount: ${discountAmount},
                buyer_email: email,
                buyer_name: member_name,
                buyer_tel: phone
@@ -106,7 +106,7 @@
                          }
                       });
                   }else {
-                	  alert("결제에 실패하셨습니다.");
+                	  alert("결제에 실패하셨습니다." + rsp.error_msg);
                    }
                 }
            );
@@ -154,7 +154,8 @@
       </tr>
       
       <c:forEach items="${productList}" var="orderPaymentOne">
-	      <tr>
+			
+			 <tr>
 	         <td>${orderPaymentOne.product_id }</td>
 	         
 				<c:choose>
@@ -204,8 +205,6 @@
     
 
 		<c:forEach var="orderPaymentOne" items="${productList}">
-		
-			<c:set var="product_name" value="${orderPaymentOne.product_name}"/>
 			<c:set var="price" value="${orderPaymentOne.price}"/>
 			<c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
 			<c:set var="discountPrice" value="${orderPaymentOne.price * (orderPaymentOne.product_discount * 0.01)}" scope="session"/>
@@ -227,6 +226,6 @@
           <button style="font-size:40px" id="iamportPayment" type="button">결제테스트</button>
         
     </div>
-
+${productList}
 </body>
 </html>
