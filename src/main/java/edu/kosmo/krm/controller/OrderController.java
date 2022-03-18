@@ -77,11 +77,8 @@ public class OrderController {
 		// 상품 가져오기
 		int product_id = joinOrderPaymentVO.getProduct_id();
 		view.addObject("productList", orderService.getProductList(product_id));
-		log.info("================product_id: " + product_id);
-		log.info("joinOrderPaymentVO:" + orderService.getProductList(product_id));
 		view.addObject("product", productService.getProduct(product_id));
-		log.info("@@@@@@@@@@@getProduct:" + productService.getProduct(product_id));
-
+		
 		view.setViewName("/order/orderPaymentOne");
 		return view;
 	}
