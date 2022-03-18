@@ -5,7 +5,7 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.ReviewMapper">
 
-	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
+	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewVO">
 	
 		<result property="nickname" column="nickname" />
 		<result property="board_id" column="board_id" />
@@ -21,7 +21,7 @@
 	
 	
 
-	<select id="getReviewList" resultType="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
+	<select id="getReviewList" resultType="edu.kosmo.krm.joinVO.JoinReviewVO">
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -60,7 +60,16 @@
          	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}
 	   ]]>
 	</select>
-
+	
+	<select id="getReviewTotalCount" resultType="int">
+	   <![CDATA[
+				SELECT count(*) FROM board B 
+   						WHERE b.board_category_id = 3 
+   						AND b.member_id = 1
+	   ]]>
+	</select>
+	
+	<!--  
  	<select id="getReviewTotalCount" resultType="int">
 	   <![CDATA[
 						SELECT count(*)
@@ -88,7 +97,7 @@
                                   
 	   ]]>
 	</select>
-
+	-->
 
 	
 </mapper> 

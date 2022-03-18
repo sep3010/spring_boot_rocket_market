@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- fontawesome -->
+<script src="https://kit.fontawesome.com/b7ee8a4337.js" crossorigin="anonymous"></script>
+
 <title>후기 작성</title>
 </head>
 <body>
@@ -25,21 +30,33 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>별정</td>
-				<td></td>
+				<td>별점</td>
+				<td>
+					<select id="score" name="score">
+						<option value="0">☆☆☆☆☆</option>
+						<option value="1">★☆☆☆☆</option>
+						<option value="2">★★☆☆☆</option>
+						<option value="3">★★★☆☆</option>
+						<option value="4">★★★★☆</option>
+						<option value="5">★★★★★</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td><input type="text" name=""></td>
+				<td><input type="text" name="title"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea rows="500" cols="700"></textarea></td>
+				<td>
+					<textarea rows="30" cols="110" 
+					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 알림없이 포인트가 회수될 수 있습니다."></textarea>
+				</td>
 			</tr>
 			<tr>
 				<td>사진 첨부</td>
-				<td id="reviewImage">
-					<input type="file" id="reviewImage" name="reviewImage" accept="image/*" multiple>
+				<td id="image">
+					<input type="file" id="reviewImages" name="reviewImages" accept="image/*" multiple>
 				</td>
 			</tr>
 		</table>

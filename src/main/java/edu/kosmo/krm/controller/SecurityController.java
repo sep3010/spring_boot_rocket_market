@@ -22,7 +22,7 @@ public class SecurityController {
 		return view;
 	}
 
-	//admin 폴더 뷰페이지 권한체크 위한 mapping
+	//admin 폴더 뷰페이지 권한체크 위한 mapping 
 	@GetMapping("/admin/adminHome")
 	public ModelAndView adminHome(ModelAndView view) {
 		log.info("adminHome..");

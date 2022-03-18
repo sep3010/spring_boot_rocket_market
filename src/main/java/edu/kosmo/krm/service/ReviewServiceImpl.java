@@ -10,7 +10,7 @@ import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.mapper.ReviewMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
-import edu.kosmo.krm.joinVO.JoinReviewWriteVO;
+import edu.kosmo.krm.joinVO.JoinReviewVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewMapper reviewMapper;
 	
 	// 내가 쓴 후기 내역 가져오는 코드
-	public List<JoinReviewWriteVO> review_getList(Criteria criteria, MemberVO memberVo) {
+	public List<JoinReviewVO> review_getList(Criteria criteria, MemberVO memberVo) {
 		log.info("review_getList()...");
 		return reviewMapper.getReviewList(criteria, memberVo);
 	}

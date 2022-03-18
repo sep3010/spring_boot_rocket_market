@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class JoinReviewWriteVO {
+public class JoinReviewVO {
 
 	private String nickname;
 	private int board_id;

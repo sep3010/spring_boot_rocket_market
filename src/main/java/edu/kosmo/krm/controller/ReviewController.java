@@ -24,7 +24,7 @@ import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.service.ReviewService;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
-import edu.kosmo.krm.joinVO.JoinReviewWriteVO;
+import edu.kosmo.krm.joinVO.JoinReviewVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
@@ -44,7 +44,7 @@ public class ReviewController {
 		log.info("orderhistory()..");
 		
 		// List 불러 오는 함수
-		List<JoinReviewWriteVO> join = reviewService.review_getList(criteria, memberCustomDetails.getMemberVO());
+		List<JoinReviewVO> join = reviewService.review_getList(criteria, memberCustomDetails.getMemberVO());
 		log.info("review().. 갯수" + join.size());
 		view.addObject("reviewList", join); 
 		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
@@ -55,7 +55,7 @@ public class ReviewController {
 		log.info("criteria:" + criteria);
 		log.info("total:" + total);
 		
-		Map scoreOptions = new HashMap();
+		Map<Integer, String> scoreOptions = new HashMap<>();
 		scoreOptions.put(0, "☆☆☆☆☆");
 		scoreOptions.put(1, "★☆☆☆☆");
 		scoreOptions.put(2, "★★☆☆☆");
