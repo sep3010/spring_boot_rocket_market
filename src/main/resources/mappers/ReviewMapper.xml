@@ -15,6 +15,8 @@
 		<result property="hit" column="hit"/>
 		<result property="score" column="score" />
 		<result property="order_id" column="order_id" />
+		<result property="order_detail_id" column="order_detail_id" />
+		<result property="order_detail_board_id" column="order_detail_board_id" />
 	</resultMap>
 	
 	
@@ -74,8 +76,7 @@
                                     M.ID = B.MEMBER_ID
                             AND
                                     B.BOARD_CATEGORY_ID = BC.ID
-                            AND
-                                    M.ID = MO.MEMBER_ID
+                            AND  	M.ID = MO.MEMBER_ID
                             AND
                                     MO.ID = OD.ORDER_ID
                             AND
@@ -84,6 +85,7 @@
                                     OD.PRODUCT_ID = P.ID
                             AND
                               	M.ID = #{id}
+                                  
 	   ]]>
 	</select>
 

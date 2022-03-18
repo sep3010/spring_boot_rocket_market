@@ -14,6 +14,7 @@
 		<result property="order_id" column="order_id" />	
 		<result property="order_date" column="order_date"/>
 		<result property="img_id" column="img_id" />
+		<result property="path" column="path" />
 	</resultMap>
 	
 	
@@ -29,7 +30,8 @@
 										        MO.ID as order_id,
 										        MO.AMOUNT,
 										        MO.ORDER_DATE,
-										        P.ID
+										        P.ID as img_id,
+										        PI.path
 										FROM 
 										        MEMBER M,
 										        MEMBER_ORDER MO,

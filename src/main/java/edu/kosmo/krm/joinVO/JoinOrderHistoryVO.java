@@ -42,7 +42,7 @@ public class JoinOrderHistoryVO {
 	
 	// Product_Image
 	private int img_id; // 컬럼 중복으로 이름 수정 (기존: id)
-	private int path;
+	private String path;
 	
 
 }

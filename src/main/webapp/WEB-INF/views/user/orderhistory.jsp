@@ -36,7 +36,7 @@
             <td>${order.status}</td>    
             <td>${order.amount}</td>
             <td>
-				<a href="/user/review_write">후기 작성</a>
+				<a href="${pageContext.request.contextPath}/user/review_write">후기 작성</a>
 			</td>                                         
          </tr>
       </c:forEach>

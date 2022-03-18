@@ -10,9 +10,7 @@
 
 package edu.kosmo.krm.joinVO;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +37,5 @@ public class JoinReviewWriteVO {
 	private int order_id;
 	private int order_detail_id;
 	private int order_detail_board_id;
+	
 }

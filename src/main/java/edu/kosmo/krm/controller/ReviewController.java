@@ -69,6 +69,16 @@ public class ReviewController {
 		return view;
 	}
 	
+	
+	@GetMapping("/user/review_write")
+	public ModelAndView review_write(ModelAndView view) {
+		log.info("review_write()");
+		
+		view.setViewName("/user/review_write");
+		
+		return view;
+	}
+	
 
 
 
