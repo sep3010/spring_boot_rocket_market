@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td></td>
+				<td><input type="text" name=""></td>
 			</tr>
 			<tr>
 				<td>내용</td>
