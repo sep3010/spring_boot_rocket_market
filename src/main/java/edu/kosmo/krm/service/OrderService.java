@@ -24,5 +24,7 @@ public interface OrderService {
 	public void insertCart(CartVO cartVO);
 	// 장바구니 상품목록가져오기
 	public List<JoinCartProductListVO> cartProductList(int member_id);
+	// 장바구니 상품삭제
+	public void removeProduct(int cart_id);
 	
 }

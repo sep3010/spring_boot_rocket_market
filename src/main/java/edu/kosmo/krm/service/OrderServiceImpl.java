@@ -47,11 +47,15 @@ public class OrderServiceImpl implements OrderService {
 		log.info("insertCart()...");
 		ordermapper.insertCart(cartVO);
 	}
-	
+	// 장바구니 상품내역 불러오기
 	public List<JoinCartProductListVO> cartProductList(int member_id) {
 		log.info("cartProductList()...");
 		return ordermapper.getCartProductList(member_id);
 	}
-	
+	// 선택한 상품 삭제
+	public void removeProduct(int cart_id) {
+		log.info("removeProduct()...");
+		ordermapper.removeProductInCart(cart_id);
+	}
 
 }

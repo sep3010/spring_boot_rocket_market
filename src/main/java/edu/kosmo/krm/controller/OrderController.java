@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.MemberInfoService;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
+import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
@@ -72,6 +74,24 @@ public class OrderController {
 
 		view.setViewName("/user/cart");
 		return view;
+	}
+	
+	//장바구니 페이지에서 선택한 상품 삭제
+	@DeleteMapping("/user/cart/{cart_id}")
+	public ResponseEntity<String> deleteProductInCart(ModelAndView view, JoinCartProductListVO joinCartProductListVO) {
+		
+		ResponseEntity<String> entity = null;
+		log.info("삭제할 상품의 장바구니 번호" + joinCartProductListVO.getCart_id());
+		
+		try {
+			orderService.removeProduct(joinCartProductListVO.getCart_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		// 삭제 처리 HTTP 상태 메시지 리턴
+		return entity;
 	}
 	
 	

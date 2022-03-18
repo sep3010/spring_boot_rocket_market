@@ -7,10 +7,6 @@
 
 package edu.kosmo.krm.joinVO;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +23,7 @@ import lombok.ToString;
 public class JoinCartProductListVO {
 
 	// Cart
+	private int cart_id; // 컬럼 중복으로 이름 수정 (기존: id)
 	private int member_id;
 	private int product_id;
 	private int quantity;

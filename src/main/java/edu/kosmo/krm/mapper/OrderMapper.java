@@ -2,6 +2,7 @@ package edu.kosmo.krm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,5 +34,7 @@ public interface OrderMapper {
 	@Select("SELECT * FROM cart WHERE member_id = #{member_id}")
 	public List<CartVO> getCart(CartVO member_id); //카트찾기
 	public List<JoinCartProductListVO> getCartProductList(int member_id);//장바구니 상품목록
+	@Delete("DELETE FROM cart WHERE id = #{cart_id}")
+	public void removeProductInCart(int cart_id);
 	
 }
