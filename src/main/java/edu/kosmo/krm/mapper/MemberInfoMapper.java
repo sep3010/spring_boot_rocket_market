@@ -3,6 +3,7 @@ package edu.kosmo.krm.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
@@ -28,6 +29,9 @@ public interface MemberInfoMapper {
 
 	// 회원 정보 조회 코드
 	MemberVO read(int id);
+	
+	@Select("SELECT * FROM member WHERE username = #{username}")
+	MemberVO readCart(String username);
 
 	// 회원 정보 수정 코드 (admin)
 	MemberVO update(MemberVO memberVO);

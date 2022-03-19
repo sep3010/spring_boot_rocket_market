@@ -32,7 +32,7 @@
 		<br><a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
 		<br><a href="${pageContext.request.contextPath}/user/orderhistory">MY 쇼핑</a>
 		<br><a href="${pageContext.request.contextPath}/user/myReviewList">구매 후기</a>
-		
+		<br><a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
 	</sec:authorize>	
 </body>
 </html>
