@@ -19,7 +19,6 @@
 		<result property="order_detail_board_id" column="order_detail_board_id" />
 	</resultMap>
 	
-	
 
 	<select id="getReviewList" resultType="edu.kosmo.krm.joinVO.JoinReviewVO">
 	   <![CDATA[
