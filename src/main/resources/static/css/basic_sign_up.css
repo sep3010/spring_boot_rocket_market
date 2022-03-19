@@ -1,0 +1,54 @@
+#centerbox {
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+}
+
+#public_join,
+#kakao_join,
+#naver_join,
+#google_join {
+  height: 50px;
+  width: 570px;
+}
+
+#kakao_join,
+#naver_join,
+#google_join {
+  border: 1px solid rgb(66, 53, 35);
+  margin-bottom: 15px;
+}
+
+#joinbox {
+  width: 570px;
+}
+
+.card {
+  border: none;
+  padding-bottom: 2rem;
+}
+
+a:hover {
+  color: rgb(201, 161, 100);
+}
+
+a {
+  color: rgb(66, 53, 35);
+  text-decoration: none;
+}
+
+#social_login {
+  position: absolute;
+  top: -65px;
+  right: 0px;
+}
+
+h1,
+h4,
+h5 {
+  font-weight: bold;
+  color: rgb(58, 47, 32);
+}
+
+h4 {
+  padding-bottom: 4rem;
+}

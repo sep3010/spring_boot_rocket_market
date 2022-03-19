@@ -1,0 +1,53 @@
+#loginbox {
+  padding-top: 9rem;
+  padding-bottom: 9rem;
+}
+
+.card {
+  height: 370px;
+  width: 400px;
+  background-color: rgb(201, 176, 144);
+}
+
+input:focus {
+  outline: 0 0 0 5 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.input-group-prepend span {
+  width: 50px;
+  background-color: rgb(128, 101, 66);
+  color: black;
+  border: 0 !important;
+}
+
+.login_btn {
+  color: black;
+  background-color: rgb(128, 101, 66);
+  width: 100px;
+}
+
+.login_btn:hover {
+  color: black;
+  background-color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(66, 53, 35);
+}
+
+#social_login {
+  position: absolute;
+  top: -65px;
+  right: 0px;
+}
+
+#social_login img {
+  height: 65px;
+  width: 65px;
+}

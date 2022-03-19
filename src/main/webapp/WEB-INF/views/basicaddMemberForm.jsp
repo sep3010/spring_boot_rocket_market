@@ -12,14 +12,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/font.css" />
-<link rel="stylesheet" href="./css/sign_up.css" />
-<!-- csrf meta tag -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<link rel="stylesheet" href="./css/basic_sign_up.css" />
 
 <title>ROCKET MARKET 회원가입</title>
-
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     
@@ -111,116 +109,6 @@
       }
 </style>
 
-
-<script type="text/javascript">
-	//csrf
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-
-	//Ajax spring security header..
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(header, token);
-	});
-
-
-	let idCheck = 0;
-	
-	$(document).ready(function(){
-		
-		$("#idCheck").click(function() {
-			const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
-
-			let userId = $("#username").val();
-			
-			if(userId == '' || userId == ' '){
-				alert("아이디를 입력해주세요.");
-			}
-			else if (userId.search(/\s/) !== -1) {
-				alert("공백입력이 있습니다.");
-			}
-			else if (regExp.test(userId)) {
-				alert("아이디는 영문과 숫자입력만 가능합니다.");
-			}
-			else {
-
-				let data = {
-						username : userId
-				};
-				
-						
-				console.log(JSON.stringify(data));
-				
-				$.ajax({
-					type: "POST",
-					url : "${pageContext.request.contextPath}/addMemberForm/idCheck",
-					cache : false,
-					contentType:"application/json; charset='UTF-8'",
-					data : JSON.stringify(data),
-					success : function(jsonData){
-						if(jsonData.idCount > 0){
-							alert("아이디가 존재합니다! 다른 아이디를 입력해주세요");
-							$("#username").focus();
-						}
-						else{
-							alert("사용가능한 아이디입니다.");
-							$("#password").focus();
-							idCheck = 1;
-						}
-					},
-					error : function(e){
-						console.log(e);
-						alert("error : " + e);
-					}
-		
-				}) //end ajax
-				
-			} // end else
-			
-			
-			
-		}); //end #idCheck.click();
-		
-		
-		$("#submit").click(function(event){
-			
-			// 숫자
-			const pattern1 = /[0-9]/; 
-			// 문자  
-	        const pattern2 = /[a-zA-Z]/; 
-	    	// 특수문자 
-	        const pattern3 = /[!@#$^&*]/; 
-	        
-	    	let password = $("#password").val();
-			
-			if(password != $("#passwordcheck").val()){
-				event.preventDefault();
-				alert("비밀번호 입력이 다릅니다. 다시 입력해주세요.");
-			}
-			else if (password.search(/\s/) !== -1) {
-				event.preventDefault();
-				alert("비밀번호에 공백이 있습니다. 다시 입력해주세요.");
-			}
-			else if (!pattern1.test(password) || !pattern2.test(password) || !pattern3.test(password) || password.length < 8) {
-				event.preventDefault();
-				alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자(!@#$^&*)로 구성하여야 합니다.");
-			}
-			else if (!pattern1.test(password) || !pattern2.test(password) || !pattern3.test(password) || password.length < 8) {
-				event.preventDefault();
-				alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자(!@#$^&*)로 구성하여야 합니다.");
-			}
-			
-			
-			
-			
-		}); // end #submit.click()
-		
-		
-	}); //end ready()
-
-
-</script>
-
-
 </head>
 <body>
 
@@ -278,8 +166,6 @@
   </div><!-- container -->
       
 </header>
-
-
 
 <!-- ======================== 제품 메뉴 =========================== -->
 	<div class="category shadow">
@@ -342,117 +228,45 @@
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
 
 
-<!-- ======================== 여기서부터 회원가입 =========================== -->
+<!-- ======================== 회원가입 선택 =========================== -->
 
 
 <div class="container">
 
-   <div class="d-flex justify-content-center h-100" id="signup_box">
-	<c:url value="/addMember" var="addUMemberUrl" />
-	<form:form name="addForm" action="${addUMemberUrl}" method="POST">
-      <div class="card">
-        <div class="card-header" style="color: white;">
-          <h3 class="title">회원가입</h3>
-        </div>
-        <div class="card-body">
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/id_icon.png" alt="" style="width: 20px; height: 20px;"></span>
-		</div>
-		<input type="text" id="username" name="username" class="form-control" placeholder="ID" />
-		<input type="button" id="idCheck" value="아이디중복확인"/>
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/pw_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="password" id="passwordcheck" name="passwordcheck" class="form-control" placeholder="비밀번호 확인" />
-		</div>
-   
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/star_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="text" name="nickname" class="form-control" placeholder="닉네임" />
-		</div>   
-   
-   		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/name_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="text" id="name" name="name" class="form-control" placeholder="이름" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/day_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="date" name="birth" class="form-control" placeholder="생년월일" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/phone_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="tel" name="phone" class="form-control" placeholder="연락처" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/email_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="email" name="email" class="form-control" placeholder="이메일" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/map_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="text" name="postcode" class="form-control" placeholder="우편번호" />
-		</div>
-		
-		<div class="input-group form-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"><img src="${pageContext.request.contextPath}/icon/home_icon.png" alt="" style="width: 25px; height: 25px;"></span>
-		</div>
-		<input type="text" name="address" class="form-control" placeholder="주소" />
-		</div>
-	
-		<div class="form-group">
-        <input
-        type="submit"
-        value="가입하기"
-        id="submit"
-        class="btn float-right sign_btn"
-        />
-        </div>
-        
-		</form:form>
-        </div><!-- card-body -->
-        <div class="card-footer">
-          <h5 style="color: white;"><SPAN>기존 회원이시라면 👉<a href="${pageContext.request.contextPath}/loginForm">로그인 하기</a></SPAN></h5>
-        </div>
 
-      </div><!-- card -->
-    
-    </div><!-- container -->
+      <center>
+          <div id="centerbox">
+          <h1>회원가입</h1>
+
+          <h4>♥ 회원 가입 후 혜택을 누리세요! ♥</h4>
+          
+          <div class="card" id="joinbox">
+             <a href="${pageContext.request.contextPath}/addMemberForm"><img src="./imgs/public_join.png" class="card-img-top" alt="..." id="public_join"></a>
+             <br/>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/kakao_join.png" class="card-img-top" alt="..." id="kakao_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/naver_join.png" class="card-img-top" alt="..." id="naver_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/google_join.png" class="card-img-top" alt="..." id="google_join"></a>
+          </div>
+
+          <div><h5>기존 회원이시라면 ><a href="${pageContext.request.contextPath}/loginForm"> 로그인 하기</a></h5></div>
+
+        
+
+        </div> <!-- centerbox -->
+      </center>
+
+
+    </div> <!-- container -->
+   
 
 
 <!-- ======================== 하단 메뉴 =========================== -->
@@ -496,8 +310,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
     -->
   </body>
-  
-  
-  
-  
 </html>

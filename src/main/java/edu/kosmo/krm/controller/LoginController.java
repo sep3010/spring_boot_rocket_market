@@ -42,6 +42,14 @@ public class LoginController {
 		return view;
 	}
 	
+	//회원가입전 회원가입 선택 페이지로 이동
+	@GetMapping("/basicaddMemberForm")
+	public ModelAndView basicaddMemberForm(ModelAndView view) {
+		log.info("basicaddMemberForm()..");
+		view.setViewName("/basicaddMemberForm");
+		return view;
+	}
+	
 	//회원가입페이지 아이디중복체크
 	@PostMapping("/addMemberForm/idCheck")
     public Map<String, Object> idCheck(@RequestBody MemberVO memberVO) {
