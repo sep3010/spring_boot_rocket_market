@@ -20,7 +20,6 @@
 	$(document).ajaxSend(function(e, xhr, options){
 		xhr.setRequestHeader(header, token);
 	});
-
 </script> 
 
 
@@ -31,6 +30,7 @@
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
 	<table width="950" cellpadding="0" cellspacing="0" border="1">
 	<tr>
+		<td>선택</td>
 		<td>장바구니번호</td>
 		<td>회원번호</td>
 		<td>상품번호</td>		
@@ -42,8 +42,12 @@
 
 	</tr>	
 	<c:set var="totalPrice" value="0"/>
-	<c:forEach var="cart" items="${cartProductList}" >
+
+	<form:form class="orderCart" action="${pageContext.request.contextPath}/order/orderPayment" method="POST">  
+	  <input type="hidden" name="member_id" value="${member_id}">	
+	  <c:forEach var="cart" items="${cartProductList}" >
 		<tr>
+			<td><input type="checkbox" name="selectProduct" class="checkProduct" value="${cart.cart_id}"></td>
 			<td>${cart.cart_id}</td>
 			<td>${cart.member_id}</td>
 			<td>${cart.product_id}</td>
@@ -59,27 +63,35 @@
 					href="${pageContext.request.contextPath}/user/cart/${cart.cart_id}">
 				<img src="${cart.path}"></a>
 			</td>
-		</tr>	
-    </c:forEach>
+		</tr>		  	
+      </c:forEach>
+    
+      <tr>
+        <td><button type="submit" class="btn" id="orderSubmitBtn">주문하기</button></td></tr>
+     
+    </form:form>
+     
+
     </table>
-    <input type="hidden" id="hiddenTotalPrice" value="${totalPrice}"/>
-    <h1 id="cartPrice">장바구니 총 결제금액 = <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원</h1>
+
+      <h1 id="cartPrice">장바구니 총 결제금액 = <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원</h1> 
+      
     
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	//상품삭제
 	$(".productDelete").click(function(event) {
-		
-		
-		event.preventDefault();
-		
+		event.preventDefault();	
 		console.log("ajax 호출 전");		
 		
 		let trObj = $(this).parent().parent();
-		let eachPrice = $(this).parent().parent().children(".eachPrice").val();
+		//let eachPrice = $(this).parent(".eachPrice").val();
+		//값 받아와서 하기 다시. 
 		
-		console.log("eachPrice : " + eachPrice);
+		
+		//console.log("eachPrice : " + eachPrice);
 		
 		$.ajax({
 			type: "DELETE",
@@ -88,22 +100,58 @@ $(document).ready(function(){
 				console.log(result);
 				if(result == "SUCCESS"){
 					$(trObj).remove();
-					$("#cartPrice").empty();	
-					$("#cartPrice").append("장바구니 총 결제금액 = <fmt:formatNumber value='${totalPrice}' pattern='#,###'/>원");
+					//$("#cartPrice").empty();	
+					//$("#cartPrice").append("장바구니 총 결제금액 = <fmt:formatNumber value='${totalPrice}' pattern='#,###'/>원");
 				}
 			},
 			error : function(e){
 				console.log(e);
 				alert("error : " + e);
 			}
-
 		}) //end ajax
 		
 	}); //end .productDelete.click();
 	
 	
+	//주문하기 이동전, 체크하지 않은 상품 장바구니에서 삭제
+	$("#orderSubmitBtn").on('click', function(){
+		event.preventDefault();	
+		console.log("ajax 호출 전");		
+		
+		//선택한 상품명가져오기
+		let productNum = [];
+		$('input:checkbox[type=checkbox]:checked').each(function () {
+			productNum.push($(this).val());
+		});
+		console.log("productNum : " + productNum);
+		let list = {
+			numList: productNum
+		}
+		console.log(JSON.stringify(list));
+		
+		/*ajax 날리는 부분 추가 수정 필요
+		$.ajax({			
+			type : "POST",
+			url : $(this).attr("action"),
+			cache : false,
+			contentType:"application/json; charset='UTF-8'",
+			data : JSON.stringify(list),
+			success : function (data) {
+				$(".orderCart").submit()
+			},
+			error : function(e) {
+				console.log(e);
+			}	
+		}); //end ajax	
+		*/
+		
+		$(".orderCart").submit();
+		
+	}); //end #orderSubmit.click();
+	
+	
+	
+	
 }); //end ready()
-
-
 </script>
 </html>
