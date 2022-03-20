@@ -6,18 +6,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
+<title>ROCKET MARKET :: 신속배송</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+  crossorigin="anonymous"
+/>
+   
+<link rel="stylesheet" href="./font.css" />
+<link rel="stylesheet" href="./chatbot-ui.css" />
+<link rel="stylesheet" href="./product_details.css" />
 
 <!-- csrf meta tag -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
+
+    
 <script type="text/javascript">
 	//csrf
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	
 	
 	//Ajax spring security header..
 	$(document).ajaxSend(function(e, xhr, options){
@@ -41,6 +63,17 @@
 </head>
 <!-- 소은 -->
 <body>
+
+
+
+
+
+
+
+
+
+
+
 	<h1>상품상세</h1>
 	<table width="750" cellpadding="0" cellspacing="0" border="1">
 		<tr>

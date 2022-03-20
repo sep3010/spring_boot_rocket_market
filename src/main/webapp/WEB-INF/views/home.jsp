@@ -280,7 +280,7 @@
 			    <sec:authorize access="hasRole('ROLE_USER')">
 			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
               		<a class="nav-link" href="#">위시리스트</a>
-              		<a class="nav-link" href="#">장바구니</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
 			</sec:authorize>             
              
@@ -308,7 +308,7 @@
             <button class="dropbtn d-flex justify-content-start">
               <img
                 class="mr-2 mt-1"
-                src="./imgs/category.png"
+                src="${pageContext.request.contextPath}/imgs/category.png"
                 alt=""
                 style="width: 21px; height: 17px"
               />전체 카테고리

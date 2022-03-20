@@ -6,25 +6,220 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
+<title>ROCKET MARKET :: 신속배송</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" 
+href="${pageContext.request.contextPath}/imgs/logo.png" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title>Rocket Market :: 신속배송</title>
-    <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
+<!-- Bootstrap CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+  crossorigin="anonymous"
+/>
 
-    <!-- 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+   
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_details.css" />
+
+<!-- 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <style>
+
+      #topmenu_left,
+      #topmenu_right {
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .navbar {
+        display: block;
+      }
+
+      #logo {
+        justify-content: center;
+      }
+
+      #topbanner {
+        text-align: center;
+        background-color: #d3c5a8;
+      }
+
+      #footernavbar {
+        font-size: 1em;
+      }
+
+      #footernavbar a {
+        text-align: center;
+        width: 14rem;
+      }
+
+      .dropbtn {
+        background-color: #ffffff;
+        width: 13rem;
+        color: rgb(90, 88, 88);
+        font-weight: bold;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      #categorybtn {
+        background-color: #ffffff;
+        width: 13.5rem;
+        color: rgb(90, 88, 88);
+        font-weight: bold;
+        text-align: center;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .dropdown {
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        width: 13rem;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #d8c5a2;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown:hover .dropbtn {
+        background-color: #d8c5a2;
+        color: rgb(90, 88, 88);
+      }
+
+      /*카테고리 상단 고정*/
+     
+
+      /* 사이드바 */
+      main {
+        position: relative;
+        top: 0px;
+      }
+      .sidebar {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 100px;
+        position: absolute;
+        right: 10px;
+        float: right;
+        z-index: 3;
+      }
+      #cartbox {
+        width: 100px;
+        background-color: #eeddbe;
+        border-radius: 10px;
+      }
+
+      #sideimg {
+        width: 80%;
+        height: 80%;
+        position: relative;
+      }
+
+      /*장바구니 삭제 버튼*/
+      #closebtn {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        z-index: 2;
+      }
+
+      #sidetitle a {
+        text-decoration: none;
+        color: black;
+      }
+
+      /*상단 페이지 이동*/
+
+      #pagebtn {
+        top: 60%;
+        left: 80%;
+        width: 100px;
+        height: 50px;
+        background-color: #eeddbe;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 10px;
+        top: 20px;
+      }
+
+      /*챗봇버튼*/
+
+      .chat-btn {
+        cursor: pointer;
+        background-color: #ffffff;
+        border: #ffffff;
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+
+      .card{
+        border: none;
+      }
+
+      .card-body{
+        font-weight: bold;
+      }
+      
+    </style>
+    
+    
 	<script type="text/javascript">
+    
+    
+	  /*페이지 상단 이동*/
+	  function clickme() {
+	    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+	  }  
+
       $(document).ready(function () {
-   	    
+    	  
+         var currentPosition = parseInt($(".sidebar").css("top"));
+         $(window).scroll(function () {
+           var position = $(window).scrollTop();
+            $(".sidebar")
+              .stop()
+              .animate({ top: position + currentPosition + "px" }, 1000);
+          });
+
     	$(".AnonymousInCart").submit(function(event) {
     	  alert("로그인이 필요한 기능입니다.");
     	})  
@@ -82,21 +277,450 @@
 
 
 <body>
+
+    <header>
+      <div>
+        <nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
+            >배너 이벤트</a
+          >
+        </nav>
+      </div>
+
+      <div class="container pb-2">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse d-flex justify-content-between"
+            id="navbarNavAltMarkup"
+          >
+            <div class="navbar-nav" id="topmenu_left">
+              <a class="nav-link" href="#">공지사항</a>
+              <a class="nav-link" href="#">문의</a>
+              <a class="nav-link" href="#">이벤트</a>
+            </div>
+            <div class="navbar-nav" id="topmenu_right">
+              <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+            </div>
+          </div>
+          
+          <!-- ======================== 로고 =========================== -->
+          <center>
+            <div id="logo" style="width: 12rem">
+                <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
+            </div>
+          </center>
+        </nav>
+      </div><!-- container -->
+    </header>
+    
+ <!-- ======================== 하단 메뉴 =========================== -->   
+    <div class="category shadow">
+      <div class="container d-flex justify-content-between">
+        <div class="dropdown">
+          <div class="text-center">
+            <button class="dropbtn d-flex justify-content-start">
+              <img
+                class="mr-2 mt-1"
+                src="${pageContext.request.contextPath}/imgs/category.png"
+                alt=""
+                style="width: 21px; height: 17px"
+              />전체 카테고리
+            </button>
+          </div>
+          <div class="dropdown-content">
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/vegetable"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/vegetable.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />채소/과일</a
+            >
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/meat"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/meat.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />육류</a
+            >
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/side"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/rise.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />국/반찬</a
+            >
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/snack"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/snack.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />간식/과자</a
+            >
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/dairy"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/cheese.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />유제품</a
+            >
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/instant"
+              ><img
+                class="mr-2"
+                src="${pageContext.request.contextPath}/imgs/instant.png"
+                alt=""
+                style="width: 21px; height: 21px"
+              />즉석식품</a
+            >
+          </div>
+        </div>
+        <div id="categorymenu">
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn"
+            >신상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn"
+            >베스트상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn"
+            >특가상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn"
+            >정기배송상품</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 여기까지 헤더 (동일)=========================== -->
+    <main>
+      <!-- 사이드바 -->
+      <div class="sidebar">
+        <div id="cartbox">
+          <div class="text-center pt-2" id="sidetitle">
+            <a href="${pageContext.request.contextPath}/user/cart" title="장바구니 이동">장바구니</a>
+          </div>
+
+          <div class="text-center pt-0 pb-3" id="sidecontent">
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              id="closebtn"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <a href="#"
+              ><img class="pt-1" src="" alt="" id="sideimg"
+            /></a>
+          </div>
+        </div>
+        
+        <!-- 챗봇버튼 -->
+        <div class="text-center mt-3 mb-3" id="chatbox">
+          <div id="chat-container">
+            <script src="${pageContext.request.contextPath}/js/chatbot-ui.js"></script>
+            <script>
+              createChatBot(
+                (host = "http://121.156.99.38:5005/webhooks/rest/webhook"),
+                (botLogo = "bot-logo.png"),
+                (title = "Prime BOT"),
+                (welcomeMessage =
+                  "안녕하세요 로켓마켓 챗봇 입니다.\n무엇을 도와드릴까요? (●'∪'●)\n▪ 배송 \n▪ 회원 \n▪ 주문/결제 \n▪ 서비스 \n▪ 취소/교환/환불\n"),
+                (inactiveMsg =
+                  "서비가 다운되었습니다. 활성화하려면 개발자에게 문의하세요."),
+                (theme = "purple")
+              );
+            </script>
+          </div>
+
+          <div class="text-center mt-2" id="pagebox">
+            <input
+              id="pagebtn"
+              type="button"
+              alt=""
+              value="Top ↑"
+              onclick="clickme()"
+            /><!-- 상단 페이지 버튼 -->
+          </div>
+        </div>
+      </div>
+      <!-- 사이드바 -->
+
+      <div class="container pt-5">
+
+      <div class="d-flex justify-content-center pt-5 pb-5"id="product_box">
+      
+		<!-- =================== 왼쪽 메인 ==================== -->      
+ 	    <c:forEach var="productInfo" items="${productInfo}">
+        <div id="product_leftbox">
+          <div class="card" id="product_big_img">          
+          <c:choose>
+			<c:when test="${not empty productInfo.productImages}">
+			  <c:forEach var="image" items="${productInfo.productImages}">
+			  	<c:set var="main" value="${image.information_type}"/>
+			  	<c:choose>
+			  	  <c:when test="${main eq 'main'}">
+					<img src="${image.path}" class="card-img-top" id="product_img">
+			  	  </c:when>
+			  	</c:choose>		  	
+			  </c:forEach>
+			</c:when>
+		  </c:choose>
+            <div class="card-body text-center p-0 pt-1">
+              <span id="stargrade"><a href=""><h6 class="p-0 pt-1">★ 5.0 (후기갯수)</h6></a></span>
+            </div>
+          </div> <!-- card 상품이미지 -->
+        </c:forEach>
+        
+
+
+        <!-- ====================추천상품===================== -->
+        <div id="recommendbox">	
+          <h6 class="text-center p-0 pt-2"> ♥ [${productBrand}] 추천 상품 ♥</h6>
+
+	      <c:forEach var="recommend" items="${recommendProduct}" end="2">
+	        <c:choose>
+		      <c:when test="${not empty recommend.productImages}">
+		      <c:forEach var="thumbnails" items="${recommend.productImages}">
+		        <a href="${pageContext.request.contextPath}/product/productView/${recommend.id}" id="image-title">
+			    <c:choose>
+			      <c:when test="${not empty recommend.productImages}">
+				    <c:forEach var="thumbnail" items="${recommend.productImages}">
+					  <div class="card-deck">
+                        <div class="card">
+					      <img src="${thumbnail.path}" class="card-img-top">
+						  <div class="card-body p-0 pt-2">
+	  		                <h6 class="card-title text-center m-0">${recommend.name}</h6>
+	  		              </div>
+                        </div>
+                      </div>
+					</c:forEach>
+				  </c:when>
+			    </c:choose>
+			    </a>			
+		      </c:forEach><!-- 썸네일찾기 반복문 -->
+			  </c:when>
+	  		</c:choose>
+	  	  </c:forEach>
+        </div><!-- recommendbox -->        
+      </div> <!-- product_leftbox -->
+ 
+      <!-- =================== 오른쪽 메인 ==================== -->    
+	  <c:forEach var="productInfo" items="${productInfo}">
+      <div id="product_rightbox">
+       <div id="tablebox">       
+        <div>
+          <h3 class="pb-4"><strong> [${productInfo.brand}] ${productInfo.name} </strong></h3>
+        </div>
+
+        <div id="product_table">      
+        <c:set var="price" value="${productInfo.price}"/>
+        <c:set var="discountPercent" value="${productInfo.discount}" scope="session"/>
+        <c:set var="discountPrice" value="${price * (1 - (discountPercent/100))}" scope="session"/>
+		<c:choose>
+		  <c:when test="${discountPercent == 0}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
+            <div id="price">
+              <dt>가격</dt>
+                <dd><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/><span> 원</span></dd>
+            </div>
+  
+            <div class="d-flex align-items-center p-0 pb-3" id="dc_price">
+              <dt>할인가</dt>
+              <dd><span class="discount">&nbsp;</span><span class="dc_text"> &nbsp;</span>
+              <span class="discount_number">&nbsp;&nbsp;</span></dd>
+            </div>		  				    
+		  </c:when>
+		  <c:otherwise> <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
+		    <div id="price">
+              <dt>가격</dt>
+                <dd><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/><span> 원</span></dd>
+            </div>
+  
+            <div class="d-flex align-items-center p-0 pb-3" id="dc_price">
+              <dt>할인가</dt>
+              <dd><span class="discount"><fmt:formatNumber value="${discountPrice}" pattern="#,###"/></span>
+              <span class="dc_text"> 원</span><span class="discount_number">&nbsp;&nbsp;${discountPercent}%</span></dd>
+            </div>
+		  </c:otherwise>
+		</c:choose>  
+  
+          <div id="capacity">
+            <dt>용량</dt><dd>${productInfo.capacity}</dd>
+          </div>
+  
+          <div id="pack">
+            <dt>포장타입</dt><dd>${productInfo.packaging}</dd>
+          </div>
+  
+          <div id="delivery">
+            <dt>배송타입</dt><dd>${productInfo.delivery_type}</dd>
+          </div>
+  
+          <script src="${pageContext.request.contextPath}/js/count.js"></script>
+  
+          <div class="pt-4 pb-3" id="amount">
+            <dt>구매수량</dt>
+          </div><!-- amount -->
+
+          <div id="amountbox">
+            <div id=amount_span>
+              <input type="button" onclick='count("minus")' value="-" />
+              <span id="amount_result">1</span>
+              <input type="button" onclick='count("plus")' value="+" />       
+            </div><!-- amount_span -->  
+            <div class="price_result"> 
+              <span class="result_text"><span>총 상품 금액 :</span> 
+              <span class="result_sum"><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/></span> <span>원</span> </span> 
+            </div><!-- price_result -->
+		</c:forEach>
+
+        
+            </div> <!-- amountbox -->  
+        </div> <!-- product_table -->
+       </div><!-- tablebox -->
+
+       <div clss="d-flex align-items-center" id="cartdiv">
+       <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
+       <a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+	   <!-- 상단코드 클릭시 장바구니로 넣기 -->
+       <a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       <!-- 상단코드 클릭시 위시리스트로 넣기 -->
+       <h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
+      </div>
+
+      </div><!-- product_rightbox -->
+       </div><!-- product_box --> 
+
+       <nav class="navbar navbar-expand-lg navbar-light"id="product_menu_nav">
+          <div class="navbar d-flex justify-content-center  p-0" >
+            <div class="navbar-nav" id="product_menu">
+              <a class="nav-link" href="#pro_information" id="pro_information_menu">상품정보</a>
+              <a class="nav-link" href="#pro_details" id="pro_details_menu">상품상세</a>
+              <a class="nav-link" href="#pro_epilogue" id="pro_epilogue_menu">상품후기</a>
+            </div>
+          </div>
+        </nav>
+		
+	  <c:forEach var="productInfo" items="${productInfo}">
+	    <c:choose>
+		  <c:when test="${not empty productInfo.productImages}">
+	        <c:forEach var="image" items="${productInfo.productImages}">
+			  <c:set var="main" value="${image.information_type}"/>
+			  <c:set var="detail" value="${image.information_type}"/>
+			  <c:set var="info" value="${image.information_type}"/>
+			  <c:choose>
+			    <c:when test="${info eq 'info'}">
+        		  <!-- 상품상세 이미지 -->
+        		  <div class=text-center id="pro_details">
+          		    <img src="${image.path}" alt="">
+        		  </div>			    
+			  	</c:when>
+			  </c:choose>			  
+			  <c:choose>
+			    <c:when test="${detail eq 'detail'}">
+			      <!-- 상품정보 이미지 -->
+                  <div class=text-center id="pro_information">
+                    <img src="${image.path}" alt="">
+                  </div>
+			  	</c:when>
+			  </c:choose>			  	
+			</c:forEach> <!-- image -->
+		  </c:when>
+		</c:choose>
+      </c:forEach> 
+       
+
+        <!-- 상품 후기 게시판 -->
+        <div class="text-center pt-5 pb-5" id="pro_epilogue">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col-sm" id="table_contentment">만족도</th>
+              <th scope="col-sm" id="table_content">후기내용</th>
+              <th scope="col-sm" id="table_writer">작성자</th>
+              <th scope="col-sm" id="table_day">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>★★★★★</td>
+              <td>음 맛있어요</td>
+              <td>김말똥</td>
+              <td>2022.03.18</td>
+            </tr>
+            <tr>
+              <td>★★★★★</td>
+              <td>괜찮네요ㅎ</td>
+              <td>김쿵스</td>
+              <td>2022.03.18</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      </div><!-- container -->
+    </main>
+
+
+    <hr class="m-0" />
+    <div class="container">
+      <footer class="pt-0">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="navbar d-flex justify-content-center">
+            <div class="navbar-nav" id="footernavbar">
+              <a class="nav-link" href="#">로켓마켓소개</a>
+              <a class="nav-link" href="#">이용약관</a>
+              <a class="nav-link" href="#">개인정보처리방침</a>
+              <a class="nav-link" href="#">이용안내</a>
+              <a class="nav-link" href="#">문의하기</a>
+            </div>
+          </div>
+        </nav>
+      </footer>
+    </div>
+    <!-- container -->
+    <hr class="m-0" />
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+    ></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"
+    ></script>
+
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
 
-	<h1>상품상세페이지입니다.</h1>
 	
 	<c:forEach var="productInfo" items="${productInfo}">
-		<p>${productInfo.name}</p>
-		<p>${productInfo.price}</p>
-		<p>${productInfo.capacity}</p>
-		<p>${productInfo.brand}</p>
-		<p>${productInfo.stock}</p>
-		<p>${productInfo.unit}</p>
-		<p>${productInfo.type}</p>
-		<p>${productInfo.packaging}</p>
-		<p>${productInfo.discount}</p>
-		<p>${productInfo.delivery_type}</p>
+
 		
 		<h4>============ 장바구니 버튼 ============</h4>
 		<!-- 비로그인 상태 -->
@@ -131,65 +755,9 @@
 	    </c:choose>	
 	    </sec:authorize>			
 		<h4>============ 장바구니 버튼 끝 ============</h4>
-		
- 		<p>
-		  <c:choose>
-			<c:when test="${not empty productInfo.productImages}">
-			  <c:forEach var="image" items="${productInfo.productImages}">
-			  	<c:set var="main" value="${image.information_type}"/>
-			  	<c:set var="detail" value="${image.information_type}"/>
-			  	<c:set var="info" value="${image.information_type}"/>
-			  	<c:choose>
-			  	  <c:when test="${main eq 'main'}">
-					<p>메인이미지<img src="${image.path}"></p>
-			  	  </c:when>
-			  	</c:choose>
-			  	<c:choose>
-			  	  <c:when test="${detail eq 'detail'}">
-					<p>상품상세이미지<img src="${image.path}"></p>
-			  	  </c:when>
-			  	</c:choose>
-			  	<c:choose>
-			  	  <c:when test="${info eq 'info'}">
-					<p>제품설명<img src="${image.path}"></p>
-			  	  </c:when>
-			  	</c:choose>			  	
-			  </c:forEach>
-			</c:when>
-		  </c:choose>		
-		</p> 
+
 	</c:forEach>
 
-		
-	
-
-
-	==========================================================================
-	<c:forEach var="recommend" items="${recommendProduct}">
-	  <h5 class="product_name">[${recommend.brand}]${recommend.name}</h5>
-	  <c:choose>
-		<c:when test="${not empty recommend.productImages}">
-		  <c:forEach var="thumbnails" items="${recommend.productImages}">
-		    <a href="${pageContext.request.contextPath}/product/productView/${recommend.id}" id="image-title">
-			  <c:choose>
-				<c:when test="${not empty recommend.productImages}">
-					<c:forEach var="thumbnail" items="${recommend.productImages}">
-						<td><img src="${thumbnail.path}"></td>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<td>대표 이미지 없음</td>
-				</c:otherwise>
-			  </c:choose>
-			</a>			
-		  </c:forEach>
-		</c:when>
-	    <c:otherwise>
-		   대표 이미지 없음
-	    </c:otherwise>
-	  </c:choose>
-	</c:forEach>
-	
 	===================================================================================================
 	후기~~!!!!
 	<c:forEach var="review" items="${productBoard}">
