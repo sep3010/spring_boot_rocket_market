@@ -5,8 +5,7 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.OrderMapper">
 
-	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
-	
+	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">	
 		<result property="status" column="status" />
 		<result property="brand" column="brand" />
 		<result property="product_name" column="product_name" />
@@ -17,9 +16,21 @@
 		<result property="path" column="path" />
 	</resultMap>
 	
+	<!--  
+	<resultMap id="OrderListMap" type="edu.kosmo.krm.joinVO.OrderHistoryListVO">	
+		<result property="username" column="username" />
+		<result property="order_id" column="order_id" />
+		<result property="amount" column="amount" />
+		<result property="order_date" column="order_date" />	
+		<result property="status" column="status"/>
+		<result property="quantity" column="quantity" />
+		<result property="brand" column="brand" />
+		<result property="product_name" column="product_name" />
+	</resultMap>
+	-->
 	
 
-	<select id="getOrderHistoryList" resultType="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
+	<select id="getOrderHistoryList" resultMap="OrderMap">
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -76,7 +87,42 @@
 						        M.ID = #{id}
 	   ]]>
 	</select>
-
+	
+	<!-- 
+	<select id="getMemberOrderHistory" resultMap="OrderListMap">
+		<![CDATA[
+			SELECT * FROM (
+	              SELECT ROWNUM AS RNUM, A.* FROM (
+	              		SELECT
+						     m.username,
+						     mo.id AS order_id,
+						     mo.amount,
+						     mo.order_date,
+						     mo.status,
+						     d.delivery_number,
+						     od.quantity,
+						     p.brand,
+						     p.name AS product_name
+						FROM  member m
+						LEFT JOIN
+						    member_order mo
+						ON m.id = mo.member_id
+						LEFT JOIN
+						    order_detail od
+						ON mo.id = od.order_id
+						LEFT JOIN
+						    delivery d
+						ON od.id = d.order_id
+						LEFT JOIN
+						    product p
+						ON od.product_id = p.id
+						WHERE m.id = #{memberVO.id}
+						ORDER BY od.order_id DESC								 
+	              ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+	       	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
+       	]]>
+	</select>
+	 -->
 
 	
 </mapper> 

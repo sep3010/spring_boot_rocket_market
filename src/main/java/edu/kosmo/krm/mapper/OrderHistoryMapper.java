@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
 
@@ -16,14 +17,12 @@ import edu.kosmo.krm.vo.ProductVO;
 //양세윤 코드 작성
 
 @Mapper
-public interface OrderMapper {
+public interface OrderHistoryMapper {
 
-	// 주문 내역 가져오는 코드 (with 페이징)
-	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
+	// 회원 마이페이지 주문 내역 조회
+	List<MemberOrderVO> getMemberOrderHistory(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	
-	int getOrderHistoryTotalCount(MemberVO memberVO);
-	
-	//List<JoinOrderHistoryVO> getMemberOrderHistory(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
-	
+	// 회원 주문 상세 조회
+	MemberOrderVO getMemberOrderDetail(long order_id, int user_id);
 	
 }

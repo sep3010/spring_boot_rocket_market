@@ -34,4 +34,10 @@ public interface MemberInfoMapper {
 	
 	// 회원 정보 수정 코드 (user)
 	MemberVO updateuser(MemberVO memberVO);
+	
+	// 로그인한 회원의 주문 내역 가져오기
+	
+	
+	
+	
 }

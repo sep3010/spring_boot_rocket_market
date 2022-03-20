@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+<mapper namespace="edu.kosmo.krm.mapper.OrderHistoryMapper">
+
+	<resultMap id="OrderListMap" type="edu.kosmo.krm.vo.MemberOrderVO">	
+		<result property="username" column="username" />
+		<result property="order_id" column="order_id" />
+		<result property="member_id" column="member_id" />	
+		<result property="payment_number" column="payment_number"/>
+		<result property="amount" column="amount" />
+		<result property="order_date" column="order_date" />
+		<result property="status" column="status" />
+		<!-- <association property="delivery" resultMap="DeliveryMap"></association> -->
+		<collection property="delivery" resultMap="DeliveryMap"></collection>	
+		<collection property="orderDetails" resultMap="OrderDetailMap"></collection>	
+	</resultMap>
+	
+	<resultMap id="OrderDetailMap" type="edu.kosmo.krm.vo.OrderDetailVO">	
+		<result property="order_detail_id" column="order_detail_id" />	
+		<result property="order_id" column="order_id" />
+		<result property="product_id" column="product_id"/>
+		<result property="quantity" column="quantity" />
+		<collection property="products" resultMap="ProductMap"></collection>
+	</resultMap>
+	
+	<resultMap id="ProductMap" type="edu.kosmo.krm.vo.ProductVO">	
+		<result property="id" column="id" />
+		<result property="name" column="product_name" />	
+		<result property="price" column="price"/>
+		<result property="capacity" column="capacity" />
+		<result property="brand" column="brand" />
+		<result property="stock" column="stock" />
+		<result property="unit" column="unit" />
+		<result property="type" column="type" />
+		<result property="packaging" column="packaging" />
+		<result property="discount" column="discount" />
+		<result property="delivery_type" column="delivery_type" />
+		<result property="enabled" column="enabled" />
+		<collection property="productImages" resultMap="ProductImageMap"></collection>	
+	</resultMap>
+	
+	<resultMap id="ProductImageMap" type="edu.kosmo.krm.vo.ProductImageVO">	
+		<result property="id" column="id" />
+		<result property="product_id" column="product_id" />	
+		<result property="extension" column="extension"/>
+		<result property="name" column="name" />
+		<result property="information_type" column="information_type" />
+		<result property="path" column="path" />
+	</resultMap>
+	
+	<resultMap id="DeliveryMap" type="edu.kosmo.krm.vo.DeliveryVO">	
+		<result property="delivery_id" column="delivery_id" />	
+		<result property="order_id" column="order_id" />
+		<result property="postcode" column="postcode"/>
+		<result property="address" column="address" />
+		<result property="receiver" column="receiver" />
+		<result property="phone" column="phone" />
+		<result property="message" column="message" />
+		<result property="member_id" column="member_id" />
+		<result property="delivery_number" column="delivery_number" />
+	</resultMap>
+	
+	<select id="getMemberOrderHistory" resultMap="OrderListMap">
+		<![CDATA[
+			SELECT * FROM (
+	              SELECT ROWNUM AS RNUM, A.* FROM (
+	              		SELECT
+						     m.username,
+						     mo.id AS order_id,
+						     mo.amount,
+						     mo.order_date,
+						     mo.status,
+						     d.delivery_number,
+						     p.brand,
+						     p.name AS product_name
+						FROM  member m
+						LEFT JOIN
+						    member_order mo
+						ON m.id = mo.member_id
+						LEFT JOIN
+						    order_detail od
+						ON mo.id = od.order_id
+						LEFT JOIN
+						    delivery d
+						ON od.id = d.order_id
+						LEFT JOIN
+						    product p
+						ON od.product_id = p.id
+						WHERE m.id = #{memberVO.id}
+						ORDER BY od.order_id DESC								 
+	              ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+	       	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
+       	]]>
+	</select>
+	
+	<select id="getMemberOrderDetail" resultMap="OrderListMap">
+		SELECT
+		     m.username,
+		     mo.id AS order_id,
+		     mo.payment_number,
+		     mo.amount,
+		     mo.order_date,
+		     mo.status,
+		     od.quantity,
+		     d.*,
+		     p.brand,
+		     p.name AS product_name,
+		     p.price,
+		     p.discount,
+		     pi.path
+		FROM  member m
+		LEFT JOIN
+		    member_order mo
+		ON m.id = mo.member_id
+		LEFT JOIN
+		    order_detail od
+		ON mo.id = od.order_id
+		LEFT JOIN
+		    delivery d
+		ON od.id = d.order_id
+		LEFT JOIN
+		    product p
+		ON od.product_id = p.id
+		LEFT JOIN
+		    product_image pi
+		ON p.id = pi.product_id    
+		WHERE m.id = 1
+		AND mo.id = 1
+		AND pi.information_type = 'thumbnail'
+	
+	</select>
+
+	
+</mapper> 

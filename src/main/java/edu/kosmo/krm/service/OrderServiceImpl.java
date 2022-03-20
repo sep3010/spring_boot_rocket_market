@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.OrderHistoryListVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +32,16 @@ public class OrderServiceImpl implements OrderService {
 		log.info("order_History_getTotal()...");
 		return ordermapper.getOrderHistoryTotalCount(memberVO);
 	}
+	
+	
+	/*******VO 수정해서 새로 만든 주문 내역 (소은)********/
+	/*
+	@Override
+	public List<OrderHistoryListVO> getMemberOrderHistory(Criteria criteria, MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
 
 
 }

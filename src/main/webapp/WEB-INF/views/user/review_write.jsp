@@ -11,7 +11,45 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b7ee8a4337.js" crossorigin="anonymous"></script>
 
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <title>후기 작성</title>
+
+<script type="text/javascript">
+	//csrf
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+	
+	
+	$(document).ready(function(){
+		$("#title").focus();
+		
+		
+		$("#submit").on('click', function(event){
+			
+			
+			
+			
+			
+			// 처리 완료 후 action 주소로 전달
+			document.$(".addProduct").submit();
+			
+		}); // end $("#submit").on('click')
+		
+		
+				
+	}); // end ready()
+	
+	
+</script>
+
 </head>
 <body>
 	<h1>후기 작성</h1>
@@ -44,13 +82,13 @@
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td><input type="text" name="title"></td>
+				<td><input type="text" id="title" name="title"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
 				<td>
 					<textarea rows="30" cols="110" 
-					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 알림없이 포인트가 회수될 수 있습니다."></textarea>
+					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 공지없이 포인트가 회수될 수 있습니다."></textarea>
 				</td>
 			</tr>
 			<tr>
