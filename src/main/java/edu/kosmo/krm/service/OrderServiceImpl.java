@@ -12,7 +12,9 @@ import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
+import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,6 +63,27 @@ public class OrderServiceImpl implements OrderService {
 		log.info("getMemberDeliveryList()...");
 		return ordermapper.getMemberDeliveryList(member_id);
 	}
+
+	@Override
+	public void insertOrderInfo(MemberOrderVO memberOrderVO) {
+		log.info("insertOrderInfo");
+		ordermapper.insertOrderInfo(memberOrderVO);
+		
+	}
+
+	@Override
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO) {
+		log.info("insertOrderDetailInfo");
+		ordermapper.insertOrderDetailInfo(orderDetailVO);
+		
+	}
+
+//	@Override
+//	public int getProudctQuantity(Long order_id) {
+//		log.info("getProudctQuantity()...");
+//		return ordermapper.getProudctQuantity(order_id);
+//		
+//	}
 	
 	
 

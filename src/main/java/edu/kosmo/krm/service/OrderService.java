@@ -10,8 +10,9 @@ import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
-import edu.kosmo.krm.vo.CouponVO;
+import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 
 
@@ -32,4 +33,13 @@ public interface OrderService {
 	
 	// 회원 배송 정보 가져오기
 	public List<JoinMemberDeliveryVO> getMemberDeliveryList(int member_id);
+	
+	// 주문 DB에 저장
+	public void insertOrderInfo(MemberOrderVO memberOrderVO);
+	
+	// 주문상세 DB에 저장 (order_detail)
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);	
+	
+//	// 주문한 상품의 개수를 가져오는 함수
+//	public int getProudctQuantity(Long order_id);
 }

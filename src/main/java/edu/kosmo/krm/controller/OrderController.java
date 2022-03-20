@@ -1,6 +1,7 @@
 package edu.kosmo.krm.controller;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +31,9 @@ import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
+import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.page.PageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -83,12 +87,66 @@ public class OrderController {
 		return view;
 	}
 	
-	@PostMapping("/order/completePayment")
-	public String completePayment() {
-		log.info("orderPaymentOne()...");
-		return "a";
+	@PostMapping("/completePayment")
+	public @ResponseBody String completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
+													HttpServletRequest request) {
+		log.info("@@@@@@@@@@@@@ completePayment ");
+		
+
+		String impuid = request.getParameter("impuid");
+		String merchantid = request.getParameter("merchantid");
+		String memberid = request.getParameter("memberid");
+		String amountS = request.getParameter("amount");
+		String status = request.getParameter("status");
+		String productid = request.getParameter("productid");
+		
+		int member_id = Integer.valueOf(memberid);
+		Long merchant_id = Long.valueOf(merchantid);
+		int amount = Integer.valueOf(amountS);
+		int product_id = Integer.valueOf(productid);
+		
+		log.info(impuid);
+		log.info("merchant_id" + merchant_id);
+		log.info("member_id" + member_id);
+		log.info("amount" + amount);
+		log.info("status" + status);
+		log.info("productid" + productid);
+		
+
+		
+		// MemberOrderVO (회원 주문)에 넣는 것
+		MemberOrderVO memberOrderVO = new MemberOrderVO();
+		memberOrderVO.setMember_id(member_id); // 회원 번호
+		memberOrderVO.setId(merchant_id); // 주문 번호
+		memberOrderVO.setPayment_number(impuid); // 결제 번호
+		memberOrderVO.setAmount(amount); // 총 금액
+
+		orderService.insertOrderInfo(memberOrderVO);
+		
+
+		// OrderDetailVO (주문 상세)에 넣는 것
+		OrderDetailVO orderDetailVO = new OrderDetailVO();
+		orderDetailVO.setOrder_id(merchant_id);
+		orderDetailVO.setProduct_id(product_id);
+		
+		orderService.insertOrderDetailInfo(orderDetailVO);
+		
+		// ajax에 "successPayment"를 보내기 위한 것
+		JSONObject result = new JSONObject();
+		result.put("successPayment", true);
+		log.info("successPayment()...");
+		return result.toString();
 	
 	}	
+	
+	// 주문완료 페이지 (view)
+	@GetMapping("/order/orderPaymentView")
+	public ModelAndView orderPaymentView(ModelAndView view) {
+		log.info("orderPaymentOne()...");
+		
+		view.setViewName("/order/orderPaymentView");
+		return view;
+	}
 	
 
 }

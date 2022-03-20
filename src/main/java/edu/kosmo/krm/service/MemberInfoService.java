@@ -28,4 +28,7 @@ public interface MemberInfoService {
 	
 	// 회원 정보 수정하는 함수
 	void updateuser(MemberVO memberVO);
+	
+	// 비밀번호 유효성 체크하는 함수
+	public String pwCheck(int id);
 }

@@ -33,7 +33,7 @@ public class JoinOrderHistoryVO {
 	
 	// Member_Order Table
 	//private int order_id;
-	private int order_id;
+	private Long order_id;
 	
 	private int amount;
 	private Timestamp order_date;

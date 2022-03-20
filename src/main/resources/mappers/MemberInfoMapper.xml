@@ -78,5 +78,16 @@
 	update member set nickname = #{nickname}, name = #{name}, phone = #{phone}, postcode = #{postcode}, address = #{address}, birth = #{birth}, email=#{email} where id = #{id}
 	]]>
 	</select>
+	
+	<!-- 회원 정보 수정을 위한 부분 (user) -->
+	<select id="pwCheck" resultType="edu.kosmo.krm.vo.MemberVO">
+	<![CDATA[
+			SELECT
+		  		  PASSWORD
+			FROM
+				  MEMBER
+			WHERE MEMBER.ID = #{id}
+	]]>
+	</select>	
 
 </mapper>

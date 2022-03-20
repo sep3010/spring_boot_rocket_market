@@ -78,7 +78,8 @@
 		<result property="receiver" column="receiver" />
 	</resultMap>	
 	
-	
+
+		
 	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
               SELECT * FROM (
@@ -270,5 +271,34 @@
 					AND
 					        M.ID = #{member_id}
 		]]>
-	</select>		
+		</select>
+		
+		<insert id="insertOrderInfo">
+			   <![CDATA[
+					INSERT INTO member_order
+					    VALUES
+					            (#{id} , #{member_id} , #{payment_number}, #{amount}, sysdate, '배송 전')
+				]]>
+		</insert>	
+		
+	 	<select id="getProudctQuantity" resultType="edu.kosmo.krm.vo.OrderDetailVO">
+		   <![CDATA[
+				SELECT
+				    	COUNT(PRODUCT_ID)
+				FROM
+						ORDER_DETAIL OD
+				WHERE
+						OD.ORDER_ID = #{order_id}
+			]]>
+		</select>		
+		
+	 	<insert id="insertOrderDetailInfo">
+		   <![CDATA[
+				INSERT INTO order_detail
+				    VALUES
+				            (ORDER_DETAIL_SEQ.nextval , #{order_id} , #{product_id}, #{quantity})
+			]]>
+		</insert>		
+		
+				
 </mapper> 

@@ -2,6 +2,7 @@ package edu.kosmo.krm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +13,9 @@ import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.CouponVO;
+import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 
 //주문 관리 매퍼
@@ -38,4 +41,12 @@ public interface OrderMapper {
 	// 회원 정보 가져오는 함수
 	public List<JoinMemberDeliveryVO> getMemberDeliveryList(int member_id);
 
+	// 주문 등록 (memberOrderVO에 등록)
+	public void insertOrderInfo(MemberOrderVO memberOrderVO);
+	
+	// 주문 상세 등록 (OrderDetailVO에 등록)
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);
+	
+	// 주문한 상품의 개수를 가져오는 함수
+	public int getProudctQuantity(Long order_id);
 }
