@@ -220,6 +220,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               .animate({ top: position + currentPosition + "px" }, 1000);
           });
 
+        //장바구니 담기
     	$(".AnonymousInCart").submit(function(event) {
     	  alert("로그인이 필요한 기능입니다.");
     	})  
@@ -433,7 +434,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
           </div>
         </div>
         
-        <!-- 챗봇버튼 -->
+        <!-- ==================== 챗봇버튼 ======================== -->
         <div class="text-center mt-3 mb-3" id="chatbox">
           <div id="chat-container">
             <script src="${pageContext.request.contextPath}/js/chatbot-ui.js"></script>
@@ -468,61 +469,60 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 
       <div class="d-flex justify-content-center pt-5 pb-5"id="product_box">
       
-		<!-- =================== 왼쪽 메인 ==================== -->      
- 	    <c:forEach var="productInfo" items="${productInfo}">
-        <div id="product_leftbox">
-          <div class="card" id="product_big_img">          
-          <c:choose>
-			<c:when test="${not empty productInfo.productImages}">
-			  <c:forEach var="image" items="${productInfo.productImages}">
-			  	<c:set var="main" value="${image.information_type}"/>
-			  	<c:choose>
-			  	  <c:when test="${main eq 'main'}">
-					<img src="${image.path}" class="card-img-top" id="product_img">
-			  	  </c:when>
-			  	</c:choose>		  	
-			  </c:forEach>
-			</c:when>
-		  </c:choose>
-            <div class="card-body text-center p-0 pt-1">
-              <span id="stargrade"><a href=""><h6 class="p-0 pt-1">★ 5.0 (후기갯수)</h6></a></span>
-            </div>
-          </div> <!-- card 상품이미지 -->
-        </c:forEach>
-        
-
-
-        <!-- ====================추천상품===================== -->
-        <div id="recommendbox">	
-          <h6 class="text-center p-0 pt-2"> ♥ [${productBrand}] 추천 상품 ♥</h6>
-
-	      <c:forEach var="recommend" items="${recommendProduct}" end="2">
-	        <c:choose>
-		      <c:when test="${not empty recommend.productImages}">
-		      <c:forEach var="thumbnails" items="${recommend.productImages}">
-		        <a href="${pageContext.request.contextPath}/product/productView/${recommend.id}" id="image-title">
-			    <c:choose>
-			      <c:when test="${not empty recommend.productImages}">
-				    <c:forEach var="thumbnail" items="${recommend.productImages}">
-					  <div class="card-deck">
-                        <div class="card">
-					      <img src="${thumbnail.path}" class="card-img-top">
-						  <div class="card-body p-0 pt-2">
-	  		                <h6 class="card-title text-center m-0">${recommend.name}</h6>
-	  		              </div>
-                        </div>
-                      </div>
-					</c:forEach>
-				  </c:when>
-			    </c:choose>
-			    </a>			
-		      </c:forEach><!-- 썸네일찾기 반복문 -->
+		<!-- =================== 왼쪽 메인 ==================== --> 
+		<div id="product_leftbox">     
+ 	    <c:forEach var="productInfo" items="${productInfo}">     
+            <div class="card" id="product_big_img">          
+            <c:choose>
+			  <c:when test="${not empty productInfo.productImages}">
+			    <c:forEach var="image" items="${productInfo.productImages}">
+			  	  <c:set var="main" value="${image.information_type}"/>
+			  	  <c:choose>
+			  	    <c:when test="${main eq 'main'}">
+					  <img src="${image.path}" class="card-img-top" id="product_img">
+			  	    </c:when>
+			  	  </c:choose>		  	
+			    </c:forEach>
 			  </c:when>
-	  		</c:choose>
-	  	  </c:forEach>
-        </div><!-- recommendbox -->        
+		    </c:choose>
+              <div class="card-body text-center p-0 pt-1">
+                <span id="stargrade"><a href=""><h6 class="p-0 pt-1">★ 5.0 (후기갯수)</h6></a></span>
+              </div>
+            </div> <!-- card 상품이미지 -->
+        
+            <!-- ====================추천상품===================== -->
+            <div id="recommendbox">	
+              <h6 class="text-center p-0 pt-2"> ♥ [${productBrand}] 추천 상품 ♥</h6>
+
+	          <c:forEach var="recommend" items="${recommendProduct}" end="2">
+	            <c:choose>
+		      	  <c:when test="${not empty recommend.productImages}">
+		            <c:forEach var="thumbnails" items="${recommend.productImages}">
+		              <a href="${pageContext.request.contextPath}/product/productView/${recommend.id}" id="image-title">
+			          <c:choose>
+			      		<c:when test="${not empty recommend.productImages}">
+				    	  <c:forEach var="thumbnail" items="${recommend.productImages}">
+					        <div class="card-deck">
+                              <div class="card">
+					            <img src="${thumbnail.path}" class="card-img-top">
+						        <div class="card-body p-0 pt-2">
+	  		                      <h6 class="card-title text-center m-0">${recommend.name}</h6>
+	  		                    </div>
+                        	  </div>
+                      		</div>
+						  </c:forEach>
+				  		</c:when>
+			    	  </c:choose>
+			    	  </a>			
+		      		</c:forEach><!-- 썸네일찾기 반복문 -->
+			  	  </c:when>
+	  			</c:choose>
+	  	  	  </c:forEach>
+        	</div><!-- recommendbox -->   
+    	</c:forEach>
       </div> <!-- product_leftbox -->
- 
+ 	
+ 	
       <!-- =================== 오른쪽 메인 ==================== -->    
 	  <c:forEach var="productInfo" items="${productInfo}">
       <div id="product_rightbox">
@@ -581,6 +581,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
           </div><!-- amount -->
 
           <div id="amountbox">
+          
             <div id=amount_span>
               <input type="button" onclick='count("minus")' value="-" />
               <span id="amount_result">1</span>
@@ -590,24 +591,67 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               <span class="result_text"><span>총 상품 금액 :</span> 
               <span class="result_sum"><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/></span> <span>원</span> </span> 
             </div><!-- price_result -->
-		</c:forEach>
-
-        
-            </div> <!-- amountbox -->  
+            
+          </div> <!-- amountbox --> 
+         
         </div> <!-- product_table -->
        </div><!-- tablebox -->
+       
+       	<!-- 비로그인 상태 -->
+		<sec:authorize access="isAnonymous()">
+	    <c:choose>
+	      <c:when test="${productInfo.stock > 0}">
+	        <div clss="d-flex align-items-center" id="cartdiv">     
+       		  <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
+       			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
+       			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       			<!-- 상단코드 클릭시 위시리스트로 넣기 -->
+       			<h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
+      		</div>	                	
+		  </c:when>
+		  <c:otherwise>
+		    <p>품절</p>	
+		  </c:otherwise>		           		                
+	    </c:choose>	
+	    </sec:authorize>		
+	    
+	    <!-- 로그인 상태 -->
+		<sec:authorize access="hasAuthority('ROLE_USER')">
+	    <c:choose>
+	      <c:when test="${productInfo.stock > 0}">
+	        <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
+	          <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
+	          <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
+	          <input type="number" class="productQuantity" name="productQuantity" value="1">
+	          <input type="submit" class="submit btn" value="장바구니" >
+			</form>		                	
+		  </c:when>
+		  <c:otherwise>
+		    <p>품절</p>	
+		  </c:otherwise>		           		                
+	    </c:choose>	
+	    </sec:authorize>
+       
+       
+       
+       
+       
 
-       <div clss="d-flex align-items-center" id="cartdiv">
+       <div clss="d-flex align-items-center" id="cartdiv">     
        <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
+   
        <a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
 	   <!-- 상단코드 클릭시 장바구니로 넣기 -->
        <a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
        <!-- 상단코드 클릭시 위시리스트로 넣기 -->
        <h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
       </div>
-
-      </div><!-- product_rightbox -->
-       </div><!-- product_box --> 
+      
+	</c:forEach> 
+    </div><!-- product_rightbox -->
+   </div><!-- product_box --> 
+  
 
        <nav class="navbar navbar-expand-lg navbar-light"id="product_menu_nav">
           <div class="navbar d-flex justify-content-center  p-0" >
@@ -659,25 +703,38 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               <th scope="col-sm" id="table_day">작성일</th>
             </tr>
           </thead>
+          
           <tbody>
-            <tr>
-              <td>★★★★★</td>
-              <td>음 맛있어요</td>
-              <td>김말똥</td>
-              <td>2022.03.18</td>
-            </tr>
-            <tr>
-              <td>★★★★★</td>
-              <td>괜찮네요ㅎ</td>
-              <td>김쿵스</td>
-              <td>2022.03.18</td>
-            </tr>
-
-          </tbody>
+          	<c:forEach var="review" items="${productBoard}">
+          	  <tr>
+	            <td>${review.score}</td>
+	  		    <td>${review.content}</td>
+	 		    <td>${review.nickname}</td>
+	  		    <td>${review.board_date}</td>
+	  		  </tr>
+		    </c:forEach>
+	   		    
+		  <tbody>
+			
         </table>
-
       </div>
 
+		    
+		  <!-- 페이징번호 -->
+		  <c:if test="${pageMaker.pre}">
+	  	   <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.startPage - 1) }">
+	  		«</a>
+		  </c:if>
+
+		  <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+	  	    <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(idx)}">${idx}</a>
+		  </c:forEach>
+
+		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	  	    <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.endPage +1) }">
+	  	    »</a>
+		  </c:if>	
+      
       </div><!-- container -->
     </main>
 
@@ -757,29 +814,6 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 		<h4>============ 장바구니 버튼 끝 ============</h4>
 
 	</c:forEach>
-
-	===================================================================================================
-	후기~~!!!!
-	<c:forEach var="review" items="${productBoard}">
-	  <p>${review.content}</p>
-	  <p>${review.board_date}</p>
-	  <p>${review.score}</p>
-	  <p>${review.nickname}</p>
-	</c:forEach>
-	
-	<!-- 페이징번호 -->
-	<c:if test="${pageMaker.pre}">
-	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.startPage - 1) }">
-	  «</a>
-	</c:if>
-
-	<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(idx)}">${idx}</a>
-	</c:forEach>
-
-	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	  <a href="${pageContext.request.contextPath}/product/productView/${productNum}${pageMaker.makeQuery(pageMaker.endPage +1) }">
-	  »</a>
-	</c:if>			
+		
 </body>
 </html>
