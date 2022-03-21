@@ -39,7 +39,7 @@
 			
 			
 			// 처리 완료 후 action 주소로 전달
-			document.$(".addProduct").submit();
+			document.$("#writeReview").submit();
 			
 		}); // end $("#submit").on('click')
 		
@@ -54,18 +54,20 @@
 <body>
 	<h1>후기 작성</h1>
 	<!-- 파일 등록을 위해 enctype="multipart/form-data" 설정-->
-	<form:form class="writeReview" 
+	<form:form id="writeReview" 
 		action="${pageContext.request.contextPath}/user/insertReview" 
 			enctype="multipart/form-data" method="post">
-		<table width="900" cellpadding="0" cellspacing="0" border="1">
+		<input type="hidden" name="order_id" value="${orderDetail.order_id}">
+		<input type="hidden" name="order_detail_id" value="${orderDetail.order_detail_id}">
+		<input type="hidden" name="member_id" value="<sec:authentication property="principal.memberVO.id"/>">		
+		<table width="850" cellpadding="0" cellspacing="0" border="1">
 			<tr>
 				<td>주문번호</td>
-				<td></td>
+				<td>${orderDetail.order_id}</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td>상품명</td>
-				<td></td>
+				<td><img src="${image.path}"></td>
+				<td>[${product.brand}] ${product.name}</td>
 			</tr>
 			<tr>
 				<td>별점</td>
@@ -87,7 +89,7 @@
 			<tr>
 				<td>내용</td>
 				<td>
-					<textarea rows="30" cols="110" 
+					<textarea rows="28" cols="100" 
 					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 공지없이 포인트가 회수될 수 있습니다."></textarea>
 				</td>
 			</tr>

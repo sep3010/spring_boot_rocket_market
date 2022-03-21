@@ -90,7 +90,7 @@
 						    product p
 						ON od.product_id = p.id
 						WHERE m.id = #{memberVO.id}
-						ORDER BY od.order_id DESC								 
+						ORDER BY od.id DESC								 
 	              ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
 	       	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
        	]]>
@@ -104,6 +104,7 @@
 		     mo.amount,
 		     mo.order_date,
 		     mo.status,
+		     od.id AS order_detail_id,
 		     od.quantity,
 		     d.*,
 		     p.brand,
@@ -127,8 +128,8 @@
 		LEFT JOIN
 		    product_image pi
 		ON p.id = pi.product_id    
-		WHERE m.id = 1
-		AND mo.id = 1
+		WHERE m.id = #{user_id}
+		AND mo.id = #{order_id}
 		AND pi.information_type = 'thumbnail'
 	
 	</select>

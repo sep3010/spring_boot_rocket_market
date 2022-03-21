@@ -29,7 +29,7 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 	}
 
 	@Override
-	public MemberOrderVO getMemberOrderDetail(long order_id, int user_id) {
+	public List<MemberOrderVO> getMemberOrderDetail(long order_id, int user_id) {
 		log.info("getMemberOrderDetail()");
 		return orderHistoryMapper.getMemberOrderDetail(order_id, user_id);
 	}

@@ -42,45 +42,74 @@
 <body>
 	<h2>주문 상세</h2>
 		<table width="870" cellpadding="0" cellspacing="0" border="1">
-			<tr>
-				<td>주문번호</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>상품명</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>별점</td>
-				<td>
-					<select id="score" name="score">
-						<option value="0">☆☆☆☆☆</option>
-						<option value="1">★☆☆☆☆</option>
-						<option value="2">★★☆☆☆</option>
-						<option value="3">★★★☆☆</option>
-						<option value="4">★★★★☆</option>
-						<option value="5">★★★★★</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>제목</td>
-				<td><input type="text" id="title" name="title"></td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>
-					<textarea rows="30" cols="110" 
-					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 공지없이 포인트가 회수될 수 있습니다."></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>사진 첨부</td>
-				<td id="image">
-					<input type="file" id="reviewImages" name="reviewImages" accept="image/*" multiple>
-				</td>
-			</tr>
+			<c:forEach var="order" items="${orderDetail}" varStatus="vs">
+				<c:if test="${vs.first}">
+					<tr>
+						<td>주문번호</td>
+						<td>${order.order_id}</td>
+						<td>주문일자</td>
+						<td>${order.order_date}</td>
+						<td>배송상태</td>
+						<td>${order.status}</td>
+					</tr>
+					<c:forEach var="delivery" items="${order.delivery}">						
+						<tr>
+							<td>받는 사람</td>
+							<td colspan="2">${delivery.receiver}</td>
+							<td>연락처</td>
+							<td colspan="2">${delivery.phone}</td>
+						</tr>
+						<tr>
+							<td>우편번호</td>
+							<td>${delivery.postcode}</td>
+							<td>주소</td>
+							<td colspan="3">${delivery.address}</td>
+						</tr>
+						<tr>
+							<td>배송 메세지</td>
+							<td colspan="2">${delivery.message}</td>
+							<td>운송장번호</td>
+							<td colspan="2">${delivery.delivery_number}</td>
+						</tr>						
+					</c:forEach><%-- <c:forEach var="delivery"> --%>
+					<tr>
+						<td colspan="3">상품명</td>
+						<td>할인율</td>
+						<td>가격</td>
+					</tr>
+				</c:if><%-- <c:if test="${vs.first}"> --%>
+				
+				<c:forEach var="detail" items="${order.orderDetails}">
+					<c:forEach var="product" items="${detail.products}">
+						<form:form action="${pageContext.request.contextPath}/user/review_write" method="post">
+							<tr>
+								<c:forEach var="image" items="${product.productImages}">
+									<input type="hidden" name="path" value="${image.path}">
+									<td><img src="${image.path}"></td>
+								</c:forEach>				
+								<td colspan="2">[${product.brand}] ${product.name}</td>
+								
+								<td>${product.discount}%</td>
+								
+								<td>${product.price}</td>
+								<td>
+									<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
+									<input type="hidden" name="order_id" value="${detail.order_id}">
+									<input type="hidden" name="name" value="${product.name}">
+									<input type="hidden" name="brand" value="${product.brand}">	
+									<input type="submit" value="후기 작성">
+								</td>		
+							</tr>	
+						</form:form>				
+					</c:forEach><%-- <c:forEach var="product"> --%>
+				</c:forEach><%-- <c:forEach var="detail"> --%>
+				<c:if test="${vs.last}">
+					<tr>
+						<td>총 가격</td>
+						<td>${order.amount}</td>
+					</tr>
+				</c:if><%-- <c:if test="${vs.last}"> --%>
+			</c:forEach><%-- <c:forEach var="order"> --%>
 		</table>
 		
 </body>

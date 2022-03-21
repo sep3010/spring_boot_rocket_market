@@ -27,6 +27,8 @@ import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinReviewVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
+import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.page.PageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -70,16 +72,34 @@ public class ReviewController {
 	}
 	
 	
-	@GetMapping("/user/review_write")
-	public ModelAndView review_write(ModelAndView view) {
+	@PostMapping("/user/review_write")
+	public ModelAndView review_write(ModelAndView view, 
+			OrderDetailVO orderDetailVO, ProductVO productVO, ProductImageVO imageVO) {
 		log.info("review_write()");
+		log.info("===========orderDetailVO : " + orderDetailVO);
+		log.info("===========productVO : " + productVO);
+		log.info("===========imageVO : " + imageVO);
+		
+		view.addObject("orderDetail", orderDetailVO);
+		view.addObject("product", productVO);
+		view.addObject("image", imageVO);
 		
 		view.setViewName("/user/review_write");
 		
 		return view;
 	}
 	
-
+	@PostMapping("/user/insertReview")
+	public ModelAndView insertReview(ModelAndView view, 
+			MultipartFile[] files) {
+		log.info("insertReview()");
+		
+		
+		view.setViewName("redirect:/user/orderhistory");
+		
+		return view;
+	}
+	
 
 
 

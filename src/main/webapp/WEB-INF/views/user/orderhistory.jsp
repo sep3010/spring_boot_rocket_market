@@ -76,21 +76,15 @@
             </c:forEach>           
             <td>${order.amount}</td>
             <td>${order.status}</td>
-            <c:forEach var="delivery" items="${order.delivery}" begin="0" end="0">
-	            <c:choose>
-	            	<c:when test="${not empty delivery}">
-	            		<c:if test="${not empty delivery.delivery_number}">
-	            			<td>${delivery.delivery_number}</td>
-	            		</c:if>
-	            		<c:if test="${empty delivery.delivery_number}">
-	            			<td>운송장 없음</td>
-	            		</c:if>
-	            	</c:when>
-	            	<c:otherwise>
-	            		<td>운송장 없음</td>
-	            	</c:otherwise>
-	            </c:choose>
-            	
+            <c:forEach var="delivery" items="${order.delivery}" varStatus="vs">
+	           	<c:if test="${vs.last}">
+	           		<c:if test="${not empty delivery.delivery_number}">
+	           			<td>${delivery.delivery_number}</td>
+	           		</c:if>
+	           		<c:if test="${empty delivery.delivery_number}">
+	           			<td>운송장 없음</td>
+	           		</c:if>
+	            </c:if>	          	
             </c:forEach>
                 
             <td>

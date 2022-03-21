@@ -23,6 +23,6 @@ public interface OrderHistoryMapper {
 	List<MemberOrderVO> getMemberOrderHistory(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	
 	// 회원 주문 상세 조회
-	MemberOrderVO getMemberOrderDetail(long order_id, int user_id);
+	List<MemberOrderVO> getMemberOrderDetail(@Param("order_id") long order_id, @Param("user_id") int user_id);
 	
 }

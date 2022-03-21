@@ -5,8 +5,7 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.ReviewMapper">
 
-	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewVO">
-	
+	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewVO">	
 		<result property="nickname" column="nickname" />
 		<result property="board_id" column="board_id" />
 		<result property="title" column="title" />

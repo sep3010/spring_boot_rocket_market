@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,9 +69,10 @@ public class OrderController {
 	// 주문 내역 리스트
 	@GetMapping("/user/orderDetail/{order_id}")
 	public ModelAndView orderDetail(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, 
-			ModelAndView view, @RequestParam("order_id") long order_id) {
+			ModelAndView view, MemberOrderVO memberOrderVO) {
 		log.info("orderDetail()..");
-		MemberOrderVO orderDetail = orderHistoryService.getMemberOrderDetail(order_id, memberCustomDetails.getMemberVO().getId());
+		log.info("memberOrderVO() : " + memberOrderVO);
+		List<MemberOrderVO> orderDetail = orderHistoryService.getMemberOrderDetail(memberOrderVO.getOrder_id(), memberCustomDetails.getMemberVO().getId());
 		log.info("================orderDetail : " + orderDetail);
 		view.addObject("orderDetail", orderDetail);
 		
