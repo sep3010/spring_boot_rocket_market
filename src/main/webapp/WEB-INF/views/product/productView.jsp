@@ -16,7 +16,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
     <title>Rocket Market :: 신속배송</title>
-    <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" 
+    href="${pageContext.request.contextPath}/imgs/logo.png" />
 
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

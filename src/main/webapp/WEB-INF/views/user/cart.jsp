@@ -87,11 +87,10 @@ $(document).ready(function(){
 		console.log("ajax 호출 전");		
 		
 		let trObj = $(this).parent().parent();
-		//let eachPrice = $(this).parent(".eachPrice").val();
-		//값 받아와서 하기 다시. 
+		let eachPrice = $(this).find(".eachPrice").val();
 		
 		
-		//console.log("eachPrice : " + eachPrice);
+		console.log("eachPrice : " + eachPrice);
 		
 		$.ajax({
 			type: "DELETE",
@@ -109,6 +108,7 @@ $(document).ready(function(){
 				alert("error : " + e);
 			}
 		}) //end ajax
+
 		
 	}); //end .productDelete.click();
 	
@@ -129,7 +129,7 @@ $(document).ready(function(){
 		}
 		console.log(JSON.stringify(list));
 		
-		/*ajax 날리는 부분 추가 수정 필요
+		//ajax 날리는 부분 추가 수정 필요
 		$.ajax({			
 			type : "POST",
 			url : $(this).attr("action"),
@@ -143,9 +143,9 @@ $(document).ready(function(){
 				console.log(e);
 			}	
 		}); //end ajax	
-		*/
 		
-		$(".orderCart").submit();
+		
+		//$(".orderCart").submit();
 		
 	}); //end #orderSubmit.click();
 	

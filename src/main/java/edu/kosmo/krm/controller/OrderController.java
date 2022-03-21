@@ -94,6 +94,19 @@ public class OrderController {
 		return entity;
 	}
 	
+	//장바구니 페이지에서 선택한 상품들가지고 주문페이지로 이동
+	@PostMapping("/order/orderPayment")
+	public ModelAndView orderPayment(ModelAndView view, Principal principal) {
+		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
+		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
+		log.info("회원번호" + memberVO.getId());
+		
+		view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));
+
+		view.setViewName("/order/orderPayment");
+		return view;
+	}
+	
 	
 	 
 	// 주문 내역 리스트
