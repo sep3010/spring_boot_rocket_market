@@ -24,9 +24,11 @@ import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.service.ReviewService;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
-import edu.kosmo.krm.joinVO.JoinReviewVO;
+import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
+import edu.kosmo.krm.vo.BoardFileVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailBoardVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductImageVO;
 import edu.kosmo.krm.vo.ProductVO;
@@ -46,7 +48,7 @@ public class ReviewController {
 		log.info("orderhistory()..");
 		
 		// List 불러 오는 함수
-		List<JoinReviewVO> join = reviewService.review_getList(criteria, memberCustomDetails.getMemberVO());
+		List<JoinReviewBoardVO> join = reviewService.review_getList(criteria, memberCustomDetails.getMemberVO());
 		log.info("review().. 갯수" + join.size());
 		view.addObject("reviewList", join); 
 		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
@@ -89,13 +91,26 @@ public class ReviewController {
 		return view;
 	}
 	
+	/*@RequestParam("order_id") long order_id, 
+			@RequestParam("order_detail_id") int order_detail_id*/
 	@PostMapping("/user/insertReview")
-	public ModelAndView insertReview(ModelAndView view, 
-			MultipartFile[] files) {
+	public ModelAndView insertReview(ModelAndView view, HttpServletRequest request, 
+			MultipartFile[] reviewImages, JoinReviewBoardVO reviewBoardVO, 
+			OrderDetailBoardVO detailBoardVO) {
 		log.info("insertReview()");
+		log.info("==========reviewBoardVO : " + reviewBoardVO);
+		log.info("============detailBoardVO : " + detailBoardVO);
+		log.info("============reviewImages : " + reviewImages);
+		
+		// 각 팀원들의 프로젝트 폴더 경로 설정(상대적 경로)을 위한 처리.
+		String savePath = request.getSession().getServletContext()
+							.getRealPath("/").concat("resources\\review-image");	
+		
+		log.info("savePath : " + savePath);
 		
 		
-		view.setViewName("redirect:/user/orderhistory");
+		
+		// view.setViewName("redirect:/user/orderhistory");
 		
 		return view;
 	}

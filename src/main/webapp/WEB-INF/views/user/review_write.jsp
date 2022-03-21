@@ -33,13 +33,14 @@
 		
 		
 		$("#submit").on('click', function(event){
-			
-			
-			
-			
-			
+			alert("후기가 등록되었습니다.");
+			window.close();
 			// 처리 완료 후 action 주소로 전달
-			document.$("#writeReview").submit();
+			//document.$("#writeReview").submit();
+	
+		  	//window.opener.document.location.href = window.opener.document.URL; // 부모창 새로고침  
+		 	
+
 			
 		}); // end $("#submit").on('click')
 		
@@ -59,7 +60,7 @@
 			enctype="multipart/form-data" method="post">
 		<input type="hidden" name="order_id" value="${orderDetail.order_id}">
 		<input type="hidden" name="order_detail_id" value="${orderDetail.order_detail_id}">
-		<input type="hidden" name="member_id" value="<sec:authentication property="principal.memberVO.id"/>">		
+		<input type="hidden" name="user_id" value="<sec:authentication property="principal.memberVO.id"/>">		
 		<table width="850" cellpadding="0" cellspacing="0" border="1">
 			<tr>
 				<td>주문번호</td>
@@ -89,7 +90,7 @@
 			<tr>
 				<td>내용</td>
 				<td>
-					<textarea rows="28" cols="100" 
+					<textarea name="content" rows="28" cols="100" 
 					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 공지없이 포인트가 회수될 수 있습니다."></textarea>
 				</td>
 			</tr>
@@ -100,7 +101,8 @@
 				</td>
 			</tr>
 		</table>
-		<button id="submit">후기 등록</button>
+		<input type="submit" value="후기 등록">
+		<!-- <button id="submit">후기 등록</button> -->
 	</form:form>
 </body>
 </html>

@@ -18,4 +18,5 @@ public interface OrderHistoryService {
 	
 	// 주문 내역 상세 가져오기
 	List<MemberOrderVO> getMemberOrderDetail(long order_id, int user_id);
+	
 }

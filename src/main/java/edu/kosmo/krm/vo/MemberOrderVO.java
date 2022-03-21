@@ -36,7 +36,7 @@ public class MemberOrderVO {
 	private Timestamp order_date;
 	private String status;
 	
-	// private DeliveryVO delivery;
+	//private DeliveryVO delivery;
 	private List<DeliveryVO> delivery;
 	private List<OrderDetailVO> orderDetails;
 	

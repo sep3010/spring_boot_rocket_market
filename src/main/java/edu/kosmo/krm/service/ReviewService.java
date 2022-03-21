@@ -3,17 +3,21 @@ package edu.kosmo.krm.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import edu.kosmo.krm.page.Criteria;
-import edu.kosmo.krm.joinVO.JoinReviewVO;
+import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailBoardVO;
 
 public interface ReviewService {
 	
 	// 내가 쓴 후기 내역 가져오는 코드
-	public List<JoinReviewVO> review_getList(Criteria criteria, MemberVO memberVo);
+	List<JoinReviewBoardVO> review_getList(Criteria criteria, MemberVO memberVo);
 		
-	public int review_getTotal(MemberVO memberVO);
+	int review_getTotal(MemberVO memberVO);
 
-
+	void insertReview(JoinReviewBoardVO joinReviewVO, 
+			OrderDetailBoardVO detailBoardVO, MultipartFile[] files, String savePath);
 
 }
