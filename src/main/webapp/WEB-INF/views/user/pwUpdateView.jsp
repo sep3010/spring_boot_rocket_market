@@ -21,8 +21,8 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 
-<title>마이페이지</title>
-<!-- 마이페이지 조회 -->
+<title>비밀번호 변경</title>
+<!-- 비밀번호 변경 -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -41,51 +41,78 @@ $(document).ajaxSend(function(e, xhr, options){
 	
 </script>	
 
-<script>
-$(document).ready(function(){
-
-	$("#pwUpdate").on("click", function(){
-		$.ajax({
-			url : "/pwCheck",
-			type : "post",
-			dataType : "json",
-			data : $("#pwUpdateForm").serializeArray(),
-			success: function(data){
-				
-				if(data==0){
-					alert("패스워드가 틀렸습니다.");
-					return;
-					}
-				}
-			}) // ajax 끝
-		}); // onclick 끝
-	}) // ready 끝
+<script type="text/javascript">
+		$(document).ready(function(){
 		
-</script>
-</head>
+			$("#pwUpdate").on("click", function(){
+				if($("#memberPw").val==""){
+					alert("현재 비밀번호를 입력해주세요");
+					$("#memberPw").focus();
+					return false
+				}
+				if($("#memberPw1").val==""){
+					alert("변경비밀번호을를 입력해주세요");
+					$("#memberPw1").focus();
+					return false
+				}
+				if($("#memberPw2").val==""){
+					alert("변경비밀번호를 입력해주세요");
+					$("#memberPw2").focus();
+					return false
+				}
+				if ($("#memberPw").val() != $("#memberPw2").val()) {
+					alert("변경비밀번호가 일치하지 않습니다.");
+					$("#memberPw2").focus();
+					 
+				
+				$.ajax({
+					url : "/member/pwCheck",
+					type : "POST",
+					dataType : "json",
+					data : $("#pwUpdateForm").serializeArray(),
+					success: function(data){
+						
+						if(data==0){
+							alert("패스워드가 틀렸습니다.");
+							return;
+						}else{
+							if(confirm("변경하시겠습니까?")){
+								$("#pwUpdateForm").submit();
+							}
+							
+						}
+					}
+				})
+				
+			});
+			
+				
+			
+		})
+	</script>
 
 
 <body>    
 	<!-- 메인으로 가는 버튼 -->
 	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
-	<h1>비밀번호 체크</h1>
+	<h1>비밀번호 변경</h1>
 
-  <form action="/pwCheck" method="post" id="pwCheck" name="pwCheck">
-                       <input type="hidden" id="username" name="username" value = "<sec:authentication property="principal.memberVO.username"/>">
+  <form action="/user/pwUpdate" method="post" id="pwUpdateForm" name="pwUpdateForm">
+                       <input type="hidden" id="memberId" name="memberId" value="${login.memberId}">
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-default panel-margin-10">
             <div class="panel-body panel-body-content text-center">
-                <p class="lead">현재 비밀번호를 입력해 주세요.</p>
-
+                <p class="lead">변경하실 비밀번호를 입력해 주세요.</p>
                 <div class="form-group">
-                    <input type="text" name="member_id" class="form-control form-control-inline text-center" value = "<sec:authentication property="principal.memberVO.username"/>" readonly="readonly"/>
+                    <input type="password" name="currentPW" id="currentPW" class="form-control form-control-inline text-center" placeholder="현재 비밀번호" />
                 </div>
                 <div class="form-group">
-                    <input type="password" name="memberPw" id="memberPw" class="form-control form-control-inline text-center" placeholder="현재 비밀번호" />
-                </div>                
-
-                <button type="button" id="pwUpdate" name="pwUpdate" class="btn btn-primary">입력</button>
-				<a href="/user/userHome" class="btn btn-default">취소</a>
+                    <input type="password" name="changePW1" class="form-control form-control-inline text-center" placeholder="새 비밀번호" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="changePW2" class="form-control form-control-inline text-center" placeholder="새 비밀번호 확인" />
+                </div>
+                <button type="button" id="pwUpdate" name="pwUpdate" class="btn btn-primary">비밀번호 변경</button> <a href="/member/infoView" class="btn btn-default">취소</a>
             </div>
         </div>
     </div>

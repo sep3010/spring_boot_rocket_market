@@ -137,7 +137,7 @@ public class OrderController {
 		log.info("successPayment()...");
 		return result.toString();
 	
-	}	
+	}
 	
 	// 주문완료 페이지 (view)
 	@GetMapping("/order/orderPaymentView")
@@ -147,6 +147,16 @@ public class OrderController {
 		view.setViewName("/order/orderPaymentView");
 		return view;
 	}
-	
 
+	// 쿠폰 적용
+	@GetMapping("/apply")
+	public @ResponseBody String apply() {
+		log.info("apply()...");
+		
+		// ajax에 "SUCCESS"를 보내기 위한 것
+		JSONObject result = new JSONObject();
+		result.put("SUCCESS", true);
+		log.info("SUCCESS()...");
+		return result.toString();
+	}
 }

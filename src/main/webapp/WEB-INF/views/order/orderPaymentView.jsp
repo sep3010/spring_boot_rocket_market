@@ -36,7 +36,10 @@
 	<sec:authentication property="principal.memberVO.name"/>님의 주문이 완료되었습니다!
 	
 	<div>결제 금액</div>
-	<div>${amount }</div>원
+	<div>${discountAmount }원</div>
+	
+	<a href="${pageContext.request.contextPath}/">홈으로 가기</a>
+	<br><a href="${pageContext.request.contextPath}/user/orderhistory">주문 내역 확인하기</a>
 	
 	
 	

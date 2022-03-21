@@ -155,20 +155,6 @@ public class MemberInfoController {
 		return entity;
 	}
 	
-	@GetMapping("/user/pwUpdateView")
-	public ModelAndView pwUpdateView(ModelAndView view){
-		view.setViewName("/user/pwUpdateView");
-		return view;
-	}
-	
-	@PostMapping("/pwCheck")
-	public int pwCheck(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, MemberVO memberVO){
-		String memberPW = memberInfoService.pwCheck(memberCustomDetails.getMemberVO().getId());
-		log.info("@@@@@@@@@@" + memberCustomDetails.getMemberVO().getId());
-		if( memberVO == null || !BCrypt.checkpw(memberVO.getPassword(), memberPW)) {
-			return 0;
-		}
-		return 1;
-	}
+
 
 }

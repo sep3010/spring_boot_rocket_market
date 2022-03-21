@@ -36,5 +36,8 @@ public interface MemberInfoMapper {
 	MemberVO updateuser(MemberVO memberVO);
 	
 	// 비밀번호 유효성 검사 코드
-	String pwCheck(int id);	
+	public String pwCheck(int id);
+	
+	// 비밀번호 변경 코드
+	public void pwUpdate(String member_id, String hashedPw) throws Exception;
 }

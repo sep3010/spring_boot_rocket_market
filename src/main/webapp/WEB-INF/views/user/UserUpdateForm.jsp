@@ -154,6 +154,7 @@ $(document).ajaxSend(function(e, xhr, options){
 			</table>
 				<br>
 				<button type="submit" id="updateSubmit" class="btn" onclick="check_onclick()">회원정보 수정</button>
+				<a type="button" id="updateSubmit" class="btn" href="/user/pwUpdateView" >비밀번호 변경하기</a>
 				<a href="delete?id=${memberInfo_view.id}">회원 탈퇴</a>
 			</form:form>
 
