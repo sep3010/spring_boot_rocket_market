@@ -12,13 +12,13 @@ function init() {
   document.getElementsByTagName("head")[0].appendChild(script);
 
   //--------------------------- Important Variables----------------------------
-  botLogoPath = "./chat_imgs/bot-logo.png";
+  botLogoPath = "/chat_imgs/bot-logo.png";
 
   //--------------------------- Chatbot Frontend -------------------------------
   const chatContainer = document.getElementById("chat-container");
 
   //챗봇 버튼 이미지
-  template = ` <a class='chat-btn'><img src = "./chat_imgs/bot.png" style="width: 70px;"  class = "icon" ></a>
+  template = ` <a class='chat-btn'><img src = "/chat_imgs/bot.png" style="width: 70px;"  class = "icon" ></a>
 
     <div class='chat-popup'>
     
@@ -56,7 +56,7 @@ function init() {
 
 		<div class='chat-input-area'>
 			<input type='text' autofocus class='chat-input' onkeypress='return givenUserInput(event)' placeholder='메세지를 입력해주세요.' autocomplete='off'>
-			<button class='chat-submit'><img src="./chat_imgs/send.png" class="icon" ></button>
+			<button class='chat-submit'><img src="/chat_imgs/send.png" class="icon" ></button>
 		</div>
 
 	</div>`;
@@ -85,10 +85,10 @@ function init() {
     if (chatPopup.style.display == "none" && mobileDevice) {
       chatPopup.style.display = "flex";
       chatInput.focus();
-      chatBtn.innerHTML = `<img src = "./chat_imgs/closebot.png" style="width: 70px;" class = "icon" >`;
+      chatBtn.innerHTML = `<img src = "/chat_imgs/closebot.png" style="width: 70px;" class = "icon" >`;
     } else if (mobileDevice) {
       chatPopup.style.display = "none";
-      chatBtn.innerHTML = `<img src = "./chat_imgs/bot.png" style="width: 70px;" class = "icon" >`;
+      chatBtn.innerHTML = `<img src = "/chat_imgs/bot.png" style="width: 70px;" class = "icon" >`;
     } else {
       mobileView();
     }
@@ -106,18 +106,18 @@ function init() {
     // console.log(expandWindow.innerHTML)
     if (
       expandWindow.innerHTML ==
-      '<img src="./chat_imgs/open_fullscreen.png" class="icon">'
+      '<img src="/chat_imgs/open_fullscreen.png" class="icon">'
     ) {
-      expandWindow.innerHTML = `<img src = "./chat_imgs/close_fullscreen.png" class = 'icon'>`;
+      expandWindow.innerHTML = `<img src = "/chat_imgs/close_fullscreen.png" class = 'icon'>`;
       root.style.setProperty("--chat-window-height", 80 + "%");
       root.style.setProperty("--chat-window-total-width", 85 + "%");
     } else if (
-      expandWindow.innerHTML == '<img src="./chat_imgs/bot.png" class="icon">'
+      expandWindow.innerHTML == '<img src="/chat_imgs/bot.png" class="icon">'
     ) {
       chatPopup.style.display = "none";
       chatBtn.style.display = "block";
     } else {
-      expandWindow.innerHTML = `<img src = "./chat_imgs/open_fullscreen.png" class = "icon" >`;
+      expandWindow.innerHTML = `<img src = "/chat_imgs/open_fullscreen.png" class = "icon" >`;
       root.style.setProperty("--chat-window-height", 500 + "px");
       root.style.setProperty("--chat-window-total-width", 380 + "px");
     }
@@ -263,7 +263,7 @@ function mobileView() {
     chatPopup.style.bottom = "0";
     chatPopup.style.right = "0";
     // chatPopup.style.f = "none"
-    expandWindow.innerHTML = `<img src = "./chat_imgs/closebot.png" class = "icon" >`;
+    expandWindow.innerHTML = `<img src = "/chat_imgs/closebot.png" class = "icon" >`;
   }
 }
 
