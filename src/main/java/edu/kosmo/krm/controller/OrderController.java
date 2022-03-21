@@ -139,6 +139,21 @@ public class OrderController {
 		return view;
 	}
 	
+	//위시리스트 ==========================================================
+	//위시리스트 페이지로 이동
+	@GetMapping("/user/wishList")
+	public ModelAndView wishList(ModelAndView view, Principal principal) {
+		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
+		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
+		log.info("회원번호" + memberVO.getId());
+		
+		view.addObject("wishProductList", orderService.wishProductList(memberVO.getId()));
+
+		view.setViewName("/user/wishList");
+		return view;
+	}
+	
+	
 	
 	 
 	// 주문 내역 리스트
@@ -162,8 +177,5 @@ public class OrderController {
 		return view;
 	}
 
-
-
-	
 
 }

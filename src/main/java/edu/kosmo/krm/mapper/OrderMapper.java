@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
@@ -38,5 +39,7 @@ public interface OrderMapper {
 	public void removeProductInCart(int cart_id);
 	@Delete("DELETE FROM cart WHERE id IN(TO_NUMBER(#{list})) AND member_id = #{member_id}")
 	public void removeProductListInCart(String list, int member_id);
+	// 위시리스트 ==================================================================
+	public List<JoinWishProductListVO> getWishProductList(int member_id); //위시리스트 상품목록
 	
 }

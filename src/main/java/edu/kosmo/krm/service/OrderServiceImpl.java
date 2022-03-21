@@ -10,6 +10,7 @@ import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
@@ -52,15 +53,22 @@ public class OrderServiceImpl implements OrderService {
 		log.info("cartProductList()...");
 		return ordermapper.getCartProductList(member_id);
 	}
-	// 선택한 상품 삭제
+	// 선택한 상품정보 삭제
 	public void removeProduct(int cart_id) {
 		log.info("removeProduct()...");
 		ordermapper.removeProductInCart(cart_id);
 	}	
-	// 선택한 상품 삭제
+	// 선택한 상품 삭제(반복문)
 	public void removeProductList(String list, int member_id) {
 		log.info("removeProductList()...");
 		ordermapper.removeProductListInCart(list, member_id);
+	}
+	
+	/*=============위시리스트=============*/
+	// 위시리스트 내역 불러오기
+	public List<JoinWishProductListVO> wishProductList(int member_id) {
+		log.info("wishProductList()...");
+		return ordermapper.getWishProductList(member_id);
 	}
 
 }

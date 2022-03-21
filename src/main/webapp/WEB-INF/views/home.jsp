@@ -279,7 +279,7 @@
 			  <!-- 회원 -->
 			    <sec:authorize access="hasRole('ROLE_USER')">
 			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="#">위시리스트</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
               		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
 			</sec:authorize>             
