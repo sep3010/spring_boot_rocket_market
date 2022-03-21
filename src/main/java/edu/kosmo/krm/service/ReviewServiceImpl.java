@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
 			OrderDetailBoardVO detailBoardVO, 
 			MultipartFile[] files, String savePath) {
 		log.info("insertReview()...");
-		reviewMapper.insertReviewBoard(joinReviewVO, null);
+		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
 		
 	}
 
