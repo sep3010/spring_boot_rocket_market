@@ -25,6 +25,7 @@ public interface OrderService {
 	// 장바구니 상품목록가져오기
 	public List<JoinCartProductListVO> cartProductList(int member_id);
 	// 장바구니 상품삭제
-	public void removeProduct(int cart_id);
+	public void removeProduct(int cart_id); //상품한개 삭제
+	public void removeProductList(String list, int member_id); //선택한상품을제외한 나머지 한개삭제(반복예정)
 	
 }

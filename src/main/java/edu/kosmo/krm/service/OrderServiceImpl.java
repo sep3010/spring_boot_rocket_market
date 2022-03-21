@@ -56,6 +56,11 @@ public class OrderServiceImpl implements OrderService {
 	public void removeProduct(int cart_id) {
 		log.info("removeProduct()...");
 		ordermapper.removeProductInCart(cart_id);
+	}	
+	// 선택한 상품 삭제
+	public void removeProductList(String list, int member_id) {
+		log.info("removeProductList()...");
+		ordermapper.removeProductListInCart(list, member_id);
 	}
 
 }

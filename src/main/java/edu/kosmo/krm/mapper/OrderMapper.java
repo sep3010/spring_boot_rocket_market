@@ -36,5 +36,7 @@ public interface OrderMapper {
 	public List<JoinCartProductListVO> getCartProductList(int member_id);//장바구니 상품목록
 	@Delete("DELETE FROM cart WHERE id = #{cart_id}")
 	public void removeProductInCart(int cart_id);
+	@Delete("DELETE FROM cart WHERE id IN(TO_NUMBER(#{list})) AND member_id = #{member_id}")
+	public void removeProductListInCart(String list, int member_id);
 	
 }

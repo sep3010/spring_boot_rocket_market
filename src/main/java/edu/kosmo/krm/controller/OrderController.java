@@ -1,6 +1,7 @@
 package edu.kosmo.krm.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
+import edu.kosmo.krm.vo.SelectNumVO;
 import edu.kosmo.krm.page.PageVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -94,9 +96,39 @@ public class OrderController {
 		return entity;
 	}
 	
+	//장바구니 페이지에서 선택한 상품들을 제외하고 나머지는 삭제
+	@PostMapping("/order/exceptProduct")
+	public ResponseEntity<String> exceptProduct(@RequestBody SelectNumVO selectNumVO, Principal principal) {
+
+		log.info("exceptProduct()..");
+		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
+		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
+		log.info("회원번호" + memberVO.getId());
+	
+		ResponseEntity<String> entity = null;
+		
+		try {
+			
+			//선택한 상품의 장바구니 번호 리스트
+			String list="";
+			
+			for(String num : selectNumVO.getNumList()) {
+				orderService.removeProductList(num, memberVO.getId());
+			}
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		// 삭제 처리 HTTP 상태 메시지 리턴
+		return entity;
+	}
+	
+	
 	//장바구니 페이지에서 선택한 상품들가지고 주문페이지로 이동
 	@PostMapping("/order/orderPayment")
 	public ModelAndView orderPayment(ModelAndView view, Principal principal) {
+
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
 		log.info("회원번호" + memberVO.getId());
