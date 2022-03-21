@@ -68,7 +68,7 @@ dd {
   width: 15rem;
 }
 
-.discount,
+#discount,
 .discount_number {
   font-size: 26px;
   font-weight: bold;
@@ -137,7 +137,7 @@ input[type="button" i] {
   text-align: right;
 }
 
-.result_sum {
+#result_sum {
   display: inline;
   font-size: 26px !important;
   font-weight: bold;

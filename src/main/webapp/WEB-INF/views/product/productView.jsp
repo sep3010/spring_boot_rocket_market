@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -491,9 +492,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             </div> <!-- card 상품이미지 -->
         
             <!-- ====================추천상품===================== -->
-            <div id="recommendbox">	
+            <div class=pb-0 id="recommendbox">	
               <h6 class="text-center p-0 pt-2"> ♥ [${productBrand}] 추천 상품 ♥</h6>
-
+				<div class=" d-flex justify-content-center">
 	          <c:forEach var="recommend" items="${recommendProduct}" end="2">
 	            <c:choose>
 		      	  <c:when test="${not empty recommend.productImages}">
@@ -502,11 +503,12 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 			          <c:choose>
 			      		<c:when test="${not empty recommend.productImages}">
 				    	  <c:forEach var="thumbnail" items="${recommend.productImages}">
-					        <div class="card-deck">
-                              <div class="card">
-					            <img src="${thumbnail.path}" class="card-img-top">
+					        <div class="card-deck" style="height: 120px;">
+                              <div class="card pr-3 pl-3">
+					            <img src="${thumbnail.path}" class="card-img-top" style="width: 100px; height: 100px;">
 						        <div class="card-body p-0 pt-2">
-	  		                      <h6 class="card-title text-center m-0">${recommend.name}</h6>
+						        <c:set var="TextValue" value="${recommend.name}" />
+	  		                      <h6 class="card-title text-center m-0">${fn:substring(TextValue,0,7)}</h6>
 	  		                    </div>
                         	  </div>
                       		</div>
@@ -518,8 +520,10 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 			  	  </c:when>
 	  			</c:choose>
 	  	  	  </c:forEach>
+	  	  	  </div>
         	</div><!-- recommendbox -->   
     	</c:forEach>
+    	
       </div> <!-- product_leftbox -->
  	
  	
@@ -535,20 +539,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         <c:set var="price" value="${productInfo.price}"/>
         <c:set var="discountPercent" value="${productInfo.discount}" scope="session"/>
         <c:set var="discountPrice" value="${price * (1 - (discountPercent/100))}" scope="session"/>
-		<c:choose>
-		  <c:when test="${discountPercent == 0}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
-            <div id="price">
-              <dt>가격</dt>
-                <dd><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/><span> 원</span></dd>
-            </div>
-  
-            <div class="d-flex align-items-center p-0 pb-3" id="dc_price">
-              <dt>할인가</dt>
-              <dd><span class="discount">&nbsp;</span><span class="dc_text"> &nbsp;</span>
-              <span class="discount_number">&nbsp;&nbsp;</span></dd>
-            </div>		  				    
-		  </c:when>
-		  <c:otherwise> <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
+		 <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
 		    <div id="price">
               <dt>가격</dt>
                 <dd><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/><span> 원</span></dd>
@@ -556,11 +547,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
   
             <div class="d-flex align-items-center p-0 pb-3" id="dc_price">
               <dt>할인가</dt>
-              <dd><span class="discount"><fmt:formatNumber value="${discountPrice}" pattern="#,###"/></span>
+              <dd><span id="discount"><fmt:formatNumber value="${discountPrice}" pattern="#,###"/></span>
               <span class="dc_text"> 원</span><span class="discount_number">&nbsp;&nbsp;${discountPercent}%</span></dd>
-            </div>
-		  </c:otherwise>
-		</c:choose>  
+            </div> 
   
           <div id="capacity">
             <dt>용량</dt><dd>${productInfo.capacity}</dd>
@@ -589,7 +578,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             </div><!-- amount_span -->  
             <div class="price_result"> 
               <span class="result_text"><span>총 상품 금액 :</span> 
-              <span class="result_sum"><fmt:formatNumber value="${productInfo.price}" pattern="#,###"/></span> <span>원</span> </span> 
+              <span id="result_sum"><fmt:formatNumber value="${discountPrice}" pattern="#,###"/></span> <span>원</span> </span> 
             </div><!-- price_result -->
             
           </div> <!-- amountbox --> 
