@@ -253,14 +253,15 @@ public class ProductInfoController {
 	@GetMapping("/product/productView/{id}")
 	public ModelAndView productView(Criteria criteria, ProductVO productVO, ModelAndView view) {
 		log.info("productView()..상품번호 : " + productVO.getId());
-
+		
+		ProductVO Recommend = productService.getProduct(productVO.getId());//상품정보가져오기	
+		
 		view.addObject("productInfo", productService.getProductInfo(productVO));//상품정보
 		view.addObject("productBoard", productBoardService.getProductBoardList(criteria,productVO));//상품후기
 		int reviewTotal = productBoardService.getProductBoardTotal(productVO);
 		view.addObject("pageMaker", new PageVO(criteria, reviewTotal));//상품후기페이징
 		view.addObject("productNum", productVO.getId());//상품번호
-		
-		ProductVO Recommend = productService.getProduct(productVO.getId());//상품정보가져오기		
+		view.addObject("productBrand", Recommend.getBrand());//상품브랜드
 		view.addObject("recommendProduct",productService.getRecommendProduct(Recommend));		
 		
 		view.setViewName("/product/productView");

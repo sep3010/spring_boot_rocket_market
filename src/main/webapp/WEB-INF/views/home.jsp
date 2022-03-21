@@ -308,7 +308,7 @@
             <button class="dropbtn d-flex justify-content-start">
               <img
                 class="mr-2 mt-1"
-                src="./imgs/category.png"
+                src="${pageContext.request.contextPath}/imgs/category.png"
                 alt=""
                 style="width: 21px; height: 17px"
               />전체 카테고리

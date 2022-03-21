@@ -206,7 +206,7 @@
         information_type, path FROM product_image  
         WHERE information_type = 'thumbnail') i
         ON p.id = i.product_id 
-        WHERE p.brand = #{brand}	
+        WHERE p.brand = #{brand} AND p.id NOT IN(#{id})
       ]]>
 	</select>
 
