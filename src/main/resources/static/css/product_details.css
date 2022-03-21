@@ -26,6 +26,11 @@
   margin: 0;
 }
 
+#recommendbox>div>a{
+  color: rgb(87, 60, 26);
+  text-decoration: none;
+}
+
 #product_leftbox {
   padding-right: 30px;
   margin-right: 20px;
