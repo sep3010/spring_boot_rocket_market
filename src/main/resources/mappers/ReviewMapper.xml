@@ -32,7 +32,7 @@
 		<result property="path" column="path" />	
 	</resultMap>
 
-	<select id="getReviewList" resultType="edu.kosmo.krm.joinVO.JoinReviewBoardVO">
+	<select id="getReviewList" resultMap="reviewMap">
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -100,6 +100,40 @@
 		    VALUES (BOARD_FILE_SEQ.nextval, 
 		    #{board_id}, #{name}, #{extension}, #{path})
 	</insert>
+	
+	<select id="getReviewContent" resultMap="reviewMap">
+	   <![CDATA[
+	   		SELECT
+			    m.id AS user_id,
+			    m.nickname,
+			    b.id AS board_id,
+			    b.title,
+			    b.content,
+			    b.hit,
+			    b.score,
+			    odb.order_detail_id,
+			    bf.path
+			FROM
+			    member m
+			LEFT JOIN    
+			    board b
+			ON 
+			    m.id = b.member_id    
+			LEFT JOIN    
+			    order_detail_board odb
+			ON
+			    b.id = odb.board_id
+			LEFT JOIN
+			    board_file bf
+			ON
+			    odb.board_id = bf.board_id
+			WHERE
+			    b.board_category_id = 3
+			AND
+			    b.id = #{boardId}	
+	   ]]>
+	</select>
+	
 	
 	<!--  
  	<select id="getReviewTotalCount" resultType="int">

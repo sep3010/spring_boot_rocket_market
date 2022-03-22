@@ -17,7 +17,9 @@ public interface ReviewService {
 		
 	int review_getTotal(MemberVO memberVO);
 
-	void insertReview(JoinReviewBoardVO joinReviewVO, 
+	int insertReview(JoinReviewBoardVO joinReviewVO, 
 			OrderDetailBoardVO detailBoardVO, MultipartFile[] files, String savePath);
+	
+	JoinReviewBoardVO getReview_content(int boardId);
 
 }

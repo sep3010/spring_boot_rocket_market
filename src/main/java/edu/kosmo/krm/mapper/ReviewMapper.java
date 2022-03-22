@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.page.Criteria;
@@ -33,5 +34,15 @@ public interface ReviewMapper {
 	// 리뷰 사진 저장
 	void insertReviewImages(BoardFileVO boardFileVO);
 	
+	// 리뷰 사진 저장을 위한 리뷰글 아이디 값 가져오기
+	@Select("SELECT board_id FROM order_detail_board WHERE order_detail_id = #{order_detail_id}")
+	int getReviewBoardId(int order_detail_id);
+	
+	// 후기글 내용 가져오기
+	JoinReviewBoardVO getReviewContent(int boardId);
+	
+	// 후기글 조회시 조회수 증가
+	@Update("UPDATE board SET hit = hit + 1 WHERE id = #{boardId}")
+	void updateReviewHit(int boardId);
 	
 }

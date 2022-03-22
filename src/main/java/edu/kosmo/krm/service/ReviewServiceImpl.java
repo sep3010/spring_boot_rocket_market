@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.mapper.ReviewMapper;
@@ -37,14 +38,19 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void insertReview(JoinReviewBoardVO joinReviewVO, 
+	@Transactional(rollbackFor = Exception.class)
+	public int insertReview(JoinReviewBoardVO joinReviewVO, 
 			OrderDetailBoardVO detailBoardVO, 
 			MultipartFile[] files, String savePath) {
 		log.info("insertReview()...");
 		
-		BoardFileVO boardFileVO;
+		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
+		
+		int boardId = reviewMapper.getReviewBoardId(detailBoardVO.getOrder_detail_id());
 		
 		if(files.length > 0) {
+			
+			BoardFileVO boardFileVO = null;
 			
 			for (MultipartFile file : files) {
 				
@@ -67,7 +73,15 @@ public class ReviewServiceImpl implements ReviewService {
 					file.transferTo(saveFile);
 					log.info("후기 사진 저장 성공");
 					
+					String imagePath = basePath + fileName; 
 					
+					boardFileVO.setBoard_id(boardId);
+					boardFileVO.setName(fileName);
+					boardFileVO.setExtension(extension);
+					boardFileVO.setPath(imagePath);
+					log.info("=========boardFileVO : " + boardFileVO);
+					
+					reviewMapper.insertReviewImages(boardFileVO);
 					
 				} catch (Exception e) {
 					log.info("후기 사진 저장 실패");
@@ -75,16 +89,19 @@ public class ReviewServiceImpl implements ReviewService {
 				}
 				
 				
-			}
+			} // end foreach
 			
-		}
+		} // end if(files.length > 0)
+	
+		return boardId;
+	}
+
+	@Override
+	public JoinReviewBoardVO getReview_content(int boardId) {
+		log.info("getReview_content()..");
+		reviewMapper.updateReviewHit(boardId);
 		
-		
-		
-		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
-		
-		
-		
+		return reviewMapper.getReviewContent(boardId);
 	}
 
 

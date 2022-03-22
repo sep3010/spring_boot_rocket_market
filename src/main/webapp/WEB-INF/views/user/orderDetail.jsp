@@ -76,6 +76,7 @@
 						<td colspan="3">상품명</td>
 						<td>할인율</td>
 						<td>가격</td>
+						<td>수량</td>
 					</tr>
 				</c:if><%-- <c:if test="${vs.first}"> --%>
 				
@@ -89,9 +90,9 @@
 								</c:forEach>				
 								<td colspan="2">[${product.brand}] ${product.name}</td>
 								
-								<td>${product.discount}%</td>
-								
+								<td>${product.discount}%</td>		
 								<td>${product.price}</td>
+								<td>${detail.quantity}</td>
 								<td>
 									<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
 									<input type="hidden" name="order_id" value="${detail.order_id}">

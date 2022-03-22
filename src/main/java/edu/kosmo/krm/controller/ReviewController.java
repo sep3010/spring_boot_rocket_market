@@ -73,11 +73,11 @@ public class ReviewController {
 		return view;
 	}
 	
-	
+	// 구매 후기 작성 페이지
 	@PostMapping("/user/review_write")
 	public ModelAndView review_write(ModelAndView view, 
 			OrderDetailVO orderDetailVO, ProductVO productVO, ProductImageVO imageVO) {
-		log.info("review_write()");
+		log.info("review_write()..");
 		log.info("===========orderDetailVO : " + orderDetailVO);
 		log.info("===========productVO : " + productVO);
 		log.info("===========imageVO : " + imageVO);
@@ -91,16 +91,18 @@ public class ReviewController {
 		return view;
 	}
 	
+	
 	/*@RequestParam("order_id") long order_id, 
 			@RequestParam("order_detail_id") int order_detail_id*/
+	// 구매 후기 작성 완료 
 	@PostMapping("/user/insertReview")
 	public ModelAndView insertReview(ModelAndView view, HttpServletRequest request, 
 			MultipartFile[] reviewImages, JoinReviewBoardVO reviewBoardVO, 
 			OrderDetailBoardVO detailBoardVO) {
-		log.info("insertReview()");
+		log.info("insertReview()...");
 		log.info("==========reviewBoardVO : " + reviewBoardVO);
 		log.info("============detailBoardVO : " + detailBoardVO);
-		log.info("============reviewImages : " + reviewImages);
+		log.info("============reviewImages : " + reviewImages.toString());
 		
 		// 각 팀원들의 프로젝트 폴더 경로 설정(상대적 경로)을 위한 처리.
 		String savePath = request.getSession().getServletContext()
@@ -108,15 +110,30 @@ public class ReviewController {
 		
 		log.info("savePath : " + savePath);
 		
+		int boardId = reviewService.insertReview(reviewBoardVO, detailBoardVO, reviewImages, savePath);
 		
+		String arrivalURL = "redirect:/user/review_content/" + boardId;
 		
-		// view.setViewName("redirect:/user/orderhistory");
+		view.setViewName(arrivalURL);
 		
 		return view;
 	}
 	
 
-
+	// 작성한 구매 후기 글 보기
+	@GetMapping("/user/review_content/{boardId}")
+	public ModelAndView getReview_content(ModelAndView view, int boardId) {
+		log.info("getReview_content()...");
+		log.info("======boardId : " + boardId);
+		log.info("=============review : " 
+				+ reviewService.getReview_content(boardId));
+		
+		view.addObject("review", reviewService.getReview_content(boardId));
+		
+		view.setViewName("/user/review_content");
+		
+		return view;
+	}
 
 	
 
