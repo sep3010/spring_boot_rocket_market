@@ -209,18 +209,17 @@ public class OrderController {
 		String amountS = request.getParameter("amount");
 		String status = request.getParameter("status");
 		String productid = request.getParameter("productid");
+		String inputpoint = request.getParameter("input_point"); // 사용 포인트
+		String userpoint = request.getParameter("user_point"); // 보유 포인트
+		String resultPoint = request.getParameter("result_Point"); // 보유 포인트
 		
 		int member_id = Integer.valueOf(memberid);
 		Long merchant_id = Long.valueOf(merchantid);
 		int amount = Integer.valueOf(amountS);
 		int product_id = Integer.valueOf(productid);
+		int result_Point = Integer.valueOf(resultPoint);
 		
-		log.info(impuid);
-		log.info("merchant_id" + merchant_id);
-		log.info("member_id" + member_id);
-		log.info("amount" + amount);
-		log.info("status" + status);
-		log.info("productid" + productid);
+		log.info("@@@@@@@@@@@@" + result_Point);
 		
 
 		
@@ -232,7 +231,6 @@ public class OrderController {
 		memberOrderVO.setAmount(amount); // 총 금액
 
 		orderService.insertOrderInfo(memberOrderVO);
-		
 
 		// OrderDetailVO (주문 상세)에 넣는 것
 		OrderDetailVO orderDetailVO = new OrderDetailVO();
@@ -240,6 +238,13 @@ public class OrderController {
 		orderDetailVO.setProduct_id(product_id);
 		
 		orderService.insertOrderDetailInfo(orderDetailVO);
+		
+		// 쿠폰 포인트와 포인트 넣는 것
+		MemberVO memberVO = new MemberVO();
+		memberVO.setPoint(result_Point);
+		memberVO.setId(member_id);
+		
+		memberInfoService.updatePoint(memberVO);
 		
 		// ajax에 "successPayment"를 보내기 위한 것
 		JSONObject result = new JSONObject();
@@ -258,15 +263,5 @@ public class OrderController {
 		return view;
 	}
 
-	// 쿠폰 적용
-	@GetMapping("/apply")
-	public @ResponseBody String apply() {
-		log.info("apply()...");
-		
-		// ajax에 "SUCCESS"를 보내기 위한 것
-		JSONObject result = new JSONObject();
-		result.put("SUCCESS", true);
-		log.info("SUCCESS()...");
-		return result.toString();
-	}
+
 }

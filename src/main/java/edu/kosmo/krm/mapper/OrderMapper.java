@@ -69,7 +69,4 @@ public interface OrderMapper {
 	// 주문 상세 등록 (OrderDetailVO에 등록)
 	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);
 	
-	// 주문한 상품의 개수를 가져오는 함수
-	public int getProudctQuantity(Long order_id);
-	
 }

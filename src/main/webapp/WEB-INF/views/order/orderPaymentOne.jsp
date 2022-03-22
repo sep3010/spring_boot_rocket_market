@@ -348,42 +348,42 @@
         
         
         // 쿠폰 적용 자바스크립트
-        	$(document).ready(function(){
+        $(document).ready(function(){
 
-        		$("#applyPoint").click(function(event){
-        	      event.preventDefault();	  
-        	      
-        	      	 let productPrice = $('#product_price').text();
-        	         let discountFee = $('#discount_price').text();
-        	         let deliveryFee = $('#delivery-fee').text(); // 배송비 
-        	         let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
-					 let discountAmount = $("#discount_Amount").text();
-					 let point = $("#inputPoint").val();
-					 
-	    	         // 할인 금액
-	    	         CouponDiscount = Number(Number(productPrice) * Number(coupon_point) * 0.01); // 쿠폰 할인가 
-	    	         discountFee =  Number(CouponDiscount) + Number(point); // 총 할인가 (쿠폰 할인가 + 포인트 할인가)
-	    	         
-         	         // 총 금액 계산
-         	         discountAmount = Number(productPrice) - Number(discountFee) + Number(deliveryFee);
-            		 $("#discount_price").text(discountFee);
-        			 $("#discount_Amount").text(discountAmount);
-        			 
-        			 alert("할인을 적용합니다.");
-        			 
-        		});
-        	}); //end click()
-        	
-/* 		    		// 쿠폰 적용 초기화
-		    		$("#applyReset").click(function(event){
-		    			discountFee = 0;
-		    			
-		            	$("#discount_price").text(discountFee);
-		        		$("#discount_Amount").text(discountAmount);		    			
-		      		}); */
-        	
+           $("#applyPoint").click(function(event){
+              event.preventDefault();     
+              
+                 let productPrice = $('#product_price').text();
+                 let discountFee = $('#discount_price').text();
+                 let deliveryFee = $('#delivery-fee').text(); // 배송비 
+                 let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
+	             let discountAmount = $("#discount_Amount").text();
+	             let input_point = $("#inputPoint").val();
+             
+                // 할인 금액
+                CouponDiscount = Number(Number(productPrice) * Number(coupon_point) * 0.01); // 쿠폰 할인가 
+                discountFee =  Number(CouponDiscount) + Number(input_point); // 총 할인가 (쿠폰 할인가 + 포인트 할인가)
+                
+                  // 총 금액 계산
+                  discountAmount = Number(productPrice) - Number(discountFee) + Number(deliveryFee);
+          	      $("#discount_price").text(discountFee);
+             	  $("#discount_Amount").text(discountAmount);
+               
+              	  alert("할인을 적용합니다.");
+               
+           });
+        }); //end click()
+        
+/*                 // 쿠폰 적용 초기화
+             $("#applyReset").click(function(event){
+                discountFee = 0;
+                
+                  $("#discount_price").text(discountFee);
+                 $("#discount_Amount").text(discountAmount);                   
+               }); */
+        
 
-        	}); // end ready()
+        }); // end ready()
 
       
     </script>
@@ -425,10 +425,40 @@
             
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
+            <sec:authorize access="isAnonymous()">
               <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-
+             </sec:authorize>
+             
+ 
+            <!-- 로그인을 했다면 -->
+			<sec:authorize access="isAuthenticated()">
+			<div style="align-self:center">
+			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+			</div>
+			  <a 
+			  class="nav-link" 
+			  onclick="document.getElementById('logout-form').submit();"
+			  >로그아웃</a>
+			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+				  <input type="hidden"/>
+			  </form:form>
+			  
+			  <!-- 관리자 -->
+				<sec:authorize access="hasRole('ROLE_ADMIN')">					
+					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>				
+			  <!-- 회원 -->
+			    <sec:authorize access="hasRole('ROLE_USER')">
+			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+              		<a class="nav-link" href="#">위시리스트</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+                </sec:authorize>
+			</sec:authorize>             
+             
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
 
@@ -556,7 +586,7 @@
     <!-- ======================== 사이드바 =========================== -->
    <main>
 
-         <!-- ======= 장바구니 ======= -->
+	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
@@ -573,7 +603,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <a href="#"
-              ><img class="pt-1" src="./" alt="" id="sideimg"
+              ><img class="pt-1" src="고기.png" alt="" id="sideimg"
             /></a>
           </div>
         </div>
@@ -689,7 +719,7 @@
 				                    	<optgroup>
 				                			<option value="0">쿠폰을 선택해 주세요!</option>
 				                	<c:forEach items="${couponList}" var="couponList">
-				                        	<option value="${couponList.discount}">${couponList.coupon_name}, ${couponList.discount} %</option>
+				                        	<option value="${couponList.discount}" >${couponList.coupon_name}, ${couponList.discount} %</option>
 				                	</c:forEach>
 				                		</optgroup>
 								</c:when>
@@ -702,7 +732,7 @@
                         </select><br>
                         
                         <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
-                        <input type="text" id="inputPoint" Placeholder="사용할 금액을 입력하세요.">
+                        <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
                         <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
@@ -727,9 +757,9 @@
 			
 			<c:set var="price" value="${orderPaymentOne.price}"/>
 			<c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
-			<c:set var="discountPrice" value="${orderPaymentOne.price * ((orderPaymentOne.product_discount * 0.01) + (point * 0.01))}" scope="session"/>
-	        <c:set var="discountAmount" value="${price * (1 - (discountPercent/100)) + 3000}" scope="session"/>
-	         
+			<c:set var="discountPrice" value="${orderPaymentOne.price * ((orderPaymentOne.product_discount * 0.01) + point)}" scope="session"/>
+	        <c:set var="discountAmount" value="${orderPaymentOne.price - discountPrice + 3000}" scope="session"/>
+	        
                 <div class=" money pt-5 pb-4">
                   <div class="d-flex">
                     <div class="mr-3">상품금액</div>  
@@ -829,17 +859,22 @@
         <sec:authorize access="isAuthenticated()">
            <sec:authentication var="principal" property="principal"/>
            
-           let discountAmount = "${discountAmount }";
-           
            let member_name = "${principal.memberVO.name}";
            let email = "${principal.memberVO.email}";
            let phone = "${principal.memberVO.phone}";
            let member_id = "${principal.memberVO.id}";
-
-
+           let discountAmount = $("#discount_Amount").text();
            let product_name = "${product.name }";
            let product_id = "${product.id }";
            let merchantid = new Date().getTime();
+           
+
+           
+           let input_point = $("#inputPoint").val(); // 입력 포인트
+           let user_point = "${principal.memberVO.point}";
+           let coupon_point = $("select[name='coupon']").val();
+		   let result_Point =  Number(user_point) - Number(input_point);
+		   
            
            var token = $("meta[name='_csrf']").attr("content");
            var header = $("meta[name='_csrf_header']").attr("content");
@@ -850,7 +885,7 @@
                pay_method: "card",
                merchant_uid: merchantid, // 주문 번호
                name: product_name,
-               amount: ${discountAmount },
+               amount: discountAmount,
                buyer_email: email,
                buyer_name: member_name,
                buyer_tel: phone
@@ -867,20 +902,24 @@
                         	 impuid : rsp.imp_uid, // 결제 번호
                         	 merchantid: rsp.merchant_uid, // 주문 번호
                         	 memberid: member_id,
-                        	 amount: ${discountAmount }, // 주문 총 금액
+                        	 amount: discountAmount,
                         	 status: rsp.status,
-                             productid: product_id
+                             productid: product_id,
+                             input_point: input_point,
+                             user_point: user_point,
+                             result_Point: result_Point,
+                             member_id: member_id
                          },
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);
                          }
                       }).done(function(successPayment){
                     	  alert("결제에 성공하셨습니다.");
-                    	  location.href="${pageContext.request.contextPath}/order/orderPaymentView?amount=${discountAmount }"
+                    	  location.href="${pageContext.request.contextPath}/order/orderPaymentView"
                       });
                   }else {
                 	  alert("결제에 실패하셨습니다." + rsp.error_msg);
-                   }
+                  }
                 }
            );
         </sec:authorize>

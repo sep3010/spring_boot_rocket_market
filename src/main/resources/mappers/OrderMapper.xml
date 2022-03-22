@@ -222,6 +222,7 @@
 	
 	<select id="getUserCouponList" resultMap="CouponMap">
 	   <![CDATA[
+	   
 				SELECT 
                 
 				    C.id as coupon_id,
@@ -239,6 +240,8 @@
 				        UC.COUPON_ID = C.ID
                 AND
                         M.ID = #{id }
+                AND
+                        USE_CHECK = 0                        
         			
 		]]>
 	</select>
