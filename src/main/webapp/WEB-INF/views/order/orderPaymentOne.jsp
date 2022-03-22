@@ -344,41 +344,45 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 1000);
         });
-
+        
+        
+        
         // 쿠폰 적용 자바스크립트
         	$(document).ready(function(){
+
         		$("#applyPoint").click(function(event){
-        			
         	      event.preventDefault();	  
-        	         
+        	      
         	      	 let productPrice = $('#product_price').text();
         	         let discountFee = $('#discount_price').text();
         	         let deliveryFee = $('#delivery-fee').text(); // 배송비 
         	         let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
 					 let discountAmount = $("#discount_Amount").text();
+					 let point = $("#inputPoint").val();
 					 
-         	         alert("쿠폰이나 적립금을 적용합니다." + coupon_point);  
-        	         
-         	         // 할인 금액
-            	 	 discountFee = Number(productPrice) * Number(coupon_point) * 0.01;
-/*          	         alert(productPrice); 
-         	         alert(discountFee);
-         	         alert(coupon_point);
-         	         alert(deliveryFee); */
-         	         
+	    	         // 할인 금액
+	    	         CouponDiscount = Number(Number(productPrice) * Number(coupon_point) * 0.01); // 쿠폰 할인가 
+	    	         discountFee =  Number(CouponDiscount) + Number(point); // 총 할인가 (쿠폰 할인가 + 포인트 할인가)
+	    	         
          	         // 총 금액 계산
          	         discountAmount = Number(productPrice) - Number(discountFee) + Number(deliveryFee);
-       			 
-         	         alert(discountAmount);
-         	        
-            		 $("#discount_price").val(discountFee);
-            		 alert($("#discount_price").val(discountFee));
-
+            		 $("#discount_price").text(discountFee);
         			 $("#discount_Amount").text(discountAmount);
-        		});
         			 
-       		 		
-        		}); //end click()
+        			 alert("할인을 적용합니다.");
+        			 
+        		});
+        	}); //end click()
+        	
+/* 		    		// 쿠폰 적용 초기화
+		    		$("#applyReset").click(function(event){
+		    			discountFee = 0;
+		    			
+		            	$("#discount_price").text(discountFee);
+		        		$("#discount_Amount").text(discountAmount);		    			
+		      		}); */
+        	
+
         	}); // end ready()
 
       
@@ -706,12 +710,12 @@
                   <p style="font-weight: bold; font-size:20px">쿠폰 | 적립금</p>
                   <div class="discount-type">
                       
-                        <label><input type="checkbox">&nbsp;쿠폰</label>
+                        <label><input type="checkbox" id="myCoupon" class="myDiscount" >&nbsp;쿠폰</label>
                         <select name="coupon" id="coupon-group" class = "coupon">
 							<c:choose>
 								<c:when test="${not empty couponList}">                            
 				                    	<optgroup>
-				                			<option value="none">쿠폰을 선택해 주세요!</option>
+				                			<option value="0">쿠폰을 선택해 주세요!</option>
 				                	<c:forEach items="${couponList}" var="couponList">
 				                        	<option value="${couponList.discount}">${couponList.coupon_name}, ${couponList.discount} %</option>
 				                	</c:forEach>
@@ -725,9 +729,10 @@
 							</c:choose>
                         </select><br>
                         
-                        <label><input type="checkbox">&nbsp;적립금</label>
-                        <input type="text">
+                        <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
+                        <input type="text" id="inputPoint" Placeholder="사용할 금액을 입력하세요.">
                         <div class="btn" id="applyPoint">적용</div>
+<!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
                       
                       <pre>                          보유적립금 <sec:authentication property="principal.memberVO.point"/>원</pre>
