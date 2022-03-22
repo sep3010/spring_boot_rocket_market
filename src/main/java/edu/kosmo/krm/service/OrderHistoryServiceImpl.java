@@ -13,6 +13,8 @@ import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.OrderHistoryListVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailBoardVO;
+import edu.kosmo.krm.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,14 +26,20 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 	
 	@Override
 	public List<MemberOrderVO> getMemberOrderHistory(Criteria criteria, MemberVO memberVO) {
-		log.info("getMemberOrderHistory()");
+		log.info("getMemberOrderHistory()..");
 		return orderHistoryMapper.getMemberOrderHistory(criteria, memberVO);
 	}
 
 	@Override
 	public List<MemberOrderVO> getMemberOrderDetail(long order_id, int user_id) {
-		log.info("getMemberOrderDetail()");
+		log.info("getMemberOrderDetail()..");
 		return orderHistoryMapper.getMemberOrderDetail(order_id, user_id);
+	}
+
+	@Override
+	public ProductVO getProductAndImage(OrderDetailBoardVO detailBoardVO) {
+		log.info("getProductAndImage()..");
+		return orderHistoryMapper.getProductAndImage(detailBoardVO);
 	}
 
 

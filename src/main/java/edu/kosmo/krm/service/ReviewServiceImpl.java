@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kosmo.krm.mapper.OrderHistoryMapper;
 import edu.kosmo.krm.mapper.ReviewMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
@@ -39,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertReview(JoinReviewBoardVO joinReviewVO, 
+	public void insertReview(JoinReviewBoardVO joinReviewVO, 
 			OrderDetailBoardVO detailBoardVO, 
 			MultipartFile[] files, String savePath) {
 		log.info("insertReview()...");
@@ -47,11 +48,12 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
 		
 		int boardId = reviewMapper.getReviewBoardId(detailBoardVO.getOrder_detail_id());
+		log.info("boardId : " + boardId);
 		
 		if(files.length > 0) {
 			
-			BoardFileVO boardFileVO = null;
-			
+			BoardFileVO boardFileVO = new BoardFileVO();
+		
 			for (MultipartFile file : files) {
 				
 				// 파일 형태 (예시: image/jpeg)
@@ -92,8 +94,7 @@ public class ReviewServiceImpl implements ReviewService {
 			} // end foreach
 			
 		} // end if(files.length > 0)
-	
-		return boardId;
+
 	}
 
 	@Override
@@ -102,6 +103,12 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewMapper.updateReviewHit(boardId);
 		
 		return reviewMapper.getReviewContent(boardId);
+	}
+
+	@Override
+	public int getReviewBoardId(int order_detail_id) {
+		log.info("getReviewBoardId()..==========" + order_detail_id);
+		return reviewMapper.getReviewBoardId(order_detail_id);
 	}
 
 

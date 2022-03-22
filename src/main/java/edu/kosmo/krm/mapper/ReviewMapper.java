@@ -6,17 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.web.multipart.MultipartFile;
 
 import edu.kosmo.krm.page.Criteria;
-import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
 import edu.kosmo.krm.vo.BoardFileVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
-import edu.kosmo.krm.vo.ProductVO;
 
-// 리뷰 관리 매퍼
+
 
 @Mapper
 public interface ReviewMapper {
@@ -35,7 +32,6 @@ public interface ReviewMapper {
 	void insertReviewImages(BoardFileVO boardFileVO);
 	
 	// 리뷰 사진 저장을 위한 리뷰글 아이디 값 가져오기
-	@Select("SELECT board_id FROM order_detail_board WHERE order_detail_id = #{order_detail_id}")
 	int getReviewBoardId(int order_detail_id);
 	
 	// 후기글 내용 가져오기

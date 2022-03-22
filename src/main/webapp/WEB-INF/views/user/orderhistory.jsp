@@ -29,7 +29,7 @@
 				let popURL = $(this).attr("href");
 				console.log("popURL : " + popURL);
 				
-				let popUp = window.open(popURL, '주문 상세',
+				let popUp = window.open(popURL, 'orderDetail',
 						'top=20, left=300, width=800px, height=700px, scrollbars=yes');
 				
 				
@@ -62,11 +62,11 @@
 	            	<c:forEach var="products" items="${details.products}" varStatus="vars">      
 	            		<c:if test="${vars.last}">
 	            			<c:set var="product_name" value="${products.name}"/>
-	            			<c:set var="count" value="${vars.count - 1}"/>
+	            			<c:set var="num" value="${vars.count - 1}"/>
 	            			<td>
 	            				<c:out value="${product_name}"></c:out>  
-	            				<c:if test="${count != 0}">
-	            					 외 <c:out value="${count}"></c:out>개
+	            				<c:if test="${num > 0}">
+	            					 외 <c:out value="${num}"></c:out>개
 	            				</c:if>		
 	            			</td>
 	            		</c:if>	            		

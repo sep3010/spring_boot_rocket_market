@@ -133,6 +133,26 @@
 		AND pi.information_type = 'thumbnail'
 	
 	</select>
-
+	
+	<select id="getProductAndImage" resultMap="productMap">
+		SELECT 
+		    p.brand,
+		    p.name AS product_name,
+		    pi.path
+		FROM 
+		    order_detail od
+		LEFT JOIN
+		    product p
+		ON
+		    od.product_id = p.id
+		LEFT JOIN
+		    product_image pi
+		ON
+		   p.id = pi.product_id 
+		WHERE
+		    od.id = #{order_detail_id}
+		AND
+		   pi.information_type = 'thumbnail'	
+	</select>
 	
 </mapper> 

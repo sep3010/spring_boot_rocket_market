@@ -34,11 +34,8 @@
 		
 		$("#submit").on('click', function(event){
 			alert("후기가 등록되었습니다.");
-			window.close();
-			// 처리 완료 후 action 주소로 전달
-			//document.$("#writeReview").submit();
-	
-		  	//window.opener.document.location.href = window.opener.document.URL; // 부모창 새로고침  
+			//opener.parent.location.reload();
+			//window.close();  
 		 	
 
 			
@@ -101,7 +98,7 @@
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="후기 등록">
+		<input type="submit" id="submit" value="후기 등록">
 		<!-- <button id="submit">후기 등록</button> -->
 	</form:form>
 </body>

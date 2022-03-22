@@ -68,23 +68,23 @@
 
  	<select id="getOrderHistoryTotalCount" resultType="int">
 	   <![CDATA[
-						SELECT count(*)
-						FROM
-						        MEMBER M,
-						        MEMBER_ORDER MO,
-						        DELIVERY D,
-						        ORDER_DETAIL OD,
-						        PRODUCT P
-						WHERE
-						        M.ID = MO.MEMBER_ID
-						AND
-						        MO.ID = D.ORDER_ID
-						AND
-						        MO.ID = OD.ORDER_ID
-						AND
-						        OD.PRODUCT_ID = P.ID
-						AND
-						        M.ID = #{id}
+						SELECT
+					         COUNT(*)
+					    FROM  member m
+					    LEFT JOIN
+					        member_order mo
+					    ON m.id = mo.member_id
+					    LEFT JOIN
+					        order_detail od
+					    ON mo.id = od.order_id
+					    LEFT JOIN
+					        delivery d
+					    ON od.id = d.order_id
+					    LEFT JOIN
+					        product p
+					    ON od.product_id = p.id
+					    WHERE m.id = #{id}
+					    ORDER BY od.id DESC
 	   ]]>
 	</select>
 	

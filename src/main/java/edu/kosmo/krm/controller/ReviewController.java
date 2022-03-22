@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.service.OrderHistoryService;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.service.ReviewService;
@@ -41,6 +43,9 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private OrderHistoryService orderHistoryService;
 	 
 	// 리뷰 내역 리스트
 	@GetMapping("/user/myReviewList")
@@ -110,9 +115,9 @@ public class ReviewController {
 		
 		log.info("savePath : " + savePath);
 		
-		int boardId = reviewService.insertReview(reviewBoardVO, detailBoardVO, reviewImages, savePath);
+		reviewService.insertReview(reviewBoardVO, detailBoardVO, reviewImages, savePath);
 		
-		String arrivalURL = "redirect:/user/review_content/" + boardId;
+		String arrivalURL = "redirect:/user/review_content/" + reviewService.getReviewBoardId(detailBoardVO.getOrder_detail_id());
 		
 		view.setViewName(arrivalURL);
 		
@@ -122,13 +127,51 @@ public class ReviewController {
 
 	// 작성한 구매 후기 글 보기
 	@GetMapping("/user/review_content/{boardId}")
-	public ModelAndView getReview_content(ModelAndView view, int boardId) {
+	public ModelAndView getReview_content(ModelAndView view, @PathVariable("boardId") int boardId) {
 		log.info("getReview_content()...");
 		log.info("======boardId : " + boardId);
-		log.info("=============review : " 
-				+ reviewService.getReview_content(boardId));
 		
-		view.addObject("review", reviewService.getReview_content(boardId));
+		JoinReviewBoardVO review = reviewService.getReview_content(boardId);
+		log.info("=============review : " + review);
+		
+		view.addObject("review", review);
+		
+		int score = review.getScore();
+		String starPoint ="";
+		
+		switch (score) {
+		case 0:
+			starPoint = "☆☆☆☆☆";
+			break;
+		case 1:
+			starPoint = "★☆☆☆☆";
+			break;
+		case 2:
+			starPoint = "★★☆☆☆";
+			break;
+		case 3:
+			starPoint = "★★★☆☆";
+			break;
+		case 4:
+			starPoint = "★★★★☆";
+			break;
+		case 5:
+			starPoint = "★★★★★";
+			break;	
+			
+		}	
+		
+		view.addObject("starPoint", starPoint);
+		
+		OrderDetailBoardVO detailBoardVO = review.getOrderDetailBoard();
+		log.info("============detailBoardVO : " + detailBoardVO);
+		/*
+		int order_detail_id = detailBoardVO.getOrder_detail_id();
+		log.info("============order_detail_id : " + order_detail_id);
+		*/
+		log.info("=============product : " 
+				+ orderHistoryService.getProductAndImage(detailBoardVO));
+		view.addObject("product", orderHistoryService.getProductAndImage(detailBoardVO));
 		
 		view.setViewName("/user/review_content");
 		

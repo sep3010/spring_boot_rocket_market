@@ -76,6 +76,8 @@ public class OrderController {
 		log.info("================orderDetail : " + orderDetail);
 		view.addObject("orderDetail", orderDetail);
 		
+		
+		
 		view.setViewName("/user/orderDetail");
 		return view;
 	}

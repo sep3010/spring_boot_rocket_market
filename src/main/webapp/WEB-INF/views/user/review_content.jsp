@@ -44,46 +44,36 @@
 <body>
 		<table width="850" cellpadding="0" cellspacing="0" border="1">
 			<tr>
-				<td>주문번호</td>
-				<td>${orderDetail.order_id}</td>
-			</tr>
-			<tr>
-				<td><img src="${image.path}"></td>
-				<td>[${product.brand}] ${product.name}</td>
-			</tr>
-			<tr>
-				<td>별점</td>
-				<td>
-					<select id="score" name="score">
-						<option value="0">☆☆☆☆☆</option>
-						<option value="1">★☆☆☆☆</option>
-						<option value="2">★★☆☆☆</option>
-						<option value="3">★★★☆☆</option>
-						<option value="4">★★★★☆</option>
-						<option value="5">★★★★★</option>
-					</select>
-				</td>
+				<c:forEach var="image" items="${product.productImages}" begin="0" end="0">
+					<td><img src="${image.path}"></td>
+					<td>[${product.brand}] ${product.name}</td>
+				</c:forEach>	
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td><input type="text" id="title" name="title"></td>
+				<td>${review.title}</td>
+				<td>별점</td>
+				<td>${starPoint}</td>
+			</tr>
+			<tr>
+				<td>작성일</td>
+				<td>${review.board_date}</td>
+				<td>조회수</td>
+				<td>${review.hit}</td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td>
-					<textarea name="content" rows="28" cols="100" 
-					placeholder="일반 리뷰 작성시 포인트 300p, 사진 리뷰 작성시 1000p가 지급됩니다.&#13;&#10;다만 상품과 관련없는 사진이나 내용을 올린 것이 확인되면 이후 별도의 공지없이 포인트가 회수될 수 있습니다."></textarea>
-				</td>
+				<td>${review.content}</td>
 			</tr>
 			<tr>
-				<td>사진 첨부</td>
+				<td>후기 사진</td>
 				<td id="image">
-					<input type="file" id="reviewImages" name="reviewImages" accept="image/*" multiple>
+					<c:forEach var="photo" items="${review.boardFiles}">
+						<img src="${photo.path}">
+					</c:forEach>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="후기 등록">
-		<!-- <button id="submit">후기 등록</button> -->
-	</form:form>
+
 </body>
 </html>

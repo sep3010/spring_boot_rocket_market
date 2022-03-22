@@ -84,11 +84,15 @@
 		INSERT ALL
 		    INTO board 
 		    VALUES(BOARD_SEQ.nextval, 
-		            #{user_id}, 3, #{title}, #{content}, 
-		            SYSDATE, null, 0, #{score}, '공개')
+		            #{joinReviewBoardVO.user_id}, 
+		            3, #{joinReviewBoardVO.title}, 
+		            #{joinReviewBoardVO.content}, 
+		            SYSDATE, null, 0, 
+		            #{joinReviewBoardVO.score}, '공개')
 		    INTO order_detail_board 
 		    VALUES(ORDER_DETAIL_BOARD_SEQ.nextval, 
-		            #{order_detail_id}, BOARD_SEQ.currval)
+		            #{detailBoardVO.order_detail_id}, 
+		            BOARD_SEQ.currval)
 		SELECT
 		*
 		FROM DUAL
@@ -109,6 +113,7 @@
 			    b.id AS board_id,
 			    b.title,
 			    b.content,
+			    b.board_date,
 			    b.hit,
 			    b.score,
 			    odb.order_detail_id,
@@ -132,6 +137,11 @@
 			AND
 			    b.id = #{boardId}	
 	   ]]>
+	</select>
+	
+	<select id="getReviewBoardId" resultType="int">
+		SELECT board_id FROM order_detail_board 
+			WHERE order_detail_id = #{order_detail_id}
 	</select>
 	
 	

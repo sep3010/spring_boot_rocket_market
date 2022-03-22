@@ -93,7 +93,7 @@
 								<td>${product.discount}%</td>		
 								<td>${product.price}</td>
 								<td>${detail.quantity}</td>
-								<td>
+								<td class="review">
 									<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
 									<input type="hidden" name="order_id" value="${detail.order_id}">
 									<input type="hidden" name="name" value="${product.name}">
