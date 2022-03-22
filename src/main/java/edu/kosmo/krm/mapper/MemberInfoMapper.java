@@ -38,4 +38,10 @@ public interface MemberInfoMapper {
 	
 	// 회원 정보 수정 코드 (user)
 	MemberVO updateuser(MemberVO memberVO);
+	
+	// 비밀번호 유효성 검사 코드
+	public String pwCheck(int id);
+	
+	// 비밀번호 변경 코드
+	public void pwUpdate(String member_id, String hashedPw) throws Exception;
 }

@@ -36,7 +36,7 @@ public class JoinReviewWriteVO {
 	private Timestamp board_date;
 	private int hit;
 	private int score;
-	private int order_id;
+	private Long order_id;
 	private int order_detail_id;
 	private int order_detail_board_id;
 }

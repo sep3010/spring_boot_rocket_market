@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -98,6 +99,7 @@ public class MemberInfoController {
 	public ModelAndView UserUpdateForm(ModelAndView view, Authentication authentication, MemberVO memberVO,
 			Principal principal) {
 
+		
 		String user_id = principal.getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		user_id = auth.getName();
@@ -120,6 +122,8 @@ public class MemberInfoController {
 		
 		log.info("modify()...");
 		ResponseEntity<String> entity = null;
+
+		
 		
 		try {
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -143,11 +147,14 @@ public class MemberInfoController {
 			
 			session = request.getSession(true);
 			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+			
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 
 		return entity;
 	}
+	
+
 
 }

@@ -11,7 +11,7 @@ import edu.kosmo.krm.vo.MemberVO;
 //2022-2-23 ~
 //양세윤 코드 작성
 
-@Service
+
 public interface MemberInfoService {
 
 	// 페이징 처리 함수
@@ -29,4 +29,7 @@ public interface MemberInfoService {
 	
 	// 회원 정보 수정하는 함수
 	void updateuser(MemberVO memberVO);
+	
+	// 비밀번호 유효성 체크하는 함수
+	public String pwCheck(int id);
 }

@@ -256,6 +256,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
              </sec:authorize>
+             
  
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">

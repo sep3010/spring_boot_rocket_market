@@ -22,8 +22,8 @@ DISCOUNT          NUMBER(10)
 @ToString
 public class CouponVO {
 	
-	private int id;
-	private String name;
-	private int discount;
+	private int coupon_id;
+	private String coupon_name;
+	private int coupon_discount;
 
 }

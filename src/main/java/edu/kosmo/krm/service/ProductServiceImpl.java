@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
-@Repository
 @Service
 public class ProductServiceImpl implements ProductService {
 	
@@ -492,6 +491,5 @@ public class ProductServiceImpl implements ProductService {
         
         
     }
-
 
 }

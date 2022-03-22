@@ -2,23 +2,85 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+
+
 <mapper namespace="edu.kosmo.krm.mapper.OrderMapper">
 
 	<resultMap id="OrderMap" type="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
-	
 		<result property="status" column="status" />
 		<result property="brand" column="brand" />
 		<result property="product_name" column="product_name" />
 		<result property="amount" column="amount" />
 		<result property="order_id" column="order_id" />	
 		<result property="order_date" column="order_date"/>
-		<result property="img_id" column="img_id" />
+		<collection property="productImages" resultMap="ProductImageMap"></collection>
 	</resultMap>
 	
+	<resultMap id="OrderpaymentMap" type="edu.kosmo.krm.joinVO.JoinOrderPaymentVO">
+		<result property="member_name" column="member_name" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="point" column="point" />
+		<result property="postcode" column="postcode" />
+		<result property="address" column="address" />
+		<result property="message" column="message" />
+		<result property="order_detail_id" column="order_detail_id" />
+		<result property="quantity" column="quantity" />
+		<result property="amount" column="amount" />
+		<result property="payment_number" column="payment_number" />
+		<result property="brand" column="brand" />
+		<result property="product_id" column="product_id" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="product_discount" column="product_discount" />
+		<result property="userCoupon_id" column="userCoupon_id" />
+		<result property="issue_date" column="issue_date" />
+		<collection property="productImages" resultMap="ProductImageMap"></collection>
+		<collection property="coupons" resultMap="CouponsMap"></collection>
+	</resultMap>
+
+	<resultMap id="ProductImageMap" type="edu.kosmo.krm.vo.ProductImageVO">
+		<result property="id" column="product_image_id" />
+		<result property="product_id" column="product_id" />
+		<result property="extension" column="extension" />
+		<result property="name" column="product_image_name" />
+		<result property="information_type" column="information_type" />
+		<result property="path" column="path" />
+	</resultMap>
+
+	<resultMap id="CouponsMap" type="edu.kosmo.krm.vo.CouponVO">
+		<result property="coupon_id" column="coupon_id" />
+		<result property="coupon_name" column="coupon_name" />
+		<result property="coupon_discount" column="coupon_discount" />
+	</resultMap>
+	
+	<resultMap id="CouponMap" type="edu.kosmo.krm.joinVO.JoinCoupon">
+		<result property="coupon_id" column="coupon_id" />
+		<result property="coupon_name" column="coupon_name" />
+		<result property="discount" column="discount" />
+		<result property="issue_date" column="issue_date" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+
+	<resultMap id="ProductMap" type="edu.kosmo.krm.vo.ProductVO">
+		<result property="id" column="id" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="capacity" column="capacity" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+	
+	<resultMap id="MemberDeliveryMap" type="edu.kosmo.krm.joinVO.JoinMemberDeliveryVO">
+		<result property="postcode" column="postcode" />
+		<result property="address" column="address" />
+		<result property="phone" column="phone" />
+		<result property="message" column="message" />
+		<result property="receiver" column="receiver" />
+	</resultMap>	
 	
 
-	<select id="getOrderHistoryList" resultType="edu.kosmo.krm.joinVO.JoinOrderHistoryVO">
+		
+	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -29,7 +91,12 @@
 										        MO.ID as order_id,
 										        MO.AMOUNT,
 										        MO.ORDER_DATE,
-										        P.ID
+										        P.ID,
+                                                PI.ID as product_image_id,
+                                                PI.EXTENSION,
+                                                PI.NAME as product_image_name,
+                                                PI.INFORMATION_TYPE,
+                                                PI.PATH                                                
 										FROM 
 										        MEMBER M,
 										        MEMBER_ORDER MO,
@@ -61,7 +128,9 @@
 						        MEMBER_ORDER MO,
 						        DELIVERY D,
 						        ORDER_DETAIL OD,
-						        PRODUCT P
+						        PRODUCT P,
+                                PRODUCT_IMAGE PI
+						        
 						WHERE
 						        M.ID = MO.MEMBER_ID
 						AND
@@ -70,6 +139,10 @@
 						        MO.ID = OD.ORDER_ID
 						AND
 						        OD.PRODUCT_ID = P.ID
+						AND
+                                P.ID = PI.PRODUCT_ID
+                        AND
+                                PI.INFORMATION_TYPE = 'thumbnail'
 						AND
 						        M.ID = #{id}
 	   ]]>
@@ -86,5 +159,159 @@
 			ON p.id = i.image_product_id
 	   ]]>
 	</select>
+
+
+ 	<select id="getOrderPaymentList" resultMap="OrderpaymentMap">
+	   <![CDATA[
+					SELECT
+					        M.name as member_name,
+					        M.phone,
+					        M.email,
+					        M.point,
+					        D.postcode,
+					        D.address,
+					        D.message,
+					        OD.id as order_detail_id,
+					        OD.quantity,
+					        MO.AMOUNT,
+					        MO.payment_number,
+					        P.brand,
+					        P.name as product_name,
+					        P.price,
+					        P.discount as product_discount,
+					        UC.coupon_id,
+					        UC.issue_date,
+                            PI.ID as product_image_id,
+                            PI.EXTENSION,
+                            PI.NAME as product_image_name,
+                            PI.INFORMATION_TYPE,
+                            PI.PATH,
+					        C.id as coupon_id,
+					        C.name as coupon_name,
+					        C.discount as coupon_discount
+					        
+					FROM    
+					        MEMBER M,
+					        USER_COUPON UC,
+					        COUPON C,
+					        MEMBER_ORDER MO,
+					        DELIVERY D,
+					        ORDER_DETAIL OD,
+					        PRODUCT P,
+					        PRODUCT_IMAGE PI
+					WHERE
+					        M.ID = MO.MEMBER_ID
+					AND
+					        M.ID = UC.MEMBER_ID
+					AND
+					        UC.COUPON_ID = C.ID
+					AND
+					        MO.ID = D.ORDER_ID
+					AND
+					        MO.ID = OD.ORDER_ID
+					AND
+					        OD.PRODUCT_ID = P.ID
+					AND
+					        P.ID = PI.PRODUCT_ID
+					AND
+					        PI.INFORMATION_TYPE = 'thumbnail'
+					AND
+					        M.ID = #{memberVO.id}
+		]]>
+	</select>
 	
+	<select id="getUserCouponList" resultMap="CouponMap">
+	   <![CDATA[
+				SELECT 
+                
+				    C.id as coupon_id,
+                    C.name as coupon_name,
+                    C.discount,
+                    UC.issue_date,
+                    M.id as member_id
+				FROM
+				        COUPON C,
+				        USER_COUPON UC,
+				        MEMBER M
+				WHERE
+				        M.ID = UC.MEMBER_ID
+				AND
+				        UC.COUPON_ID = C.ID
+                AND
+                        M.ID = #{id }
+        			
+		]]>
+	</select>
+
+	<select id="getProductList" resultMap="OrderpaymentMap">
+	   <![CDATA[
+						SELECT 
+							P.id as product_id,
+					        P.brand,
+					        P.name as product_name,
+					        P.price,
+					        P.discount as product_discount,
+					        PI.ID as product_image_id,
+                            PI.EXTENSION,
+                            PI.NAME as product_image_name,
+                            PI.INFORMATION_TYPE,
+                            PI.PATH
+						FROM
+                        PRODUCT P,
+                        PRODUCT_IMAGE PI
+            WHERE
+                        P.ID = PI.PRODUCT_ID
+            AND
+                        PI.INFORMATION_TYPE = 'thumbnail'
+            AND
+                        P.ID = #{product_id}
+		]]>
+	</select>
+		
+	<select id="getMemberDeliveryList" resultMap="MemberDeliveryMap">
+	   <![CDATA[
+					SELECT
+					        D.postcode,
+					        D.address,
+					        D.phone,
+					        D.message,
+					        D.receiver
+					FROM
+					        MEMBER M,
+					        DELIVERY D
+					WHERE
+					        M.ID = D.MEMBER_ID
+					AND
+					        M.ID = #{member_id}
+		]]>
+	</select>
+		
+	<insert id="insertOrderInfo">
+		<![CDATA[
+			INSERT INTO member_order
+				VALUES
+						(#{id} , #{member_id} , #{payment_number}, #{amount}, sysdate, '배송 전')
+		]]>
+	</insert>	
+	
+	<select id="getProudctQuantity" resultType="edu.kosmo.krm.vo.OrderDetailVO">
+		<![CDATA[
+			SELECT
+					COUNT(PRODUCT_ID)
+			FROM
+					ORDER_DETAIL OD
+			WHERE
+					OD.ORDER_ID = #{order_id}
+		]]>
+	</select>		
+	
+	<insert id="insertOrderDetailInfo">
+		<![CDATA[
+			INSERT INTO order_detail
+				VALUES
+						(ORDER_DETAIL_SEQ.nextval , #{order_id} , #{product_id}, #{quantity})
+		]]>
+	</insert>		
+		
+				
 </mapper> 

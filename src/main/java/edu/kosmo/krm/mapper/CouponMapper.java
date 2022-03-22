@@ -8,17 +8,17 @@ import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.vo.CouponVO;
 
-
-
 @Mapper
 public interface CouponMapper {
-	
-	// 쿠폰목록 ====================================================
-	@Select("SELECT * FROM coupon")
+
+	@Select("SELECT \n"
+			+ "id as coupon_id,\n"
+			+ "name as coupon_name,\n"
+			+ "discount as coupon_discount\n"
+			+ "FROM coupon")
 	public List<CouponVO> getCouponList();
-	// 쿠폰등록=====================================================
-	@Insert("INSERT INTO coupon VALUES (coupon_SEQ.NEXTVAL ,#{name} ,#{discount})")
+
+	@Insert("INSERT INTO coupon VALUES (coupon_SEQ.NEXTVAL ,#{coupon_name} ,#{coupon_discount})")
 	public void insertCoupon(CouponVO couponVO);
-	
 
 }

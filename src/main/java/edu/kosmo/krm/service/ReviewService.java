@@ -10,7 +10,7 @@ import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinReviewWriteVO;
 import edu.kosmo.krm.vo.MemberVO;
 
-@Service
+
 public interface ReviewService {
 	
 	// 내가 쓴 리뷰 내역 가져오는 코드

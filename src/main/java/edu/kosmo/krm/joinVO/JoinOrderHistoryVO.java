@@ -1,5 +1,5 @@
 /* 
-== 주문 내역에서 사용할 Join 테이블들 ==
+f== 주문 내역에서 사용할 Join 테이블들 ==
   	MEMBER,
     MEMBER_ORDER,
     DELIVERY,
@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import edu.kosmo.krm.vo.ProductImageVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,9 @@ public class JoinOrderHistoryVO {
 
 	
 	// Member_Order Table
-	private int order_id;
+	//private int order_id;
+	private Long order_id;
+	
 	private int amount;
 	private Timestamp order_date;
 	private String status;
@@ -41,8 +44,7 @@ public class JoinOrderHistoryVO {
 	private String brand;
 	
 	// Product_Image
-	private int img_id; // 컬럼 중복으로 이름 수정 (기존: id)
-	private int path;
+	private List<ProductImageVO> productImages;
 	
 
 }

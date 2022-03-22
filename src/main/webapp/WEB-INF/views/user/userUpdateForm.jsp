@@ -64,6 +64,13 @@ $(document).ajaxSend(function(e, xhr, options){
 					email: email
 			};
 			
+			// 유효성 검사
+			if(form.name.value.trim()=="" || form.nickname.value.trim()=="" || form.phone.value.trim()=="" || form.postcode.value.trim()=="" || form.address.value.trim()=="" || form.birth.value.trim()=="" || form.email.value.trim()==""){
+				alert("입력값에 공백이 있으면 안 됩니다. 필수 입력칸을 입력해 주세요.");
+				return false;
+			}
+
+			
 			console.log(JSON.stringify(param));
 			
 		       $.ajax({
@@ -85,6 +92,11 @@ $(document).ajaxSend(function(e, xhr, options){
 	}); // end ready()
 	
 </script>	
+
+<script>
+
+	
+</script>
 </head>
 
 
@@ -95,7 +107,7 @@ $(document).ajaxSend(function(e, xhr, options){
 	
 	<c:url value="/modify" var="modifyUrl"/>
 	
-	<form:form name="/modifyForm" action="${modifyUrl}" method="POST">
+	<form:form name="/modifyForm" action="${modifyUrl}" method="POST" id="form">
 		<input type="hidden" id="username" name="username" value="<sec:authentication property="principal.memberVO.username"/>">
 		
 			<table width="500 cellpadding=" 0" cellspacing="0" border="1">
@@ -141,7 +153,8 @@ $(document).ajaxSend(function(e, xhr, options){
 				</tr>
 			</table>
 				<br>
-				<button type="submit" id="updateSubmit" class="btn">회원정보 수정</button>
+				<button type="submit" id="updateSubmit" class="btn" onclick="check_onclick()">회원정보 수정</button>
+				<a type="button" id="updateSubmit" class="btn" href="/user/pwUpdateView" >비밀번호 변경하기</a>
 				<a href="delete?id=${memberInfo_view.id}">회원 탈퇴</a>
 			</form:form>
 
