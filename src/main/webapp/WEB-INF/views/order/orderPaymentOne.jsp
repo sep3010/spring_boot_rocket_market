@@ -18,8 +18,8 @@
       crossorigin="anonymous"
     />
     
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
+    <link rel="stylesheet" href="./css/chatbot-ui.css" />
+    <link rel="stylesheet" href="./css/font.css" />
 
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -344,41 +344,45 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 1000);
         });
-
+        
+        
+        
         // 쿠폰 적용 자바스크립트
         	$(document).ready(function(){
+
         		$("#applyPoint").click(function(event){
-        			
         	      event.preventDefault();	  
-        	         
+        	      
         	      	 let productPrice = $('#product_price').text();
         	         let discountFee = $('#discount_price').text();
         	         let deliveryFee = $('#delivery-fee').text(); // 배송비 
         	         let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
 					 let discountAmount = $("#discount_Amount").text();
+					 let point = $("#inputPoint").val();
 					 
-         	         alert("쿠폰이나 적립금을 적용합니다." + coupon_point);  
-        	         
-         	         // 할인 금액
-            	 	 discountFee = Number(productPrice) * Number(coupon_point) * 0.01;
-/*          	         alert(productPrice); 
-         	         alert(discountFee);
-         	         alert(coupon_point);
-         	         alert(deliveryFee); */
-         	         
+	    	         // 할인 금액
+	    	         CouponDiscount = Number(Number(productPrice) * Number(coupon_point) * 0.01); // 쿠폰 할인가 
+	    	         discountFee =  Number(CouponDiscount) + Number(point); // 총 할인가 (쿠폰 할인가 + 포인트 할인가)
+	    	         
          	         // 총 금액 계산
          	         discountAmount = Number(productPrice) - Number(discountFee) + Number(deliveryFee);
-       			 
-         	         alert(discountAmount);
-         	        
-            		 $("#discount_price").val(discountFee);
-            		 alert($("#discount_price").val(discountFee));
-
+            		 $("#discount_price").text(discountFee);
         			 $("#discount_Amount").text(discountAmount);
-        		});
         			 
-       		 		
-        		}); //end click()
+        			 alert("할인을 적용합니다.");
+        			 
+        		});
+        	}); //end click()
+        	
+/* 		    		// 쿠폰 적용 초기화
+		    		$("#applyReset").click(function(event){
+		    			discountFee = 0;
+		    			
+		            	$("#discount_price").text(discountFee);
+		        		$("#discount_Amount").text(discountAmount);		    			
+		      		}); */
+        	
+
         	}); // end ready()
 
       
@@ -421,93 +425,64 @@
             
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
-              <sec:authorize access="isAnonymous()">
-	              <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
-	              <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
-	              <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              </sec:authorize>
-              
-              <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="#">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
-                </sec:authorize>
-			</sec:authorize> 
-			
+              <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/addMemberForm">회원가입</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
-		
-		
 
-      <!-- ======================== 로고 =========================== -->
+
+		<!-- ======================== 로고 =========================== -->
         <center>
-           <div id="logo" style="width: 12rem">
-              <img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top" alt="..." />
+        	<div id="logo" style="width: 12rem">
+              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
-   </nav>
+	</nav>
   </div><!-- container -->
       
 </header>
 
 
-   <!-- ======================== 제품 메뉴 =========================== -->
-   <div class="category shadow">
+<!-- ======================== 하단 메뉴 =========================== -->
+	
+	<div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
-            <button class="dropbtn">
+            <button class="dropbtn d-flex justify-content-start">
               <img
-                class="mr-2"
+                class="mr-2 mt-1"
                 src="${pageContext.request.contextPath}/imgs/category.png"
                 alt=""
-                style="width: 21px; height: 17px" text
+                style="width: 21px; height: 17px"
               />전체 카테고리
             </button>
           </div>
           <div class="dropdown-content">
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/vegetable"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/vegetable.png"
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/meat"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/meat.png"
                 style="width: 21px; height: 21px"
               />육류</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/side"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/rise.png"
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/snack"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/snack.png"
@@ -515,14 +490,14 @@
                 style="width: 21px; height: 21px"
               />간식/과자</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/dairy"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/cheese.png"
                 style="width: 21px; height: 21px"
               />유제품</a
             >
-            <a class="dropdown-item" href="#"
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/categoryProduct/instant"
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/instant.png"
@@ -532,15 +507,16 @@
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="#" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
         </div>
       </div>
     </div>
+    <!-- ======================== 여기까지 헤더 (동일)=========================== -->
 
-   <!-- ======================== 캐러셀 =========================== -->
+	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -605,7 +581,7 @@
         <!-- ======= 챗봇 ======= -->
         <div class="text-center mt-3 mb-3" id="chatbox">
           <div id="chat-container">
-            <script src="${pageContext.request.contextPath}/js/chatbot-ui.js"></script>
+            <script src="./js/chatbot-ui.js"></script>
             <script>
               createChatBot(
                 (host = "http://121.156.99.38:5005/webhooks/rest/webhook"),
@@ -706,12 +682,12 @@
                   <p style="font-weight: bold; font-size:20px">쿠폰 | 적립금</p>
                   <div class="discount-type">
                       
-                        <label><input type="checkbox">&nbsp;쿠폰</label>
+                        <label><input type="checkbox" id="myCoupon" class="myDiscount" >&nbsp;쿠폰</label>
                         <select name="coupon" id="coupon-group" class = "coupon">
 							<c:choose>
 								<c:when test="${not empty couponList}">                            
 				                    	<optgroup>
-				                			<option value="none">쿠폰을 선택해 주세요!</option>
+				                			<option value="0">쿠폰을 선택해 주세요!</option>
 				                	<c:forEach items="${couponList}" var="couponList">
 				                        	<option value="${couponList.discount}">${couponList.coupon_name}, ${couponList.discount} %</option>
 				                	</c:forEach>
@@ -725,9 +701,10 @@
 							</c:choose>
                         </select><br>
                         
-                        <label><input type="checkbox">&nbsp;적립금</label>
-                        <input type="text">
+                        <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
+                        <input type="text" id="inputPoint" Placeholder="사용할 금액을 입력하세요.">
                         <div class="btn" id="applyPoint">적용</div>
+<!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
                       
                       <pre>                          보유적립금 <sec:authentication property="principal.memberVO.point"/>원</pre>

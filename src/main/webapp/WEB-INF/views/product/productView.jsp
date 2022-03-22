@@ -591,7 +591,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
 	        <div clss="d-flex align-items-center" id="cartdiv">     
-       		  <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
+       		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
 	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
@@ -628,7 +628,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
        
 
        <div clss="d-flex align-items-center" id="cartdiv">     
-       <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
+       <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
    
        <a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
 	   <!-- 상단코드 클릭시 장바구니로 넣기 -->

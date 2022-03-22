@@ -251,7 +251,7 @@
                   </div><!-- product-information 끝 -->
                 
                   <div class="buttons d-flex justify-content-around">
-					<div class="btn btn-outline-success opener" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${product.id }'" >찜하기</div>
+					<div class="btn btn-outline-success opener">찜하기</div>
                     <div class="btn btn-outline-success opener">장바구니</div>
                   </div>
                 </div>     
