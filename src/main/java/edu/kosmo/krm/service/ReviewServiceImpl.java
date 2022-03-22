@@ -1,17 +1,18 @@
 package edu.kosmo.krm.service;
 
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.mapper.ReviewMapper;
 import edu.kosmo.krm.page.Criteria;
-import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
+import edu.kosmo.krm.vo.BoardFileVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,49 @@ public class ReviewServiceImpl implements ReviewService {
 			OrderDetailBoardVO detailBoardVO, 
 			MultipartFile[] files, String savePath) {
 		log.info("insertReview()...");
+		
+		BoardFileVO boardFileVO;
+		
+		if(files.length > 0) {
+			
+			for (MultipartFile file : files) {
+				
+				// 파일 형태 (예시: image/jpeg)
+				String extension = file.getContentType();
+				
+				// 기존 파일 이름
+				String originalName = file.getOriginalFilename();
+				
+				String uuid = UUID.randomUUID().toString().replace("-", "");
+				
+				// 기존에 저장된 파일과 중복된 이름으로 저장되는 것을 막기위한 처리
+				String fileName = uuid + "_" + originalName;
+				
+				// 서버에서 저장된 이미지를 불러오기 위한 기본 경로
+				String basePath = "http://localhost:8282/resources/review-image/";
+				
+				File saveFile = new File(savePath, fileName);
+				try {
+					file.transferTo(saveFile);
+					log.info("후기 사진 저장 성공");
+					
+					
+					
+				} catch (Exception e) {
+					log.info("후기 사진 저장 실패");
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		
+		
+		
 		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
+		
+		
 		
 	}
 
