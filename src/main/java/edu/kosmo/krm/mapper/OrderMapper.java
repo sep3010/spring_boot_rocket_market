@@ -49,6 +49,7 @@ public interface OrderMapper {
 	public void removeProductListInCart(String list, int member_id);
 	
 	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
+	
 	int getOrderHistoryTotalCount(MemberVO memberVO);
 	
 	// 결제주문

@@ -50,14 +50,15 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		return memberInfoMapper.readCart(username);
 	}
 
-	// 회원 정보 수정하는 함수
+	// 회원 정보 수정하는 함수(관리자)
 	@Override
 	public void modify(MemberVO memberVO) {
 		log.info("modify()...");
 		memberInfoMapper.update(memberVO);
 
 	}
-
+	
+	// 회원 정보 수정하는 함수(회원)
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateuser(MemberVO memberVO) {
@@ -74,5 +75,7 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		return memberInfoMapper.pwCheck(id);
 		
 	}
+
+	
 
 }

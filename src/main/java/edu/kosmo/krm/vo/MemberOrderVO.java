@@ -1,7 +1,7 @@
 package edu.kosmo.krm.vo;
 
 import java.sql.Timestamp;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,6 @@ PAYMENT_NUMBER          VARCHAR2(100)
 AMOUNT                  NUMBER(20)    
 ORDER_DATE              DATE          
 STATUS                  VARCHAR2(30)  
-
 */
 
 @AllArgsConstructor
@@ -26,13 +25,21 @@ STATUS                  VARCHAR2(30)
 @Setter
 @ToString
 public class MemberOrderVO {
-	private Long id; // 주문 번호
+	
+	// private Long id; // 주문 번호
+	private String username;
+	private long order_id; // 기존 id
 	private int member_id;
-	private String payment_number; // 결제 번호
+	private String payment_number;
 	private int amount;
 	private Timestamp order_date;
 	private String status;
 	
+	//private DeliveryVO delivery;
+	private List<DeliveryVO> delivery;
+	private List<OrderDetailVO> orderDetails;
 	
+	
+
 
 }

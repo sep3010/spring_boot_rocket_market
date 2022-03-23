@@ -44,4 +44,6 @@ public interface MemberInfoMapper {
 	
 	// 비밀번호 변경 코드
 	public void pwUpdate(String member_id, String hashedPw) throws Exception;
+
+	
 }

@@ -5,8 +5,8 @@
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.ReviewMapper">
 
-	<resultMap id="ReviewMap" type="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
-	
+	<resultMap id="reviewMap" type="edu.kosmo.krm.joinVO.JoinReviewBoardVO">
+		<result property="user_id" column="user_id" />	
 		<result property="nickname" column="nickname" />
 		<result property="board_id" column="board_id" />
 		<result property="title" column="title" />
@@ -14,12 +14,25 @@
 		<result property="board_date" column="board_date" />	
 		<result property="hit" column="hit"/>
 		<result property="score" column="score" />
-		<result property="order_id" column="order_id" />
+		<association property="orderDetailBoard" resultMap="detailBoardMap"/>
+		<collection property="boardFiles" resultMap="boardFileMap"/>
 	</resultMap>
 	
+	<resultMap id="detailBoardMap" type="edu.kosmo.krm.vo.OrderDetailBoardVO">
+		<result property="id" column="id" />	
+		<result property="order_detail_id" column="order_detail_id" />
+		<result property="board_id" column="board_id" />		
+	</resultMap>
 	
+	<resultMap id="boardFileMap" type="edu.kosmo.krm.vo.BoardFileVO">
+		<result property="id" column="id" />	
+		<result property="board_id" column="board_id" />
+		<result property="name" column="name" />
+		<result property="extension" column="extension" />
+		<result property="path" column="path" />	
+	</resultMap>
 
-	<select id="getReviewList" resultType="edu.kosmo.krm.joinVO.JoinReviewWriteVO">
+	<select id="getReviewList" resultMap="reviewMap">
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -58,7 +71,90 @@
          	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}
 	   ]]>
 	</select>
-
+	
+	<select id="getReviewTotalCount" resultType="int">
+	   <![CDATA[
+				SELECT count(*) FROM board B 
+   						WHERE b.board_category_id = 3 
+   						AND b.member_id = 1
+	   ]]>
+	</select>
+	
+	<insert id="insertReviewBoard">
+		INSERT ALL
+		    INTO board 
+		    VALUES(BOARD_SEQ.nextval, 
+		            #{joinReviewBoardVO.user_id}, 
+		            3, #{joinReviewBoardVO.title}, 
+		            #{joinReviewBoardVO.content}, 
+		            SYSDATE, null, 0, 
+		            #{joinReviewBoardVO.score}, '공개')
+		    INTO order_detail_board 
+		    VALUES(ORDER_DETAIL_BOARD_SEQ.nextval, 
+		            #{detailBoardVO.order_detail_id}, 
+		            BOARD_SEQ.currval)
+		SELECT
+		*
+		FROM DUAL
+	</insert>
+	
+	<insert id="insertReviewImages">
+		INSERT 
+		    INTO board_file 
+		    VALUES (BOARD_FILE_SEQ.nextval, 
+		    #{board_id}, #{name}, #{extension}, #{path})
+	</insert>
+	
+	<select id="getReviewContent" resultMap="reviewMap">
+	   <![CDATA[
+	   		SELECT
+			    m.id AS user_id,
+			    m.nickname,
+			    b.id AS board_id,
+			    b.title,
+			    b.content,
+			    b.board_date,
+			    b.hit,
+			    b.score,
+			    odb.order_detail_id,
+			    bf.path
+			FROM
+			    member m
+			LEFT JOIN    
+			    board b
+			ON 
+			    m.id = b.member_id    
+			LEFT JOIN    
+			    order_detail_board odb
+			ON
+			    b.id = odb.board_id
+			LEFT JOIN
+			    board_file bf
+			ON
+			    odb.board_id = bf.board_id
+			WHERE
+			    b.board_category_id = 3
+			AND
+			    b.id = #{boardId}	
+	   ]]>
+	</select>
+	
+	<select id="getReviewBoardId" resultType="int">
+		SELECT board_id FROM order_detail_board 
+			WHERE order_detail_id = #{order_detail_id}
+	</select>
+	
+	<select id="checkReviewBoardId" resultMap="detailBoardMap">
+		SELECT 
+			board_id, 
+			order_detail_id  
+		FROM 
+			order_detail_board 
+		WHERE 
+			order_detail_id = #{order_detail_id}
+	</select>
+	
+	<!--  
  	<select id="getReviewTotalCount" resultType="int">
 	   <![CDATA[
 						SELECT count(*)
@@ -74,8 +170,7 @@
                                     M.ID = B.MEMBER_ID
                             AND
                                     B.BOARD_CATEGORY_ID = BC.ID
-                            AND
-                                    M.ID = MO.MEMBER_ID
+                            AND  	M.ID = MO.MEMBER_ID
                             AND
                                     MO.ID = OD.ORDER_ID
                             AND
@@ -84,9 +179,10 @@
                                     OD.PRODUCT_ID = P.ID
                             AND
                               	M.ID = #{id}
+                                  
 	   ]]>
 	</select>
-
+	-->
 
 	
 </mapper> 

@@ -28,11 +28,38 @@
 		<form:form action="${pageContext.request.contextPath}/logout"
 			method="POST">
 			<input type="submit" value="로그아웃" />
-		</form:form>	
-		<br><a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
-		<br><a href="${pageContext.request.contextPath}/user/orderhistory">MY 쇼핑</a>
-		<br><a href="${pageContext.request.contextPath}/user/myReviewList">구매 후기</a>
-		<br><a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
-	</sec:authorize>	
+		</form:form>			
+	</sec:authorize>	 
+	
+	<br><a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
+	
+	<h4>MY 쇼핑</h4>
+	<br><a href="${pageContext.request.contextPath}/user/orderhistory">주문 내역</a>
+	<br><a href="">위시리스트</a>
+	<br><a href="">쿠폰목록</a>
+	<br><a href="${pageContext.request.contextPath}/user/myReviewList">내가 쓴 문의</a>
+	
+	<h3>주문/배송</h3>
+	<p></p>
+	
+	<h3>적립금</h3>
+	<p></p>
+	
+	<h3>쿠폰</h3>
+	<p></p>
+	
+	<table width="700" cellpadding="0" cellspacing="0" border="1">
+		<tr>
+			<td>주문 내역</td>
+		</tr>
+		
+		
+		<tr>
+			<td>쿠폰</td>
+		</tr>
+	
+	</table>
+	
+	
 </body>
 </html>

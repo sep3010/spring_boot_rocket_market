@@ -34,13 +34,14 @@ public interface MemberMapper {
 	@Insert("INSERT INTO authority VALUES (#{id}, 'ROLE_USER')")
 	public void insertAuthority(int id);
 	
-	// 카카오 로그인시 강제 회원가입
+	// 소셜 로그인시 강제 회원가입
 	public void insertSocialMember(
 			@Param("user_id") String user_id, 
 			@Param("password") String password, 
 			@Param("nickname") String nikname,
 			@Param("email") String email, 
 			@Param("provider") String provider);
+	
 	
 	
 }

@@ -2,7 +2,6 @@ package edu.kosmo.krm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,7 +21,7 @@ public class SecurityController {
 		return view;
 	}
 
-	//admin 폴더 뷰페이지 권한체크 위한 mapping
+	//admin 폴더 뷰페이지 권한체크 위한 mapping 
 	@GetMapping("/admin/adminHome")
 	public ModelAndView adminHome(ModelAndView view) {
 		log.info("adminHome..");

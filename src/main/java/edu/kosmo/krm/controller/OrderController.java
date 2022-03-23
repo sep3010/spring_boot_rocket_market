@@ -8,12 +8,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +39,10 @@ import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.service.OrderHistoryService;
+import edu.kosmo.krm.service.ReviewService;
+import edu.kosmo.krm.joinVO.OrderHistoryListVO;
+import edu.kosmo.krm.vo.OrderDetailBoardVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.SelectNumVO;
@@ -49,12 +55,18 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private MemberInfoService memberInfoService;
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private OrderHistoryService orderHistoryService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	/*유빈*/
 	//장바구니에 상품넣기
@@ -150,18 +162,19 @@ public class OrderController {
 		view.setViewName("/order/orderPayment");
 		return view;
 	}
-	
-	
 	 
-	// 주문 내역 리스트
+	// 주문 내역 리스트(회원 마이페이지)
 	@GetMapping("/user/orderhistory")
 	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, Criteria criteria, ModelAndView view) {
 		log.info("orderhistory()..");
 		
 		// List 불러 오는 함수
-		List<JoinOrderHistoryVO> join = orderService.order_History_getList(criteria, memberCustomDetails.getMemberVO());
+		// List<JoinOrderHistoryVO> join = orderService.order_History_getList(criteria, memberCustomDetails.getMemberVO());
+		// List<OrderHistoryListVO> join = orderService.getMemberOrderHistory(criteria, memberCustomDetails.getMemberVO());
+		List<MemberOrderVO> join = orderHistoryService.getMemberOrderHistory(criteria, memberCustomDetails.getMemberVO());
 		log.info("orderhistory().. 갯수" + join.size());
 		view.addObject("orderList", join); 
+		view.addObject("count", join.size());
 		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
 
 		int total = orderService.order_History_getTotal(memberCustomDetails.getMemberVO());
@@ -173,8 +186,7 @@ public class OrderController {
 		view.setViewName("/user/orderhistory");
 		return view;
 	}
-	
-	
+
 	// 주문 페이지 (view)
 	@GetMapping("/order/orderPaymentOne")
 	public ModelAndView orderPaymentOne(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, JoinOrderPaymentVO joinOrderPaymentVO, ModelAndView view) {
@@ -194,6 +206,36 @@ public class OrderController {
 		view.addObject("product", productService.getProduct(product_id));
 		
 		view.setViewName("/order/orderPaymentOne");
+		return view;
+	}
+
+	// 주문 내역 리스트
+	@GetMapping("/user/orderDetail/{order_id}")
+	public ModelAndView orderDetail(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, 
+			ModelAndView view, MemberOrderVO memberOrderVO) {
+		log.info("orderDetail()..");
+		log.info("memberOrderVO() : " + memberOrderVO);
+		List<MemberOrderVO> orderDetail = orderHistoryService.getMemberOrderDetail(memberOrderVO.getOrder_id(), memberCustomDetails.getMemberVO().getId());
+		log.info("================orderDetail : " + orderDetail);
+		view.addObject("orderDetail", orderDetail);
+		
+		List<OrderDetailVO> orderDetailVOs = new ArrayList<OrderDetailVO>();
+		
+		List<OrderDetailBoardVO> boardIds = new ArrayList<OrderDetailBoardVO>();
+		for(int i = 0; i < orderDetail.size(); i++) {
+			orderDetailVOs.add(orderDetail.get(i).getOrderDetails().get(0));
+			
+			if(reviewService.checkReviewBoardId(orderDetailVOs.get(i)) != null) {
+				log.info("board_id : " + reviewService.checkReviewBoardId(orderDetailVOs.get(i)));
+				boardIds.add(reviewService.checkReviewBoardId(orderDetailVOs.get(i)));
+			}
+						
+		}
+		
+		
+		log.info("=================boardIds : " + boardIds);
+		view.addObject("boardIds", boardIds);
+		view.setViewName("/user/orderDetail");
 		return view;
 	}
 	
@@ -227,7 +269,7 @@ public class OrderController {
 		// MemberOrderVO (회원 주문)에 넣는 것
 		MemberOrderVO memberOrderVO = new MemberOrderVO();
 		memberOrderVO.setMember_id(member_id); // 회원 번호
-		memberOrderVO.setId(merchant_id); // 주문 번호
+		memberOrderVO.setOrder_id(merchant_id); // 주문 번호
 		memberOrderVO.setPayment_number(impuid); // 결제 번호
 		memberOrderVO.setAmount(amount); // 총 금액
 
@@ -269,4 +311,6 @@ public class OrderController {
 		log.info("SUCCESS()...");
 		return result.toString();
 	}
+
+	
 }

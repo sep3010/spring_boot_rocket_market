@@ -1,8 +1,5 @@
 package edu.kosmo.krm.vo;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +12,7 @@ import lombok.ToString;
 ID         NOT NULL NUMBER(30) 
 ORDER_ID            NUMBER(30) 
 PRODUCT_ID          NUMBER(20) 
-QUANTITY            NUMBER(10)
+QUANTITY            NUMBER(10) 
 */
 
 @AllArgsConstructor
@@ -23,15 +20,18 @@ QUANTITY            NUMBER(10)
 @Getter
 @Setter
 @ToString
-public class OrderDetailVO {
-
-	//private int id; // 주문 상세 번호
-	private int order_detail_id;
-	private long order_id;
-	private int product_id;
-	private int quantity;
+public class DeliveryVO {
 	
-	private List<ProductVO> products;
+	private int delivery_id; // 기존 : id
+	private long order_id;
+	private String postcode;
+	private String address;
+	private String receiver;
+	private String phone;
+	private String message;
+	private int member_id; 
+	private String delivery_number;
+
 
 
 }
