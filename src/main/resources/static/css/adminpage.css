@@ -1,0 +1,86 @@
+#adminlist > div > a {
+  width: 15rem !important;
+}
+
+#admin_product_table {
+  font-size: 1rem;
+}
+
+#table_number,
+#table_percent,
+#table_delivery,
+#table_state {
+  width: 6rem !important;
+}
+
+#table_name {
+  width: auto;
+}
+#table_stock {
+  width: 21rem !important;
+}
+
+.table thead th,
+.table tbody tr {
+  vertical-align: middle;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.pagination {
+  position: absolute;
+  left: 50%;
+}
+
+.page-link {
+  color: #32383d;
+}
+
+.page-link:hover {
+  color: #32383d;
+}
+
+h5 > a {
+  color: #32383d;
+  vertical-align: middle;
+  padding-left: 3rem;
+}
+
+h5 > a:hover {
+  color: #32383d;
+}
+
+h1 > a {
+  color: #32383d;
+}
+
+h1 > a:hover {
+  color: #32383d;
+}
+
+.coupon_div {
+  margin-right: 800px;
+}
+
+#table_coupon_num,
+#table_coupon_percent {
+  width: 9rem !important;
+}
+
+#table_coupon_name {
+  width: 20rem !important;
+}
+
+#admin_addproduct_table {
+  width: 950px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  /* [라디오 버튼이 클릭 되었을 경우 내부 원형 색상] */
+  background-color: rgb(87, 60, 26);
+  color: rgb(87, 60, 26);
+}
