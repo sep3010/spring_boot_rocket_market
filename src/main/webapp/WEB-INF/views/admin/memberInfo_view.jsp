@@ -292,7 +292,8 @@
       <h2 style="font-weight: bold;"> 회원 리스트 </h2><h5><a href="">상품목록</a></h5><h5><a href="">쿠폰관리</a></h5><h5><a href="">주문내역관리</a></h5>
     </div>
 
-      <form:form>
+      <form:form id="form" method="post">
+      <input type="hidden" name="id" value="${memberInfo_view.id}">
 
       <table class="table table-bordered pt-5"  id="admin_addproduct_table">
         <tr>
@@ -351,17 +352,18 @@
         </tr>					
   
       </table>
-    </form:form>
+   
+   	 </form:form>
 
-    <div>
 
-      <input type="button" class="btn btn-outline-dark" id="btn-update" value="회원정보수정">
+
+      <input type="button" id="btn-update"  class="btn btn-outline-dark" value="회원정보수정">
       <a type="button" class="btn btn-outline-dark" href="delete?id=${memberInfo_view.id}">삭제</a>
-			<a type="button" class="btn btn-outline-dark" href="${pageContext.request.contextPath}/admin/memberList">목록</a>
+	  <a type="button" class="btn btn-outline-dark" href="${pageContext.request.contextPath}/admin/memberList">목록</a>
 
-      
-    </div>
 
+
+	 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		
 		<script type="text/javascript">
