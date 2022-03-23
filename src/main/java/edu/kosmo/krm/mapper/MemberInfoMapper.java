@@ -41,9 +41,15 @@ public interface MemberInfoMapper {
 	
 	// 비밀번호 유효성 검사 코드
 	public String pwCheck(int id);
+//	
+//	// 비밀번호 변경 코드
+//	public void pwUpdate(String member_id, String hashedPw) throws Exception;
 	
 	// 비밀번호 변경 코드
 	public void pwUpdate(String member_id, String hashedPw) throws Exception;
 
+	
+	// 결제 후 포인트 차감 함수
+	MemberVO updatePoint(MemberVO memberVO);
 	
 }

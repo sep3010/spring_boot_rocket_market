@@ -160,7 +160,7 @@
 	<select id="getCartProductList" resultType="edu.kosmo.krm.joinVO.JoinCartProductListVO">
 	   <![CDATA[
 			SELECT * FROM (SELECT id, name, price, brand, discount FROM product) p
-			INNER JOIN(select id AS cart_id, member_id, product_id, quantity FROM cart WHERE member_id = 201) c 
+			INNER JOIN(select id AS cart_id, member_id, product_id, quantity FROM cart WHERE member_id = #{member_id}) c 
 			ON p.id = c.product_id
 			INNER JOIN(SELECT product_id AS image_product_id, path FROM product_image WHERE information_type = 'thumbnail') i 
 			ON p.id = i.image_product_id
@@ -264,6 +264,7 @@
 	
 	<select id="getUserCouponList" resultMap="CouponMap">
 	   <![CDATA[
+	   
 				SELECT 
                 
 				    C.id as coupon_id,
@@ -281,6 +282,8 @@
 				        UC.COUPON_ID = C.ID
                 AND
                         M.ID = #{id }
+                AND
+                        USE_CHECK = 0                        
         			
 		]]>
 	</select>
@@ -360,7 +363,7 @@
 	<select id="getWishProductList" resultType="edu.kosmo.krm.joinVO.JoinWishProductListVO">
 	   <![CDATA[
 			SELECT * FROM (SELECT id, name, price, brand, discount FROM product) p
-			INNER JOIN(select id AS wishlist_id, member_id, product_id FROM wishlist WHERE member_id = 201) c 
+			INNER JOIN(select id AS wishlist_id, member_id, product_id FROM wishlist WHERE member_id = #{member_id}) c 
 			ON p.id = c.product_id
 			INNER JOIN(SELECT product_id AS image_product_id, path FROM product_image WHERE information_type = 'thumbnail') i 
 			ON p.id = i.image_product_id

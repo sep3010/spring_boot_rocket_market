@@ -89,5 +89,12 @@
 			WHERE MEMBER.ID = #{id}
 	]]>
 	</select>	
+	
+
+	<select id="updatePoint" resultType="edu.kosmo.krm.vo.MemberVO">
+	<![CDATA[
+			UPDATE MEMBER SET POINT = #{point} WHERE MEMBER.ID = #{id}
+	]]>
+	</select>		
 
 </mapper>

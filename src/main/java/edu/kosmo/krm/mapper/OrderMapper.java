@@ -49,10 +49,14 @@ public interface OrderMapper {
 
 	@Delete("DELETE FROM cart WHERE id IN(TO_NUMBER(#{list})) AND member_id = #{member_id}")
 	public void removeProductListInCart(String list, int member_id);
+	
 	// 위시리스트 ==================================================================
+	
 	public List<JoinWishProductListVO> getWishProductList(int member_id); //위시리스트 상품목록
+	
 	@Insert("INSERT INTO wishlist VALUES (wishlist_SEQ.NEXTVAL, #{member_id}, #{product_id})")
 	public void insertWishList(WishListVO wishListVO); //위시리스트에 상품 넣기
+	
 	@Delete("DELETE FROM wishlist WHERE id = #{wishlist_id}")
 	public void removeProductInWishList(int wishlist_id);//위시리스트 상품 삭제
 	
@@ -77,8 +81,5 @@ public interface OrderMapper {
 	
 	// 주문 상세 등록 (OrderDetailVO에 등록)
 	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);
-	
-	// 주문한 상품의 개수를 가져오는 함수
-	public int getProudctQuantity(Long order_id);
 	
 }

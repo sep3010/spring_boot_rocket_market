@@ -32,4 +32,6 @@ public interface MemberInfoService {
 	// 비밀번호 유효성 체크하는 함수
 	public String pwCheck(int id);
 	
+	// 결제 후 포인트 차감 함수
+	void updatePoint(MemberVO memberVO);
 }

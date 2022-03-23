@@ -67,6 +67,13 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		
 	}
 
+	@Override
+	public void updatePoint(MemberVO memberVO) {
+		log.info("updatePoint()......");
+		memberInfoMapper.updatePoint(memberVO);
+		
+	}
+
 	// 비밀번호 유효성 검사하는 코드
 	@Override
 	public String pwCheck(int id) {
@@ -75,7 +82,5 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		return memberInfoMapper.pwCheck(id);
 		
 	}
-
-	
 
 }
