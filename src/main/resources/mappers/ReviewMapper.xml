@@ -144,6 +144,15 @@
 			WHERE order_detail_id = #{order_detail_id}
 	</select>
 	
+	<select id="checkReviewBoardId" resultMap="detailBoardMap">
+		SELECT 
+			board_id, 
+			order_detail_id  
+		FROM 
+			order_detail_board 
+		WHERE 
+			order_detail_id = #{order_detail_id}
+	</select>
 	
 	<!--  
  	<select id="getReviewTotalCount" resultType="int">

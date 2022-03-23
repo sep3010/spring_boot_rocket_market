@@ -29,7 +29,7 @@ public class DeliveryVO {
 	private String receiver;
 	private String phone;
 	private String message;
-	private String member_id; 
+	private int member_id; 
 	private String delivery_number;
 
 

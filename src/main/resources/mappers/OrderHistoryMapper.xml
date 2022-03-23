@@ -90,7 +90,7 @@
 						    product p
 						ON od.product_id = p.id
 						WHERE m.id = #{memberVO.id}
-						ORDER BY od.id DESC								 
+						ORDER BY mo.order_date DESC								 
 	              ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
 	       	) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
        	]]>

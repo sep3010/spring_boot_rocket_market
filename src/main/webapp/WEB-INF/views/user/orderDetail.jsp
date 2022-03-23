@@ -93,13 +93,35 @@
 								<td>${product.discount}%</td>		
 								<td>${product.price}</td>
 								<td>${detail.quantity}</td>
-								<td class="review">
-									<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
-									<input type="hidden" name="order_id" value="${detail.order_id}">
-									<input type="hidden" name="name" value="${product.name}">
-									<input type="hidden" name="brand" value="${product.brand}">	
-									<input type="submit" value="후기 작성">
-								</td>		
+								<c:if test="${not empty boardIds}">
+								<c:forEach var="board" items="${boardIds}" varStatus="status">	
+									<c:choose>
+										 <c:when test="${orderDetail[vs.index].orderDetails[0].order_detail_id == boardIds[status.index].order_detail_id}">
+										 	<td>
+												<a href="${pageContext.request.contextPath}/user/review_content/${boardIds[status.index].board_id}">후기 보기</a>
+											</td>
+										 </c:when>
+										<c:otherwise>
+											<td>
+												<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
+												<input type="hidden" name="order_id" value="${detail.order_id}">
+												<input type="hidden" name="name" value="${product.name}">
+												<input type="hidden" name="brand" value="${product.brand}">	
+												<input type="submit" value="후기 작성">
+											</td>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								</c:if>
+								<c:if test="${empty boardIds}">
+									<td>
+										<input type="hidden" name="order_detail_id" value="${detail.order_detail_id}">
+										<input type="hidden" name="order_id" value="${detail.order_id}">
+										<input type="hidden" name="name" value="${product.name}">
+										<input type="hidden" name="brand" value="${product.brand}">	
+										<input type="submit" value="후기 작성">
+									</td>
+								</c:if>		
 							</tr>	
 						</form:form>				
 					</c:forEach><%-- <c:forEach var="product"> --%>

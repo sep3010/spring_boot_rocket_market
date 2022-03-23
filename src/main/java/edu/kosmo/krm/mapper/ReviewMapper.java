@@ -12,6 +12,7 @@ import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
 import edu.kosmo.krm.vo.BoardFileVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 
 
 
@@ -32,7 +33,9 @@ public interface ReviewMapper {
 	void insertReviewImages(BoardFileVO boardFileVO);
 	
 	// 리뷰 사진 저장을 위한 리뷰글 아이디 값 가져오기
-	int getReviewBoardId(int order_detail_id);
+	int getReviewBoardId(OrderDetailBoardVO detailBoardVO);
+	
+	OrderDetailBoardVO checkReviewBoardId(OrderDetailVO orderDetailVO);
 	
 	// 후기글 내용 가져오기
 	JoinReviewBoardVO getReviewContent(int boardId);

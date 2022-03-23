@@ -1,6 +1,7 @@
 package edu.kosmo.krm.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,14 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.service.OrderHistoryService;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
+import edu.kosmo.krm.service.ReviewService;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.OrderHistoryListVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.OrderDetailBoardVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.page.PageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +45,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderHistoryService orderHistoryService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	 
 	// 주문 내역 리스트(회원 마이페이지)
 	@GetMapping("/user/orderhistory")
@@ -76,8 +83,22 @@ public class OrderController {
 		log.info("================orderDetail : " + orderDetail);
 		view.addObject("orderDetail", orderDetail);
 		
+		List<OrderDetailVO> orderDetailVOs = new ArrayList<OrderDetailVO>();
+		
+		List<OrderDetailBoardVO> boardIds = new ArrayList<OrderDetailBoardVO>();
+		for(int i = 0; i < orderDetail.size(); i++) {
+			orderDetailVOs.add(orderDetail.get(i).getOrderDetails().get(0));
+			
+			if(reviewService.checkReviewBoardId(orderDetailVOs.get(i)) != null) {
+				log.info("board_id : " + reviewService.checkReviewBoardId(orderDetailVOs.get(i)));
+				boardIds.add(reviewService.checkReviewBoardId(orderDetailVOs.get(i)));
+			}
+						
+		}
 		
 		
+		log.info("=================boardIds : " + boardIds);
+		view.addObject("boardIds", boardIds);
 		view.setViewName("/user/orderDetail");
 		return view;
 	}

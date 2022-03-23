@@ -17,6 +17,7 @@ import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
 import edu.kosmo.krm.vo.BoardFileVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		reviewMapper.insertReviewBoard(joinReviewVO, detailBoardVO);
 		
-		int boardId = reviewMapper.getReviewBoardId(detailBoardVO.getOrder_detail_id());
+		int boardId = reviewMapper.getReviewBoardId(detailBoardVO);
 		log.info("boardId : " + boardId);
 		
 		if(files.length > 0) {
@@ -106,9 +107,15 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int getReviewBoardId(int order_detail_id) {
-		log.info("getReviewBoardId()..==========" + order_detail_id);
-		return reviewMapper.getReviewBoardId(order_detail_id);
+	public int getReviewBoardId(OrderDetailBoardVO detailBoardVO) {
+		log.info("getReviewBoardId()..==========" + detailBoardVO);
+		return reviewMapper.getReviewBoardId(detailBoardVO);
+	}
+
+	@Override
+	public OrderDetailBoardVO checkReviewBoardId(OrderDetailVO orderDetailVO) {
+		log.info("getReviewBoardId()..==========" + orderDetailVO);
+		return reviewMapper.checkReviewBoardId(orderDetailVO);
 	}
 
 

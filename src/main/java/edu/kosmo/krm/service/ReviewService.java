@@ -9,6 +9,7 @@ import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinReviewBoardVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
+import edu.kosmo.krm.vo.OrderDetailVO;
 
 public interface ReviewService {
 	
@@ -22,6 +23,7 @@ public interface ReviewService {
 	
 	JoinReviewBoardVO getReview_content(int boardId);
 	
-	int getReviewBoardId(int order_detail_id);
-
+	int getReviewBoardId(OrderDetailBoardVO detailBoardVO);
+	
+	OrderDetailBoardVO checkReviewBoardId(OrderDetailVO orderDetailVO);
 }

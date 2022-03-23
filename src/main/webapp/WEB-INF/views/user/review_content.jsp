@@ -63,11 +63,11 @@
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td>${review.content}</td>
+				<td colspan="3">${review.content}</td>
 			</tr>
 			<tr>
 				<td>후기 사진</td>
-				<td id="image">
+				<td colspan="3">
 					<c:forEach var="photo" items="${review.boardFiles}">
 						<img src="${photo.path}">
 					</c:forEach>

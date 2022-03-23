@@ -117,7 +117,7 @@ public class ReviewController {
 		
 		reviewService.insertReview(reviewBoardVO, detailBoardVO, reviewImages, savePath);
 		
-		String arrivalURL = "redirect:/user/review_content/" + reviewService.getReviewBoardId(detailBoardVO.getOrder_detail_id());
+		String arrivalURL = "redirect:/user/review_content/" + reviewService.getReviewBoardId(detailBoardVO);
 		
 		view.setViewName(arrivalURL);
 		
