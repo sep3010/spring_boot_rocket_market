@@ -155,6 +155,15 @@ public class MemberInfoController {
 		return entity;
 	}
 	
+	@GetMapping("/user/deliveryForm")
+	public ModelAndView deliveryForm(ModelAndView view) {
+		
+		log.info("deliveryForm()...");
+		view.setViewName("/user/deliveryForm");
+		
+		return view;
+	}
+	
 
 
 }

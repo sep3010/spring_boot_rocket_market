@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,7 @@ import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.SelectNumVO;
 import edu.kosmo.krm.page.PageVO;
@@ -193,72 +196,49 @@ public class OrderController {
 		view.addObject("productList", orderService.getProductList(product_id));
 		view.addObject("product", productService.getProduct(product_id));
 		
+		
+		
 		view.setViewName("/order/orderPaymentOne");
 		return view;
 	}
 	
 	@PostMapping("/completePayment")
-	public @ResponseBody String completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
-													HttpServletRequest request) {
-		log.info("@@@@@@@@@@@@@ completePayment ");
-		
-
-		String impuid = request.getParameter("impuid");
-		String merchantid = request.getParameter("merchantid");
-		String memberid = request.getParameter("memberid");
-		String amountS = request.getParameter("amount");
-		String status = request.getParameter("status");
-		String productid = request.getParameter("productid");
-		String inputpoint = request.getParameter("input_point"); // 사용 포인트
-		String userpoint = request.getParameter("user_point"); // 보유 포인트
-		String resultPoint = request.getParameter("result_Point"); // 보유 포인트
-		
-		int member_id = Integer.valueOf(memberid);
-		Long merchant_id = Long.valueOf(merchantid);
-		int amount = Integer.valueOf(amountS);
-		int product_id = Integer.valueOf(productid);
-		int result_Point = Integer.valueOf(resultPoint);
-		
-		log.info("@@@@@@@@@@@@" + result_Point);
-		
-
+	public ResponseEntity<String> completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
+								HttpServletRequest request, @RequestBody PaymentInfoVO paymentInfoVO, HttpSession session) {
+		ResponseEntity<String> entity = null;
 		
 		// MemberOrderVO (회원 주문)에 넣는 것
-		MemberOrderVO memberOrderVO = new MemberOrderVO();
-		memberOrderVO.setMember_id(member_id); // 회원 번호
-		memberOrderVO.setId(merchant_id); // 주문 번호
-		memberOrderVO.setPayment_number(impuid); // 결제 번호
-		memberOrderVO.setAmount(amount); // 총 금액
-
-		orderService.insertOrderInfo(memberOrderVO);
+		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-		OrderDetailVO orderDetailVO = new OrderDetailVO();
-		orderDetailVO.setOrder_id(merchant_id);
-		orderDetailVO.setProduct_id(product_id);
-		
-		orderService.insertOrderDetailInfo(orderDetailVO);
+		orderService.insertOrderDetailInfo(paymentInfoVO);
 		
 		// 쿠폰 포인트와 포인트 넣는 것
-		MemberVO memberVO = new MemberVO();
-		memberVO.setPoint(result_Point);
-		memberVO.setId(member_id);
+		memberInfoService.updatePoint(paymentInfoVO);
+		entity = new ResponseEntity<String>("successPayment", HttpStatus.OK);
+
+		// 결제 완료 페이지에 들어갈 세션 값 세팅
+		String amount = paymentInfoVO.getAmount();
+		String input_point = paymentInfoVO.getInput_point();
+		int result_Point = paymentInfoVO.getResult_Point();
+		String merchantid = paymentInfoVO.getMerchantid();
+		String impuid = paymentInfoVO.getImpuid();
 		
-		memberInfoService.updatePoint(memberVO);
+		session.setAttribute("amount", amount);
+		session.setAttribute("input_point", input_point);
+		session.setAttribute("result_Point", result_Point);
+		session.setAttribute("merchantid", merchantid);
+		session.setAttribute("impuid", impuid);
 		
-		// ajax에 "successPayment"를 보내기 위한 것
-		JSONObject result = new JSONObject();
-		result.put("successPayment", true);
-		log.info("successPayment()...");
-		return result.toString();
+		
+		return entity;
 	
 	}
 	
 	// 주문완료 페이지 (view)
 	@GetMapping("/order/orderPaymentView")
-	public ModelAndView orderPaymentView(ModelAndView view) {
-		log.info("orderPaymentOne()...");
-		
+	public ModelAndView orderPaymentView(ModelAndView view, PaymentInfoVO paymentInfoVO) {
+
 		view.setViewName("/order/orderPaymentView");
 		return view;
 	}

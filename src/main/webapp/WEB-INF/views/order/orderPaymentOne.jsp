@@ -649,6 +649,9 @@
               <li><a href="">03 주문완료</a></li>
             </ul>
           </nav>
+
+
+
           <div class="container mb-5  border-dark border-bottom">
             <div class="row information-delivery mb-3">
               <div class="col-md-6 col-sm-12 d-flex flex-column">
@@ -679,6 +682,7 @@
                 </c:forEach>
              	 </div>
               </div>
+              
 
               
               
@@ -867,6 +871,7 @@
            let product_name = "${product.name }";
            let product_id = "${product.id }";
            let merchantid = new Date().getTime();
+           let quantity = 1;
            
 
            
@@ -890,33 +895,38 @@
                buyer_name: member_name,
                buyer_tel: phone
                
-           }, function(rsp) {   
+           }, function(rsp) {
+        	   
+        	   
                   if(rsp.success) {
                    
                       $.ajax({
                          url: "/completePayment",
-                         //contentType: 'application/json',
+     					 contentType:"application/json; charset='UTF-8'",
                          type: 'POST',
-                         dataType: 'json',
-                         data: {
-                        	 impuid : rsp.imp_uid, // 결제 번호
+                         data:JSON.stringify({
+                          	 impuid : rsp.imp_uid, // 결제 번호
                         	 merchantid: rsp.merchant_uid, // 주문 번호
-                        	 memberid: member_id,
                         	 amount: discountAmount,
                         	 status: rsp.status,
                              productid: product_id,
                              input_point: input_point,
                              user_point: user_point,
                              result_Point: result_Point,
-                             member_id: member_id
-                         },
+                             member_id: member_id,
+                             quantity: quantity
+                         }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);
                          }
                       }).done(function(successPayment){
                     	  alert("결제에 성공하셨습니다.");
-                    	  location.href="${pageContext.request.contextPath}/order/orderPaymentView"
+                    	  location.href="/order/orderPaymentView"
+                    	  
+                    	  //orderSucess(payment_data);
+                    	  
                       });
+                      
                   }else {
                 	  alert("결제에 실패하셨습니다." + rsp.error_msg);
                   }
@@ -927,8 +937,7 @@
      } // payment() 끝
     
 
-
-	    
+   
 
 	    //문서가 준비되면 제일먼저 실행
 	    $(document).ready(function(){
