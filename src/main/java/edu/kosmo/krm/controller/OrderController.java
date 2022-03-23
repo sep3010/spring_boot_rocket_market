@@ -27,11 +27,13 @@ import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
 import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.SelectNumVO;
+import edu.kosmo.krm.vo.WishListVO;
 import edu.kosmo.krm.page.PageVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,7 +88,7 @@ public class OrderController {
 		log.info("삭제할 상품의 장바구니 번호" + joinCartProductListVO.getCart_id());
 		
 		try {
-			orderService.removeProduct(joinCartProductListVO.getCart_id());
+			orderService.removeCartProduct(joinCartProductListVO.getCart_id());
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,10 +154,42 @@ public class OrderController {
 		view.setViewName("/user/wishList");
 		return view;
 	}
+	//위시리스트에 상품넣기
+	@PostMapping("/user/inWishList")
+	public ResponseEntity<String> inWishList(@RequestBody WishListVO wishListVO) {
+		ResponseEntity<String> entity = null;
+		log.info("productId : " + wishListVO.getProduct_id());
+		log.info("id : " + wishListVO.getMember_id());
+		// {"product_id":"481","member_id":"user"}
+		try {
+			orderService.insertWishList(wishListVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {	
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;	
+	}
+	
+	//장바구니 페이지에서 선택한 상품 삭제
+	@DeleteMapping("/user/wishList/{wishlist_id}")
+	public ResponseEntity<String> deleteProductInWishList(ModelAndView view, JoinWishProductListVO joinWishProductListVO) {
+		
+		ResponseEntity<String> entity = null;
+		log.info("삭제할 상품의 위시리스트 번호" + joinWishProductListVO.getWishlist_id());
+		
+		try {
+			orderService.removeWishProduct(joinWishProductListVO.getWishlist_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		// 삭제 처리 HTTP 상태 메시지 리턴
+		return entity;
+	}
 	
 	
-	
-	 
+	/* =================주문내역========================*/
 	// 주문 내역 리스트
 	@GetMapping("/user/orderhistory")
 	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, Criteria criteria, ModelAndView view) {

@@ -473,7 +473,8 @@
           <c:forEach var="discount" items="${discountList}" varStatus="status" begin="0" end="3">
           <div class="card">
           	<c:forEach var="image" items="${discount.productImages}">
-             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
+             <a href="${pageContext.request.contextPath}/product/productView/${discount.id}">
+             <img src="${image.path}" class="card-img-top" alt="..." /></a>
              </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${discount.brand}]${discount.name}</h6>
@@ -495,7 +496,8 @@
           <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
           <div class="card">
           	<c:forEach var="image" items="${newList.productImages}">
-             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
+             <a href="${pageContext.request.contextPath}/product/productView/${newList.id}">
+             <img src="${image.path}" class="card-img-top" alt="..." /></a>
              </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>

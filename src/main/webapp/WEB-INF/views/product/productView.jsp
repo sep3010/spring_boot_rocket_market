@@ -221,30 +221,25 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               .animate({ top: position + currentPosition + "px" }, 1000);
           });
 
-        //장바구니 담기
-    	$(".AnonymousInCart").submit(function(event) {
-    	  alert("로그인이 필요한 기능입니다.");
-    	})  
-
+        // 장바구니 담기
         $(".inCart").submit(function() {   	
 	      // csrf
        	  var token = $("meta[name='_csrf']").attr("content");
        	  var header = $("meta[name='_csrf_header']").attr("content");       	
           event.preventDefault();
          
-         //변경필수
-         let productId = $(this).find(".productId").val();
-         let productQuantity = $(this).find(".productQuantity").val();
-       	 let memberId = $(this).find(".memberId").val();
+         let productId = $(this).find(".productId").val(); //상품번호        
+       	 let memberId = $(this).find(".memberId").val(); //회원번호
+       	 let amount_result = $("#amount_result").text(); //선택수량
 
          var data = {
     	   product_id : productId,
-    	   quantity : productQuantity,
+    	   quantity : amount_result,
     	   member_id : memberId
          };
    
          console.log(JSON.stringify(data));                 
-       
+       	        
    	     $.ajax({
            type : "POST",
            url : "${pageContext.request.contextPath}/user/inCart",
@@ -272,6 +267,50 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            
         });  // end click()
  
+        //=================================================
+        // 찜하기 담기
+        $(".inWishList").submit(function() {   	
+	      // csrf
+       	  var token = $("meta[name='_csrf']").attr("content");
+       	  var header = $("meta[name='_csrf_header']").attr("content");       	
+          event.preventDefault();
+         
+         let productId = $(this).find(".productId").val(); //상품번호        
+       	 let memberId = $(this).find(".memberId").val(); //회원번호
+
+         var data = {
+    	   product_id : productId,
+    	   member_id : memberId
+         };
+   
+         console.log(JSON.stringify(data));                 
+       	        
+   	     $.ajax({
+           type : "POST",
+           url : "${pageContext.request.contextPath}/user/inWishList",
+           cache : false,
+           contentType:'application/json; charset="UTF-8"',
+           data : JSON.stringify(data),
+           beforeSend: function(xhr) {
+               xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+           },
+           success: function () { 
+             console.log("ajax 통신 성공");
+             const moveCart = confirm("상품을 위시리스트에 담았습니다. 위시리스트로 이동하시겠습니까?");            	 
+             if(moveCart == false){  
+               console.log("위시리스트 이동 안함");            		
+             }
+             else{
+               console.log("위시리스트 이동");
+               location.assign("${pageContext.request.contextPath}/user/wishList");
+             }
+           },
+           error: function (e) {
+             console.log(e);
+           }         
+         }); //end ajax()      
+           
+        });  // end click()
 	  });
 </script>
 
@@ -312,10 +351,38 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               <a class="nav-link" href="#">이벤트</a>
             </div>
             <div class="navbar-nav" id="topmenu_right">
+            <sec:authorize access="isAnonymous()">
               <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+             </sec:authorize>
+ 
+            <!-- 로그인을 했다면 -->
+			<sec:authorize access="isAuthenticated()">
+			<div style="align-self:center">
+			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+			</div>
+			  <a 
+			  class="nav-link" 
+			  onclick="document.getElementById('logout-form').submit();"
+			  >로그아웃</a>
+			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+				  <input type="hidden"/>
+			  </form:form>
+			  
+			  <!-- 관리자 -->
+				<sec:authorize access="hasRole('ROLE_ADMIN')">					
+					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>				
+			  <!-- 회원 -->
+			    <sec:authorize access="hasRole('ROLE_USER')">
+			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+                </sec:authorize>
+			</sec:authorize>  
             </div>
           </div>
           
@@ -586,56 +653,69 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         </div> <!-- product_table -->
        </div><!-- tablebox -->
        
-       	<!-- 비로그인 상태 -->
+       	<!-- =========== 비로그인 상태 ============ -->
 		<sec:authorize access="isAnonymous()">
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
 	        <div clss="d-flex align-items-center" id="cartdiv">     
-       		  <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
-       			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
-	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
-       			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
-       			<!-- 상단코드 클릭시 위시리스트로 넣기 -->
-       			<h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
+       		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/loginForm'">구매하기</div>       		       		  
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       		  <h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
       		</div>	                	
 		  </c:when>
 		  <c:otherwise>
-		    <p>품절</p>	
+		    <div clss="d-flex align-items-center" id="cartdiv">     
+       		  <div class="btn btn-success btn-lg" id="cartbtn">품절</div>       		       		  
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       		  <h5 class="cart_text pt-4"> 현재 품절인 상품입니다. 재입고예정 : 없음 </h5>
+      		</div>	
 		  </c:otherwise>		           		                
 	    </c:choose>	
 	    </sec:authorize>		
 	    
-	    <!-- 로그인 상태 -->
+	    <!-- =========== 로그인 상태 ============ -->
 		<sec:authorize access="hasAuthority('ROLE_USER')">
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
-	        <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
-	          <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
-	          <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
-	          <input type="number" class="productQuantity" name="productQuantity" value="1">
-	          <input type="submit" class="submit btn" value="장바구니" >
-			</form>		                	
+	      	<div clss="d-flex align-items-center" id="cartdiv">     
+       		  <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>   
+       		  <!-- 상단코드 클릭시 주문단계로 바로 넘어가기(세윤) --> 
+
+       		  <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
+ 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
+	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
+	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img" value="장바구니" >      		  		       		  			  
+       		  </form>	
+       		  <!-- 상단코드 클릭시 장바구니로 넣기 -->
+       		  
+       		  <form class="inWishList" action="${pageContext.request.contextPath}/user/wishList" method="post" >
+ 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
+	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
+	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img" value="장바구니" >      		  		       		  			  
+       		  </form>	
+			  <!-- 상단코드 클릭시 위시리스트로 넣기 -->
+			  
+       		  <h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
+      		</div>	       	
 		  </c:when>
 		  <c:otherwise>
-		    <p>품절</p>	
+		    <div clss="d-flex align-items-center" id="cartdiv">     
+       		  <div class="btn btn-success btn-lg disabled" id="cartbtn">품절</div>       		       		  
+       		  <a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+			  <!-- 상단코드 클릭시 장바구니로 넣기 -->
+       		  <form class="inWishList" action="${pageContext.request.contextPath}/user/wishList" method="post" >
+ 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
+	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
+	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img" value="장바구니" >      		  		       		  			  
+       		  </form>			  <!-- 상단코드 클릭시 위시리스트로 넣기 -->
+       		  <h5 class="cart_text pt-4"> 현재 품절인 상품입니다. 재입고예정 : 없음 </h5>
+      		</div>		
 		  </c:otherwise>		           		                
 	    </c:choose>	
 	    </sec:authorize>
-       
-       
-       
-       
-       
 
-       <div clss="d-flex align-items-center" id="cartdiv">     
-       <div class="btn btn-success btn-lg" id="cartbtn">구매하기</div>
-   
-       <a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
-	   <!-- 상단코드 클릭시 장바구니로 넣기 -->
-       <a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
-       <!-- 상단코드 클릭시 위시리스트로 넣기 -->
-       <h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
-      </div>
       
 	</c:forEach> 
     </div><!-- product_rightbox -->

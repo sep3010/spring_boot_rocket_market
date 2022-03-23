@@ -14,7 +14,8 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
     <title>Rocket Market :: 신속배송</title>
     <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
 
@@ -117,6 +118,18 @@
 			height:200px;
 		}
 	</style>
+	
+<script type="text/javascript">
+	// csrf
+   var token = $("meta[name='_csrf']").attr("content");
+   var header = $("meta[name='_csrf_header']").attr("content");
+   
+ 	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+</script> 	
+	
 </head>
 
 
