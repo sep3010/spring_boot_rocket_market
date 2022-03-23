@@ -348,19 +348,13 @@
         <nav class="pt-3 pb-3"aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item">
-              <a class="page-link" href="${pageContext.request.contextPath}/admin/memberList${pageMaker.makeQuery(pageMaker.startPage - 1) }" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-        
-        <%--     <c:if test="${pageMaker.pre}">
+       		<c:if test="${pageMaker.pre}">
               <a class="page-link" href="${pageContext.request.contextPath}/admin/memberList${pageMaker.makeQuery(pageMaker.startPage - 1) }" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
               </a>
             </c:if>  
-            </li> --%>
+            </li>
             
             <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
             <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
@@ -370,12 +364,12 @@
             </c:forEach>
             
            
-            <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+            <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
               <a class="page-link" href="${pageContext.request.contextPath}/admin/memberList${pageMaker.makeQuery(pageMaker.endPage +1) }" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>
               </a>
-           <%--  </c:if>   --%>
+           </c:if>
             </li>
           </ul>
         </nav>
