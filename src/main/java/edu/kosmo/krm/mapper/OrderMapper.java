@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
@@ -21,6 +22,7 @@ import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
+import edu.kosmo.krm.vo.WishListVO;
 
 //주문 관리 매퍼
 //2022-2-23 ~
@@ -47,6 +49,12 @@ public interface OrderMapper {
 
 	@Delete("DELETE FROM cart WHERE id IN(TO_NUMBER(#{list})) AND member_id = #{member_id}")
 	public void removeProductListInCart(String list, int member_id);
+	// 위시리스트 ==================================================================
+	public List<JoinWishProductListVO> getWishProductList(int member_id); //위시리스트 상품목록
+	@Insert("INSERT INTO wishlist VALUES (wishlist_SEQ.NEXTVAL, #{member_id}, #{product_id})")
+	public void insertWishList(WishListVO wishListVO); //위시리스트에 상품 넣기
+	@Delete("DELETE FROM wishlist WHERE id = #{wishlist_id}")
+	public void removeProductInWishList(int wishlist_id);//위시리스트 상품 삭제
 	
 	List<JoinOrderHistoryVO> getOrderHistoryList(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	

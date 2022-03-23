@@ -14,6 +14,7 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>Rocket Market :: 신속배송</title>
     <link rel="shortcut icon" type="image/x-icon" href="logo.png" />
@@ -117,6 +118,19 @@
 			height:200px;
 		}
 	</style>
+	
+<script type="text/javascript">
+	// csrf
+   var token = $("meta[name='_csrf']").attr("content");
+   var header = $("meta[name='_csrf_header']").attr("content");
+   
+ 	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+</script> 	
+	
+	
 </head>
 
 
@@ -181,10 +195,40 @@
 				    </c:choose>                  
                   </div><!-- product-information 끝 -->
                 
-                  <div class="buttons d-flex justify-content-around">
-                    <div class="btn btn-outline-danger">찜하기</div>
-                    <div class="btn btn-outline-success opener">장바구니</div>
-                  </div>
+                  <!-- =========== 비로그인 상태 ============ -->
+                  <sec:authorize access="isAnonymous()">
+	    			<c:choose>
+	      			  <c:when test="${product.stock > 0}">
+                        <div class="buttons d-flex justify-content-around">
+                          <div class="btn btn-outline-danger">찜하기</div>                   		
+                    	  <div class="btn btn-outline-success opener">장바구니</div>
+                  		</div>           	
+		  			  </c:when>
+		  			  <c:otherwise>
+                        <div class="buttons d-flex justify-content-around">
+                          <div class="btn btn-outline-danger"> 찜하기</div>                   		
+                    	  <div class="btn btn-outline-ordinary opener disabled">품절</div>
+                  		</div>		  			  
+		  			  </c:otherwise>
+		  			</c:choose>
+		  		  </sec:authorize>
+		  		  <!-- =========== 로그인 상태 ============ -->
+		  		  <sec:authorize access="hasAuthority('ROLE_USER')">
+	    			<c:choose>
+	      			  <c:when test="${product.stock > 0}">
+                        <div class="buttons d-flex justify-content-around">
+                          <div class="btn btn-outline-danger" >찜하기</div>                   		
+                    	  <div class="btn btn-outline-success opener">장바구니</div>
+                  		</div>           	
+		  			  </c:when>
+		  			  <c:otherwise>
+                        <div class="buttons d-flex justify-content-around">
+                          <div class="btn btn-outline-danger"> 찜하기</div>                   		
+                    	  <div class="btn btn-outline-ordinary opener disabled">품절</div>
+                  		</div>		  			  
+		  			  </c:otherwise>
+		  			</c:choose>
+		  		  </sec:authorize>
                 </div>     
               </c:forEach>                    
             </div>                
@@ -227,4 +271,5 @@
     </div> <!-- container 끝 -->
 
 </body>
+
 </html>

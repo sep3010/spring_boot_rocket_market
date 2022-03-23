@@ -356,4 +356,15 @@
 	</insert>		
 		
 				
+	<!-- 회원별 장바구니 상품내역 -->
+	<select id="getWishProductList" resultType="edu.kosmo.krm.joinVO.JoinWishProductListVO">
+	   <![CDATA[
+			SELECT * FROM (SELECT id, name, price, brand, discount FROM product) p
+			INNER JOIN(select id AS wishlist_id, member_id, product_id FROM wishlist WHERE member_id = 201) c 
+			ON p.id = c.product_id
+			INNER JOIN(SELECT product_id AS image_product_id, path FROM product_image WHERE information_type = 'thumbnail') i 
+			ON p.id = i.image_product_id
+	   ]]>
+	</select>	
+	
 </mapper> 

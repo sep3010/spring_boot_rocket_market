@@ -22,6 +22,12 @@
 	});
 </script> 
 
+<style>
+	.closeBtn{
+		width:100px;
+		height:100px;
+	}
+</style>
 
 </head>
 <body>
@@ -65,7 +71,7 @@
 				<a 
 					class="productDelete" 
 					href="${pageContext.request.contextPath}/user/cart/${cart.cart_id}">
-				<img src="${cart.path}"></a>
+				<img class="closeBtn" src="/imgs/close_img.png"></a>
 			</td>
 		</tr>		  	
       </c:forEach>
@@ -162,7 +168,6 @@ $(document).ready(function(){
 		
 		console.log(JSON.stringify(list));
 		
-		//ajax 날리는 부분 추가 수정 필요
 		$.ajax({			
 			type : "POST",
 			url : "${pageContext.request.contextPath}/order/exceptProduct",

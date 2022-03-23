@@ -10,6 +10,7 @@ import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinCartProductListVO;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
@@ -19,6 +20,7 @@ import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
 import edu.kosmo.krm.vo.ProductVO;
+import edu.kosmo.krm.vo.WishListVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -55,7 +57,8 @@ public class OrderServiceImpl implements OrderService {
 		log.info("insertCart()...");
 		ordermapper.insertCart(cartVO);
 	}
-
+	
+	@Override
 	// 장바구니 상품내역 불러오기
 	public List<JoinCartProductListVO> cartProductList(int member_id) {
 		log.info("cartProductList()...");
@@ -69,9 +72,38 @@ public class OrderServiceImpl implements OrderService {
 	}	
 	
 	// 선택한 상품 삭제
+	@Override
+	// 선택한 상품정보 삭제(장바구니)
+	public void removeCartProduct(int cart_id) {
+		log.info("removeProduct()...");
+		ordermapper.removeProductInCart(cart_id);
+	}
+	
+	@Override
+	// 선택한 상품 삭제(반복문)
 	public void removeProductList(String list, int member_id) {
 		log.info("removeProductList()...");
 		ordermapper.removeProductListInCart(list, member_id);
+	}
+	
+	/*=============위시리스트=============*/
+	// 위시리스트 내역 불러오기
+	@Override
+	public List<JoinWishProductListVO> wishProductList(int member_id) {
+		log.info("wishProductList()...");
+		return ordermapper.getWishProductList(member_id);
+	}
+	@Override
+	// 위시리스트에 상품 넣기
+	public void insertWishList(WishListVO wishListVO) {
+		log.info("insertWishList()...");
+		ordermapper.insertWishList(wishListVO);
+	}
+	@Override
+	// 선택한 상품정보 삭제(위시리스트)
+	public void removeWishProduct(int wishlist_id) {
+		log.info("removeWishProduct()...");
+		ordermapper.removeProductInWishList(wishlist_id);
 	}
 
 	@Override
