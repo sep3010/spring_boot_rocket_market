@@ -762,47 +762,5 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     crossorigin="anonymous"
     ></script>
 
-	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
-
-	
-	<c:forEach var="productInfo" items="${productInfo}">
-
-		
-		<h4>============ 장바구니 버튼 ============</h4>
-		<!-- 비로그인 상태 -->
-		<sec:authorize access="isAnonymous()">
-	    <c:choose>
-	      <c:when test="${productInfo.stock > 0}">
-	        <form:form id="AnonymousInCart" action="/login" method="post" >
-			  <input type="number" class="productQuantity" name="productQuantity" value="1">
-			  <input type="submit" class="submit btn" value="장바구니" >
-			</form:form>		                	
-		  </c:when>
-		  <c:otherwise>
-		    <p>품절</p>	
-		  </c:otherwise>		           		                
-	    </c:choose>	
-	    </sec:authorize>		
-	    
-	    <!-- 로그인 상태 -->
-		<sec:authorize access="hasAuthority('ROLE_USER')">
-	    <c:choose>
-	      <c:when test="${productInfo.stock > 0}">
-	        <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
-	          <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
-	          <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
-	          <input type="number" class="productQuantity" name="productQuantity" value="1">
-	          <input type="submit" class="submit btn" value="장바구니" >
-			</form>		                	
-		  </c:when>
-		  <c:otherwise>
-		    <p>품절</p>	
-		  </c:otherwise>		           		                
-	    </c:choose>	
-	    </sec:authorize>			
-		<h4>============ 장바구니 버튼 끝 ============</h4>
-
-	</c:forEach>
-		
 </body>
 </html>
