@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ import edu.kosmo.krm.service.ReviewService;
 import edu.kosmo.krm.joinVO.OrderHistoryListVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.SelectNumVO;
 import edu.kosmo.krm.vo.WishListVO;
@@ -258,6 +261,8 @@ public class OrderController {
 		view.addObject("productList", orderService.getProductList(product_id));
 		view.addObject("product", productService.getProduct(product_id));
 		
+		
+		
 		view.setViewName("/order/orderPaymentOne");
 		return view;
 	}
@@ -292,6 +297,7 @@ public class OrderController {
 		return view;
 	}
 	
+	@PostMapping("/completePayment")
 	@PostMapping("/completePayment")
 	public @ResponseBody String completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
 													HttpServletRequest request) {
@@ -346,9 +352,8 @@ public class OrderController {
 	
 	// 주문완료 페이지 (view)
 	@GetMapping("/order/orderPaymentView")
-	public ModelAndView orderPaymentView(ModelAndView view) {
-		log.info("orderPaymentOne()...");
-		
+	public ModelAndView orderPaymentView(ModelAndView view, PaymentInfoVO paymentInfoVO) {
+
 		view.setViewName("/order/orderPaymentView");
 		return view;
 	}

@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.vo.DeliveryVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 
 //회원 관리 매퍼(회원 불러오기 (페이징), 회원 정보 조회, 정보 수정)
 //2022-2-23 ~
@@ -50,6 +52,9 @@ public interface MemberInfoMapper {
 
 	
 	// 결제 후 포인트 차감 함수
-	MemberVO updatePoint(MemberVO memberVO);
+	MemberVO updatePoint(PaymentInfoVO paymentInfoVO);
+	
+	// 배송지 입력
+	public void insertDeliveryIfo(DeliveryVO deliveryVO);
 	
 }

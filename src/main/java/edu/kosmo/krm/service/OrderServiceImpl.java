@@ -19,6 +19,7 @@ import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.WishListVO;
 import lombok.extern.slf4j.Slf4j;
@@ -133,16 +134,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void insertOrderInfo(MemberOrderVO memberOrderVO) {
+	public void insertOrderInfo(PaymentInfoVO paymentInfoVO) {
 		log.info("insertOrderInfo");
-		ordermapper.insertOrderInfo(memberOrderVO);
+		ordermapper.insertOrderInfo(paymentInfoVO);
 		
 	}
 
 	@Override
-	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO) {
+	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO) {
 		log.info("insertOrderDetailInfo");
-		ordermapper.insertOrderDetailInfo(orderDetailVO);
+		ordermapper.insertOrderDetailInfo(paymentInfoVO);
 		
 	}
 

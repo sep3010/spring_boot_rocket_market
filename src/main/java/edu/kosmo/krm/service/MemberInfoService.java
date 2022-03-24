@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 
 //회원 관리 컨트롤러(회원 정보 리스트, 회원 정보 조회, 회원 정보 수정, 회원 삭제)
 //2022-2-23 ~
@@ -33,5 +34,5 @@ public interface MemberInfoService {
 	public String pwCheck(int id);
 	
 	// 결제 후 포인트 차감 함수
-	void updatePoint(MemberVO memberVO);
+	void updatePoint(PaymentInfoVO paymentInfoVO);
 }

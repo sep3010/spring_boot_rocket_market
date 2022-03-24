@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.kosmo.krm.mapper.MemberInfoMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 //회원 관리 컨트롤러(회원 정보 리스트, 회원 정보 조회, 회원 정보 수정, 회원 삭제)
@@ -68,9 +69,9 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 	}
 
 	@Override
-	public void updatePoint(MemberVO memberVO) {
+	public void updatePoint(PaymentInfoVO paymentInfoVO) {
 		log.info("updatePoint()......");
-		memberInfoMapper.updatePoint(memberVO);
+		memberInfoMapper.updatePoint(paymentInfoVO);
 		
 	}
 

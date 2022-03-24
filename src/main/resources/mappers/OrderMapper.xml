@@ -77,22 +77,8 @@
 		<result property="message" column="message" />
 		<result property="receiver" column="receiver" />
 	</resultMap>	
-	
-	<!--  
-	<resultMap id="OrderListMap" type="edu.kosmo.krm.joinVO.OrderHistoryListVO">	
-		<result property="username" column="username" />
-		<result property="order_id" column="order_id" />
-		<result property="amount" column="amount" />
-		<result property="order_date" column="order_date" />	
-		<result property="status" column="status"/>
-		<result property="quantity" column="quantity" />
-		<result property="brand" column="brand" />
-		<result property="product_name" column="product_name" />
-	</resultMap>
-	-->
-	
-
-	<select id="getOrderHistoryList" resultMap="OrderMap">
+		
+	<select id="getOrderHistoryList" resultMap="OrderMap" >
 	   <![CDATA[
               SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
@@ -335,18 +321,18 @@
 		<![CDATA[
 			INSERT INTO member_order
 				VALUES
-						(#{id} , #{member_id} , #{payment_number}, #{amount}, sysdate, '배송 전')
+						(#{merchantid} , #{member_id} , #{impuid}, #{amount}, sysdate, '배송 전')
 		]]>
 	</insert>	
 	
-	<select id="getProudctQuantity" resultType="edu.kosmo.krm.vo.OrderDetailVO">
+	<select id="getProudctQuantity" resultType="edu.kosmo.krm.vo.PaymentInfoVO">
 		<![CDATA[
 			SELECT
 					COUNT(PRODUCT_ID)
 			FROM
 					ORDER_DETAIL OD
 			WHERE
-					OD.ORDER_ID = #{order_id}
+					OD.ORDER_ID = #{merchantid}
 		]]>
 	</select>		
 	
@@ -354,7 +340,7 @@
 		<![CDATA[
 			INSERT INTO order_detail
 				VALUES
-						(ORDER_DETAIL_SEQ.nextval , #{order_id} , #{product_id}, #{quantity})
+						(ORDER_DETAIL_SEQ.nextval , #{merchantid} , #{productid}, #{quantity})
 		]]>
 	</insert>		
 		

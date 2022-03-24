@@ -70,7 +70,6 @@ $(document).ajaxSend(function(e, xhr, options){
 				return false;
 			}
 
-			
 			console.log(JSON.stringify(param));
 			
 		       $.ajax({
@@ -151,6 +150,13 @@ $(document).ajaxSend(function(e, xhr, options){
 					<td><label for="email">이메일</label></td>
 					<td> <input type="text" id="email" name="email" value=<sec:authentication property="principal.memberVO.email"/>></td>
 				</tr>
+				
+				<tr>
+					<td><label for="deliveryInfo">배송 정보</label></td>
+					<td><a href="/user/deliveryForm" type="button">배송 정보 확인</a></td>
+				</tr>
+				
+								
 			</table>
 				<br>
 				<button type="submit" id="updateSubmit" class="btn" onclick="check_onclick()">회원정보 수정</button>

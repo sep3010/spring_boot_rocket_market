@@ -21,6 +21,7 @@ import edu.kosmo.krm.vo.CouponVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailVO;
+import edu.kosmo.krm.vo.PaymentInfoVO;
 import edu.kosmo.krm.vo.ProductVO;
 import edu.kosmo.krm.vo.WishListVO;
 
@@ -77,9 +78,9 @@ public interface OrderMapper {
 	public List<JoinMemberDeliveryVO> getMemberDeliveryList(int member_id);
 
 	// 주문 등록 (memberOrderVO에 등록)
-	public void insertOrderInfo(MemberOrderVO memberOrderVO);
+	public void insertOrderInfo(PaymentInfoVO paymentInfoVO);
 	
 	// 주문 상세 등록 (OrderDetailVO에 등록)
-	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);
+	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO);
 	
 }
