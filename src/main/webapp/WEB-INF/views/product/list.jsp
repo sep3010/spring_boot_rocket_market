@@ -16,11 +16,14 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>Rocket Market :: 신속배송</title>
    <link rel="shortcut icon" type="image/x-icon" 
    href="${pageContext.request.contextPath}/imgs/logo.png" />
+
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -335,8 +338,18 @@
    function clickme() {
        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
    }  
+   
+	//csrf
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});  
+   
 
-    $(document).ready(function () {
+$(document).ready(function () {
          
        var currentPosition = parseInt($(".sidebar").css("top"));
        $(window).scroll(function () {
@@ -345,8 +358,96 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 1000);
         });
+       
+   	//찜목록에 상품담기
+   	$(".wishProduct").click(function(event) {
+   		event.preventDefault();       
+
+   		let product_id = $(this).find(".wishProduct_id").val();
+   		let member_id = $(this).find(".member_id").val();
+   		
+   		let form = {
+   			product_id : product_id,
+   			member_id : member_id
+   		}
+   		
+   		console.log(JSON.stringify(form));
+   		
+   	    $.ajax({
+   	       type: "POST",
+   	       url : $(this).attr("action"),
+   	       cache : false,
+   	       contentType:"application/json; charset='UTF-8'",
+   	       data : JSON.stringify(form),
+           beforeSend: function(xhr) {
+               xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+            },
+   	       success : function(data){   	          
+   	          if(data == "SUCCESS"){
+                  const moveWish = confirm("상품을 위시리스트에 담았습니다. 위시리스트로 이동하시겠습니까?");            	 
+                  if(moveWish == false){  
+                    console.log("위시리스트 이동 안함");            		
+                  }
+                  else{
+                    console.log("위시리스트 이동");
+                    location.assign("${pageContext.request.contextPath}/user/wishList");
+                  }
+   	            }
+   	         },
+   	         error : function(e){
+   	            console.log(e);
+   	            alert("error : " + e);
+   	         }
+   	      }); //end ajax	      
+   	   }); //end .wishProduct.click();
+       
+      	//장바구니에 상품담기
+      	$(".cartProduct").click(function(event) {
+      		event.preventDefault();       
+
+      		let product_id = $(this).find(".cartProduct_id").val();
+      		let member_id = $(this).find(".member_id").val();
+      		let quantity = 1;
+      		
+      		let form = {
+      			product_id : product_id,
+      			member_id : member_id,
+      			quantity : quantity
+      		}
+      		
+      		console.log(JSON.stringify(form));
+      		
+      	    $.ajax({
+      	       type: "POST",
+      	       url : $(this).attr("action"),
+      	       cache : false,
+      	       contentType:"application/json; charset='UTF-8'",
+      	       data : JSON.stringify(form),
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+               },
+      	       success : function(data){   	          
+      	          if(data == "SUCCESS"){
+                     const moveWish = confirm("상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");            	 
+                     if(moveWish == false){  
+                       console.log("장바구니 이동 안함");            		
+                     }
+                     else{
+                       console.log("장바구니 이동");
+                       location.assign("${pageContext.request.contextPath}/user/cart");
+                     }
+      	            }
+      	         },
+      	         error : function(e){
+      	            console.log(e);
+      	            alert("error : " + e);
+      	         }
+      	      }); //end ajax	      
+      	   }); //end .cartProduct.click();
+   	   
    });
 </script>
+
    
 </head>
 
@@ -519,25 +620,26 @@
 
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
     <main>
-      <!-- 사이드바 -->
+	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
             <a href="${pageContext.request.contextPath}/user/cart" title="장바구니 이동">장바구니</a>
           </div>
-
           <div class="text-center pt-0 pb-3" id="sidecontent">
-            <button
-              type="button"
-              class="close"
-              aria-label="Close"
-              id="closebtn"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <a href="#"
-              ><img class="pt-1" src="" alt="" id="sideimg"
-            /></a>
+          
+          <!-- 장바구니에 있는 상품 표시 -->
+            <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
+				로그인 후 사용 가능합니다.
+            </sec:authorize>
+   
+			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+			  <c:forEach var="cart" items="${cartProductList}" >
+		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
+		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
+			  </c:forEach>
+			</sec:authorize>            
+
           </div>
         </div>
         
@@ -635,14 +737,14 @@
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
                         <div class="buttons d-flex justify-content-around">
-                          <div class="btn btn-outline-danger">찜하기</div>                   		
-                    	  <div class="btn btn-outline-success opener">장바구니</div>
+                          <a class="btn btn-outline-danger">찜하기</a>                   		
+                    	  <a class="btn btn-outline-success opener">장바구니</a>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
                         <div class="buttons d-flex justify-content-around">
-                          <div class="btn btn-outline-danger"> 찜하기</div>                   		
-                    	  <div class="btn btn-outline-ordinary opener disabled">품절</div>
+                          <a class="btn btn-outline-danger"> 찜하기</a>                   		
+                    	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  
 		  			  </c:otherwise>
 		  			</c:choose>
@@ -652,14 +754,22 @@
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
                         <div class="buttons d-flex justify-content-around">
-                          <div class="btn btn-outline-danger" >찜하기</div>                   		
-                    	  <div class="btn btn-outline-success opener">장바구니</div>
+                          <form:form class="wishProduct" action="${pageContext.request.contextPath}/product/insertWish" method="POST">
+                            <input type="hidden" class="wishProduct_id" value="${product.id}"/>
+                            <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
+                            <input type="button" class="submitWishBtn" value="찜하기">                         
+                          </form:form>
+                          <form:form class="cartProduct" action="${pageContext.request.contextPath}/product/insertCart" method="POST">
+                            <input type="hidden" class="cartProduct_id" value="${product.id}"/>
+                            <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
+                            <input type="button" class="submitCartBtn" value="장바구니">                         
+                          </form:form>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
                         <div class="buttons d-flex justify-content-around">
-                          <div class="btn btn-outline-danger"> 찜하기</div>                   		
-                    	  <div class="btn btn-outline-ordinary opener disabled">품절</div>
+                          <a class="btn btn-outline-danger"> 찜하기</a>                   		
+                    	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  
 		  			  </c:otherwise>
 		  			</c:choose>
@@ -705,9 +815,7 @@
         <!-- container -->
         <!-- Optional JavaScript; choose one of the two! -->
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
         </script>
@@ -721,5 +829,7 @@
     <hr class="m-0" />
 
 </body>
+
+
 
 </html>
