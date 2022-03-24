@@ -13,5 +13,6 @@ public class PaymentInfoVO {
 	    public int result_Point;
 	    public String member_id;
 	    public int quantity;
+	    public String product_name;
 
 }

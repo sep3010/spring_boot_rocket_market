@@ -35,10 +35,9 @@
 	
 	<sec:authentication property="principal.memberVO.name"/>님의 주문이 완료되었습니다!
 	
-
+	<%= session.getAttribute("product_name") %>
 	총 결제 금액: <%= session.getAttribute("amount") %>
 	사용 적립금: <%= session.getAttribute("input_point") %>
-	보유 적립금: <%= session.getAttribute("result_Point") %>
 	주문 번호: <%= session.getAttribute("merchantid") %>
 	결제 번호: <%= session.getAttribute("impuid") %>
 	

@@ -51,6 +51,9 @@ public interface OrderMapper {
 	@Delete("DELETE FROM cart WHERE id IN(TO_NUMBER(#{list})) AND member_id = #{member_id}")
 	public void removeProductListInCart(String list, int member_id);
 	
+	@Select("SELECT COUNT(*) FROM cart WHERE member_id = #{member_id}")
+	public int GetCartCount(int member_id); // 장바구니에 담긴 상품 개수 가져오기
+	
 	// 위시리스트 ==================================================================
 	
 	public List<JoinWishProductListVO> getWishProductList(int member_id); //위시리스트 상품목록
@@ -83,4 +86,5 @@ public interface OrderMapper {
 	// 주문 상세 등록 (OrderDetailVO에 등록)
 	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO);
 	
+
 }

@@ -42,6 +42,9 @@ public interface OrderService {
 	public void removeProduct(int cart_id); //상품한개 삭제
 
 	public void removeCartProduct(int cart_id); //상품한개 삭제
+
+	// 장바구니 상품 개수 가져오기
+	public int getCartCount(int member_id);
 	
 	public void removeProductList(String list, int member_id); //선택한상품을제외한 나머지 한개삭제(반복예정)
 	// 위시리스트 상품목록가져오기
