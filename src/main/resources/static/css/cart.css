@@ -1,0 +1,77 @@
+#cart_nav a {
+  color: gray;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+#cart_nav a {
+  text-decoration: none !important;
+  background-color: transparent;
+}
+
+#cart_nav a:hover {
+  color: rgb(255, 165, 0);
+}
+
+li {
+  list-style-type: none;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: none;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+#table_cart_data {
+  width: 25rem !important;
+}
+
+#menu_title {
+  padding-left: 15px;
+}
+
+#result_price_table {
+  padding-top: 5rem;
+}
+#result_price_kor,
+#result_price_num,
+#cartPrice {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #948e8e;
+}
+
+input[type="checkbox"]::before {
+  content: "\2713";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: scale(0) translate(-50%, -50%);
+  line-height: 1;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #b1895b;
+  color: white;
+}
+
+input[type="checkbox"]:checked::before {
+  border-radius: 2px;
+  transform: scale(1) translate(-50%, -50%);
+}

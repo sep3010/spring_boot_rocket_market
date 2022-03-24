@@ -350,42 +350,45 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               <a class="nav-link" href="#">문의</a>
               <a class="nav-link" href="#">이벤트</a>
             </div>
+            <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
             <sec:authorize access="isAnonymous()">
               <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
              </sec:authorize>
+             
  
             <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+         <sec:authorize access="isAuthenticated()">
+         <div style="align-self:center">
+           <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+         </div>
+           <a 
+           class="nav-link" 
+           onclick="document.getElementById('logout-form').submit();"
+           >로그아웃</a>
+           <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+              <input type="hidden"/>
+           </form:form>
+           
+           <!-- 관리자 -->
+            <sec:authorize access="hasRole('ROLE_ADMIN')">               
+               <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+                   <a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>            
+           <!-- 회원 -->
+             <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
-			</sec:authorize>  
-            </div>
-          </div>
-          
+         </sec:authorize>             
+             
+            </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
+        </div><!-- collapse navbar-collapse -->
+
           <!-- ======================== 로고 =========================== -->
           <center>
             <div id="logo" style="width: 12rem">
@@ -844,47 +847,5 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     crossorigin="anonymous"
     ></script>
 
-	<h1><a href="${pageContext.request.contextPath}/">Main Home</a></h1>
-
-	
-	<c:forEach var="productInfo" items="${productInfo}">
-
-		
-		<h4>============ 장바구니 버튼 ============</h4>
-		<!-- 비로그인 상태 -->
-		<sec:authorize access="isAnonymous()">
-	    <c:choose>
-	      <c:when test="${productInfo.stock > 0}">
-	        <form:form id="AnonymousInCart" action="/login" method="post" >
-			  <input type="number" class="productQuantity" name="productQuantity" value="1">
-			  <input type="submit" class="submit btn" value="장바구니" >
-			</form:form>		                	
-		  </c:when>
-		  <c:otherwise>
-		    <p>품절</p>	
-		  </c:otherwise>		           		                
-	    </c:choose>	
-	    </sec:authorize>		
-	    
-	    <!-- 로그인 상태 -->
-		<sec:authorize access="hasAuthority('ROLE_USER')">
-	    <c:choose>
-	      <c:when test="${productInfo.stock > 0}">
-	        <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
-	          <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
-	          <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
-	          <input type="number" class="productQuantity" name="productQuantity" value="1">
-	          <input type="submit" class="submit btn" value="장바구니" >
-			</form>		                	
-		  </c:when>
-		  <c:otherwise>
-		    <p>품절</p>	
-		  </c:otherwise>		           		                
-	    </c:choose>	
-	    </sec:authorize>			
-		<h4>============ 장바구니 버튼 끝 ============</h4>
-
-	</c:forEach>
-		
 </body>
 </html>

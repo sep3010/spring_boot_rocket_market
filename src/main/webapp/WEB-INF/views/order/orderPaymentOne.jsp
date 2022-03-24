@@ -736,11 +736,7 @@
                         </select><br>
                         
                         <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
-<<<<<<< HEAD
-                        <input type="text" id="inputPoint" Placeholder="사용할 금액을 입력하세요.">
-=======
                         <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
->>>>>>> dev-ysy-cartOrder
                         <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
