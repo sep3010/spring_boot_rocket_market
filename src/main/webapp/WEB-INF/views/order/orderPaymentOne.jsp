@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -18,21 +19,22 @@
       crossorigin="anonymous"
     />
     
-    <link rel="stylesheet" href="./css/chatbot-ui.css" />
-    <link rel="stylesheet" href="./css/font.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
 
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
+<link rel="shortcut icon" type="image/x-icon" 
+href="${pageContext.request.contextPath}/imgs/logo.png" />
 
-	<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-	<!-- iamport.payment.js -->
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-	
-	<!-- csrf meta tag -->
-	<meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+   <!-- jQuery -->
+   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+   <!-- iamport.payment.js -->
+   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+   
+   <!-- csrf meta tag -->
+   <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
     
     <style>
      
@@ -41,13 +43,16 @@
         width: 70%;
         margin: 0 auto;
       }
+
       a {
         text-decoration: none !important;
         color: black;
       }
+
       li {
         list-style-type: none;
       }
+
       .description {
         border: 1px solid orange;
         width: 80%;
@@ -59,22 +64,27 @@
         display: block;
         padding: 10px;
       }
+
       nav a:hover {
         color: orange;
       }
+
       .information-delivery {
         border-top: 2px solid gray;
         border-bottom: 1px solid lightgray;
       }
+
       .row {
         padding: 16px 0;
 
       }
+
       .order-group img {
         width: 80px;
         height: 80px;
         border-radius: 5px;
       }
+
       .money {
         margin: 0 auto;
         display: flex;
@@ -105,10 +115,12 @@
         border: none;
         border-radius: 5px;
       }
+
       .discount-type input[type="text"] {
         border: 1px solid lightgray;
         border-radius: 5px;
       }
+
       .btn {
         border: 1px solid tomato;
         width: 120px;
@@ -118,6 +130,7 @@
         font-weight: bold;
         
       }
+
       .btn:hover {
         background: tomato;
         color: #fff;
@@ -128,6 +141,7 @@
         font-family: "Pretendard-Regular";
 
       }
+
       .order-group {
         
         display: flex;
@@ -141,15 +155,18 @@
         display: flex;
         justify-content: space-between;
       }
+
       .product p {
         font-size: 24px;
         font-weight: bold;
         line-height: 80px;
       }
+
       .order {
         width: 30%;
         font-size: 20px;
       }
+
       .order p {
         width: 24px;
         font-weight: bold;
@@ -160,6 +177,7 @@
         flex-direction: column;
         justify-content: center;
       }
+      
       #coupon-group {
         border: 1px solid lightgray;
         width: 200px;
@@ -353,23 +371,21 @@
            $("#applyPoint").click(function(event){
               event.preventDefault();     
               
-                 let productPrice = $('#product_price').text();
-                 let discountFee = $('#discount_price').text();
-                 let deliveryFee = $('#delivery-fee').text(); // 배송비 
-                 let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
-	             let discountAmount = $("#discount_Amount").text();
-	             let input_point = $("#inputPoint").val();
-             
-                // 할인 금액
-                CouponDiscount = Number(Number(productPrice) * Number(coupon_point) * 0.01); // 쿠폰 할인가 
-                discountFee =  Number(CouponDiscount) + Number(input_point); // 총 할인가 (쿠폰 할인가 + 포인트 할인가)
-                
-                  // 총 금액 계산
-                  discountAmount = Number(productPrice) - Number(discountFee) + Number(deliveryFee);
-          	      $("#discount_price").text(discountFee);
-             	  $("#discount_Amount").text(discountAmount);
+              let deliveryFee = $('#delivery-fee').text(); // 배송비 
+              //let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
+	             let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
+	            
+	             let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
+	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
+	             let productTotal = $('#productDiscountAcount').val();
+	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
+			
+               pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
+               productPointTotalprice = Number(discount_price) - Number(input_point);
+
+               $("#discount_Amount").text(productPointTotalprice);
                
-              	  alert("할인을 적용합니다.");
+           	  alert(input_point + "원의 적립금을 사용합니다.");
                
            });
         }); //end click()
@@ -433,52 +449,51 @@
              
  
             <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  type="button"
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="#">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+         <sec:authorize access="isAuthenticated()">
+         <div style="align-self:center">
+           <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+         </div>
+           <a 
+           class="nav-link" 
+           onclick="document.getElementById('logout-form').submit();"
+           >로그아웃</a>
+           <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+              <input type="hidden"/>
+           </form:form>
+           
+           <!-- 관리자 -->
+            <sec:authorize access="hasRole('ROLE_ADMIN')">               
+               <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+                   <a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>            
+           <!-- 회원 -->
+             <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
-			</sec:authorize>             
+         </sec:authorize>             
              
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
 
 
-		<!-- ======================== 로고 =========================== -->
+      <!-- ======================== 로고 =========================== -->
         <center>
-        	<div id="logo" style="width: 12rem">
+           <div id="logo" style="width: 12rem">
               <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
-	</nav>
+   </nav>
   </div><!-- container -->
       
 </header>
 
 
 <!-- ======================== 하단 메뉴 =========================== -->
-	
-	<div class="category shadow">
+   
+   <div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
@@ -547,85 +562,11 @@
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
 
-	<!-- ======================== 캐러셀 =========================== -->
-    <div
-      id="carouselExampleInterval"
-      class="carousel slide"
-      data-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-interval="10000">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item" data-interval="2000">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
-        </div>
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-target="#carouselExampleInterval"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-target="#carouselExampleInterval"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </button>
-    </div>
-    
-    <!-- ======================== 사이드바 =========================== -->
    <main>
 
-	  <!-- ======= 장바구니 ======= -->
+     <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
-        <div id="cartbox">
-          <div class="text-center pt-2" id="sidetitle">
-            <a href="" title="장바구니 이동">장바구니</a>
-          </div>
 
-          <div class="text-center pt-0 pb-3" id="sidecontent">
-            <button
-              type="button"
-              class="close"
-              aria-label="Close"
-              id="closebtn"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <a href="#"
-              ><img class="pt-1" src="고기.png" alt="" id="sideimg"
-            /></a>
-          </div>
-        </div>
-        
-        <!-- ======= 챗봇 ======= -->
-        <div class="text-center mt-3 mb-3" id="chatbox">
-          <div id="chat-container">
-            <script src="./js/chatbot-ui.js"></script>
-            <script>
-              createChatBot(
-                (host = "http://121.156.99.38:5005/webhooks/rest/webhook"),
-                (botLogo = "bot-logo.png"),
-                (title = "Prime BOT"),
-                (welcomeMessage =
-                  "안녕하세요 로켓마켓 챗봇 입니다.\n무엇을 도와드릴까요? (●'∪'●)\n▪ 배송 \n▪ 회원 \n▪ 주문/결제 \n▪ 서비스 \n▪ 취소/교환/환불\n"),
-                (inactiveMsg =
-                  "서비가 다운되었습니다. 활성화하려면 개발자에게 문의하세요."),
-                (theme = "purple")
-              );
-            </script>
-          </div>
         <!-- ======= 상단 페이지 이동버튼 ======= -->
           <div class="text-center mt-2" id="pagebox">
             <input
@@ -658,59 +599,56 @@
               <div class="col-md-6 col-sm-12 d-flex flex-column">
                 <p style="font-weight: bold; font-size:20px">배송정보(회원정보)</p>
                 <c:forEach items="${memberDeliveryInfoList}" var="memberDeliveryInfo">
-	                <div class="recepient mb-4">
-	                  <p>수령인</p>
-	                  <div class="description">${memberDeliveryInfo.receiver}</div>
-	                </div>
-	                <div class="phone">
-	                  <p>휴대폰</p>
-	                  <div class="description">${memberDeliveryInfo.phone}</div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-sm-12 information-other border-left py-3">
-	                <div class="address">
-	                  <p>우편번호</p>
-	                  <div class="description">${memberDeliveryInfo.postcode}</div>
-	                </div>
-	                <div class="delivery-site">
-	                  <p>배송지</p>
-	                  <div class="description">${memberDeliveryInfo.address}</div>
-	                </div>
-	                <div class="message ">
-	                  <p>배송메세지</p>
-	                  <div class="description">${memberDeliveryInfo.message}</div>
-	                </div>
+                   <div class="recepient mb-4">
+                     <p>수령인</p>
+                     <div class="description">${memberDeliveryInfo.receiver}</div>
+                   </div>
+                   <div class="phone">
+                     <p>휴대폰</p>
+                     <div class="description">${memberDeliveryInfo.phone}</div>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-sm-12 information-other border-left py-3">
+                   <div class="address">
+                     <p>우편번호</p>
+                     <div class="description">${memberDeliveryInfo.postcode}</div>
+                   </div>
+                   <div class="delivery-site">
+                     <p>배송지</p>
+                     <div class="description">${memberDeliveryInfo.address}</div>
+                   </div>
+                   <div class="message ">
+                     <p>배송메세지</p>
+                     <div class="description">${memberDeliveryInfo.message}</div>
+                   </div>
                 </c:forEach>
-             	 </div>
+                 </div>
               </div>
-              
-
-              
-              
-                <p style="font-weight: bold; font-size:20px">주문상품 0건</p>
+     
+                <p style="font-weight: bold; font-size:20px">주문상품 1건</p>
                 <div class="col-12 d-flex order-group pb-3">
                   <c:forEach items="${productList}" var="orderPaymentOne">
-		   			 <div class="product d-flex justify-content-around align-items-center">
-		                    <p>${orderPaymentOne.product_id }</p>
-							<c:choose>
-								<c:when test="${not empty orderPaymentOne.productImages}">
-									<c:forEach var="thumbnail" items="${orderPaymentOne.productImages}">
-										<td><img src="${thumbnail.path}"></td>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<td>대표 이미지 없음</td>
-								</c:otherwise>
-							</c:choose> 
-		                    <p class=""><span>[${orderPaymentOne.brand}]</span>${orderPaymentOne.product_name}</p>
-		                  </div>
-		                  <div class="order d-flex align-items-center">
-		                    <p style="margin-right: 70px; width: 100px;">1개</p>
-		                    <p style="width: 100px;">${orderPaymentOne.price}원</p>
-		                  </div>
-	                 </c:forEach>
-	               </div>
-	               <hr>
+                   <div class="product d-flex justify-content-around align-items-center">
+                          <p>${orderPaymentOne.product_id }</p>
+                     <c:choose>
+                        <c:when test="${not empty orderPaymentOne.productImages}">
+                           <c:forEach var="thumbnail" items="${orderPaymentOne.productImages}">
+                              <td><img src="${thumbnail.path}"></td>
+                           </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                           <td>대표 이미지 없음</td>
+                        </c:otherwise>
+                     </c:choose> 
+                          <p class=""><span>[${orderPaymentOne.brand}]</span>${orderPaymentOne.product_name}</p>
+                        </div>
+                        <div class="order d-flex align-items-center">
+                          <p style="margin-right: 70px; width: 100px;">1개</p>
+                          <p style="width: 100px;">${orderPaymentOne.price}원</p>
+                        </div>
+                    </c:forEach>
+                  </div>
+                  <hr>
                 
               <div class="row information-payment">
                 <div class="col-md-6 col-sm-12">
@@ -719,25 +657,27 @@
                       
                         <label><input type="checkbox" id="myCoupon" class="myDiscount" >&nbsp;쿠폰</label>
                         <select name="coupon" id="coupon-group" class = "coupon">
-							<c:choose>
-								<c:when test="${not empty couponList}">                            
-				                    	<optgroup>
-				                			<option value="0">쿠폰을 선택해 주세요!</option>
-				                	<c:forEach items="${couponList}" var="couponList">
-				                        	<option value="${couponList.discount}" >${couponList.coupon_name}, ${couponList.discount} %</option>
-				                	</c:forEach>
-				                		</optgroup>
-								</c:when>
-									<c:otherwise>
-				                    	<optgroup>
-				                        	<option value=""><td>사용 가능 쿠폰 없음</td></option>
-				                		</optgroup>		
-									</c:otherwise>
-							</c:choose>
+                     <c:choose>
+                        <c:when test="${not empty couponList}">                            
+                                   <optgroup>
+                                     <option value="0">쿠폰을 선택해 주세요!</option>
+                               <c:forEach items="${couponList}" var="couponList">
+                                       <option value="${couponList.discount}" >${couponList.coupon_name}, ${couponList.discount} %</option>
+                               </c:forEach>
+                                  </optgroup>
+                        </c:when>
+                           <c:otherwise>
+                                   <optgroup>
+                                       <option value=""><td>사용 가능 쿠폰 없음</td></option>
+                                  </optgroup>      
+                           </c:otherwise>
+                     </c:choose>
                         </select><br>
                         
                         <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
+
                         <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
+
                         <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
@@ -759,12 +699,12 @@
 
     <!-- 결제 금액 -->
     <c:forEach var="orderPaymentOne" items="${productList}">
-			
-			<c:set var="price" value="${orderPaymentOne.price}"/>
-			<c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
-			<c:set var="discountPrice" value="${orderPaymentOne.price * ((orderPaymentOne.product_discount * 0.01) + point)}" scope="session"/>
-	        <c:set var="discountAmount" value="${orderPaymentOne.price - discountPrice + 3000}" scope="session"/>
-	        
+         
+         <c:set var="price" value="${orderPaymentOne.price}"/>
+         <c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
+         <c:set var="discountPrice" value="${orderPaymentOne.price * ((orderPaymentOne.product_discount * 0.01) + point)}" scope="session"/>
+           <c:set var="discountAmount" value="${orderPaymentOne.price - discountPrice + 3000}" scope="session"/>
+           
                 <div class=" money pt-5 pb-4">
                   <div class="d-flex">
                     <div class="mr-3">상품금액</div>  
@@ -785,9 +725,9 @@
                     <div class="mr-3">주문금액</div>   
                     <div class="price total-price" id="discount_Amount">${discountAmount }</div>  
                   </div>
-				</div> <!--container information-delivery-->
-	</c:forEach>
-	
+            </div> <!--container information-delivery-->
+   </c:forEach>
+   
             </div><!--container information-delivery-->
             <div class="paymentBtn text-center">
               <input type="submit" id="iamportPayment" value="결제하기">
@@ -879,8 +819,8 @@
            let input_point = $("#inputPoint").val(); // 입력 포인트
            let user_point = "${principal.memberVO.point}";
            let coupon_point = $("select[name='coupon']").val();
-		   let result_Point =  Number(user_point) - Number(input_point);
-		   
+           let result_Point =  Number(user_point) - Number(input_point);
+         
            
            var token = $("meta[name='_csrf']").attr("content");
            var header = $("meta[name='_csrf_header']").attr("content");
@@ -897,39 +837,40 @@
                buyer_tel: phone
                
            }, function(rsp) {
-        	   
-        	   
+              
+              
                   if(rsp.success) {
                    
                       $.ajax({
                          url: "/completePayment",
-     					 contentType:"application/json; charset='UTF-8'",
+                     contentType:"application/json; charset='UTF-8'",
                          type: 'POST',
                          data:JSON.stringify({
-                          	 impuid : rsp.imp_uid, // 결제 번호
-                        	 merchantid: rsp.merchant_uid, // 주문 번호
-                        	 amount: discountAmount,
-                        	 status: rsp.status,
+                             impuid : rsp.imp_uid, // 결제 번호
+                             merchantid: rsp.merchant_uid, // 주문 번호
+                             amount: discountAmount,
+                             status: rsp.status,
                              productid: product_id,
                              input_point: input_point,
                              user_point: user_point,
                              result_Point: result_Point,
                              member_id: member_id,
-                             quantity: quantity
+                             quantity: quantity,
+                             product_name: product_name
                          }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);
                          }
                       }).done(function(successPayment){
-                    	  alert("결제에 성공하셨습니다.");
-                    	  location.href="/order/orderPaymentView"
-                    	  
-                    	  //orderSucess(payment_data);
-                    	  
+                         alert("결제에 성공하셨습니다.");
+                         location.href="/order/orderPaymentView"
+                         
+                         //orderSucess(payment_data);
+                         
                       });
                       
                   }else {
-                	  alert("결제에 실패하셨습니다." + rsp.error_msg);
+                     alert("결제에 실패하셨습니다." + rsp.error_msg);
                   }
                 }
            );
@@ -940,12 +881,12 @@
 
    
 
-	    //문서가 준비되면 제일먼저 실행
-	    $(document).ready(function(){
-	       $("#iamportPayment").click(function(){
-	          payment();//버튼 클릭하면 호출
-	       });
-	    });
-	    
+       //문서가 준비되면 제일먼저 실행
+       $(document).ready(function(){
+          $("#iamportPayment").click(function(){
+             payment();//버튼 클릭하면 호출
+          });
+       });
+       
     </script>
 </html>

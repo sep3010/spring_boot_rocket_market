@@ -87,6 +87,12 @@ public class OrderServiceImpl implements OrderService {
 		ordermapper.removeProductListInCart(list, member_id);
 	}
 	
+	@Override
+	public int getCartCount(int member_id) {
+		log.info("cartCount()...");
+		return ordermapper.GetCartCount(member_id);
+	}
+	
 	/*=============위시리스트=============*/
 	// 위시리스트 내역 불러오기
 	@Override
@@ -146,6 +152,8 @@ public class OrderServiceImpl implements OrderService {
 		ordermapper.insertOrderDetailInfo(paymentInfoVO);
 		
 	}
+
+
 
 //	@Override
 //	public int getProudctQuantity(Long order_id) {

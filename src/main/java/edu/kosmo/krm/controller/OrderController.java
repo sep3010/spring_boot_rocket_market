@@ -161,12 +161,16 @@ public class OrderController {
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
 		log.info("회원번호" + memberVO.getId());
-		
+		int cartCount = orderService.getCartCount(memberVO.getId());
+		view.addObject("cartCount", cartCount);
+		log.info("@@@@@@@@@@@" + cartCount);
+		view.setViewName("/order/orderPayment");
 		view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));
 
 		view.setViewName("/order/orderPayment");
 		return view;
 	}
+
 
 	// 주문 내역 리스트(회원 마이페이지)
 	//위시리스트 ==========================================================
@@ -318,12 +322,14 @@ public class OrderController {
 		int result_Point = paymentInfoVO.getResult_Point();
 		String merchantid = paymentInfoVO.getMerchantid();
 		String impuid = paymentInfoVO.getImpuid();
+		String product_name = paymentInfoVO.getProduct_name();
 		
 		session.setAttribute("amount", amount);
 		session.setAttribute("input_point", input_point);
 		session.setAttribute("result_Point", result_Point);
 		session.setAttribute("merchantid", merchantid);
 		session.setAttribute("impuid", impuid);
+		session.setAttribute("product_name", product_name);
 		
 		
 		return entity;
