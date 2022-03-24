@@ -366,7 +366,6 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 
                   pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
                   productPointTotalprice = Number(discount_price) - Number(input_point);
-					alert("@@" + productPointTotalprice)
                   
       			
       			  $("#productDiscountPrice").text(pointProductPrice);
