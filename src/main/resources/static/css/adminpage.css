@@ -77,3 +77,10 @@ h1 > a:hover {
 #admin_addproduct_table {
   width: 950px;
 }
+
+input[type="checkbox"],
+input[type="radio"] {
+  /* [라디오 버튼이 클릭 되었을 경우 내부 원형 색상] */
+  background-color: rgb(87, 60, 26);
+  color: rgb(87, 60, 26);
+}

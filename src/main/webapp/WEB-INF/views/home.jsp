@@ -20,8 +20,9 @@
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
     />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
+
           
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
