@@ -40,7 +40,8 @@ li {
   padding-top: 5rem;
 }
 #result_price_kor,
-#result_price_num {
+#result_price_num,
+#cartPrice {
   font-size: 21px;
   font-weight: bold;
 }
