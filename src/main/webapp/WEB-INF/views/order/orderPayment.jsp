@@ -363,10 +363,13 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
 	             let productTotal = $('#productDiscountAcount').val();
 	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
-			
+
                   pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
                   productPointTotalprice = Number(discount_price) - Number(input_point);
-
+					alert("@@" + productPointTotalprice)
+                  
+      			
+      			  $("#productDiscountPrice").text(pointProductPrice);
                   $("#productDiscountAcount").text(productPointTotalprice);
                   
               	  alert(pointProductPrice + "원의 적립금을 사용합니다.");
