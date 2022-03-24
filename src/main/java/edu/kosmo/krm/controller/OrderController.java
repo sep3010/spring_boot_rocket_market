@@ -298,55 +298,35 @@ public class OrderController {
 	}
 	
 	@PostMapping("/completePayment")
-	@PostMapping("/completePayment")
-	public @ResponseBody String completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
-													HttpServletRequest request) {
-		log.info("@@@@@@@@@@@@@ completePayment ");
-		
-
-		String impuid = request.getParameter("impuid");
-		String merchantid = request.getParameter("merchantid");
-		String memberid = request.getParameter("memberid");
-		String amountS = request.getParameter("amount");
-		String status = request.getParameter("status");
-		String productid = request.getParameter("productid");
-		
-		int member_id = Integer.valueOf(memberid);
-		Long merchant_id = Long.valueOf(merchantid);
-		int amount = Integer.valueOf(amountS);
-		int product_id = Integer.valueOf(productid);
-		
-		log.info(impuid);
-		log.info("merchant_id" + merchant_id);
-		log.info("member_id" + member_id);
-		log.info("amount" + amount);
-		log.info("status" + status);
-		log.info("productid" + productid);
-		
-
+	public ResponseEntity<String> completePayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails,
+								HttpServletRequest request, @RequestBody PaymentInfoVO paymentInfoVO, HttpSession session) {
+		ResponseEntity<String> entity = null;
 		
 		// MemberOrderVO (회원 주문)에 넣는 것
-		MemberOrderVO memberOrderVO = new MemberOrderVO();
-		memberOrderVO.setMember_id(member_id); // 회원 번호
-		memberOrderVO.setOrder_id(merchant_id); // 주문 번호
-		memberOrderVO.setPayment_number(impuid); // 결제 번호
-		memberOrderVO.setAmount(amount); // 총 금액
-
-		orderService.insertOrderInfo(memberOrderVO);
-		
+		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-		OrderDetailVO orderDetailVO = new OrderDetailVO();
-		orderDetailVO.setOrder_id(merchant_id);
-		orderDetailVO.setProduct_id(product_id);
+		orderService.insertOrderDetailInfo(paymentInfoVO);
 		
-		orderService.insertOrderDetailInfo(orderDetailVO);
+		// 쿠폰 포인트와 포인트 넣는 것
+		memberInfoService.updatePoint(paymentInfoVO);
+		entity = new ResponseEntity<String>("successPayment", HttpStatus.OK);
+
+		// 결제 완료 페이지에 들어갈 세션 값 세팅
+		String amount = paymentInfoVO.getAmount();
+		String input_point = paymentInfoVO.getInput_point();
+		int result_Point = paymentInfoVO.getResult_Point();
+		String merchantid = paymentInfoVO.getMerchantid();
+		String impuid = paymentInfoVO.getImpuid();
 		
-		// ajax에 "successPayment"를 보내기 위한 것
-		JSONObject result = new JSONObject();
-		result.put("successPayment", true);
-		log.info("successPayment()...");
-		return result.toString();
+		session.setAttribute("amount", amount);
+		session.setAttribute("input_point", input_point);
+		session.setAttribute("result_Point", result_Point);
+		session.setAttribute("merchantid", merchantid);
+		session.setAttribute("impuid", impuid);
+		
+		
+		return entity;
 	
 	}
 	
