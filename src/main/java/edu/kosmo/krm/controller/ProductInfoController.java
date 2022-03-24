@@ -105,7 +105,7 @@ public class ProductInfoController {
 	}
 	
 	// 상품 수정 페이지(관리자)
-	@GetMapping("/admin/modifyView/{id}")
+	@GetMapping("/admin/productModifyView/{id}")
 	public ModelAndView productModifyView(ModelAndView view, ProductVO productVO) {
 		log.info("productModifyView()..");
 		view.addObject("product", productService.getProductContent(productVO));
