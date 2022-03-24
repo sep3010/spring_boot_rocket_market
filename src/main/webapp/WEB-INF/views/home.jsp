@@ -265,6 +265,7 @@
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -379,13 +380,16 @@
     >
       <div class="carousel-inner">
         <div class="carousel-item active" data-interval="10000">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <a href=""><img src="${pageContext.request.contextPath}/imgs/slide1.png" class="d-block w-100"/></a>
         </div>
         <div class="carousel-item" data-interval="2000">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <a href=""><img src="${pageContext.request.contextPath}/imgs/slide2.png" class="d-block w-100"/></a>
         </div>
         <div class="carousel-item">
-          <img src="${pageContext.request.contextPath}/imgs/슬라이드1.png" class="d-block w-100" alt="..." />
+          <a href=""><img src="${pageContext.request.contextPath}/imgs/slide3.png" class="d-block w-100"/></a>
+        </div>
+        <div class="carousel-item">
+          <a href=""><img src="${pageContext.request.contextPath}/imgs/slide4.png" class="d-block w-100"/></a>
         </div>
       </div>
       <button
