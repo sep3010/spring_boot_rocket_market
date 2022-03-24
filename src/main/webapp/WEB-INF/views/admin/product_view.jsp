@@ -52,7 +52,7 @@
 		$("#modify").on('click', function(){
 			
 			// 해당 주소로 이동
-			location.href = "${pageContext.request.contextPath}/admin/modifyView/${product.id}";
+			location.href = "${pageContext.request.contextPath}/admin/productModifyView/${product.id}";
 
 		}); 
 		

@@ -320,17 +320,15 @@
 		 $("input:radio[name='delivery_type']").prop('checked', false);
 		 $("input:radio[name='delivery_type']").val(delivery_type).prop('checked', true);
 		
-		 
-		 
-		 $("#mainImage").empty();
+	
 		 $("#mainImage").prepend("<img src=" + main + ">");
 		 $("#mainImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
-		 $("#infoImage").empty();
+	
 		 $("#infoImage").prepend("<img src=" + info + ">");
 		 $("#infoImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
-		 $("#detailImage").empty();
+	
 		 $("#detailImage").prepend("<img src=" + detail + ">");
 		 $("#detailImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
@@ -349,16 +347,8 @@
 			
 			let makeModifyPage = makeInputValue();
 			
-			// 상품 수정 경로로 바꾸기
-			$(".addProduct").attr("action", "${pageContext.request.contextPath}/admin/modifyProduct");
-			$("#submit").remove();
+	
 			$(".link").remove();
-			
-			$("h1").empty();
-			$("h1").prepend("상품 수정");
-			
-			// 수정 버튼 만들어주기
-			$("#table").after('<button id=modify>수정하기</button>');
 			
 		}
 		
@@ -403,98 +393,18 @@
 </head>
 <!-- 소은 -->
 <body>
-	<!-- ======================== 배너 =========================== -->
-	<div>
-    	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
-        </nav>
-    </div>
-
-	<!-- ======================== 상단 메뉴 =========================== -->
-    <div class="container pb-2">
-        <nav class="navbar navbar-expand-md navbar-light">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          
-          <div
-            class="collapse navbar-collapse d-flex justify-content-between"
-            id="navbarNavAltMarkup">
-            <div class="navbar-nav" id="topmenu_left">
-              <a class="nav-link" href="#">공지사항</a>
-              <a class="nav-link" href="#">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
-            </div>
-            
-            <!-- 로그인을 안했다면 -->
-            <div class="navbar-nav" id="topmenu_right">
-            <sec:authorize access="isAnonymous()">
-              <a class="nav-link" href="${pageContext.request.contextPath}/loginForm">로그인</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/basicaddMemberForm">회원가입</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-             </sec:authorize>
-             
- 
-            <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="#">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
-                </sec:authorize>
-			</sec:authorize>             
-             
-            </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
-        </div><!-- collapse navbar-collapse -->
-
-
-		<!-- ======================== 로고 =========================== -->
-        <center>
-        	<div id="logo" style="width: 12rem">
-              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
-            </div>
-        </center>
-	</nav>
-  </div><!-- container -->
-      
-</header>
 
     <div class="pt-5 pb-5 mr-5 ml-5">
       <img src="${pageContext.request.contextPath}/imgs/admin.png" style="width: 50px;">
-      <h1 style="font-weight: bold;"> <a href="${pageContext.request.contextPath}/admin/adminHome"> 관리자 페이지 </a></h1> 
+      <h1 style="font-weight: bold;"> <a href="${pageContext.request.contextPath}/admin/adminHom"> 관리자 페이지 </a></h1> 
       <br>
       <div class="d-flex justify-content-start align-items-center">
-      <h2 style="font-weight: bold;"> 상품등록 
+      	<h2 style="font-weight: bold;"> 상품수정 </h2> 
       </div>
 
 	<!-- 파일 등록을 위해 enctype="multipart/form-data" 설정-->
 	<form:form class="addProduct" 
-		action="${pageContext.request.contextPath}/admin/insertProduct" 
+		action="${pageContext.request.contextPath}/admin/modifyProduct" 
 			enctype="multipart/form-data" method="post">
       <table class="table table-bordered pt-5"  id="admin_addproduct_table">
 			<tr>
@@ -583,43 +493,24 @@
 			<tr>
 				<!-- accept="image/*"는 이미지 형태의 파일만 허용하겠다는 의미 -->
 				<td>상품 대표 이미지</td>
-				<td id="mainImage"><input type="file" id="main" name="main" accept="image/*" required></td>
+				<td id="mainImage"></td>
 			</tr>
 			<tr>
 				<td>상품정보 이미지</td>
-				<td id="infoImage"><input type="file" id="info" name="info" accept="image/*" required></td>
+				<td id="infoImage"></td>
 			</tr>
 			<tr>
 				<td>상품상세 이미지</td>
-				<td id="detailImage"><input type="file" id="detail" name="detail" accept="image/*" required></td>
+				<td id="detailImage"></td>
 			</tr>					
 
 		</table>
-		<button class="btn btn-warning" id="submit">상품 등록</button>
+		<button class="btn btn-warning" id="modify">수정하기</button>
 	</form:form> 
-	
+	</div>
 	<br><br><br>
 
-    <!-- ======================== 하단 메뉴 (푸터 동일) =========================== -->
-	<hr class="m-0" />
-    <div class="container">
-      <footer class="pt-0">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <div class="navbar d-flex justify-content-center">
-            <div class="navbar-nav" id="footernavbar">
-              <a class="nav-link" href="#">로켓마켓소개</a>
-              <a class="nav-link" href="#">이용약관</a>
-              <a class="nav-link" href="#">개인정보처리방침</a>
-              <a class="nav-link" href="#">이용안내</a>
-              <a class="nav-link" href="#">문의하기</a>
-            </div>
-          </div>
-        </nav>
-      </footer>
-    </div>
-    <!-- container -->
-    <hr class="m-0" />
-
+  
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

@@ -519,9 +519,9 @@
       <h1 style="font-weight: bold;"> <a href="${pageContext.request.contextPath}/admin/adminHome"> 관리자 페이지 </a></h1> 
       <br>
       <div class="d-flex justify-content-start align-items-center">
-      <h2 style="font-weight: bold;"> 상품등록 
+      	<h2 style="font-weight: bold;"> 상품등록 </h2>
       </div>
-
+	
 	<!-- 파일 등록을 위해 enctype="multipart/form-data" 설정-->
 	<form:form class="addProduct" 
 		action="${pageContext.request.contextPath}/admin/insertProduct" 
@@ -627,7 +627,7 @@
 		</table>
 		<button class="btn btn-warning" id="submit">상품 등록</button>
 	</form:form> 
-	
+	</div>
 	<br><br><br>
 
     <!-- ======================== 하단 메뉴 (푸터 동일) =========================== -->

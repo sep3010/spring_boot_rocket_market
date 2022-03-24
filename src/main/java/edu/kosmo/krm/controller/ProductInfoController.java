@@ -110,7 +110,7 @@ public class ProductInfoController {
 		log.info("productModifyView()..");
 		view.addObject("product", productService.getProductContent(productVO));
 
-		view.setViewName("/admin/addProduct");
+		view.setViewName("/admin/productModifyView");
 		return view;
 	}
 	
