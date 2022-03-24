@@ -200,6 +200,11 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         font-weight: bold;
       }
       
+      form { 
+      display : inline; 
+      margin:0px
+      }
+      
     </style>
     
     
@@ -364,6 +369,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -659,9 +665,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	      <c:when test="${productInfo.stock > 0}">
 	        <div clss="d-flex align-items-center" id="cartdiv">     
        		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
-       			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
+       			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img"></a>
 	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
-       			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img"></a>
        			<!-- 상단코드 클릭시 위시리스트로 넣기 -->
        			<h5 class="cart_text pt-4"> 지금 구매하기를 누르시면 혜택이 팡팡팡! </h5>
       		</div>	                	
@@ -685,17 +691,17 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
        		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
        		  <!-- 상단코드 클릭시 주문단계로 바로 넘어가기(세윤) --> 
 
-       		  <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
- 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
-	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
-	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img" value="장바구니" >      		  		       		  			  
+       		  <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" style="width: 50px; margin: 0px;">
+ 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}" style="width: 50px; margin: 0px;">	          
+	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id" />">
+	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img" value="장바구니" style="width: 50px; padding: 0px;" >      		  		       		  			  
        		  </form>	
        		  <!-- 상단코드 클릭시 장바구니로 넣기 -->
        		  
        		  <form class="inWishList" action="${pageContext.request.contextPath}/user/wishList" method="post" >
- 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}">	          
+ 	            <input type="hidden" class="productId" name="productId" value="${productInfo.id}" style="width: 50px;">	          
 	            <input type="hidden" class="memberId" name="memberId" value="<sec:authentication property="principal.memberVO.id"/>">
-	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img" value="장바구니" >      		  		       		  			  
+	            <input type="image" class="submit btn" src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img" value="장바구니" style="width: 50px; padding: 0px;" >      		  		       		  			  
        		  </form>	
 			  <!-- 상단코드 클릭시 위시리스트로 넣기 -->
 			  
