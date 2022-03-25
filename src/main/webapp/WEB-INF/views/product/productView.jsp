@@ -489,25 +489,26 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
     <main>
-      <!-- 사이드바 -->
+	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
             <a href="${pageContext.request.contextPath}/user/cart" title="장바구니 이동">장바구니</a>
           </div>
-
           <div class="text-center pt-0 pb-3" id="sidecontent">
-            <button
-              type="button"
-              class="close"
-              aria-label="Close"
-              id="closebtn"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <a href="#"
-              ><img class="pt-1" src="" alt="" id="sideimg"
-            /></a>
+          
+          <!-- 장바구니에 있는 상품 표시 -->
+            <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
+				로그인 후 사용 가능합니다.
+            </sec:authorize>
+   
+			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+			  <c:forEach var="cart" items="${cartProductList}" >
+		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
+		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
+			  </c:forEach>
+			</sec:authorize>            
+
           </div>
         </div>
         
