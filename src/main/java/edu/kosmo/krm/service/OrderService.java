@@ -75,5 +75,7 @@ public interface OrderService {
 	
 //	// 주문한 상품의 개수를 가져오는 함수
 //	public int getProudctQuantity(Long order_id);
+	
+	public void insertDeliveryInfo (PaymentInfoVO paymentInfoVO);
 
 }

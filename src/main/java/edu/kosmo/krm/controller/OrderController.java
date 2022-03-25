@@ -314,15 +314,20 @@ public class OrderController {
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);
+		
+		// 배송 정보 입력하는 것
+		orderService.insertDeliveryInfo(paymentInfoVO);
+		
 		entity = new ResponseEntity<String>("successPayment", HttpStatus.OK);
-
-		// 결제 완료 페이지에 들어갈 세션 값 세팅
+		
+				// 결제 완료 페이지에 들어갈 세션 값 세팅
 		String amount = paymentInfoVO.getAmount();
 		String input_point = paymentInfoVO.getInput_point();
 		int result_Point = paymentInfoVO.getResult_Point();
 		String merchantid = paymentInfoVO.getMerchantid();
 		String impuid = paymentInfoVO.getImpuid();
 		String product_name = paymentInfoVO.getProduct_name();
+		String delivery_number = paymentInfoVO.getDelivery_number();
 		
 		session.setAttribute("amount", amount);
 		session.setAttribute("input_point", input_point);
@@ -330,6 +335,7 @@ public class OrderController {
 		session.setAttribute("merchantid", merchantid);
 		session.setAttribute("impuid", impuid);
 		session.setAttribute("product_name", product_name);
+		session.setAttribute("delivery_number", delivery_number);
 		
 		
 		return entity;

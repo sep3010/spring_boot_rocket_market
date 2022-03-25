@@ -371,7 +371,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       			  $("#productDiscountPrice").text(pointProductPrice);
                   $("#productDiscountAcount").text(productPointTotalprice);
                   
-              	  alert(pointProductPrice + "원의 적립금을 사용합니다.");
+              	  alert(input_point + "원의 적립금을 사용합니다.");
                
            });
         }); //end click()
@@ -584,31 +584,36 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <div class="row information-delivery mb-3">
               <div class="col-md-6 col-sm-12 d-flex flex-column">
                 <p style="font-weight: bold; font-size:20px">배송정보(회원정보)</p>
-                <c:forEach items="${memberDeliveryInfoList}" var="memberDeliveryInfo">
+                
+		<c:url value="/completePayment" var="completePaymentUrl" />
+		
+			<form:form name="completePayment" id="completePayment" action="${completePaymentUrl}" method="POST">
                    <div class="recepient mb-4">
                      <p>수령인</p>
-                     <div class="description">${memberDeliveryInfo.receiver}</div>
+                     <input type="text" id="receiver" class="description"></input>
                    </div>
                    <div class="phone">
                      <p>휴대폰</p>
-                     <div class="description">${memberDeliveryInfo.phone}</div>
+                     <input type="text" id="phone" class="description"></input>
                    </div>
                  </div>
                  <div class="col-md-6 col-sm-12 information-other border-left py-3">
                    <div class="address">
                      <p>우편번호</p>
-                     <div class="description">${memberDeliveryInfo.postcode}</div>
+						<input type="text" id="postcode" class="description"></input>
                    </div>
                    <div class="delivery-site">
                      <p>배송지</p>
-                     <div class="description">${memberDeliveryInfo.address}</div>
+						<input type="text" id="address" class="description"></input>
                    </div>
                    <div class="message ">
                      <p>배송메세지</p>
-                     <div class="description">${memberDeliveryInfo.message}</div>
+						<input type="text" id="message" class="description"></input>
                    </div>
-                </c:forEach>
                  </div>
+              </form:form>   
+                
+                 
               </div>
      
                 <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount }건</p>
@@ -779,6 +784,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
     -->
   </body>
+  
+  <script>
+  		$(document).ready({
+
+  			
+  		})
+  </script>
+  
+  
      <script type="text/javascript">
 
   //csrf
@@ -787,6 +801,16 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     function payment() {
 
+    	// 운송장 번호 난수 발생 함수
+    	function createDeliveryNumber(n) {
+	  			  let str = ''
+	  			  for (let i = 0; i < n; i++) {
+	  			    str += Math.floor(Math.random() * 10)
+	  			  }
+	  			  return str
+	  			}
+	  			
+	  			
         
         <sec:authorize access="isAnonymous()">
            location.href = "/into/loginForm";
@@ -803,6 +827,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            let product_name = "${cartProductList[0].name} 외 ${cartCount - 1} 건"; // 상품명
            let quantity = "${cartCount}"
            
+   
+           let delivery_number = createDeliveryNumber(6); // 운송장 번호
            
            let discountAmount = $("#productDiscountAcount").text();
            let product_id = "${product.id }";
@@ -814,6 +840,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            let coupon_point = $("select[name='coupon']").val();
            let result_Point =  Number(user_point) - Number(input_point);
          
+
            
            var token = $("meta[name='_csrf']").attr("content");
            var header = $("meta[name='_csrf_header']").attr("content");
@@ -831,7 +858,13 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                
            }, function(rsp) {
               
-              
+               // 배송 정보 입력
+               let delivery_receiver = $("#receiver").val();
+               let delivery_phone = $("#phone").val();
+               let delivery_postcode = $("#postcode").val();
+               let delivery_address = $("#address").val();
+               let delivery_message = $("#message").val();
+        	      
                   if(rsp.success) {
                    
                       $.ajax({
@@ -849,7 +882,14 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                             result_Point: result_Point,
                             member_id: member_id,
                             quantity: quantity,
-                            product_name: product_name
+                            product_name: product_name,
+                            delivery_number: delivery_number,
+                            delivery_receiver: delivery_receiver,
+                            delivery_phone : delivery_phone,
+                            delivery_postcode: delivery_postcode,
+                            delivery_address: delivery_address,
+                            delivery_message: delivery_message
+                            
                          }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);

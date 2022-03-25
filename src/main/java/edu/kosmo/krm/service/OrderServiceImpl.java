@@ -153,6 +153,14 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
+	// 배송 정보 입력
+	@Override
+	public void insertDeliveryInfo(PaymentInfoVO paymentInfoVO) {
+		log.info("insertDeliveryInfo");
+		ordermapper.insertDeliveryInfo(paymentInfoVO);
+		
+	}
+
 
 
 //	@Override

@@ -380,10 +380,11 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	             let productTotal = $('#productDiscountAcount').val();
 	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
 			
-               pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
+	           pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
                productPointTotalprice = Number(discount_price) - Number(input_point);
 
                $("#discount_Amount").text(productPointTotalprice);
+               $("#discount_price").text(pointProductPrice);
                
            	  alert(input_point + "원의 적립금을 사용합니다.");
                
@@ -627,26 +628,32 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
      
                 <p style="font-weight: bold; font-size:20px">주문상품 1건</p>
                 <div class="col-12 d-flex order-group pb-3">
-                  <c:forEach items="${productList}" var="orderPaymentOne">
-                   <div class="product d-flex justify-content-around align-items-center">
-                          <p>${orderPaymentOne.product_id }</p>
-                     <c:choose>
-                        <c:when test="${not empty orderPaymentOne.productImages}">
-                           <c:forEach var="thumbnail" items="${orderPaymentOne.productImages}">
-                              <td><img src="${thumbnail.path}"></td>
-                           </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                           <td>대표 이미지 없음</td>
-                        </c:otherwise>
-                     </c:choose> 
-                          <p class=""><span>[${orderPaymentOne.brand}]</span>${orderPaymentOne.product_name}</p>
-                        </div>
-                        <div class="order d-flex align-items-center">
-                          <p style="margin-right: 70px; width: 100px;">1개</p>
-                          <p style="width: 100px;">${orderPaymentOne.price}원</p>
-                        </div>
-                    </c:forEach>
+					<table width="950" cellpadding="0" cellspacing="0" border="1">
+					<tr>
+						<td>상품번호</td>		
+						<td>상품명</td>
+						<td>수량</td>
+						<td>가격</td>
+						<td>총금액</td>	
+						<td>총 할인가</td>	
+					</tr>
+					<c:forEach items="${productList}" var="orderPaymentOne">
+						<tr>
+							<td>${orderPaymentOne.product_id}</td>
+							<td>[${orderPaymentOne.brand}]${orderPaymentOne.product_name}</td>
+							<td>1</td>
+							<td><fmt:formatNumber value="${orderPaymentOne.price}" pattern="#,###"/>원</td>		
+							<c:set var="productTotalPrice" value="${orderPaymentOne.price *  1}"/>
+							<td><fmt:formatNumber value="${productTotalPrice}" pattern="#,###"/>원</td>							
+							<c:set var="productDiscountTotalPrice" value="${(orderPaymentOne.price * (1- (orderPaymentOne.product_discount/100))) * 1}"/>
+							<td><fmt:formatNumber value="${productDiscountTotalPrice}" pattern="#,###"/>원</td>
+							<c:set var="productTotalAcount" value="${productTotalAcount + productTotalPrice}"/>
+							<c:set var="productDiscountAcount" value="${productDiscountAcount + productDiscountTotalPrice}"/>
+							<c:set var="productDiscountPrice" value="${productTotalAcount - productDiscountAcount}"/>
+							<input type="hidden" id="productDiscountPriceHidden" value="${productTotalAcount - productDiscountAcount}">	
+						</tr>
+					</c:forEach>		
+					</table>
                   </div>
                   <hr>
                 
@@ -796,7 +803,14 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     function payment() {
 
-        
+		function createDeliveryNumber(n) {
+			  let str = ''
+			  for (let i = 0; i < n; i++) {
+			    str += Math.floor(Math.random() * 10)
+			  }
+			  return str
+			}
+		
         <sec:authorize access="isAnonymous()">
            location.href = "/into/loginForm";
         </sec:authorize>   
@@ -814,7 +828,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            let merchantid = new Date().getTime();
            let quantity = 1;
            
-
+           let delivery_number = createDeliveryNumber(6); // 운송장 번호
            
            let input_point = $("#inputPoint").val(); // 입력 포인트
            let user_point = "${principal.memberVO.point}";
@@ -856,7 +870,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                              result_Point: result_Point,
                              member_id: member_id,
                              quantity: quantity,
-                             product_name: product_name
+                             product_name: product_name,
+                             delivery_number: delivery_number
                          }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);
