@@ -38,171 +38,9 @@
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
     
-<style>
-
-      #topmenu_left,
-      #topmenu_right {
-        font-weight: bold;
-        font-size: 0.9em;
-      }
-
-      .navbar {
-        display: block;
-      }
-
-      #logo {
-        justify-content: center;
-      }
-
-      #topbanner {
-        text-align: center;
-        background-color: #d3c5a8;
-      }
-
-      #footernavbar {
-        font-size: 1em;
-      }
-
-      #footernavbar a {
-        text-align: center;
-        width: 14rem;
-      }
-
-      .dropbtn {
-        background-color: #ffffff;
-        width: 13rem;
-        color: rgb(90, 88, 88);
-        font-weight: bold;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-      }
-
-      #categorybtn {
-        background-color: #ffffff;
-        width: 13.5rem;
-        color: rgb(90, 88, 88);
-        font-weight: bold;
-        text-align: center;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-      }
-
-      .dropdown {
-        display: inline-block;
-      }
-
-      .dropdown-content {
-        display: none;
-        width: 13rem;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 2;
-      }
-
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
-
-      .dropdown-content a:hover {
-        background-color: #d8c5a2;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
-      .dropdown:hover .dropbtn {
-        background-color: #d8c5a2;
-        color: rgb(90, 88, 88);
-      }
-
-      /*카테고리 상단 고정*/
-      .category {
-        position: sticky;
-        top: 0px;
-        background: #fff;
-        z-index: 1;
-      }
-
-      /* 사이드바 */
-      main {
-        position: relative;
-        top: 0px;
-      }
-      .sidebar {
-        margin-top: 10px;
-        margin-right: 10px;
-        width: 100px;
-        position: absolute;
-        right: 10px;
-        float: right;
-        z-index: 3;
-      }
-      #cartbox {
-        width: 100px;
-        background-color: #eeddbe;
-        border-radius: 10px;
-      }
-
-      #sideimg {
-        width: 80%;
-        height: 80%;
-        position: relative;
-      }
-
-      /*장바구니 삭제 버튼*/
-      #closebtn {
-        position: absolute;
-        top: 30px;
-        right: 10px;
-        z-index: 2;
-      }
-
-      #sidetitle a {
-        text-decoration: none;
-        color: black;
-      }
-
-      /*상단 페이지 이동*/
-
-      #pagebtn {
-        top: 60%;
-        left: 80%;
-        width: 100px;
-        height: 50px;
-        background-color: #eeddbe;
-        border: 1px solid rgb(255, 255, 255);
-        border-radius: 10px;
-        top: 20px;
-      }
-
-      /*챗봇버튼*/
-
-      .chat-btn {
-        cursor: pointer;
-        background-color: #ffffff;
-        border: #ffffff;
-        opacity: 1;
-        transition: opacity 0.3s;
-      }
-
-      .card{
-        border: none;
-      }
-
-      .card-body{
-        font-weight: bold;
-      }
-      
+	<style>
+		
+     
     </style>
 
 
@@ -325,11 +163,11 @@
 		 $("#mainImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 	
-		 $("#infoImage").prepend("<img src=" + info + ">");
+		 $("#infoImage").prepend("<img style='width:740px' src=" + info + ">");
 		 $("#infoImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 	
-		 $("#detailImage").prepend("<img src=" + detail + ">");
+		 $("#detailImage").prepend("<img style='width:740px' src=" + detail + ">");
 		 $("#detailImage").append("<span onclick=imageDelete();><i class='fa fa-times fa-xl'></i></span>");
 		 
 
@@ -341,16 +179,12 @@
 	$(document).ready(function(){
 		// 페이지 접속시 상품명 입력칸에 커서를 위치시킨다.
 		$("#name").focus();
-		
-		// 수정 페이지로 접근시 input 태그에 value를 넣어주기 위한 설정
-		if(${product != null}){
+
 			
-			let makeModifyPage = makeInputValue();
+		let makeModifyPage = makeInputValue();
+
+		$(".link").remove();
 			
-	
-			$(".link").remove();
-			
-		}
 		
 		// 상품 수정 버튼
 		$("#modify").on('click', function(event){
@@ -406,7 +240,7 @@
 	<form:form class="addProduct" 
 		action="${pageContext.request.contextPath}/admin/modifyProduct" 
 			enctype="multipart/form-data" method="post">
-      <table class="table table-bordered pt-5"  id="admin_addproduct_table">
+      <table class="table table-bordered pt-5"  id="admin_addproduct_table"  style='width:740px'>
 			<tr>
 				<td>상품명</td>
 				<td><input type="text" id="name" name="name"></td>

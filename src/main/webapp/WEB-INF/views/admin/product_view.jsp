@@ -64,16 +64,6 @@
 <!-- 소은 -->
 <body>
 
-
-
-
-
-
-
-
-
-
-
 	<h1>상품상세</h1>
 	<table width="750" cellpadding="0" cellspacing="0" border="1">
 		<tr>
