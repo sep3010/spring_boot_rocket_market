@@ -323,6 +323,7 @@ public class OrderController {
 		String merchantid = paymentInfoVO.getMerchantid();
 		String impuid = paymentInfoVO.getImpuid();
 		String product_name = paymentInfoVO.getProduct_name();
+		String delivery_number = paymentInfoVO.getDelivery_number();
 		
 		session.setAttribute("amount", amount);
 		session.setAttribute("input_point", input_point);
@@ -330,6 +331,7 @@ public class OrderController {
 		session.setAttribute("merchantid", merchantid);
 		session.setAttribute("impuid", impuid);
 		session.setAttribute("product_name", product_name);
+		session.setAttribute("delivery_number", delivery_number);
 		
 		
 		return entity;

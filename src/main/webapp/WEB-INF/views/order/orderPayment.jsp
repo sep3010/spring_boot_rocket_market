@@ -371,7 +371,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       			  $("#productDiscountPrice").text(pointProductPrice);
                   $("#productDiscountAcount").text(productPointTotalprice);
                   
-              	  alert(pointProductPrice + "원의 적립금을 사용합니다.");
+              	  alert(input_point + "원의 적립금을 사용합니다.");
                
            });
         }); //end click()
@@ -779,6 +779,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
     -->
   </body>
+  
+  <script>
+  		$(document).ready({
+
+  			
+  		})
+  </script>
+  
+  
      <script type="text/javascript">
 
   //csrf
@@ -786,7 +795,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     var header = $("meta[name='_csrf_header']").attr("content");
     
     function payment() {
-
+			function createDeliveryNumber(n) {
+	  			  let str = ''
+	  			  for (let i = 0; i < n; i++) {
+	  			    str += Math.floor(Math.random() * 10)
+	  			  }
+	  			  return str
+	  			}
+	  			
+	  			
         
         <sec:authorize access="isAnonymous()">
            location.href = "/into/loginForm";
@@ -803,6 +820,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            let product_name = "${cartProductList[0].name} 외 ${cartCount - 1} 건"; // 상품명
            let quantity = "${cartCount}"
            
+   
+           let delivery_number = createDeliveryNumber(6); // 운송장 번호
            
            let discountAmount = $("#productDiscountAcount").text();
            let product_id = "${product.id }";
@@ -849,7 +868,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                             result_Point: result_Point,
                             member_id: member_id,
                             quantity: quantity,
-                            product_name: product_name
+                            product_name: product_name,
+                            delivery_number: delivery_number
                          }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);

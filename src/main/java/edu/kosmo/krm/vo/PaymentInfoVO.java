@@ -14,5 +14,7 @@ public class PaymentInfoVO {
 	    public String member_id;
 	    public int quantity;
 	    public String product_name;
+	    public String delivery_number;
+	    
 
 }

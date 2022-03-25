@@ -40,6 +40,7 @@
 	사용 적립금: <%= session.getAttribute("input_point") %>
 	주문 번호: <%= session.getAttribute("merchantid") %>
 	결제 번호: <%= session.getAttribute("impuid") %>
+	운송장 번호: <%= session.getAttribute("delivery_number") %>
 	
 	<a href="${pageContext.request.contextPath}/">홈으로 가기</a>
 	<br><a href="${pageContext.request.contextPath}/user/orderhistory">주문 내역 확인하기</a>

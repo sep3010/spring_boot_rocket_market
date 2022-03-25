@@ -803,7 +803,14 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
     
     function payment() {
 
-        
+		function createDeliveryNumber(n) {
+			  let str = ''
+			  for (let i = 0; i < n; i++) {
+			    str += Math.floor(Math.random() * 10)
+			  }
+			  return str
+			}
+		
         <sec:authorize access="isAnonymous()">
            location.href = "/into/loginForm";
         </sec:authorize>   
@@ -821,7 +828,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            let merchantid = new Date().getTime();
            let quantity = 1;
            
-
+           let delivery_number = createDeliveryNumber(6); // 운송장 번호
            
            let input_point = $("#inputPoint").val(); // 입력 포인트
            let user_point = "${principal.memberVO.point}";
@@ -863,7 +870,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                              result_Point: result_Point,
                              member_id: member_id,
                              quantity: quantity,
-                             product_name: product_name
+                             product_name: product_name,
+                             delivery_number: delivery_number
                          }),
                          beforeSend: function(xhr){
                             xhr.setRequestHeader(header, token);
