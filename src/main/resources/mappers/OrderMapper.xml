@@ -356,4 +356,13 @@
 	   ]]>
 	</select>	
 	
+	<insert id="insertDeliveryInfo">
+		<![CDATA[
+			insert into   delivery
+                        (id, order_id, postcode, address, receiver, phone, message, member_id, delivery_number)
+              values
+                        (delivery_seq.nextval, #{merchantid}, #{delivery_postcode}, #{delivery_address}, #{delivery_receiver}, #{delivery_phone}, #{delivery_message}, #{member_id}, #{delivery_number})
+		]]>
+	</insert>		
+	
 </mapper> 

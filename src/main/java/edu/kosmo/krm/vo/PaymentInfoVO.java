@@ -16,5 +16,12 @@ public class PaymentInfoVO {
 	    public String product_name;
 	    public String delivery_number;
 	    
+	    // 배송 정보
+		private String delivery_postcode ;
+		private String delivery_address ;
+		private String delivery_receiver ;
+		private String delivery_phone ;
+		private String delivery_message ;
+	    
 
 }

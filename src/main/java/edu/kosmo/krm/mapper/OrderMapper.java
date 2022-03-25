@@ -85,6 +85,9 @@ public interface OrderMapper {
 	
 	// 주문 상세 등록 (OrderDetailVO에 등록)
 	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO);
+
+	// 주문 후 배송지 정보 등록
+	public void insertDeliveryInfo(PaymentInfoVO paymentInfoVO);
 	
 
 }

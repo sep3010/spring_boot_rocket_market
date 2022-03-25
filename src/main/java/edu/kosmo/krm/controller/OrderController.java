@@ -314,9 +314,13 @@ public class OrderController {
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);
+		
+		// 배송 정보 입력하는 것
+		orderService.insertDeliveryInfo(paymentInfoVO);
+		
 		entity = new ResponseEntity<String>("successPayment", HttpStatus.OK);
-
-		// 결제 완료 페이지에 들어갈 세션 값 세팅
+		
+				// 결제 완료 페이지에 들어갈 세션 값 세팅
 		String amount = paymentInfoVO.getAmount();
 		String input_point = paymentInfoVO.getInput_point();
 		int result_Point = paymentInfoVO.getResult_Point();
