@@ -53,6 +53,9 @@ public interface OrderMapper {
 	
 	@Select("SELECT COUNT(*) FROM cart WHERE member_id = #{member_id}")
 	public int GetCartCount(int member_id); // 장바구니에 담긴 상품 개수 가져오기
+
+	@Select("SELECT * FROM cart WHERE member_id = #{member_id}")
+	public List<CartVO> getCartInfo(int member_id); // 장바구니 가져오기
 	
 	// 위시리스트 ==================================================================
 	
@@ -84,7 +87,7 @@ public interface OrderMapper {
 	public void insertOrderInfo(PaymentInfoVO paymentInfoVO);
 	
 	// 주문 상세 등록 (OrderDetailVO에 등록)
-	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO);
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);
 
 	// 주문 후 배송지 정보 등록
 	public void insertDeliveryInfo(PaymentInfoVO paymentInfoVO);

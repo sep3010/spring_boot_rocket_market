@@ -79,7 +79,6 @@
 		                  <th scope="col-sm" id="table_name">주문상품</th>
 		                  <th scope="col-sm" id="table_percent">결제 금액</th>
 		                  <th scope="col-sm" id="table_price">주문상태</th>
-		                  <th scope="col-sm" id="table_type">운송장번호</th>
 		                  <th scope="col-sm" id="table_delivery">상세내역보기</th> 
 		                </tr>
 		              </thead>
@@ -107,16 +106,6 @@
             
 				            <td>${order.amount}</td>
 				            <td>${order.status}</td>
-				            <c:forEach var="delivery" items="${order.delivery}" varStatus="vs">
-					           	<c:if test="${vs.last}">
-					           		<c:if test="${not empty delivery.delivery_number}">
-					           			<td>${delivery.delivery_number}</td>
-					           		</c:if>
-					           		<c:if test="${empty delivery.delivery_number}">
-					           			<td>운송장 없음</td>
-					           		</c:if>
-					            </c:if>	          	
-				            </c:forEach>
 				             <td>
 				 <a class="orderDetail" href="${pageContext.request.contextPath}/user/orderDetail/${order.order_id}">상세 내역보기</a>
 			</td>                                         

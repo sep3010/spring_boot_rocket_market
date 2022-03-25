@@ -28,6 +28,8 @@ public interface OrderService {
 
 	public int order_History_getTotal(MemberVO memberVO);
 
+	public List<CartVO> getCartInfo(int member_id);
+	
 	/*유빈*/
 	// 회원장바구니 유무확인
 	public int findCart(CartVO cartVO);
@@ -71,10 +73,7 @@ public interface OrderService {
 	public void insertOrderInfo(PaymentInfoVO paymentInfoVO);
 	
 	// 주문상세 DB에 저장 (order_detail)
-	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO);	
-	
-//	// 주문한 상품의 개수를 가져오는 함수
-//	public int getProudctQuantity(Long order_id);
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);	
 	
 	public void insertDeliveryInfo (PaymentInfoVO paymentInfoVO);
 

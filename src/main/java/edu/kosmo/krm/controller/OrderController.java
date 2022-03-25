@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -310,7 +311,45 @@ public class OrderController {
 		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-		orderService.insertOrderDetailInfo(paymentInfoVO);
+				
+		String memberid = paymentInfoVO.getMember_id();
+		int member_id = Integer.valueOf(memberid); 
+		List<CartVO> cartProductCount = orderService.getCartInfo(member_id);
+		log.info("카트에 담긴 상품 종류" + cartProductCount);
+		
+		// member_id로 카트 가져오는 코드
+	    for (CartVO cart : cartProductCount) {
+			String orderid = paymentInfoVO.getMerchantid();
+			Long order_id = Long.valueOf(orderid); 
+			OrderDetailVO orderDetailVO = new OrderDetailVO();
+		
+			log.info("cart" + cart.getProduct_id());
+
+	    	CartVO cartVO = new CartVO();
+
+	    	int product_id = cart.getProduct_id();
+	    	int quantity = cart.getQuantity();
+		    
+	    	cartVO.setId(product_id);
+	    	cartVO.setQuantity(quantity);
+	    	
+	    	orderDetailVO.setProduct_id(product_id);
+	    	orderDetailVO.setQuantity(quantity);
+			orderDetailVO.setOrder_id(order_id);
+			
+			orderService.insertOrderDetailInfo(orderDetailVO);
+	    }
+	    	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);
