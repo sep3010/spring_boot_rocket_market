@@ -338,17 +338,8 @@ public class OrderController {
 			orderDetailVO.setOrder_id(order_id);
 			
 			orderService.insertOrderDetailInfo(orderDetailVO);
+			orderService.deleteCart(member_id);
 	    }
-	    	
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		// 쿠폰 포인트와 포인트 넣는 것

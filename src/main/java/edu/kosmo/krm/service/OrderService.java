@@ -76,5 +76,7 @@ public interface OrderService {
 	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO);	
 	
 	public void insertDeliveryInfo (PaymentInfoVO paymentInfoVO);
+	
+	public void deleteCart(int member_id);
 
 }

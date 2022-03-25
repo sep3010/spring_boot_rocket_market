@@ -15,7 +15,6 @@ import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
 import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.joinVO.JoinMemberDeliveryVO;
-import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.vo.CouponVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
@@ -91,6 +90,10 @@ public interface OrderMapper {
 
 	// 주문 후 배송지 정보 등록
 	public void insertDeliveryInfo(PaymentInfoVO paymentInfoVO);
+	
+	// 결제 후 카트 비우기
+	@Delete("DELETE FROM CART WHERE MEMBER_ID = #{member_id}")
+	public void deleteCart(int member_id);
 	
 
 }

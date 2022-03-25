@@ -168,6 +168,13 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
+	@Override
+	public void deleteCart(int member_id) {
+		log.info("deleteCart()...");
+		ordermapper.deleteCart(member_id);
+		
+	}
+
 
 
 
