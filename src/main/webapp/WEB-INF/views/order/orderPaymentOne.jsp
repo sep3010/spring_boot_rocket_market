@@ -377,8 +377,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	            
 	             let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
 	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
-	             let productTotal = $('#productDiscountPrice').val();
-	             
+	             let productTotal = $('#productDiscountAcount').val();
+	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
+			
 	           pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
                productPointTotalprice = Number(discount_price) - Number(input_point);
 
@@ -709,7 +710,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
          <c:set var="price" value="${orderPaymentOne.price}"/>
          <c:set var="discountPercent" value="${orderPaymentOne.product_discount}" scope="session"/>
          <c:set var="discountPrice" value="${orderPaymentOne.price * ((orderPaymentOne.product_discount * 0.01) + point)}" scope="session"/>
-         <c:set var="discountAmount" value="${orderPaymentOne.price - discountPrice + 3000}" scope="session"/>
+           <c:set var="discountAmount" value="${orderPaymentOne.price - discountPrice + 3000}" scope="session"/>
            
                 <div class=" money pt-5 pb-4">
                   <div class="d-flex">
