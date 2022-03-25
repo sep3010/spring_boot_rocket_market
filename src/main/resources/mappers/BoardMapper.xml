@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+<mapper namespace="edu.kosmo.krm.mapper.BoardMapper">
+	
+	
+	<!-- ========== 공지사항 ========== -->
+	
+	<select id="getNoticeBoardWithPaging"
+		resultType="edu.kosmo.krm.vo.BoardVO">
+   <![CDATA[
+               SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT
+                             *
+                         FROM
+                             board where board_category_id = 1 order by id desc
+             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
+      
+   
+   ]]>
+	</select>
+	
+	<insert id="postNotice">
+		<![CDATA[
+			insert into board(id, member_id, board_category_id, title, content,
+			board_date, sort, hit, score, scope)
+			values(board_seq.nextval, #{member_id}, 1, #{title}, #{content},
+			to_date(sysdate, 'yyyy-mm-dd'), null, 0, 0, '공개')
+		]]>
+	</insert>
+	
+	<update id="modifyNotice">
+		<![CDATA[
+			update board set title = #{title}, content = #{content}
+			where id = #{id}
+		]]>
+	</update>
+	
+	<!-- ========== 공지사항 끝 ========== -->
+	
+	<!-- ========== 문의사항 ========== -->
+
+	 
+	<select id="getInquiryBoardWithPaging"
+		resultType="edu.kosmo.krm.joinVO.JoinInquiryBoardVO">
+   <![CDATA[
+               SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+				SELECT * FROM board b 
+				LEFT JOIN (SELECT nickname, id AS member_table_id FROM member) m
+				ON b.member_id = m.member_table_id
+				LEFT JOIN (SELECT board_id, COUNT(*) AS count FROM reply GROUP BY board_id) r
+				ON b.id = r.board_id
+				WHERE b.board_category_id = 2
+				ORDER BY id DESC
+             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
+   ]]>
+	</select>
+	
+<!-- 	<insert id="postInquiry">
+		<![CDATA[
+			insert into board(id, member_id, board_category_id, title, content,
+			board_date, sort, hit, score, scope)
+			values(board_seq.nextval, #{member_id}, 2, #{title}, #{content},
+			to_date(sysdate, 'yyyy-mm-dd'), #{sort}, 0, 0, '공개')
+		]]>
+	</insert> -->
+	
+	<update id="modifyInquiry">
+		<![CDATA[
+			update board set title = #{title}, content = #{content}, sort = #{sort},
+			where id = #{id}
+		]]>
+	</update>
+	
+</mapper>
