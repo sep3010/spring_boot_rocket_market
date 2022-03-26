@@ -377,13 +377,12 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	          let userPoint = "<sec:authentication property="principal.memberVO.point"/>"; // 사용자 보유 포인트
 	          let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
 	          let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
-	          let productTotal = $('#productDiscountAcount').val();
-	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
-			
-	          alert(productTotal)
-	          pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
-              productPointTotalprice = Number(discount_price) - Number(input_point);
-
+	          let productTotal = $('#product_price').text();
+			  let couponDiscountFee = Number(productTotal) * Number(coupon_point) * 0.01
+	          pointProductPrice = Number(productDiscountPrice) + Number(input_point) + Number(couponDiscountFee); // 상품 할인가 + 사용 적립금
+              productPointTotalprice = Number(productTotal) - Number(pointProductPrice) + Number(deliveryFee);
+	          
+	          
                $("#discount_Amount").text(productPointTotalprice);
                $("#discount_price").text(pointProductPrice);
                alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
@@ -453,7 +452,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <!-- 로그인을 했다면 -->
          <sec:authorize access="isAuthenticated()">
          <div style="align-self:center">
-           <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+           ${userName }님 환영합니다.&nbsp;&nbsp;
          </div>
            <a 
            class="nav-link" 
@@ -681,9 +680,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                      </c:choose>
                         </select><br>
                         
-                        <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
+                        <label><input type="checkbox" id="myPoint" class="myDiscount">&nbsp;적립금</label>
 
-                        <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
+                        <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0 min="0">
 
                         <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
