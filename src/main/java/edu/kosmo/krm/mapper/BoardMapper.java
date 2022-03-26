@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import edu.kosmo.krm.joinVO.JoinInquiryBoardVO;
+import edu.kosmo.krm.joinVO.JoinQuestionBoardVO;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.BoardVO;
 import edu.kosmo.krm.vo.CouponVO;
+import edu.kosmo.krm.vo.ReplyVO;
 
 
 
@@ -50,8 +52,7 @@ public interface BoardMapper {
 	public List<JoinInquiryBoardVO> getInquiryBoardWithPaging(Criteria criteria);
 	
 	// 개별 문의사항 조회
-	@Select("Select * from board where id = #{id}")
-	public BoardVO getInquiry(int id);
+	public JoinQuestionBoardVO getInquiry(int id);
 	
 	// 문의사항 작성
 	@Insert("INSERT INTO board VALUES (board_SEQ.NEXTVAL, #{member_id}, 2, #{title}, #{content}, SYSDATE, #{sort}, 0, null, #{scope})")
@@ -68,6 +69,10 @@ public interface BoardMapper {
 	// 글조회수 업데이트
 	@Update("UPDATE board SET hit = hit + 1 WHERE id = #{id}")
 	public void upHit(int id);
+	
+	// 문의사항 답글 작성
+	@Insert("INSERT INTO reply VALUES (REPLY_SEQ.nextval, #{board_id}, #{content}, SYSDATE)")
+	public void insertReply(ReplyVO replyVO);
 
 
 }

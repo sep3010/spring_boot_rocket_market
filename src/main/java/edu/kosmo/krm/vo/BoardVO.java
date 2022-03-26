@@ -1,5 +1,6 @@
 package edu.kosmo.krm.vo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class BoardVO {
 	private int board_category_id;
 	private String title;
 	private String content;
-	private Timestamp board_date;
+	private Date board_date;
 	private String sort;
 	private int hit;
 	private int score;

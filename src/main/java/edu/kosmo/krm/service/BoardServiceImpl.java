@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.kosmo.krm.joinVO.JoinInquiryBoardVO;
+import edu.kosmo.krm.joinVO.JoinQuestionBoardVO;
 import edu.kosmo.krm.mapper.BoardMapper;
 import edu.kosmo.krm.mapper.MemberInfoMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.BoardVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.ReplyVO;
 import lombok.extern.slf4j.Slf4j;
 
 //게시판 관리 서비스단
@@ -90,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 개별 문의사항 조회
 	@Override
-	public BoardVO getInquiry(int id) {
+	public JoinQuestionBoardVO getInquiry(int id) {
 		log.info("getInquiry(in service)");
 		
 		boardMapper.upHit(id);
@@ -115,8 +117,15 @@ public class BoardServiceImpl implements BoardService {
 	// 게시글 작성자 회원번호
 	@Override
 	public int getBoardWriter(int id) {
-		log.info("getBoardWriter()..");
+		log.info("getBoardWriter(in service)..");
 		return boardMapper.getBoardWriterNum(id);
+	}
+	
+	// 문의사항 답글 작성
+	@Override
+	public void insertReply(ReplyVO replyVO) {
+		log.info("getBoardWriter(in service)..");
+		boardMapper.insertReply(replyVO);		
 	}
 		
 	

@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import edu.kosmo.krm.joinVO.JoinInquiryBoardVO;
+import edu.kosmo.krm.joinVO.JoinQuestionBoardVO;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.vo.BoardVO;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.ReplyVO;
 
 //게시판 관리 서비스단
 //2022-3-21 ~
@@ -42,7 +44,7 @@ public interface BoardService {
 	public List<JoinInquiryBoardVO> getInquiryBoard(Criteria criteria);
 	
 	// 개별 문의사항 조회
-	public BoardVO getInquiry(int id);
+	public JoinQuestionBoardVO getInquiry(int id);
 	
 	// 문의사항 작성
 	public void postInquiry(BoardVO boardVO);
@@ -51,5 +53,8 @@ public interface BoardService {
 	public void deleteInquiry(int id);
 	// 작성자 회원번호조회
 	public int getBoardWriter(int id);
+	
+	// 문의사항 답글 작성
+	void insertReply(ReplyVO replyVO);
 	
 }

@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
 <mapper namespace="edu.kosmo.krm.mapper.BoardMapper">
+
+	<resultMap id="questionMap" type="edu.kosmo.krm.joinVO.JoinQuestionBoardVO">
+		<result property="board_id" column="board_id" />
+		<result property="member_id" column="member_id" />
+		<result property="board_category_id" column="board_category_id" />		
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="board_date" column="board_date" />
+		<result property="sort" column="sort" />		
+		<result property="hit" column="hit" />
+		<result property="scope" column="scope" />
+		<result property="nickname" column="nickname" />
+		<result property="reply_id" column="reply_id" />			
+		<result property="reply_content" column="reply_content" />
+		<result property="reply_date" column="reply_date" />
+	</resultMap>
 	
 	
 	<!-- ========== 공지사항 ========== -->
@@ -60,6 +76,35 @@
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}
    ]]>
+	</select>
+	
+	<select id="getInquiry" resultMap="questionMap">
+		SELECT
+		    b.id AS board_id,
+		    b.member_id,
+		    b.board_category_id,
+		    b.title,
+		    b.content,
+		    b.board_date,
+		    b.sort,
+		    b.hit,
+		    b.scope,
+		    m.nickname,
+		    r.id AS reply_id,
+		    r.content AS reply_content,
+		    r.reply_date   
+		FROM
+		    board b
+		LEFT JOIN
+		    member m
+		ON
+		    b.member_id = m.id    
+		LEFT JOIN
+		    reply r
+		ON
+		    b.id = r.board_id
+		WHERE 
+		    b.id = #{id}
 	</select>
 	
 <!-- 	<insert id="postInquiry">
