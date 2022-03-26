@@ -2,11 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -14,6 +12,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <!-- Bootstrap CSS -->
+    
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -23,14 +22,144 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
 
-          
     <title>ROCKET MARKET :: 신속배송</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+ 
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-<style>
+    <style>
+      
+      /* ========== 공지사항 ========== */
 
+      /* 공통사항 */
+      a {
+        text-decoration: none !important;
+        color: black;
+      }
+      a:hover {
+        color: orange;
+      }
+      li {
+        list-style-type: none;
+      }
+
+      /* 공통사항 끝 */
+
+      /* 상단 멤버 정보*/
+
+      
+      #container {
+        display: flex;
+        justify-content: space-around;
+      }
+      .information-box {
+        width: 250px;
+        height: 250px;
+        background: #fff;
+        border-radius: 10px;
+      }
+      .information-box2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .member-information {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .photo {
+        width: 120px;
+        height: 120px;
+        border: 1px solid lightgray;
+        border-radius: 100%;
+      }
+      .modifyBtn {
+        display: block;
+        width: 120px;
+        height: 50px;
+        border: 1px solid orange;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+      }
+      .modifyBtn:hover {
+        background: orange;
+        color: #fff;
+        transition: .3s;
+        font-weight: bold;
+        opacity: .7;
+      }
+
+
+      .tag, .spacer, .content {
+        height: 50px;
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .content {
+        font-size: 30px;
+        font-weight: bold;
+        color: #cc932a;
+        letter-spacing: 5px;
+      }
+      
+
+
+      /* 네비게이션 */
+      #navigation {
+        position: absolute;
+        left: -200px;
+      }
+      #navigation a {
+        width: 150px;
+        display: flex;
+        border: 1px solid lightgray;
+        padding: 10px;
+        justify-content: space-between;
+      }
+      #navigation a:hover {
+        color: orange;
+      }
+      
+      /* 네비게이션 끝 */
+
+      table {
+        width: 1300px;
+        border-top: 2px solid gray;
+      }
+      th {
+        font-size: 20px;
+        padding: 10px;
+      }
+      td {
+        padding: 10px;
+      }
+      .contents__table {
+        width: 1200px;
+        position: relative;
+        margin-top: 50px;
+      }
+      .board__container {
+        width: 1200px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+      }
+      
+     
+
+
+
+      /* 상단 멤버 정보 끝*/
+
+
+      /* ========== 작업끝 ========== */
+    
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -125,15 +254,12 @@
       }
 
       /* 사이드바 */
-      main {
-        position: relative;
-        top: 0px;
-      }
+      /* 메인 포지션 렐러티브값 날렸습니다. 사이드바 포지션을 렐러티브로 수정했습니다. */
       .sidebar {
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: absolute;
+        position: relative;
         right: 10px;
         float: right;
         z-index: 3;
@@ -195,8 +321,23 @@
       }
       
     </style>
+    
+    <!-- csrf meta tag -->
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <script>
+    
+ 	// csrf
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+  	//Ajax spring security header..
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(header, token);
+	});
+    
+    
       /*페이지 상단 이동*/
       function clickme() {
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -211,12 +352,46 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 1000);
         });
+		
+        
+        
+        /* 개별 공지사항 삭제 비동기 */
+        $('.delete').on('click', function(event){
+        	event.preventDefault();
+        	
+        	
+        	//var id = $(this).find('.delete').parent();
+        	let trObj = $(this).parent().parent();
+        	console.log("주소 : " + $(this).attr("href"));
+        	$.ajax({
+        		type: "DELETE",
+        		url : $(this).attr("href"),
+        		beforeSend: function(xhr) {
+                    xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+                 },
+	        	success : function(data) {
+	        		if(data == "SUCCESS"){
+	        			alert("삭제완료");
+		        		$(trObj).remove();
+	        		}
+	        		
+        	},
+        	error : function(e) {
+        		console.log(e);
+        	}
+        	});
+        });
+
+        
+        
+        
+
+
       });
 
 
     </script>
   </head>
-  
 <body>
 
 <header>
@@ -322,6 +497,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/vegetable.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
@@ -329,6 +505,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/meat.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />육류</a
             >
@@ -336,6 +513,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/rise.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
@@ -351,6 +529,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/cheese.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />유제품</a
             >
@@ -358,6 +537,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/instant.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
@@ -468,82 +648,81 @@
         </div>
       </div>
       
+
+           <!-- ========== 공지사항 ========== -->
+           
+  
+          <div class="board__container">
+            
+            
+            <div class="contents__table">
+              <nav id="navigation">
+                <p style="font-size: 24px; font-weight: bold;">고객센터</p>
+                <ul>
+                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold text-warning">공지사항<span>></span></a></li>
+                  <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
+                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
+                </ul>
+              </nav>
+              
+              <table style="position: relative;">
+                <p style="font-size: 30px; font-weight: bold;">공지사항</p>
+                <tr class="border-bottom">
+                  <th class="text-center">제목</th>
+                  <th class="text-center">작성자</th>
+                  <th class="text-center">작성일자</th>
+                  <th class="text-center">조회</th>
+                  <th></th>
+                </tr>
+                <c:forEach var="notice" items="${BoardPaging}">
+	                <tr>
+	                  <td class="text-center"><a href="${pageContext.request.contextPath}/board/notice_content_view/${notice.id}">${notice.title}</a></td>
+	                  <td class="text-center">Rocket Market</td>
+	                  <td class="text-center">${notice.board_date}</td>
+	                  <td class="text-center complete">${notice.hit}</td>
+		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
+						<td></td>
+		              </sec:authorize>
+			          <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+	                    <td><a href="${pageContext.request.contextPath}/board/admin/delete_notice/${notice.id}" class="delete"><img src="${pageContext.request.contextPath}/imgs/close_img.png" width="30px" class="deleteBtn"></a></td>
+					  </sec:authorize> 	                  
+	                </tr>
+                </c:forEach>
+                <tr class="border-top">
+                  <td colspan="5" class="text-center">
+		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
+
+		              </sec:authorize>
+			          <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+					    <a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
+					  </sec:authorize>                   
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
+          </div>
+          
+	          <!-- 공지사항 끝 -->
+		<c:if test="${pageMaker.pre}">
+			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+		</c:if>
 	
-	      
-
-	  <!-- ======================== 메인페이지 상품표시 =========================== -->
-      <div class="container pt-5">
-
-        <h2 class="text-center pb-3" style="font-weight: bold">오늘의 할인</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="discount" items="${discountList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-          	<c:forEach var="image" items="${discount.productImages}">
-             <a href="${pageContext.request.contextPath}/product/productView/${discount.id}">
-             <img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${discount.brand}]${discount.name}</h6>
-              <p class="card-text">
-              <div class="price"><span class="rate text-danger">${discount.discount}% </span>
-              <fmt:formatNumber value="${discount.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>
-          </div> <!-- card-deck -->
-          	
-
-
-        <h2 class="text-center pb-3" style="font-weight: bold">새로 나왔어요!</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-          	<c:forEach var="image" items="${newList.productImages}">
-             <a href="${pageContext.request.contextPath}/product/productView/${newList.id}">
-             <img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
-              <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>	
-          </div> <!-- card-deck -->
-         
-
-          <h2 class="text-center pb-3" style="font-weight: bold">Best 인기 상품</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-             <c:forEach var="image" items="${newList.productImages}">
-             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
-              <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>	
-          </div> <!-- card-deck --> 
-         </div> <!-- container -->
-         
-                
+		<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+		<c:forEach var="idx" begin="${pageMaker.startPage }"
+			end="${pageMaker.endPage }">
+			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
+		</c:forEach>
+	
+		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+		</c:if>
+	    
     </main>
     
     
-    <!-- ======================== 하단 메뉴 (푸터 동일) =========================== -->
-	<hr class="m-0" />
+    <!-- ======================== 하단 메뉴 =========================== -->
+   <hr class="m-0" />
     <div class="container">
       <footer class="pt-0">
         <nav class="navbar navbar-expand-lg navbar-light">

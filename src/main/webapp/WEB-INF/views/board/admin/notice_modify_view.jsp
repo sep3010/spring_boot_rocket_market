@@ -2,11 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -14,6 +12,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <!-- Bootstrap CSS -->
+    
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -23,14 +22,84 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
 
-          
     <title>ROCKET MARKET :: 신속배송</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
-    
-<style>
 
+    
+    <style>
+      
+         /* ==========개별  공지사항 ========== */
+
+      /* 공통사항 */
+      a {
+        text-decoration: none !important;
+        color: black;
+      }
+      a:hover {
+        color: orange;
+      }
+      li {
+        list-style-type: none;
+      }
+
+      /* 공통사항 끝 */
+      .write__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 70px;
+        margin-bottom: 70px;
+      }
+      table {
+        width: 1000px;
+        border-top: 1px solid;
+        margin-top: 20px;
+      }
+      th {
+        width: 150px;
+        background:rgb(238, 237, 237)
+      }
+     
+      th, td {
+        padding: 10px;
+      }
+      td {
+        border-bottom: 1px solid rgb(238, 237, 237);
+        box-sizing: border-box;
+      }
+      .content {
+        width: 1000px;
+      }
+      .buttons {
+        display: flex;
+        width: 300px;
+        justify-content: space-around;
+      }
+      .modifyBtn {
+        margin-top: 30px;
+        display: flex;
+        justify-content :center;
+        align-items: center;
+        width: 120px;
+        height: 50px;
+        border: 2px solid lightgray;
+        font-weight: bold;
+        border-radius: 5px;
+        background: #fff;
+        
+      }
+      .modifyBtn:hover {
+        background: lightgray;
+        opacity: .8;
+        color: #fff;
+        transition: .2s;
+      }
+
+
+      /* ========== 개별 공지사항 끝 ========== */
+    
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -125,15 +194,12 @@
       }
 
       /* 사이드바 */
-      main {
-        position: relative;
-        top: 0px;
-      }
+      /* 메인 포지션 렐러티브값 날렸습니다. 사이드바 포지션을 렐러티브로 수정했습니다. */
       .sidebar {
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: absolute;
+        position: relative;
         right: 10px;
         float: right;
         z-index: 3;
@@ -193,6 +259,17 @@
       .card-body{
         font-weight: bold;
       }
+      input[type="text"] {
+      	width: 100%;
+      	border: none;
+      }
+      textarea {
+      	width: 100%;
+      	height: 500px;
+      	resize: none;
+      	border: none;
+      	padding: 10px;
+      }
       
     </style>
 
@@ -211,24 +288,28 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 1000);
         });
+
+        
+        
+        
+
+
       });
 
 
     </script>
   </head>
-  
 <body>
-
-<header>
-	<!-- ======================== 배너 =========================== -->
-	<div>
-    	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+    <header>
+      <div>
+        <nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
+            >배너 이벤트</a
+          >
         </nav>
-    </div>
+      </div>
 
-	<!-- ======================== 상단 메뉴 =========================== -->
-    <div class="container pb-2">
+      <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
           <button
             class="navbar-toggler"
@@ -237,19 +318,19 @@
             data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
-          
           <div
             class="collapse navbar-collapse d-flex justify-content-between"
-            id="navbarNavAltMarkup">
+            id="navbarNavAltMarkup"
+          >
             <div class="navbar-nav" id="topmenu_left">
-              <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
+              <a class="nav-link" href="#">공지사항</a>
+              <a class="nav-link" href="#">문의</a>
               <a class="nav-link" href="#">이벤트</a>
             </div>
-            
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
             <sec:authorize access="isAnonymous()">
@@ -266,7 +347,6 @@
 			</div>
 			  <a 
 			  class="nav-link" 
-			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -291,20 +371,19 @@
         </div><!-- collapse navbar-collapse -->
 
 
-		<!-- ======================== 로고 =========================== -->
-        <center>
-        	<div id="logo" style="width: 12rem">
-              <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
+          
+          <!-- ======================== 로고 =========================== -->
+          <center>
+            <div id="logo" style="width: 12rem">
+                <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
-        </center>
-	</nav>
-  </div><!-- container -->
-      
-</header>
+          </center>
+        </nav>
+      </div><!-- container -->
+    </header>
     
-<!-- ======================== 하단 메뉴 =========================== -->
-	
-	<div class="category shadow">
+ <!-- ======================== 하단 메뉴 =========================== -->   
+    <div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
@@ -322,6 +401,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/vegetable.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />채소/과일</a
             >
@@ -329,6 +409,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/meat.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />육류</a
             >
@@ -336,6 +417,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/rise.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />국/반찬</a
             >
@@ -351,6 +433,7 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/cheese.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />유제품</a
             >
@@ -358,22 +441,32 @@
               ><img
                 class="mr-2"
                 src="${pageContext.request.contextPath}/imgs/instant.png"
+                alt=""
                 style="width: 21px; height: 21px"
               />즉석식품</a
             >
           </div>
         </div>
         <div id="categorymenu">
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn">신상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn">베스트상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn">특가상품</a>
-          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn">정기배송상품</a>
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/newProduct" role="button" id="categorybtn"
+            >신상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/bestProduct" role="button" id="categorybtn"
+            >베스트상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/saleProduct" role="button" id="categorybtn"
+            >특가상품</a
+          >
+          <a class="btn btn-light" href="${pageContext.request.contextPath}/subscribeProduct" role="button" id="categorybtn"
+            >정기배송상품</a
+          >
         </div>
       </div>
     </div>
-    <!-- ======================== 여기까지 헤더 (동일)=========================== -->
 
-	<!-- ======================== 캐러셀 =========================== -->
+    <!-- ======================== 여기까지 헤더 (동일)=========================== -->
+    
+    	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -413,8 +506,7 @@
       </button>
     </div>
     
-    <!-- ======================== 사이드바 =========================== -->
-	<main>
+    <main>
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -437,8 +529,7 @@
 
           </div>
         </div>
-        
-        <!-- ======= 챗봇 ======= -->
+        <!-- ==================== 챗봇버튼 ======================== -->
         <div class="text-center mt-3 mb-3" id="chatbox">
           <div id="chat-container">
             <script src="${pageContext.request.contextPath}/js/chatbot-ui.js"></script>
@@ -455,7 +546,7 @@
               );
             </script>
           </div>
-        <!-- ======= 상단 페이지 이동버튼 ======= -->
+
           <div class="text-center mt-2" id="pagebox">
             <input
               id="pagebtn"
@@ -463,87 +554,63 @@
               alt=""
               value="Top ↑"
               onclick="clickme()"
-            />
+            /><!-- 상단 페이지 버튼 -->
           </div>
         </div>
       </div>
+      <!-- 사이드바 -->
       
-	
-	      
-
-	  <!-- ======================== 메인페이지 상품표시 =========================== -->
-      <div class="container pt-5">
-
-        <h2 class="text-center pb-3" style="font-weight: bold">오늘의 할인</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="discount" items="${discountList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-          	<c:forEach var="image" items="${discount.productImages}">
-             <a href="${pageContext.request.contextPath}/product/productView/${discount.id}">
-             <img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${discount.brand}]${discount.name}</h6>
-              <p class="card-text">
-              <div class="price"><span class="rate text-danger">${discount.discount}% </span>
-              <fmt:formatNumber value="${discount.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>
-          </div> <!-- card-deck -->
-          	
-
-
-        <h2 class="text-center pb-3" style="font-weight: bold">새로 나왔어요!</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-          	<c:forEach var="image" items="${newList.productImages}">
-             <a href="${pageContext.request.contextPath}/product/productView/${newList.id}">
-             <img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
-              <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>	
-          </div> <!-- card-deck -->
-         
-
-          <h2 class="text-center pb-3" style="font-weight: bold">Best 인기 상품</h2>
-
-        <div class="card-deck pb-5">
-          <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
-          <div class="card">
-             <c:forEach var="image" items="${newList.productImages}">
-             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
-            <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
-              <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
-              </div>
-              </p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-          </c:forEach>	
-          </div> <!-- card-deck --> 
-         </div> <!-- container -->
-         
-                
+      
+           <!-- ========== 개별 공지사항 페이지 ========== -->
+             <div class="write__container">
+               <p class="text-center" style="font-weight: bold; font-size: 30px;">공지사항<br><span style="font-size: 16px;" class="text-muted">Rocket Market의 새로운 소식들과 유용한 정보들을
+                 한곳에서 확인하세요.
+               </span></p>
+               <form:form action="${pageContext.request.contextPath}/board/admin/modify_notice" id="modify-form" method="post">
+               	<input type="hidden" name="id" value="${notice.id}">
+               	<table>
+                 <col>
+                   <tr>
+                     <th>제목</th>
+                     <td colspan="3">
+                     	<input type="text" name="title" value="${notice.title}" id="title">
+                     </td>
+                    </tr>
+                    <tr>
+                      <th>작성자</th>
+                      <td colspan="3">Rocket Market</td>
+                   </tr>
+                   <tr>
+                     <th>작성일</th>
+                     <td>${notice.board_date}</td>
+                     <th>조회수</th>
+                     <td>${notice.hit}</td>
+                   </tr>
+                   <tr>
+                     <td colspan="4" class="py-3">
+                       <textarea name="content">${notice.content}</textarea>
+                     </td>
+                   </tr>
+               </table>	
+               </form:form>
+               <div class="buttons">
+                 <div class="modify-content">
+                   <input type="submit" value="공지수정" form="modify-form" class="modifyBtn">
+                  </div>
+                  <div class="modify-content">
+                      <a href="${pageContext.request.contextPath}/board/noticeHome" class="modifyBtn">
+                        목록보기
+                      </a>
+                     </div>
+                  </div>
+               </div>
+ 
+          <!-- 개별 공지사항 끝 -->
+ 
     </main>
-    
-    
-    <!-- ======================== 하단 메뉴 (푸터 동일) =========================== -->
-	<hr class="m-0" />
+        
+    <!-- ======================== 하단 메뉴 =========================== -->
+   <hr class="m-0" />
     <div class="container">
       <footer class="pt-0">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -566,7 +633,7 @@
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>

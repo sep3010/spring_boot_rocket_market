@@ -263,7 +263,7 @@
 			  <!-- 회원 -->
 			    <sec:authorize access="hasRole('ROLE_USER')">
 			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="#">위시리스트</a>
+              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
               		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
 			</sec:authorize>             
@@ -285,10 +285,13 @@
 
 	<div class="pb-5 mr-5 ml-5">
       <img src="${pageContext.request.contextPath}/imgs/admin.png" style="width: 50px;">
-      <h1 style="font-weight: bold;"> <a href=""> 관리자 페이지 </a></h1> 
+      <h1 style="font-weight: bold;"> <a href="${pageContext.request.contextPath}/admin/adminHome"> 관리자 페이지 </a></h1> 
       <br>
       <div class="d-flex justify-content-start align-items-center">
-      <h2 style="font-weight: bold;"> 회원 리스트 </h2><h5><a href="">상품목록</a></h5><h5><a href="">쿠폰관리</a></h5><h5><a href="">주문내역관리</a></h5>
+      <h2 style="font-weight: bold;">회원 리스트 </h2>
+      <h5><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></h5>
+      <h5><a href="${pageContext.request.contextPath}/admin/couponManagement">쿠폰관리</a></h5>
+      <h5><a href="">주문내역관리</a></h5>
     </div>
 
 
