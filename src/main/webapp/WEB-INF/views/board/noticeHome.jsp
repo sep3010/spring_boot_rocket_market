@@ -683,7 +683,7 @@
 		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
 						<td></td>
 		              </sec:authorize>
-			          <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+			          <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
 	                    <td><a href="${pageContext.request.contextPath}/board/admin/delete_notice/${notice.id}" class="delete"><img src="${pageContext.request.contextPath}/imgs/close_img.png" width="30px" class="deleteBtn"></a></td>
 					  </sec:authorize> 	                  
 	                </tr>
@@ -693,7 +693,7 @@
 		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
 
 		              </sec:authorize>
-			          <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+			          <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
 					    <a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
 					  </sec:authorize>                   
                   </td>
