@@ -23,10 +23,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class JoinInquiryBoardVO {
+public class JoinQuestionBoardVO {
 
 	// Board
-	private int id;
+	private int board_id;
 	private int member_id;
 	private int board_category_id;
 	private String title;
@@ -34,16 +34,15 @@ public class JoinInquiryBoardVO {
 	private Date board_date;
 	private String sort;
 	private int hit;
-	private int score;
 	private String scope;
 	
 	// Member
 	private String nickname;
-	private int member_table_id; // 컬럼 중복으로 이름 수정 (기존: member_id)
-	
+		
 	// Reply
-	private int board_id; 
-	private int count;
+	private int reply_id;
+	private String reply_content;
+	private Date reply_date;
 	
 
 }

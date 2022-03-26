@@ -627,52 +627,67 @@
         <table>
           <col>
             <tr>
-              <th>제목</th>
-                <td colspan="3">${inquiry.title}</td>
+	            <th>제목</th>
+	            <td colspan="3">${inquiry.title}</td>
             </tr>
             <tr>
               <th>작성자</th>
-                <td colspan="3">${writer_name}</td>
+              <td colspan="3">${inquiry.nickname}</td>
             </tr>
             <tr>
-              <th>문의분류</th>
-                <td>${inquiry.sort}</td>
-                <th>공개여부</th>
-                  <td>${inquiry.scope}</td>
+	         	<th>문의분류</th>
+	            <td>${inquiry.sort}</td>
+	            <th>공개여부</th>
+	            <td>${inquiry.scope}</td>
             </tr>
             <tr>
-              <th>작성일</th>
-                <td>${inquiry.board_date}</td>
-                <th>조회수</th>
-                  <td>${inquiry.hit}</td>
+	            <th>작성일</th>
+	            <td>${inquiry.board_date}</td>
+	            <th>조회수</th>
+	            <td>${inquiry.hit}</td>
             </tr>
             <tr>
-              <td colspan="4" class="py-3">
-                <div class="content">${inquiry.content}</div>
-                     </td>
+	            <td colspan="4" class="py-3">
+	            	<div class="content">${inquiry.content}</div>
+	            </td>
             </tr>
         </table>
         
-        <sec:authorize access="isAuthenticated()">
-		  <sec:authorize access="hasRole('ROLE_ADMIN')">					
-	        <form action="" method="post" id="reply-from">
-	          <div id="reply">
-	            <p class="font-weight-bold" style=" font-size: 18px;">답변일자 2022-04-15</p>
-	            <textarea name="content" autofocus readonly></textarea>         
-	          </div>
-	          <div class="buttons">
-	            <div class="modify-content">
-	              <input type="submit" value="답변하기" class="reply-listBtn" id="replyBtn" form="reply-from"/>
-	            </div>
-	            <div class="modify-content">
-	              <a href="${pageContext.request.contextPath}/board/notice/noticeHome" class="reply-listBtn">목록보기</a>
-	            </div>
-	          </div>
-	        </form>
-          </sec:authorize>				
-		</sec:authorize>            
-      </div>
-  
+        <!-- 답글 부분 -->
+        <div id="reply">
+	        <c:choose>
+	        	<%-- 답글이 있을 경우 --%>
+	        	<c:when test="${inquiry.reply_id > 0}">
+	        		<div id="reply">
+			            <p class="font-weight-bold" style=" font-size: 18px;">답변</p>
+			            <textarea name="content" readonly>${inquiry.reply_content}</textarea>         
+			        </div>
+	        		<div class="modify-content">
+		              <a href="${pageContext.request.contextPath}/board/inquiryHome" class="reply-listBtn">목록보기</a>
+		            </div>
+	        	</c:when>
+	        	<c:otherwise>
+        			<sec:authorize access="hasRole('ROLE_ADMIN')">					
+				        <form:form action="${pageContext.request.contextPath}/board/user/writeReply" method="post" id="reply-from">
+				          <input type="hidden" name="board_id" value="${inquiry.board_id}">
+				          <div id="reply">
+				            <p class="font-weight-bold" style=" font-size: 18px;">답변</p>
+				            <textarea name="content" autofocus></textarea>         
+				          </div>
+				          <div class="buttons">
+				            <div class="modify-content">
+				              <input type="submit" value="답변하기" class="reply-listBtn" id="replyBtn" form="reply-from"/>
+				            </div>
+				            <div class="modify-content">
+				              <a href="${pageContext.request.contextPath}/board/inquiryHome" class="reply-listBtn">목록보기</a>
+				            </div>
+				          </div>
+				        </form:form>
+			        </sec:authorize>
+	        	</c:otherwise>
+	        </c:choose>
+        </div>
+        
           <!-- 개별 문의사항 조회 끝 -->
 
     </main>

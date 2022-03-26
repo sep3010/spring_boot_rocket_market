@@ -47,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 import edu.kosmo.krm.vo.BoardVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberVO;
+import edu.kosmo.krm.vo.ReplyVO;
 
 
 @Slf4j
@@ -81,6 +82,7 @@ public class BoardController {
 	@GetMapping(path = "/board/notice_content_view/{id}")
 	public ModelAndView notice_content_view(@PathVariable int id, ModelAndView view) {
 		log.info("notice_content_view(in controller");
+		log.info("========board_id : " + id);
 		
 		view.addObject("notice", boardService.getNotice(id));
 		view.setViewName("/board/notice_content_view");
@@ -174,10 +176,12 @@ public class BoardController {
 	@GetMapping(path = "/board/user/inquiry_content_view/{id}")
 	public ModelAndView inquiry_content_view(@PathVariable int id, MemberVO memberVO, ModelAndView view) {
 		log.info("inquiry_content_view(in controller");
+		log.info("========board_id : " + id);
+		log.info("=========inquiry : " + boardService.getInquiry(id));
 		
-		int writerID = boardService.getBoardWriter(id); //게시글의 작성자 회원번호
-		memberVO = memberInfoService.get(writerID); //작성자 회원번호로 회원정보조회
-		view.addObject("writer_name", memberVO.getNickname());
+		//int writerID = boardService.getBoardWriter(id); //게시글의 작성자 회원번호
+		//memberVO = memberInfoService.get(writerID); //작성자 회원번호로 회원정보조회
+		//view.addObject("writer_name", memberVO.getNickname());
 		view.addObject("inquiry", boardService.getInquiry(id));
 		view.setViewName("/board/user/inquiry_content_view");
 		
@@ -225,5 +229,18 @@ public class BoardController {
 		return entity;
 		
 	}
+	
+	@PostMapping("/board/user/writeReply")
+	public ModelAndView writeReply(ModelAndView view, ReplyVO replyVO) {
+		log.info("writeReply()..");
+		log.info("=========replyVO : " + replyVO);
+		
+		boardService.insertReply(replyVO);
+		String url = "redirect:/board/user/inquiry_content_view/" + replyVO.getBoard_id();
+		
+		view.setViewName(url);
+		return view;
+	}
+	
 	
 }
