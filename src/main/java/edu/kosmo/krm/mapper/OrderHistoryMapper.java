@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
+import edu.kosmo.krm.vo.DeliveryVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
@@ -29,4 +30,7 @@ public interface OrderHistoryMapper {
 	// 주문 상세번호에 해당하는 상품 이름과 썸네일 이미지 조회
 	ProductVO getProductAndImage(OrderDetailBoardVO detailBoardVO);
 	
+	// 주문 번호로 배송 정보 가져오기
+	@Select("SELECT * FROM DELIVERY WHERE DELIVERY.ORDER_ID = #{order_id} ")
+	List<DeliveryVO> getDeliveryInfo(long order_id);
 }

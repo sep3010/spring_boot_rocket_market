@@ -40,6 +40,7 @@ import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
+import edu.kosmo.krm.vo.DeliveryVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
@@ -279,8 +280,10 @@ public class OrderController {
 		log.info("orderDetail()..");
 		log.info("memberOrderVO() : " + memberOrderVO);
 		List<MemberOrderVO> orderDetail = orderHistoryService.getMemberOrderDetail(memberOrderVO.getOrder_id(), memberCustomDetails.getMemberVO().getId());
-		log.info("================orderDetail : " + orderDetail);
+		List<DeliveryVO> deliveryInfo = orderHistoryService.getDeliveryInfo(memberOrderVO.getOrder_id()); 
+		
 		view.addObject("orderDetail", orderDetail);
+		view.addObject("deliveryInfo", deliveryInfo);
 		
 		List<OrderDetailVO> orderDetailVOs = new ArrayList<OrderDetailVO>();
 		

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,7 @@
 </head>
 <body>
 	<h2>주문 상세</h2>
+	
 		<table width="870" cellpadding="0" cellspacing="0" border="1">
 			<c:forEach var="order" items="${orderDetail}" varStatus="vs">
 				<c:if test="${vs.first}">
@@ -52,24 +54,24 @@
 						<td>배송상태</td>
 						<td>${order.status}</td>
 					</tr>
-					<c:forEach var="delivery" items="${order.delivery}">						
+					<c:forEach var="deliveryInfo" items="${deliveryInfo}">						
 						<tr>
 							<td>받는 사람</td>
-							<td colspan="2">${delivery.receiver}</td>
+							<td colspan="2">${deliveryInfo.receiver}</td>
 							<td>연락처</td>
-							<td colspan="2">${delivery.phone}</td>
+							<td colspan="2">${deliveryInfo.phone}</td>
 						</tr>
 						<tr>
 							<td>우편번호</td>
-							<td>${delivery.postcode}</td>
+							<td>${deliveryInfo.postcode}</td>
 							<td>주소</td>
-							<td colspan="3">${delivery.address}</td>
+							<td colspan="3">${deliveryInfo.address}</td>
 						</tr>
 						<tr>
 							<td>배송 메세지</td>
-							<td colspan="2">${delivery.message}</td>
+							<td colspan="2">${deliveryInfo.message}</td>
 							<td>운송장번호</td>
-							<td colspan="2">${delivery.delivery_number}</td>
+							<td colspan="2">${deliveryInfo.delivery_number}</td>
 						</tr>						
 					</c:forEach><%-- <c:forEach var="delivery"> --%>
 					<tr>
@@ -129,7 +131,7 @@
 				<c:if test="${vs.last}">
 					<tr>
 						<td>총 가격</td>
-						<td>${order.amount}</td>
+						<td><fmt:formatNumber value="${order.amount}" pattern="#,###"/></td>
 					</tr>
 				</c:if><%-- <c:if test="${vs.last}"> --%>
 			</c:forEach><%-- <c:forEach var="order"> --%>
