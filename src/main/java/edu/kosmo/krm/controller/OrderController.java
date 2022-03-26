@@ -158,7 +158,7 @@ public class OrderController {
 	
 	//장바구니 페이지에서 선택한 상품들가지고 주문페이지로 이동
 	@PostMapping("/order/orderPayment")
-	public ModelAndView orderPayment(ModelAndView view, Principal principal) {
+	public ModelAndView orderPayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view, Principal principal) {
 
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
@@ -168,6 +168,11 @@ public class OrderController {
 		log.info("@@@@@@@@@@@" + cartCount);
 		view.setViewName("/order/orderPayment");
 		view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));
+		
+		// 쿠폰 가져오는 코드
+		List<JoinCoupon> coupon = orderService.getUserCouponList(memberCustomDetails.getMemberVO());
+		view.addObject("couponList", coupon);
+
 
 		view.setViewName("/order/orderPayment");
 		return view;
