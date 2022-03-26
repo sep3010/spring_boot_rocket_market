@@ -372,26 +372,22 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               event.preventDefault();     
               
               let deliveryFee = $('#delivery-fee').text(); // 배송비 
-              //let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
-	             let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
-	             let userPoint = "<sec:authentication property="principal.memberVO.point"/>"; // 사용자 보유 포인트
-	             let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
-	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
-	             let productTotal = $('#productDiscountAcount').val();
+              let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
+	          let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
+	          let userPoint = "<sec:authentication property="principal.memberVO.point"/>"; // 사용자 보유 포인트
+	          let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
+	          let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
+	          let productTotal = $('#productDiscountAcount').val();
 	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
 			
-	           pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
-               productPointTotalprice = Number(discount_price) - Number(input_point);
+	          alert(productTotal)
+	          pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
+              productPointTotalprice = Number(discount_price) - Number(input_point);
 
+               $("#discount_Amount").text(productPointTotalprice);
+               $("#discount_price").text(pointProductPrice);
+               alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
 
-               
-               if(input_point > userPoint){
-             	  alert("보유 포인트 이상으로 사용할 수 없습니다.")
-               } else {
-                   $("#discount_Amount").text(productPointTotalprice);
-                   $("#discount_price").text(pointProductPrice);
-                   alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
-               }
                
            });
         }); //end click()
@@ -891,7 +887,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                             xhr.setRequestHeader(header, token);
                          }
                       }).done(function(successPayment){
-                         alert("결제에 성공하셨습니다.");
+                         alert("결제가 완료되었습니다.");
                          location.href="/order/orderPaymentView"
                          
                          //orderSucess(payment_data);

@@ -368,13 +368,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                   productPointTotalprice = Number(discount_price) - Number(input_point);
                   
                   
-                  if(input_point > userPoint){
-                	  alert("보유 포인트 이상으로 사용할 수 없습니다.")
-                  } else {
-          			  $("#productDiscountPrice").text(pointProductPrice);
-                      $("#productDiscountAcount").text(productPointTotalprice);
-                      alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
-                  }
+      			  $("#productDiscountPrice").text(pointProductPrice);
+                  $("#productDiscountAcount").text(productPointTotalprice);
+                  alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
                   
                   
               	  
