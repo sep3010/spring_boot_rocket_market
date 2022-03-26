@@ -134,6 +134,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -149,7 +150,7 @@
         height: 80%;
         position: relative;
       }
-
+      
       /*장바구니 삭제 버튼*/
       #closebtn {
         position: absolute;
@@ -171,7 +172,7 @@
         width: 100px;
         height: 50px;
         background-color: #eeddbe;
-        border: 1px solid rgb(255, 255, 255);
+        border: 1px solid rgb(0 0 0 / 0%);
         border-radius: 10px;
         top: 20px;
       }
@@ -209,7 +210,7 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
       });
 
@@ -372,7 +373,7 @@
       </div>
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-
+<main>
 	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -414,7 +415,7 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -429,7 +430,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>

@@ -306,7 +306,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         width: 100px;
         height: 50px;
         background-color: #eeddbe;
-        border: 1px solid rgb(255, 255, 255);
+        border: 1px solid rgb(0 0 0 / 0%);
         border-radius: 10px;
         top: 20px;
       }
@@ -618,7 +618,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
      
                 <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount }건</p>
                 <div class="col-12 d-flex order-group pb-3">
-					<table width="950" cellpadding="0" cellspacing="0" border="1">
+					<table class="table text-center" width="950" cellpadding="0" cellspacing="0" border="1" >
 					<tr>
 						<td>상품번호</td>		
 						<td>상품명</td>
@@ -630,7 +630,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 					<c:forEach var="cart" items="${cartProductList}" >	
 						<tr>
 							<td>${cart.product_id}</td>
-							<td><img src="${cart.path}">[${cart.brand}]${cart.name}</td>
+							<td class="text-left pl-2"><img src="${cart.path}">[${cart.brand}]${cart.name}</td>
 							<td>${cart.quantity}</td>
 							<td><fmt:formatNumber value="${cart.price}" pattern="#,###"/>원</td>		
 							<c:set var="productTotalPrice" value="${cart.price *  cart.quantity}"/>
@@ -669,11 +669,11 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 									</c:otherwise>
 							</c:choose>
                         </select><br>
-                        <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
+                        <label><input type="checkbox" id="myPoint" class="myDiscount">&nbsp;적립금</label>
 
                         <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
 						
-                        <div class="btn" id="applyPoint">적용</div>
+                        <div class="btn" id="applyPoint" style="height: 28px">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
                       
@@ -704,22 +704,22 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                 <div class=" money pt-5 pb-4">
                   <div class="d-flex">
                     <div class="mr-3">상품금액</div>  
-                    <div class="price product-price" id="productTotalAcount">${productTotalAcount }</div>  
+                    <div class="price product-price" id="productTotalAcount"><fmt:formatNumber value="${productTotalAcount}" pattern="#,###"/> 원</div>  
                   </div>
                   <div class="ml-1 mr-1">-</div>
                   <div class="d-flex">
                     <div class="mr-3">상품 할인금액</div>  
-                    <div class="price discount-fee" id="productDiscountPrice">${productDiscountPrice }</div>
+                    <div class="price discount-fee" id="productDiscountPrice"><fmt:formatNumber value="${productDiscountPrice}" pattern="#,###"/> 원</div>
                   </div>
                   <div class="ml-3 mr-3">+</div>
                   <div class="d-flex">
                     <div class="mr-3">배송비</div>  
-                    <div class="price delivery-fee" id="delivery-fee">3000</div>
+                    <div class="price delivery-fee" id="delivery-fee">3,000 원</div>
                   </div>
                   <div class="ml-3 mr-3">=</div>
                   <div class="d-flex">
-                    <div class="mr-3">주문금액</div>   
-                    <div class="price total-price" id="productDiscountAcount">${productDiscountAcount + 3000}</div>  
+                    <div class="mr-3">주문금액</div>  
+                    <div class="price total-price" id="productDiscountAcount"> <fmt:formatNumber value="${productDiscountAcount + 3000}" pattern="#,###"/> 원</div>  
                   </div>
 				</div> <!--container information-delivery-->
 

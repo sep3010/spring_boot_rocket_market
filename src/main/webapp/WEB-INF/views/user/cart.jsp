@@ -385,7 +385,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 		      <c:forEach var="cart" items="${cartProductList}" >
 		        <tr>
 		          <td><input type="checkbox" name="selectProduct" class="checkProduct" value="${cart.cart_id}"></td>
-		          <td><img src="${cart.path}" style="width: 100px; height: 100px;">
+		          <td class="text-left"><img src="${cart.path}" style="width: 100px; height: 100px;">
 		          <span id="menu_title">[${cart.brand}]${cart.name}</span></td>
 		          <td>${cart.quantity}</td>
 		          <c:set var="productTotalPrice" value="${(cart.price * (1- (cart.discount/100))) * cart.quantity}"/>
@@ -402,7 +402,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 		     </c:forEach>
 		    
 		     <tr>
-		       <td><button type="submit" class="btn" id="orderSubmitBtn">주문하기</button></td>
+		       <td><button type="submit" class="btn btn-outline-danger"" id="orderSubmitBtn">주문하기</button></td>
 		     </tr>
 		    </form:form>
     </table>
