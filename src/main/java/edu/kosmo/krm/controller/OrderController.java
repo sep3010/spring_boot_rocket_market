@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.JoinOrderPaymentVO;
 import edu.kosmo.krm.joinVO.JoinWishProductListVO;
 import edu.kosmo.krm.vo.CartVO;
+import edu.kosmo.krm.vo.DeliveryVO;
 import edu.kosmo.krm.vo.MemberCustomDetails;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
@@ -156,7 +158,7 @@ public class OrderController {
 	
 	//장바구니 페이지에서 선택한 상품들가지고 주문페이지로 이동
 	@PostMapping("/order/orderPayment")
-	public ModelAndView orderPayment(ModelAndView view, Principal principal) {
+	public ModelAndView orderPayment(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view, Principal principal) {
 
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
@@ -166,6 +168,11 @@ public class OrderController {
 		log.info("@@@@@@@@@@@" + cartCount);
 		view.setViewName("/order/orderPayment");
 		view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));
+		
+		// 쿠폰 가져오는 코드
+		List<JoinCoupon> coupon = orderService.getUserCouponList(memberCustomDetails.getMemberVO());
+		view.addObject("couponList", coupon);
+
 
 		view.setViewName("/order/orderPayment");
 		return view;
@@ -278,8 +285,10 @@ public class OrderController {
 		log.info("orderDetail()..");
 		log.info("memberOrderVO() : " + memberOrderVO);
 		List<MemberOrderVO> orderDetail = orderHistoryService.getMemberOrderDetail(memberOrderVO.getOrder_id(), memberCustomDetails.getMemberVO().getId());
-		log.info("================orderDetail : " + orderDetail);
+		List<DeliveryVO> deliveryInfo = orderHistoryService.getDeliveryInfo(memberOrderVO.getOrder_id()); 
+		
 		view.addObject("orderDetail", orderDetail);
+		view.addObject("deliveryInfo", deliveryInfo);
 		
 		List<OrderDetailVO> orderDetailVOs = new ArrayList<OrderDetailVO>();
 		
@@ -310,7 +319,36 @@ public class OrderController {
 		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-		orderService.insertOrderDetailInfo(paymentInfoVO);
+				
+		String memberid = paymentInfoVO.getMember_id();
+		int member_id = Integer.valueOf(memberid); 
+		List<CartVO> cartProductCount = orderService.getCartInfo(member_id);
+		log.info("카트에 담긴 상품 종류" + cartProductCount);
+		
+		// member_id로 카트 가져오는 코드
+	    for (CartVO cart : cartProductCount) {
+			String orderid = paymentInfoVO.getMerchantid();
+			Long order_id = Long.valueOf(orderid); 
+			OrderDetailVO orderDetailVO = new OrderDetailVO();
+		
+			log.info("cart" + cart.getProduct_id());
+
+	    	CartVO cartVO = new CartVO();
+
+	    	int product_id = cart.getProduct_id();
+	    	int quantity = cart.getQuantity();
+		    
+	    	cartVO.setId(product_id);
+	    	cartVO.setQuantity(quantity);
+	    	
+	    	orderDetailVO.setProduct_id(product_id);
+	    	orderDetailVO.setQuantity(quantity);
+			orderDetailVO.setOrder_id(order_id);
+			
+			orderService.insertOrderDetailInfo(orderDetailVO);
+			orderService.deleteCart(member_id);
+	    }
+		
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);

@@ -365,7 +365,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         
         
         
-        // 쿠폰 적용 자바스크립트
+   	  // 쿠폰 및 적립금 적용 자바스크립트
         $(document).ready(function(){
 
            $("#applyPoint").click(function(event){
@@ -374,7 +374,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               let deliveryFee = $('#delivery-fee').text(); // 배송비 
               //let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
 	             let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
-	            
+	             let userPoint = "<sec:authentication property="principal.memberVO.point"/>"; // 사용자 보유 포인트
 	             let discount_price = $('#discount_Amount').text(); // 할인 후 총 금액
 	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
 	             let productTotal = $('#productDiscountAcount').val();
@@ -383,10 +383,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	           pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
                productPointTotalprice = Number(discount_price) - Number(input_point);
 
-               $("#discount_Amount").text(productPointTotalprice);
-               $("#discount_price").text(pointProductPrice);
+
                
-           	  alert(input_point + "원의 적립금을 사용합니다.");
+               if(input_point > userPoint){
+             	  alert("보유 포인트 이상으로 사용할 수 없습니다.")
+               } else {
+                   $("#discount_Amount").text(productPointTotalprice);
+                   $("#discount_price").text(pointProductPrice);
+                   alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
+               }
                
            });
         }); //end click()
@@ -630,19 +635,17 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
      
                 <p style="font-weight: bold; font-size:20px">주문상품 1건</p>
                 <div class="col-12 d-flex order-group pb-3">
-					<table width="950" cellpadding="0" cellspacing="0" border="1">
-					<tr>
-						<td>상품번호</td>		
-						<td>상품명</td>
-						<td>수량</td>
-						<td>가격</td>
-						<td>총금액</td>	
-						<td>총 할인가</td>	
-					</tr>
+					<table width="950" cellpadding="0" cellspacing="0" class="product_table" style="border: none;">
+
 					<c:forEach items="${productList}" var="orderPaymentOne">
 						<tr>
 							<td>${orderPaymentOne.product_id}</td>
-							<td>[${orderPaymentOne.brand}]${orderPaymentOne.product_name}</td>
+							<td>
+								<c:forEach items="${orderPaymentOne.productImages}" var="productImage">
+									<c:set var="image_path" value="${productImage.path}"/>
+								</c:forEach>
+							
+							<img src="${image_path}">[${orderPaymentOne.brand}]${orderPaymentOne.product_name}</td>
 							<td>1</td>
 							<td><fmt:formatNumber value="${orderPaymentOne.price}" pattern="#,###"/>원</td>		
 							<c:set var="productTotalPrice" value="${orderPaymentOne.price *  1}"/>
@@ -658,7 +661,6 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 					</table>
                   </div>
                   <hr>
-                
               <div class="row information-payment">
                 <div class="col-md-6 col-sm-12">
                   <p style="font-weight: bold; font-size:20px">쿠폰 | 적립금</p>
@@ -697,8 +699,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                   <div class="col-md-6 col-sm-12 border-left">
                     <p style="font-weight: bold; font-size: 20px;">결제</p>
                     <div class="payment-type">
-                      <label><input type="radio" name="pay">&nbsp;카드결제</label>
-                      <label><input type="radio" name="pay" class="ml-5">&nbsp;무통장입금</label>
+                      <label><input type="radio" name="pay" checked="checked">&nbsp;카드결제</label>
                     </div>
                   </div>
                 </div>

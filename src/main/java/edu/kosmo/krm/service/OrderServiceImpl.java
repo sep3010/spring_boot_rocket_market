@@ -44,6 +44,13 @@ public class OrderServiceImpl implements OrderService {
 		return ordermapper.getOrderHistoryTotalCount(memberVO);
 	}
 	
+	// 장바구니 가져오는 코드
+	@Override
+	public List<CartVO> getCartInfo(int member_id) {
+		log.info("getCartInfo()...");
+		return ordermapper.getCartInfo(member_id);
+	}
+	
 	/*유빈*/
 	// 회원 장바구니 유무 확인
 	@Override
@@ -147,9 +154,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void insertOrderDetailInfo(PaymentInfoVO paymentInfoVO) {
+	public void insertOrderDetailInfo(OrderDetailVO orderDetailVO) {
 		log.info("insertOrderDetailInfo");
-		ordermapper.insertOrderDetailInfo(paymentInfoVO);
+		ordermapper.insertOrderDetailInfo(orderDetailVO);
 		
 	}
 
@@ -160,6 +167,15 @@ public class OrderServiceImpl implements OrderService {
 		ordermapper.insertDeliveryInfo(paymentInfoVO);
 		
 	}
+
+	@Override
+	public void deleteCart(int member_id) {
+		log.info("deleteCart()...");
+		ordermapper.deleteCart(member_id);
+		
+	}
+
+
 
 
 

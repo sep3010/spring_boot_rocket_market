@@ -11,6 +11,7 @@ import edu.kosmo.krm.mapper.OrderMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.joinVO.JoinOrderHistoryVO;
 import edu.kosmo.krm.joinVO.OrderHistoryListVO;
+import edu.kosmo.krm.vo.DeliveryVO;
 import edu.kosmo.krm.vo.MemberOrderVO;
 import edu.kosmo.krm.vo.MemberVO;
 import edu.kosmo.krm.vo.OrderDetailBoardVO;
@@ -40,6 +41,12 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 	public ProductVO getProductAndImage(OrderDetailBoardVO detailBoardVO) {
 		log.info("getProductAndImage()..");
 		return orderHistoryMapper.getProductAndImage(detailBoardVO);
+	}
+
+	@Override
+	public List<DeliveryVO> getDeliveryInfo(Long order_id) {
+		log.info("getDeliveryInfo");
+		return orderHistoryMapper.getDeliveryInfo(order_id);
 	}
 
 

@@ -349,29 +349,35 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         
         
         
-        // 쿠폰 적용 자바스크립트
+        // 쿠폰 및 적립금 적용 자바스크립트
         $(document).ready(function(){
 
            $("#applyPoint").click(function(event){
               event.preventDefault();     
               
                  let deliveryFee = $('#delivery-fee').text(); // 배송비 
-                 //let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
-	             let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
-	            
+                 let coupon_point= $("select[name='coupon']").val(); // 쿠폰 할인 퍼센트
+                 let input_point = $("#inputPoint").val(); // 적립금 사용 포인트
+                 let userPoint = "<sec:authentication property="principal.memberVO.point"/>"; // 사용자 보유 포인트
 	             let discount_price = $('#productDiscountAcount').text(); // 할인 후 총 금액
 	             let productDiscountPrice = $('#productDiscountPriceHidden').val(); // 상품 할인 금액
 	             let productTotal = $('#productDiscountAcount').val();
 	            // let productDiscountPrice = $("#productDiscountPrice").val(); // 상품 할인 금액
 
-                  pointProductPrice = Number(productDiscountPrice) + Number(input_point); // 상품 할인가 + 사용 적립금
+                  pointProductPrice = Number(productDiscountPrice) + Number(input_point) + Number(); // 상품 할인가 + 사용 적립금 + 쿠폰 할인가
                   productPointTotalprice = Number(discount_price) - Number(input_point);
                   
-      			
-      			  $("#productDiscountPrice").text(pointProductPrice);
-                  $("#productDiscountAcount").text(productPointTotalprice);
                   
-              	  alert(input_point + "원의 적립금을 사용합니다.");
+                  if(input_point > userPoint){
+                	  alert("보유 포인트 이상으로 사용할 수 없습니다.")
+                  } else {
+          			  $("#productDiscountPrice").text(pointProductPrice);
+                      $("#productDiscountAcount").text(productPointTotalprice);
+                      alert("총 " + pointProductPrice + "원의 할인이 적용됩니다.");
+                  }
+                  
+                  
+              	  
                
            });
         }); //end click()
@@ -616,17 +622,10 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                  
               </div>
      
-                <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount }건</p>
+                <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount-1 }건</p>
                 <div class="col-12 d-flex order-group pb-3">
-					<table width="950" cellpadding="0" cellspacing="0" border="1">
-					<tr>
-						<td>상품번호</td>		
-						<td>상품명</td>
-						<td>수량</td>
-						<td>가격</td>
-						<td>총금액</td>	
-						<td>총 할인가</td>	
-					</tr>
+					<table width="950" cellpadding="0" cellspacing="0" class="product_table" style="border: none;">
+
 					<c:forEach var="cart" items="${cartProductList}" >	
 						<tr>
 							<td>${cart.product_id}</td>
@@ -671,7 +670,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                         </select><br>
                         <label><input type="checkbox" id="myPoint" class="myDiscount">적립금</label>
 
-                        <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0>
+                        <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0 min="0">
 						
                         <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
@@ -683,8 +682,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                   <div class="col-md-6 col-sm-12 border-left">
                     <p style="font-weight: bold; font-size: 20px;">결제</p>
                     <div class="payment-type">
-                      <label><input type="radio" name="pay">&nbsp;카드결제</label>
-                      <label><input type="radio" name="pay" class="ml-5">&nbsp;무통장입금</label>
+                      <label><input type="radio" name="pay" checked="checked">&nbsp;카드결제</label>
                     </div>
                   </div>
                 </div>
