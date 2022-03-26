@@ -21,7 +21,8 @@
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
-
+	<!-- font awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>ROCKET MARKET :: 신속배송</title>
  
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
@@ -680,7 +681,25 @@
                 <c:forEach var="inquiry" items="${BoardPaging}">
 	                <tr>
 	                  <td class="text-center">[${inquiry.sort}]</td>
-	                  <td class="text-center"><a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a></td>
+	                  <td class="text-center">
+	                  	<c:choose>
+	                  		<c:when test="${inquiry.scope == '비공개'}">
+	                  			<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
+									<i class="fa fa-lock"></i>${inquiry.title}
+								</sec:authorize>
+								<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>
+									<sec:authentication property="principal.memberVO.name"/>
+									<c:if test="${principal.memberVO.name eq inquiry.nickname}">
+										<a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
+									</c:if>
+								
+	                  			</sec:authorize>
+	                  		</c:when>
+	                  		<c:otherwise>
+	                  			<a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
+	                  		</c:otherwise>         	
+	                  	</c:choose>
+	                  </td>
 	                  <td class="text-center">${inquiry.nickname}</td>
 	                  <td class="text-center">${inquiry.board_date}</td>
 	                  <td class="text-center complete">${inquiry.hit}</td>
