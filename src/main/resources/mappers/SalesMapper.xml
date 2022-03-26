@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="edu.kosmo.krm.mapper.SalesMapper">
+
+	<resultMap id="salesMap" type="edu.kosmo.krm.vo.ProductSalesVO">	
+		<result property="product_id" column="product_id" />
+		<result property="quantity" column="quantity" />
+		<result property="sales_date" column="sales_date" />
+	</resultMap>
+	
+	
+	<select id="" resultMap="salesMap">
+		<![CDATA[
+			
+		]]>
+	</select>	
+	
+
+</mapper> 
