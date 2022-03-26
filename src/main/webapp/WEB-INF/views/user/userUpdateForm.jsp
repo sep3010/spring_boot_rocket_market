@@ -38,9 +38,30 @@ $(document).ajaxSend(function(e, xhr, options){
 });
 
  	$(document).ready(function(){
+ 		
+
+		let username = $("#username").val();
+		let nickname = $("#nickname").val();
+		let name = $("#name").val();
+		let phone = $("#phone").val();
+		let postcode = $("#postcode").val();
+		let address = $("#address").val();
+		let birth = $("#birth").val();
+		let email = $("#email").val();	
+
+
+
+ 		if (name == 'null' || phone == 'null' || postcode == 'null' || address == 'null' ||  email == 'null') {
+			$("#name").val("");
+			$("#phone").val("");
+			$("#postcode").val("");
+			$("#address").val("");
+			$("#email").val("");
+		} 
+ 		
 		$("#updateSubmit").click(function(event){
 			event.preventDefault();
-			
+
 			const id = <sec:authentication property="principal.memberVO.id"/>;
 			let username = $("#username").val();
 			let nickname = $("#nickname").val();
@@ -49,8 +70,7 @@ $(document).ajaxSend(function(e, xhr, options){
 			let postcode = $("#postcode").val();
 			let address = $("#address").val();
 			let birth = $("#birth").val();
-			let email = $("#email").val();
-					
+			let email = $("#email").val();	
 			
 			let param = {
 					id: id,
@@ -66,7 +86,7 @@ $(document).ajaxSend(function(e, xhr, options){
 			
 			// 유효성 검사
 			if(form.name.value.trim()=="" || form.nickname.value.trim()=="" || form.phone.value.trim()=="" || form.postcode.value.trim()=="" || form.address.value.trim()=="" || form.birth.value.trim()=="" || form.email.value.trim()==""){
-				alert("입력값에 공백이 있으면 안 됩니다. 필수 입력칸을 입력해 주세요.");
+				alert("입력값에 공백이 있으면 안 됩니다. 모든 정보를 입력해 주세요.");
 				return false;
 			}
 
@@ -89,6 +109,9 @@ $(document).ajaxSend(function(e, xhr, options){
 			}); //end ajax
 		}); //end click()
 	}); // end ready()
+	
+	
+
 	
 </script>	
 
@@ -150,18 +173,12 @@ $(document).ajaxSend(function(e, xhr, options){
 					<td><label for="email">이메일</label></td>
 					<td> <input type="text" id="email" name="email" value=<sec:authentication property="principal.memberVO.email"/>></td>
 				</tr>
-				
-				<tr>
-					<td><label for="deliveryInfo">배송 정보</label></td>
-					<td><a href="/user/deliveryForm" type="button">배송 정보 확인</a></td>
-				</tr>
+
 				
 								
 			</table>
 				<br>
 				<button type="submit" id="updateSubmit" class="btn" onclick="check_onclick()">회원정보 수정</button>
-				<a type="button" id="updateSubmit" class="btn" href="/user/pwUpdateView" >비밀번호 변경하기</a>
-				<a href="delete?id=${memberInfo_view.id}">회원 탈퇴</a>
 			</form:form>
 
 	</body>

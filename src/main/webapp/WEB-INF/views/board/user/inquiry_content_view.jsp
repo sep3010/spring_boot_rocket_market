@@ -402,7 +402,7 @@
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
 			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+			  ${userName }님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
 			  class="nav-link" 
