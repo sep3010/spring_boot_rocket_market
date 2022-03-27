@@ -206,6 +206,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       margin:0px
       }
       
+      
+      /*구매하기 버튼 품절 상태에서 길이 어긋남*/
+     #cartbtn{
+      width: 125px;
+     } 
+     
+     #heart_img{
+      padding : 0px;
+     }
     </style>
     
     
@@ -667,7 +676,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
 	        <div clss="d-flex align-items-center" id="cartdiv">     
-       		  <div class="btn btn-success btn-lg" style="width: 125px" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
+       		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img"></a>
 	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img"></a>
@@ -678,8 +687,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 		  <c:otherwise>
 		    <div clss="d-flex align-items-center" id="cartdiv">     
        		  <div class="btn btn-success btn-lg" id="cartbtn">품절</div>       		       		  
-       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
-       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img"style="width: 50px; margin: 0px;"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img"style="width: 50px; padding: 0px;"></a>
        		  <h5 class="cart_text pt-4"> 현재 품절인 상품입니다. 재입고예정 : 없음 </h5>
       		</div>	
 		  </c:otherwise>		           		                
