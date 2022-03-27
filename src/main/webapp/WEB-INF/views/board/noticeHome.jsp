@@ -259,7 +259,8 @@
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: relative;
+        position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -350,7 +351,7 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
 		
         
@@ -398,7 +399,7 @@
 	<!-- ======================== 배너 =========================== -->
 	<div>
     	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
@@ -609,7 +610,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>

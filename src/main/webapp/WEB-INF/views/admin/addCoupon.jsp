@@ -143,10 +143,11 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
-      }
+       }
       #cartbox {
         width: 100px;
         background-color: #eeddbe;
@@ -166,7 +167,7 @@
 	<!-- ======================== 배너 =========================== -->
 	<div>
     	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
@@ -208,7 +209,8 @@
 			  ${userName }님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
-			  class="nav-link" 
+			  class="nav-link"
+			  type="button" 
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -263,7 +265,7 @@
             <td><input type="number" id="coupon_discount" name="coupon_discount" value="0">%</td>
          </tr>
       </table>
-      <button class="btn btn-primary" type="submit">쿠폰 등록</button>
+      <button class="btn btn-outline-dark" type="submit">쿠폰 등록</button>
    </form:form>
 
 	<br><br><br>

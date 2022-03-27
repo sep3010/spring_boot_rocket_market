@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="/WEB-INF/views/popup.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,6 +135,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -149,7 +151,7 @@
         height: 80%;
         position: relative;
       }
-
+      
       /*장바구니 삭제 버튼*/
       #closebtn {
         position: absolute;
@@ -171,7 +173,7 @@
         width: 100px;
         height: 50px;
         background-color: #eeddbe;
-        border: 1px solid rgb(255, 255, 255);
+        border: 1px solid rgb(0 0 0 / 0%);
         border-radius: 10px;
         top: 20px;
       }
@@ -209,7 +211,7 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
       });
 
@@ -223,7 +225,7 @@
 	<!-- ======================== 배너 =========================== -->
 	<div>
     	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
@@ -372,7 +374,7 @@
       </div>
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-
+<main>
 	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -414,7 +416,7 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -429,7 +431,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>

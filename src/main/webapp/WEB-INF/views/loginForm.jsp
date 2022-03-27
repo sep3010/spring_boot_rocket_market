@@ -138,10 +138,7 @@
 				alert("비밀번호를 입력하세요");
 				return false;
 			}
-			else{
-				alert("로그인 성공");
-				return true;
-			}
+			
 		} //end onsubmit()
 	}//end window.onload
 
@@ -155,7 +152,7 @@
 	<!-- ======================== 배너 =========================== -->
 	<div>
     	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
@@ -340,9 +337,10 @@
         </div>
 
       </div>  
+      </form:form>
       </div><!-- loginbox -->
 
-      	</form:form>
+     
     </div><!-- container -->
     <!-- ======================== 하단 메뉴 =========================== -->
 	<hr class="m-0" />

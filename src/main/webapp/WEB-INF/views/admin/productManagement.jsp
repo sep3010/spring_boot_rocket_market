@@ -142,6 +142,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -242,9 +243,9 @@
 </head>
 <body>
    <!-- ======================== 배너 =========================== -->
-   <div>
-       <nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
+	<div>
+    	<nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
@@ -278,6 +279,7 @@
          </div>
            <a 
            class="nav-link" 
+           type="button"
            onclick="document.getElementById('logout-form').submit();"
            >로그아웃</a>
            <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -321,6 +323,7 @@
       <h2 style="font-weight: bold;"> 상품목록 </h2>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a></h5>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/couponManagement">쿠폰관리</a></h5>
+      <h5><a href="${pageContext.request.contextPath}/admin/adminHome">매출관리</a></h5>
       </div>
 
         <table class="table table-bordered text-center pt-5"  id="admin_product_table">
@@ -417,7 +420,7 @@
       </c:if>   
       </ul>
     </nav>        
-   <p><a href="${pageContext.request.contextPath}/admin/addProduct">상품등록</a></p>
+   <p><a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/admin/addProduct">상품등록하기</a></p>
 
 </div>   
    

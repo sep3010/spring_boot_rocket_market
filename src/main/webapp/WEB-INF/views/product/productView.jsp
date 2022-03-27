@@ -140,6 +140,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -177,7 +178,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         width: 100px;
         height: 50px;
         background-color: #eeddbe;
-        border: 1px solid rgb(255, 255, 255);
+        border: 1px solid rgb(0 0 0 / 0%);
         border-radius: 10px;
         top: 20px;
       }
@@ -205,6 +206,15 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       margin:0px
       }
       
+      
+      /*구매하기 버튼 품절 상태에서 길이 어긋남*/
+     #cartbtn{
+      width: 125px;
+     } 
+     
+     #heart_img{
+      padding : 0px;
+     }
     </style>
     
     
@@ -223,7 +233,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            var position = $(window).scrollTop();
             $(".sidebar")
               .stop()
-              .animate({ top: position + currentPosition + "px" }, 1000);
+              .animate({ top: position + currentPosition + "px" }, 900);
           });
 
         // 장바구니 담기
@@ -325,13 +335,11 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 <body>
 
     <header>
-      <div>
-        <nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
-            >배너 이벤트</a
-          >
+	<div>
+    	<nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
-      </div>
+    </div>
 
       <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
@@ -503,7 +511,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2" >
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>
@@ -679,8 +687,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 		  <c:otherwise>
 		    <div clss="d-flex align-items-center" id="cartdiv">     
        		  <div class="btn btn-success btn-lg" id="cartbtn">품절</div>       		       		  
-       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" alt="" id="cart_img"></a>
-       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" alt="" id="heart_img"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img"style="width: 50px; margin: 0px;"></a>
+       		  <a href="${pageContext.request.contextPath}/loginForm"><img src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img"style="width: 50px; padding: 0px;"></a>
        		  <h5 class="cart_text pt-4"> 현재 품절인 상품입니다. 재입고예정 : 없음 </h5>
       		</div>	
 		  </c:otherwise>		           		                
@@ -692,7 +700,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
 	      	<div clss="d-flex align-items-center" id="cartdiv">     
-       		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
+       		  <div class="btn btn-success btn-lg" id="cartbtn" style="width: 125px;" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
        		  <!-- 상단코드 클릭시 주문단계로 바로 넘어가기(세윤) --> 
 
        		  <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" style="width: 50px; margin: 0px;">
