@@ -667,7 +667,7 @@
           <div class="inner">
             <ul>
               <li class="shadow">
-                <p>김지훈님<br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
+                <p><sec:authentication property="principal.memberVO.name"/><br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
                 <a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
               </li>
               <li class="shadow">
@@ -680,7 +680,7 @@
               </li>
               <li class="shadow">
                 <p>적립금</p>
-                <p>9000원</p>
+                <p><sec:authentication property="principal.memberVO.point"/>원</p>
               </li>
             </ul>
           </div>

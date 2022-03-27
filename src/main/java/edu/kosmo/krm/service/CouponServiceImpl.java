@@ -30,5 +30,11 @@ public class CouponServiceImpl implements CouponService {
 		couponMapper.insertCoupon(couponVO);
 	}
 
+	@Override
+	public int getMemberCouponCount(int user_id) {
+		log.info("getMemberCouponCount..");
+		return couponMapper.getMemberCouponCount(user_id);
+	}
+
 	
 }

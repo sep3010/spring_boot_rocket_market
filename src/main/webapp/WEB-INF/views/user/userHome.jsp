@@ -593,11 +593,11 @@
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>0 개</p>
+                <p>${couponCount}개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
-                <p>9000원</p>
+                <p><sec:authentication property="principal.memberVO.point"/>원</p>
               </li>
             </ul>
           </div>

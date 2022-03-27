@@ -21,5 +21,7 @@ public interface CouponMapper {
 	@Insert("INSERT INTO coupon VALUES (coupon_SEQ.NEXTVAL ,#{coupon_name} ,#{coupon_discount})")
 	public void insertCoupon(CouponVO couponVO);
 	
+	@Select("SELECT COUNT(*) FROM coupon c, user_coupon uc WHERE c.id = uc.coupon_id AND uc.member_id = #{user_id} AND uc.use_check = 1")
+	int getMemberCouponCount(int user_id);
 
 }

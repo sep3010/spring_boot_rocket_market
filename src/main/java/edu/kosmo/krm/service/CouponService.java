@@ -15,5 +15,8 @@ public interface CouponService {
 	
 	// 쿠폰등록 ==============================================
 	public void insertCoupon(CouponVO couponVO);
+	
+	// 유저가 소유한 쿠폰 갯수
+	int getMemberCouponCount(int user_id);
 
 }

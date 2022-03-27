@@ -32,5 +32,6 @@ public class JoinCoupon {
 	private int discount;
 	private Timestamp issue_date;
 	private int member_id;
+	private int use_check;
 
 }

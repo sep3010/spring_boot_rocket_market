@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.kosmo.krm.service.CouponService;
 import edu.kosmo.krm.service.MemberInfoService;
 import edu.kosmo.krm.service.MemberService;
 import edu.kosmo.krm.service.OrderHistoryService;
@@ -24,6 +25,9 @@ public class SecurityController {
 	@Autowired
 	private MemberInfoService memberInfoService;
 	
+	@Autowired
+	private CouponService couponService;
+	
 	//user 폴더 뷰페이지 권한체크 위한 mapping
 	@GetMapping("/user/userHome")
 	public ModelAndView userHome(ModelAndView view, Principal principal) {
@@ -35,6 +39,7 @@ public class SecurityController {
 		MemberVO memberVO = memberInfoService.getUser(username);
 		
 		view.addObject("orderCount", historyService.getMemberOrderCount(memberVO.getId()));
+		view.addObject("couponCount", couponService.getMemberCouponCount(memberVO.getId()));
 		
 		view.setViewName("/user/userHome");
 		return view;

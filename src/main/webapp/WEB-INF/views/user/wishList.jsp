@@ -730,7 +730,7 @@
           <div class="inner">
             <ul>
               <li class="shadow">
-                <p>김지훈님<br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
+                <p><sec:authentication property="principal.memberVO.name"/><br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
                 <a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
               </li>
               <li class="shadow">
@@ -743,7 +743,7 @@
               </li>
               <li class="shadow">
                 <p>적립금</p>
-                <p>9000원</p>
+                <p><sec:authentication property="principal.memberVO.point"/>원</p>
               </li>
             </ul>
           </div>
@@ -754,10 +754,9 @@
           <nav id="navigation" class="pt-2">
             <ul>
               <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-              <li><a href="">주문내역<span>></span></a></li>
-              <li><a href="" class="border-top-0 font-weight-bold">위시리스트<span>></span></a></li>
-              <li><a href="" class="border-top-0">쿠폰목록<span>></span></a></li>
-              <li><a href="" class="border-top-0">내 문의<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/" class="border-top-0">쿠폰목록<span>></span></a></li>
             </ul>
           </nav>
           
