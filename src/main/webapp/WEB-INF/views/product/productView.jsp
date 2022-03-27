@@ -326,13 +326,11 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 <body>
 
     <header>
-      <div>
-        <nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
-            >배너 이벤트</a
-          >
+	<div>
+    	<nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
-      </div>
+    </div>
 
       <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
