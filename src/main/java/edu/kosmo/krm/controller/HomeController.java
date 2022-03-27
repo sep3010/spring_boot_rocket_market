@@ -45,6 +45,8 @@ public class HomeController {
 			view.addObject("discountList", productService.getSaleProductList(criteriaP));
 			//신상품목록
 			view.addObject("newList", productService.getNewProductList(criteriaP));
+			//베스트상품목록
+			view.addObject("bestList", productService.getBestProductList(criteriaP));
 			return view;
 		}
 		
@@ -56,6 +58,8 @@ public class HomeController {
 			view.addObject("discountList", productService.getSaleProductList(criteriaP));
 			//신상품목록
 			view.addObject("newList", productService.getNewProductList(criteriaP));
+			//베스트상품목록
+			view.addObject("bestList", productService.getBestProductList(criteriaP));
 			//사이드바 장바구니품목
 			try {
 				if(principal.getName() != null) {

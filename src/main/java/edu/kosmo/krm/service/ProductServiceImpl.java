@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kosmo.krm.joinVO.JoinBestProductVO;
 import edu.kosmo.krm.mapper.ProductMapper;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.CriteriaP;
@@ -56,9 +57,9 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getProduct(id);
 	}
 	
-	//베스트상품목록(판매수량이 많은 순)===================================
+	//베스트상품목록(후기가 존재하고, 후기점수가 높은 순)===================================
 	@Override
-	public List<ProductVO> getBestProductList(CriteriaP criteria) {
+	public List<JoinBestProductVO> getBestProductList(CriteriaP criteria) {
 		log.info("getBestProductList..");
 		return productMapper.getBestProductList(criteria);
 	}
