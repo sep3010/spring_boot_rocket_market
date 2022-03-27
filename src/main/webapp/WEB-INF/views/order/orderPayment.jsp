@@ -268,7 +268,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: relative;
+        position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -344,7 +345,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
         
         
@@ -441,6 +442,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
          </div>
            <a 
            class="nav-link" 
+           type="button"
            onclick="document.getElementById('logout-form').submit();"
            >로그아웃</a>
            <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -558,7 +560,6 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <input
               id="pagebtn"
               type="button"
-              alt=""
               value="Top ↑"
               onclick="clickme()"
             />

@@ -213,7 +213,8 @@
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: relative;
+        position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -289,7 +290,7 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
 
         
@@ -350,6 +351,7 @@
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -510,6 +512,8 @@
     </div>
     
     <main>
+	  <!-- ======================== 사이드바 =========================== -->
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -524,7 +528,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>
@@ -532,7 +536,8 @@
 
           </div>
         </div>
-        <!-- ==================== 챗봇버튼 ======================== -->
+        
+        <!-- ======= 챗봇 ======= -->
         <div class="text-center mt-3 mb-3" id="chatbox">
           <div id="chat-container">
             <script src="${pageContext.request.contextPath}/js/chatbot-ui.js"></script>
@@ -549,7 +554,7 @@
               );
             </script>
           </div>
-
+        <!-- ======= 상단 페이지 이동버튼 ======= -->
           <div class="text-center mt-2" id="pagebox">
             <input
               id="pagebtn"
@@ -557,7 +562,7 @@
               alt=""
               value="Top ↑"
               onclick="clickme()"
-            /><!-- 상단 페이지 버튼 -->
+            />
           </div>
         </div>
       </div>

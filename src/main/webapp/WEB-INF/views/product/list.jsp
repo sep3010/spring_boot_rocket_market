@@ -505,7 +505,8 @@ $(document).ready(function () {
 			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
-			  class="nav-link" 
+			  class="nav-link"
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">

@@ -197,7 +197,8 @@
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: relative;
+        position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -348,7 +349,7 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 1000);
+            .animate({ top: position + currentPosition + "px" }, 900);
         });
 
 
@@ -406,6 +407,7 @@
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -580,7 +582,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>

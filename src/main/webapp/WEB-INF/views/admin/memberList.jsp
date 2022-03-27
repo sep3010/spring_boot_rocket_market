@@ -135,6 +135,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -248,6 +249,7 @@
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">

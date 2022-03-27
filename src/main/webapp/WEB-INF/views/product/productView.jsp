@@ -224,7 +224,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
            var position = $(window).scrollTop();
             $(".sidebar")
               .stop()
-              .animate({ top: position + currentPosition + "px" }, 1000);
+              .animate({ top: position + currentPosition + "px" }, 900);
           });
 
         // 장바구니 담기
@@ -669,7 +669,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 	    <c:choose>
 	      <c:when test="${productInfo.stock > 0}">
 	        <div clss="d-flex align-items-center" id="cartdiv">     
-       		  <div class="btn btn-success btn-lg" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
+       		  <div class="btn btn-success btn-lg" style="width: 125px" id="cartbtn" onclick="location.href='${pageContext.request.contextPath}/order/orderPaymentOne?product_id=${productInfo.id }'">구매하기</div>
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/cart.png" id="cart_img"></a>
 	   			<!-- 상단코드 클릭시 장바구니로 넣기 -->
        			<a href=""><img src="${pageContext.request.contextPath}/imgs/heart.png" id="heart_img"></a>
