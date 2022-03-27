@@ -388,17 +388,7 @@ public class OrderController {
 		return view;
 	}
 
-	// 쿠폰 적용
-	@GetMapping("/apply")
-	public @ResponseBody String apply() {
-		log.info("apply()...");
-		
-		// ajax에 "SUCCESS"를 보내기 위한 것
-		JSONObject result = new JSONObject();
-		result.put("SUCCESS", true);
-		log.info("SUCCESS()...");
-		return result.toString();
-	}
+
 
 
 }
