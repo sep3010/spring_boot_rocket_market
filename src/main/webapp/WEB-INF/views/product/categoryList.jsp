@@ -18,8 +18,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
     <title>Rocket Market :: 신속배송</title>
    <link rel="shortcut icon" type="image/x-icon" 
    href="${pageContext.request.contextPath}/imgs/logo.png" />
@@ -335,6 +335,17 @@
 
       
       
+      /*상품 박스*/
+      #product{
+         position: relative;
+      }
+      
+      #around_btn{
+        width: 255px;
+      position: absolute;
+        bottom: 20px;
+
+      }
       
       
       
@@ -406,32 +417,32 @@
              
  
             <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  type="button"
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+         <sec:authorize access="isAuthenticated()">
+         <div style="align-self:center">
+           <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+         </div>
+           <a 
+           class="nav-link" 
+           type="button"
+           onclick="document.getElementById('logout-form').submit();"
+           >로그아웃</a>
+           <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+              <input type="hidden"/>
+           </form:form>
+           
+           <!-- 관리자 -->
+            <sec:authorize access="hasRole('ROLE_ADMIN')">               
+               <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+                   <a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>            
+           <!-- 회원 -->
+             <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
-			</sec:authorize>             
+         </sec:authorize>             
              
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
@@ -532,7 +543,7 @@
 
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
     <main>
-	  <!-- ======= 장바구니 ======= -->
+     <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
@@ -542,15 +553,15 @@
           
           <!-- 장바구니에 있는 상품 표시 -->
             <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
-				로그인 후 사용 가능합니다.
+            로그인 후 사용 가능합니다.
             </sec:authorize>
    
-			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
-		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
-		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
-			  </c:forEach>
-			</sec:authorize>            
+         <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+           <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
+              <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
+              <img class="pt-1" src="${cart.path}" id="sideimg"/></a>         
+           </c:forEach>
+         </sec:authorize>            
 
           </div>
         </div>
@@ -666,7 +677,7 @@
               <c:forEach var="product" items="${productList}">
                  
                  <!-- 상품카드 정보 -->
-                <div id="product" class="col-sm-6 col-md-4 col-lg-3">
+                <div id="product" class="col-sm-6 col-md-4 col-lg-3 pb-3" style="height: 392px;">
                   <a href="${pageContext.request.contextPath}/product/productView/${product.id}" id="image-title"><!-- 상품번호 넣어서 상품 상세 페이지로 이동 -->
                     <c:choose>
                  <c:when test="${not empty product.productImages}">
@@ -693,7 +704,7 @@
                     <c:set var="discountPercent" value="${product.discount}" scope="session"/>
                     <c:set var="discountPrice" value="${price * (1 - (discountPercent/100))}" scope="session"/>
                <c:choose>
-                 <c:when test="${discountPercent == 0}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
+                 <c:when test="${discountPercent == 1}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
                         <h3><fmt:formatNumber value="${product.price}" pattern="#,###"/>원</h3>                   
                  </c:when>
                  <c:otherwise> <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
@@ -707,9 +718,9 @@
                  </c:otherwise>
                 </c:choose>                  
                   </div><!-- product-information 끝 -->
-                
-                  <div class="buttons d-flex justify-content-around">
-                  <div class="btn btn-outline-success opener" >찜하기</div>
+                                
+                  <div class="buttons d-flex justify-content-around" id="around_btn" >
+                  <div class="btn btn-outline-danger opener" >찜하기</div>
                     <div class="btn btn-outline-success opener">장바구니</div>
                   </div>
                 </div>     

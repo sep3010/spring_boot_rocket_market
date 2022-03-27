@@ -323,6 +323,7 @@
       <h2 style="font-weight: bold;"> 상품목록 </h2>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a></h5>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/couponManagement">쿠폰관리</a></h5>
+      <h5><a href="${pageContext.request.contextPath}/admin/adminHome">매출관리</a></h5>
       </div>
 
         <table class="table table-bordered text-center pt-5"  id="admin_product_table">
@@ -419,7 +420,7 @@
       </c:if>   
       </ul>
     </nav>        
-   <p><a href="${pageContext.request.contextPath}/admin/addProduct">상품등록</a></p>
+   <p><a class="btn btn-outline-dark" href="${pageContext.request.contextPath}/admin/addProduct">상품등록하기</a></p>
 
 </div>   
    

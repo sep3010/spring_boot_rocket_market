@@ -265,7 +265,7 @@
             <td><input type="number" id="coupon_discount" name="coupon_discount" value="0">%</td>
          </tr>
       </table>
-      <button class="btn btn-primary" type="submit">쿠폰 등록</button>
+      <button class="btn btn-outline-dark" type="submit">쿠폰 등록</button>
    </form:form>
 
 	<br><br><br>

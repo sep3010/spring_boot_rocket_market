@@ -293,7 +293,7 @@
       <h2 style="font-weight: bold;">회원 리스트 </h2>
       <h5><a href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a></h5>
       <h5><a href="${pageContext.request.contextPath}/admin/couponManagement">쿠폰관리</a></h5>
-      <h5><a href="">주문내역관리</a></h5>
+      <h5><a href="${pageContext.request.contextPath}/admin/adminHome">매출관리</a></h5>
     </div>
 
 
