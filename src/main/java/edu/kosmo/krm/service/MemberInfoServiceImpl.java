@@ -84,4 +84,10 @@ public class MemberInfoServiceImpl implements MemberInfoService {
 		
 	}
 
+	@Override
+	public MemberVO getUser(String username) {
+		log.info("getUser()......");
+		return memberInfoMapper.getUser(username);
+	}
+
 }

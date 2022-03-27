@@ -25,6 +25,8 @@ public interface OrderHistoryService {
 	ProductVO getProductAndImage(OrderDetailBoardVO detailBoardVO);
 	
 	List<DeliveryVO> getDeliveryInfo(Long order_id); 
-		
+	
+	// 회원의 주문 개수 가져오기
+	int getMemberOrderCount(int user_id);
 	
 }

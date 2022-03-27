@@ -54,6 +54,12 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 		log.info("getDeliveryInfo");
 		return orderHistoryMapper.getDeliveryInfo(order_id);
 	}
+	
+	@Override
+	public int getMemberOrderCount(int user_id) {
+		log.info("getMemberOrderCount");
+		return orderHistoryMapper.getMemberOrderCount(user_id);
+	}
 
 
 

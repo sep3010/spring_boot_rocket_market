@@ -13,6 +13,9 @@ import edu.kosmo.krm.vo.PaymentInfoVO;
 //양세윤 코드 작성
 
 public interface MemberInfoService {
+	
+	// 아이디로 회원 번호 가져오기
+	MemberVO getUser(String username);
 
 	// 페이징 처리 함수
 	public int getTotal();

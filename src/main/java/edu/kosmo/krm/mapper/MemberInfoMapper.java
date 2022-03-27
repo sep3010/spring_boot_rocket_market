@@ -18,6 +18,7 @@ import edu.kosmo.krm.vo.PaymentInfoVO;
 public interface MemberInfoMapper {
 
 	// 회원 가져오는 코드
+	@Select("SELECT id FROM member WHERE username = #{username}")
 	public MemberVO getUser(String username);
 	
 	// 페이징 관련 코드

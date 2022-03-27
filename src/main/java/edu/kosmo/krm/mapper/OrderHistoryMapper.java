@@ -33,4 +33,8 @@ public interface OrderHistoryMapper {
 	// 주문 번호로 배송 정보 가져오기
 	@Select("SELECT * FROM DELIVERY WHERE DELIVERY.ORDER_ID = #{order_id} ")
 	List<DeliveryVO> getDeliveryInfo(long order_id);
+	
+	@Select("SELECT COUNT(*) FROM member_order WHERE member_id = #{user_id}")
+	int getMemberOrderCount(int user_id);
+	
 }

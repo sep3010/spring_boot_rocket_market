@@ -366,6 +366,96 @@
             .stop()
             .animate({ top: position + currentPosition + "px" }, 900);
         });
+       
+       
+     //찜목록에 상품담기
+      	$(".wishProduct").click(function(event) {
+      		event.preventDefault();       
+
+      		let product_id = $(this).find(".wishProduct_id").val();
+      		let member_id = $(this).find(".member_id").val();
+      		
+      		let form = {
+      			product_id : product_id,
+      			member_id : member_id
+      		}
+      		
+      		console.log(JSON.stringify(form));
+      		
+      	    $.ajax({
+      	       type: "POST",
+      	       url : $(this).attr("action"),
+      	       cache : false,
+      	       contentType:"application/json; charset='UTF-8'",
+      	       data : JSON.stringify(form),
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+               },
+      	       success : function(data){   	          
+      	          if(data == "SUCCESS"){
+                     const moveWish = confirm("상품을 위시리스트에 담았습니다. 위시리스트로 이동하시겠습니까?");            	 
+                     if(moveWish == false){  
+                       console.log("위시리스트 이동 안함");            		
+                     }
+                     else{
+                       console.log("위시리스트 이동");
+                       location.assign("${pageContext.request.contextPath}/user/wishList");
+                     }
+      	            }
+      	         },
+      	         error : function(e){
+      	            console.log(e);
+      	            alert("error : " + e);
+      	         }
+      	      }); //end ajax	      
+      	   }); //end .wishProduct.click();
+          
+         	//장바구니에 상품담기
+         	$(".cartProduct").click(function(event) {
+         		event.preventDefault();       
+
+         		let product_id = $(this).find(".cartProduct_id").val();
+         		let member_id = $(this).find(".member_id").val();
+         		let quantity = 1;
+         		
+         		let form = {
+         			product_id : product_id,
+         			member_id : member_id,
+         			quantity : quantity
+         		}
+         		
+         		console.log(JSON.stringify(form));
+         		
+         	    $.ajax({
+         	       type: "POST",
+         	       url : $(this).attr("action"),
+         	       cache : false,
+         	       contentType:"application/json; charset='UTF-8'",
+         	       data : JSON.stringify(form),
+                 beforeSend: function(xhr) {
+                     xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+                  },
+         	       success : function(data){   	          
+         	          if(data == "SUCCESS"){
+                        const moveWish = confirm("상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");            	 
+                        if(moveWish == false){  
+                          console.log("장바구니 이동 안함");            		
+                        }
+                        else{
+                          console.log("장바구니 이동");
+                          location.assign("${pageContext.request.contextPath}/user/cart");
+                        }
+         	            }
+         	         },
+         	         error : function(e){
+         	            console.log(e);
+         	            alert("error : " + e);
+         	         }
+         	      }); //end ajax	      
+         	   }); //end .cartProduct.click();
+       
+       
+       
    });
 </script>
 
@@ -654,19 +744,7 @@
           <h2 class="product-title text-center mt-5 border-bottom pb-4"> ${name} </h2>
           
           <div class="row conditions d-flex justify-content-between">
-            <div class="quantity"><h5>총 ${productTotal} 개</h5></div>
-              <div class="condition">
-                <nav>
-                  <ul class="d-flex justify-content-center">
-                    <li><a href="">전체보기</a></li>
-                    <li><a href="">신상품순</a></li>
-                    <li><a href="">베스트</a></li>
-                    <li><a href="">낮은가격순</a></li>
-                    <li><a href="">높은가격순</a></li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
+            <div class="quantity"><h5>총 ${productTotal} 개</h5></div>  
           </div>
                     
           <!-- ============================== 상품카드 ================================= -->         
@@ -716,11 +794,49 @@
                  </c:otherwise>
                 </c:choose>                  
                   </div><!-- product-information 끝 -->
-                                
-                  <div class="buttons d-flex justify-content-around" id="around_btn" >
-                  <div class="btn btn-outline-danger opener" >찜하기</div>
-                    <div class="btn btn-outline-success opener">장바구니</div>
-                  </div>
+                  
+                  <!-- =========== 비로그인 상태 ============ -->
+                  <sec:authorize access="isAnonymous()">
+	    			<c:choose>
+	      			  <c:when test="${product.stock > 0}">
+                        <div class="buttons d-flex justify-content-around">
+                          <a class="btn btn-outline-danger">찜하기</a>                   		
+                    	  <a class="btn btn-outline-success opener">장바구니</a>
+                  		</div>           	
+		  			  </c:when>
+		  			  <c:otherwise>
+                        <div class="buttons d-flex justify-content-around">
+                          <a class="btn btn-outline-danger"> 찜하기</a>                   		
+                    	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
+                  		</div>		  			  
+		  			  </c:otherwise>
+		  			</c:choose>
+		  		  </sec:authorize>              
+                  <!-- =========== 로그인 상태 ============ -->
+		  		  <sec:authorize access="hasAuthority('ROLE_USER')">
+	    			<c:choose>
+	      			  <c:when test="${product.stock > 0}">
+                        <div class="buttons d-flex justify-content-around">
+                          <form:form class="wishProduct" action="${pageContext.request.contextPath}/product/insertWish" method="POST">
+                            <input type="hidden" class="wishProduct_id" value="${product.id}"/>
+                            <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
+                            <input type="button" class="submitWishBtn" value="찜하기">                         
+                          </form:form>
+                          <form:form class="cartProduct" action="${pageContext.request.contextPath}/product/insertCart" method="POST">
+                            <input type="hidden" class="cartProduct_id" value="${product.id}"/>
+                            <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
+                            <input type="button" class="submitCartBtn" value="장바구니">                         
+                          </form:form>
+                  		</div>           	
+		  			  </c:when>
+		  			  <c:otherwise>
+                        <div class="buttons d-flex justify-content-around">
+                          <a class="btn btn-outline-danger"> 찜하기</a>                   		
+                    	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
+                  		</div>		  			  
+		  			  </c:otherwise>
+		  			</c:choose>
+		  		  </sec:authorize>
                 </div>     
               </c:forEach>                    
             </div>                
