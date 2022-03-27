@@ -648,7 +648,7 @@
             </tr>
             <tr>
               <td colspan="4" class="py-3">
-                <div class="content">${inquiry.content}</div>
+                <textarea readonly class="content">${inquiry.content}</textarea>
                      </td>
             </tr>
         </table>

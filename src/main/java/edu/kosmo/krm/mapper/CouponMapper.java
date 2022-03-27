@@ -20,5 +20,6 @@ public interface CouponMapper {
 
 	@Insert("INSERT INTO coupon VALUES (coupon_SEQ.NEXTVAL ,#{coupon_name} ,#{coupon_discount})")
 	public void insertCoupon(CouponVO couponVO);
+	
 
 }

@@ -30,128 +30,107 @@
     
     <style>
       
-      /* ========== 공지사항 ========== */
-
+      body {
+        min-width: 1400px;
+      }
+      /* ========== 공지사항홈 ========== */
       /* 공통사항 */
-      a {
+      .center__container a {
         text-decoration: none !important;
         color: black;
       }
-      a:hover {
+      .center__container a:hover {
         color: orange;
+        font-weight: bold;
       }
-      li {
+
+      .center__container li {
         list-style-type: none;
       }
-
-      /* 공통사항 끝 */
-
-      /* 상단 멤버 정보*/
-
-      
-      #container {
-        display: flex;
-        justify-content: space-around;
-      }
-      .information-box {
-        width: 250px;
-        height: 250px;
-        background: #fff;
-        border-radius: 10px;
-      }
-      .information-box2 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .member-information {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-      }
-      .photo {
-        width: 120px;
-        height: 120px;
-        border: 1px solid lightgray;
-        border-radius: 100%;
-      }
-      .modifyBtn {
-        display: block;
-        width: 120px;
-        height: 50px;
-        border: 1px solid orange;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-      }
-      .modifyBtn:hover {
-        background: orange;
-        color: #fff;
-        transition: .3s;
-        font-weight: bold;
-        opacity: .7;
-      }
-
-
-      .tag, .spacer, .content {
-        height: 50px;
-        font-weight: bold;
-        font-size: 24px;
-      }
-      .content {
-        font-size: 30px;
-        font-weight: bold;
-        color: #cc932a;
-        letter-spacing: 5px;
-      }
-      
-
-
-      /* 네비게이션 */
-      #navigation {
-        position: absolute;
-        left: -200px;
+      /* 공통사항 끝*/
+      .center {
+        margin-top: 70px;
+        margin-bottom: 70px;
       }
       #navigation a {
         width: 150px;
         display: flex;
+        justify-content: space-between;
         border: 1px solid lightgray;
         padding: 10px;
-        justify-content: space-between;
-      }
-      #navigation a:hover {
-        color: orange;
-      }
-      
-      /* 네비게이션 끝 */
-
-      table {
-        width: 1300px;
-        border-top: 2px solid gray;
-      }
-      th {
-        font-size: 20px;
-        padding: 10px;
-      }
-      td {
-        padding: 10px;
-      }
-      .contents__table {
-        width: 1200px;
-        position: relative;
-        margin-top: 50px;
       }
       .board__container {
-        width: 1200px;
-        margin: 0 auto;
-        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .board-content {
+        font-size: .8em;
+
+      }
+
+     
+
+      /* 테이블 헤더*/
+      .board-title {
+        border-top: 2px solid gray;
+        border-bottom: 1px solid lightgray;
+      }
+      .title, .writer, .date, .delete-box, .hit {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        border-bottom: 1px solid lightgray;
+      }
+      .title {
+        width: 620px;
+      }
+      .writer {
+        width: 150px;
+      }
+      .date {
+        width: 150px;
+      }
+      .hit {
+      	width: 80px;
+      }
+      .delete-box {
+        width: 40px;
       }
       
-     
+      
+      
+      /* 테이블 컨텐츠 */
+      
+      .content-writer, .content-date, .deleteBtn, .content-hit {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .content-title {
+        width: 620px;
+        padding: 25px;
+      }
+      .content-writer {
+        width: 150px;
+      }
+      .content-date {
+        width: 150px;
+      }
+      .content-hit {
+      	width: 80px;
+      }
+      .deleteBtn {
+        width: 30px;
+      }
+      
+      
+
+
+      /* ========== 작업끝 ========== */
 
 
 
@@ -648,76 +627,79 @@
         </div>
       </div>
       
-
-           <!-- ========== 공지사항 ========== -->
-           
-  
-          <div class="board__container">
-            
-            
-            <div class="contents__table">
-              <nav id="navigation">
-                <p style="font-size: 24px; font-weight: bold;">고객센터</p>
-                <ul>
-                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold text-warning">공지사항<span>></span></a></li>
-                  <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
-                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
-                </ul>
-              </nav>
+      
+      
+      <!-- ========== 공지사항 홈 ========== -->
+      <div class="center">
+        <div class="center__container d-flex justify-content-center">
+          <nav id="navigation" class="pt-2">
+            <ul>
+              <p style="font-size: 20px; font-weight: bold;">고객센터</p>
+              <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold">공지사항<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
+            </ul>
+          </nav>
+          <div class="board__container ml-5">
+            <div class="board mb-5">
+              <p style="font-size: 30px; font-weight: bold;">공지사항</p>
+              <div class="board-title d-flex">
+                <div class="title">제목</div>
+                <div class="writer">작성자</div>
+                <div class="date">작성일</div>
+                <div class="hit">조회</div>
+	            <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
+                	<div class="delete-box"></div>
+                </sec:authorize>
+              </div>
+              <c:forEach var="notice" items="${BoardPaging}">
               
-              <table style="position: relative;">
-                <p style="font-size: 30px; font-weight: bold;">공지사항</p>
-                <tr class="border-bottom">
-                  <th class="text-center">제목</th>
-                  <th class="text-center">작성자</th>
-                  <th class="text-center">작성일자</th>
-                  <th class="text-center">조회</th>
-                  <th></th>
-                </tr>
-                <c:forEach var="notice" items="${BoardPaging}">
-	                <tr>
-	                  <td class="text-center"><a href="${pageContext.request.contextPath}/board/notice_content_view/${notice.id}">${notice.title}</a></td>
-	                  <td class="text-center">Rocket Market</td>
-	                  <td class="text-center">${notice.board_date}</td>
-	                  <td class="text-center complete">${notice.hit}</td>
-		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
-						<td></td>
-		              </sec:authorize>
-			          <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
-	                    <td><a href="${pageContext.request.contextPath}/board/admin/delete_notice/${notice.id}" class="delete"><img src="${pageContext.request.contextPath}/imgs/close_img.png" width="30px" class="deleteBtn"></a></td>
-					  </sec:authorize> 	                  
-	                </tr>
-                </c:forEach>
-                <tr class="border-top">
-                  <td colspan="5" class="text-center">
-		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
-
-		              </sec:authorize>
-			          <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
-					    <a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
-					  </sec:authorize>                   
-                  </td>
-                </tr>
-              </table>
+              <div class="board-content d-flex">
+                <div class="content-title">
+                	<a href="${pageContext.request.contextPath}/board/notice_content_view/${notice.id}">${notice.title}</a>
+                </div>
+                <div class="content-writer">RocketMarket</div>
+                <div class="content-date">${notice.board_date}</div>
+                <div class="content-hit">${notice.hit}</div>
+   	            <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
+	                <div class="deleteBtn">
+	                	<a href="${pageContext.request.contextPath}/board/admin/delete_notice/${notice.id}" class="delete">
+	                	<img src="${pageContext.request.contextPath}/imgs/close_img.png" width="30px" class="deleteBtn">
+	                	</a>
+	                </div>
+	            </sec:authorize>
+              </div>
+              </c:forEach>
+              
+              
+              
+              <div class="board-footer border-bottom"></div>
+              <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
+			    <div class="text-center">
+			    	<a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
+			    </div>
+			  </sec:authorize>    
             </div>
-            
-          </div>
-          
-	          <!-- 공지사항 끝 -->
-		<c:if test="${pageMaker.pre}">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-		</c:if>
+            <div class="paging__container d-flex">
+              <c:if test="${pageMaker.pre}">
+				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+			  </c:if>
 	
 		<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
-		<c:forEach var="idx" begin="${pageMaker.startPage }"
-			end="${pageMaker.endPage }">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
-		</c:forEach>
+			  <c:forEach var="idx" begin="${pageMaker.startPage }"
+			    	end="${pageMaker.endPage }">
+				  <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
+			  </c:forEach>
 	
-		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
-		</c:if>
-	    
+			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+			</c:if>
+            </div>
+        </div>
+      </div>            
+  </div>
+          
+      <!-- 공지사항 끝 -->	    
     </main>
     
     

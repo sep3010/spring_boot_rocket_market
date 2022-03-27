@@ -746,7 +746,7 @@
                    </td>
                </tr>
           </table>
-        <div class="text-center">
+        <div class="text-center d-flex justify-content-center">
           <input type="submit" value="작성완료">
         </div> 
           
