@@ -319,36 +319,50 @@ public class OrderController {
 		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-				
 		String memberid = paymentInfoVO.getMember_id();
 		int member_id = Integer.valueOf(memberid); 
 		List<CartVO> cartProductCount = orderService.getCartInfo(member_id);
 		log.info("카트에 담긴 상품 종류" + cartProductCount);
 		
-		// member_id로 카트 가져오는 코드
-	    for (CartVO cart : cartProductCount) {
-			String orderid = paymentInfoVO.getMerchantid();
-			Long order_id = Long.valueOf(orderid); 
+		String orderid = paymentInfoVO.getMerchantid();
+		Long order_id = Long.valueOf(orderid); 
+
+		
+		if(cartProductCount.size() == 0) {
 			OrderDetailVO orderDetailVO = new OrderDetailVO();
-		
-			log.info("cart" + cart.getProduct_id());
-
-	    	CartVO cartVO = new CartVO();
-
-	    	int product_id = cart.getProduct_id();
-	    	int quantity = cart.getQuantity();
-		    
-	    	cartVO.setId(product_id);
-	    	cartVO.setQuantity(quantity);
-	    	
-	    	orderDetailVO.setProduct_id(product_id);
-	    	orderDetailVO.setQuantity(quantity);
-			orderDetailVO.setOrder_id(order_id);
-			
+			int product_idOne = Integer.valueOf(paymentInfoVO.getProductid());
+			Long order_idOne = Long.valueOf(paymentInfoVO.getMerchantid());
+			orderDetailVO.setProduct_id(product_idOne);
+			orderDetailVO.setOrder_id(order_idOne);
+			orderDetailVO.setQuantity(1);
 			orderService.insertOrderDetailInfo(orderDetailVO);
-			orderService.deleteCart(member_id);
-	    }
+			
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + orderDetailVO);
+			
+		}else {
+			// member_id로 카트 가져오는 코드
+		    for (CartVO cart : cartProductCount) {
+
+				OrderDetailVO orderDetailVO = new OrderDetailVO();
+				log.info("cart" + cart.getProduct_id());
+	
+		    	CartVO cartVO = new CartVO();
+	
+		    	int product_id = cart.getProduct_id();
+		    	int quantity = cart.getQuantity();
+			    
+		    	cartVO.setId(product_id);
+		    	cartVO.setQuantity(quantity);
+		    	
+		    	orderDetailVO.setProduct_id(product_id);
+		    	orderDetailVO.setQuantity(quantity);
+				orderDetailVO.setOrder_id(order_id);
+				
+				orderService.insertOrderDetailInfo(orderDetailVO);
+				orderService.deleteCart(member_id);
+		    }
 		
+		}		
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);
