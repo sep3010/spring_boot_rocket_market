@@ -193,73 +193,74 @@
       xhr.setRequestHeader(header, token);
    });
    
-   let daySales = '${daySales}';
-   console.log("daySales : " + daySales);
-   let monthSales = '${monthSales}';
-   console.log("monthSales : " + monthSales);
-   let yearSales = '${yearSales}';
-   console.log("yearSales : " + yearSales);
+   $(document).ready(function() {
+
    
-   
-   google.charts.load('current', {'packages':['corechart']});
-   google.charts.setOnLoadCallback(drawChart);
-   
-   function check(){
-	   let year = $("#year").val();
-	   console.log(year);
-	   let month = $("#month").val();
-	   console.log(month);
+	   let daySales = '${daySales}';
+	   console.log("daySales : " + daySales);
+	   let monthSales = '${monthSales}';
+	   console.log("monthSales : " + monthSales);
+	   let yearSales = '${yearSales}';
+	   console.log("yearSales : " + yearSales);
 	   
-	   let checkValue = [
-		   if(year == "전체"){
-	    		 <c:forEach var="ySales" items="${yearSales}" varStatus="vs">
-		    		 
-			 				[${ySales.sale_year}, ${ySales.sum}],
-			 			<c:if test="${status.last}">
-			 				[${ySales.sale_year}, ${ySales.sum}]
-			 			</c:if>
-			 		
-	    		 </c:forEach>
-	    	 }
+	   $("#select").on('click', function(){
 		   
-	   ]
-	   
-	   console.log("checkValue : " + checkValue);
-	   
-   }
+		   google.charts.load('current', {'packages':['line']});
+		   google.charts.setOnLoadCallback(drawChart);
+		
+			function drawChart() {
+				let year = $("#year").val();
+				console.log(year);
+				let month = $("#month").val();
+				console.log(month);
+				
+				let chartData;
+				let size;
+				if(year == '전체'){
+					chartDate = '${yearSales}'; 
+					
+				}
+				else if(month == '전체'){
+					chartDate = '${monthSales}';
+				}
+				else{
+					chartDate = '${daySales}';
+				}
+				console.log(chartDate);
+				console.log(size);
+			
+				  var data = new google.visualization.DataTable();
+				  data.addColumn('number', '일');
+				  data.addColumn('number', month + '월');
+				  
+				  <c:forEach var="sales" items="${daySales}" varStatus="vs">
+			 		<c:forEach var="sale" items="${sales}" varStatus="status">
+			 			<c:if test="${sale.sale_year == 2022 && sale.sale_month == 3}">
+			 			 data.addRows([[${sale.sale_day}, ${sale.sum}]]);
+			 			</c:if>
+			 		</c:forEach>
+			   	  </c:forEach>
+				  
+
+			
+				  var options = {
+				    chart: {
+				      title: '매출 관리',
+				      curveType: 'function',
+			          legend: { position: 'bottom' }
+				    },
+				    width: 900,
+				    height: 500
+				  };
+				
+				  var chart = new google.charts.Line(document.getElementById('curve_chart'));
+				
+				  chart.draw(data, google.charts.Line.convertOptions(options));
+			}
+		
+	   }) // end #select onclick
    
-
-   function drawChart() {
-	  
-	   
-     var data = google.visualization.arrayToDataTable([
-    	 
-    	 ['Year', '합계(원)'],
-    	 <c:forEach var="sales" items="${daySales}" varStatus="vs">
-	 		<c:forEach var="sale" items="${sales}" varStatus="status">
-	 			<c:if test="${sale.sale_year == 2022 && sale.sale_month == 3}">
-	 				[${sale.sale_day}, ${sale.sum}],
-	 			</c:if>
-	 			<c:if test="${status.last}">
-	 				[${sale.sale_day}, ${sale.sum}]
-	 			</c:if>
-	 		</c:forEach>
-	   	</c:forEach>
-    	 
-     ]);
-
-     var options = {
-       title: '매출 차트',
-       curveType: 'function',
-       legend: { position: 'bottom' }
-     };
-
-     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-     chart.draw(data, options);
-   }
-   
-   
+   }); // end ready
 
    
 </script>
@@ -363,10 +364,11 @@
     		<option value="11">11월</option>
     		<option value="12">12월</option>
     	</select>
-    	<button id="select" onclick="ckeck()">확인</button>
+    	<button id="select">확인</button>
     	<p>${currentYear - 5} ~ ${currentYear}년을 선택하면 연도별 매출을 확인할 수 있습니다.</p>
     	<p>연도를 선택하고, 1~12월을 선택하면 해당 연도의 월별 매출을 확인할 수 있습니다.</p>
     	<p>연도를 선택하고, 월을 선택하면 해당 연도, 해당 월의 일별 매출을 확인할 수 있습니다.</p>
+  
   
       	
       	
