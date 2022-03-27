@@ -647,9 +647,9 @@
 	            <td>${inquiry.hit}</td>
             </tr>
             <tr>
-	            <td colspan="4" class="py-3">
-	            	<div class="content">${inquiry.content}</div>
-	            </td>
+              <td colspan="4" class="py-3">
+                <textarea readonly class="content">${inquiry.content}</textarea>
+                     </td>
             </tr>
         </table>
         

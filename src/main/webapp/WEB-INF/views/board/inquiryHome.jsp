@@ -19,147 +19,125 @@
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
     />
+
+    <!-- font awesome -->
+	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot-ui.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css" />
-	<!-- font awesome -->
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <title>ROCKET MARKET :: 신속배송</title>
  
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <style>
       
-      /* ========== 공지사항 ========== */
-
-      /* 공통사항 */
-      a {
+       body {
+        min-width: 1400px;
+      }
+      .center__container a {
         text-decoration: none !important;
         color: black;
       }
-      a:hover {
+      .center__container a:hover {
         color: orange;
+        font-weight: bold;
       }
-      li {
+
+      .center__container li {
         list-style-type: none;
       }
-
-      /* 공통사항 끝 */
-
-      /* 상단 멤버 정보*/
-
-      
-      #container {
-        display: flex;
-        justify-content: space-around;
-      }
-      .information-box {
-        width: 250px;
-        height: 250px;
-        background: #fff;
-        border-radius: 10px;
-      }
-      .information-box2 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .member-information {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-      }
-      .photo {
-        width: 120px;
-        height: 120px;
-        border: 1px solid lightgray;
-        border-radius: 100%;
-      }
-      .modifyBtn {
-        display: block;
-        width: 120px;
-        height: 50px;
-        border: 1px solid orange;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-      }
-      .modifyBtn:hover {
-        background: orange;
-        color: #fff;
-        transition: .3s;
-        font-weight: bold;
-        opacity: .7;
-      }
-
-
-      .tag, .spacer, .content {
-        height: 50px;
-        font-weight: bold;
-        font-size: 24px;
-      }
-      .content {
-        font-size: 30px;
-        font-weight: bold;
-        color: #cc932a;
-        letter-spacing: 5px;
-      }
-      
-
-
-      /* 네비게이션 */
-      #navigation {
-        position: absolute;
-        left: -200px;
+      .center {
+        margin-top: 70px;
+        margin-bottom: 70px;
       }
       #navigation a {
         width: 150px;
         display: flex;
+        justify-content: space-between;
         border: 1px solid lightgray;
         padding: 10px;
-        justify-content: space-between;
-      }
-      #navigation a:hover {
-        color: orange;
-      }
-      
-      /* 네비게이션 끝 */
-
-      table {
-        width: 1300px;
-        border-top: 2px solid gray;
-      }
-      th {
-        font-size: 20px;
-        padding: 10px;
-      }
-      td {
-        padding: 10px;
-      }
-      .contents__table {
-        width: 1200px;
-        position: relative;
-        margin-top: 50px;
       }
       .board__container {
-        width: 1200px;
-        margin: 0 auto;
-        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .board-content {
+        font-size: .8em;
+
+      }
+
+      .board-title {
+        border-top: 2px solid gray;
+        border-bottom: 1px solid lightgray;
+      }
+      .title, .writer, .date, .reply-state, .type, .hit, .scope, .deleteBtn {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        border-bottom: 1px solid lightgray;
+      }
+      .type {
+        width: 120px;
+      } 
+      .title {
+        width: 310px;
+      }
+      .writer {
+        width: 130px;
+      }
+      .date {
+        width: 150px;
+      }
+      .hit {
+        width: 100px;
+      }
+      .reply-state {
+        width: 120px;
+      }
+      .scope {
+         width: 130px;
+      }
+      .deleteBtn {
+         width: 50px;
       }
       
-     
+      .content-writer, .content-date, .content-reply-state, .content-type, .content-hit, .content-scope, .content-deleteBtn {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .content-type {
+        width: 120px;
+      }
+      .content-title {
+        width: 310px;
+        padding: 25px;
+      }
+      .content-writer {
+        width: 130px;
+      }
+      .content-date {
+        width: 150px;
+      }
+      .content-hit {
+        width: 100px;
 
-
-
-      /* 상단 멤버 정보 끝*/
-
-
-      /* ========== 작업끝 ========== */
+      }
+      .content-reply-state {
+        width: 120px;
+      }
+      .content-scope {
+         width: 130px;
+      }
+      .content-deleteBtn {
+         width: 50px;
+      }
     
       #topmenu_left,
       #topmenu_right {
@@ -260,8 +238,7 @@
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: absolute;
-        top:10px;
+        position: relative;
         right: 10px;
         float: right;
         z-index: 3;
@@ -325,19 +302,19 @@
     </style>
     
     <!-- csrf meta tag -->
-	<meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+   <meta name="_csrf" content="${_csrf.token}"/>
+   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <script>
     
- 	// csrf
+    // csrf
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     
-  	//Ajax spring security header..
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(header, token);
-	});
+     //Ajax spring security header..
+   $(document).ajaxSend(function(e, xhr, options){
+      xhr.setRequestHeader(header, token);
+   });
     
     
       /*페이지 상단 이동*/
@@ -352,41 +329,42 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 900);
+            .animate({ top: position + currentPosition + "px" }, 1000);
         });
-		
+      
         $('.reply-state:contains(답변완료)').css("color", "dodgerblue");
         $('.reply-state:contains(답변대기)').css("color", "tomato");
         
         /* 개별 공지사항 삭제 비동기 */
-        $('.delete').on('click', function(event){
-        	event.preventDefault();
-        	
-        	
-        	//var id = $(this).find('.delete').parent();
-        	let trObj = $(this).parent().parent();
-        	console.log("주소 : " + $(this).attr("href"));
-        	$.ajax({
-        		type: "DELETE",
-        		url : $(this).attr("href"),
-        		beforeSend: function(xhr) {
+        $('.deleteButton').on('click', function(event){
+           event.preventDefault();
+           
+           
+           //var id = $(this).find('.delete').parent();
+           let trObj = $(this).parent().parent();
+           console.log("주소 : " + $(this).attr("href"));
+           $.ajax({
+              type: "DELETE",
+              url : $(this).attr("href"),
+              beforeSend: function(xhr) {
                     xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
                  },
-	        	success : function(data) {
-	        		if(data == "SUCCESS"){
-	        			alert("삭제완료");
-		        		$(trObj).remove();
-	        		}
-	        		
-        	},
-        	error : function(e) {
-        		console.log(e);
-        	}
-        	});
+              success : function(data) {
+                 if(data == "SUCCESS"){
+                    alert("삭제완료");
+                    $(trObj).remove();
+                 }
+                 
+           },
+           error : function(e) {
+              console.log(e);
+           }
+           });
         });
 
         
-        
+        $('.content-reply-state:contains(답변완료)').css("color", "dodgerblue");
+        $('.content-reply-state:contains(답변대기)').css("color", "tomato");
         
 
 
@@ -398,14 +376,14 @@
 <body>
 
 <header>
-	<!-- ======================== 배너 =========================== -->
-	<div>
-    	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
+   <!-- ======================== 배너 =========================== -->
+   <div>
+       <nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
         </nav>
     </div>
 
-	<!-- ======================== 상단 메뉴 =========================== -->
+   <!-- ======================== 상단 메뉴 =========================== -->
     <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
           <button
@@ -438,51 +416,51 @@
              
  
             <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  ${userName }님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  type="button"
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+         <sec:authorize access="isAuthenticated()">
+         <div style="align-self:center">
+           <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+         </div>
+           <a 
+           class="nav-link" 
+           type="button"
+           onclick="document.getElementById('logout-form').submit();"
+           >로그아웃</a>
+           <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+              <input type="hidden"/>
+           </form:form>
+           
+           <!-- 관리자 -->
+            <sec:authorize access="hasRole('ROLE_ADMIN')">               
+               <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+                   <a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>            
+           <!-- 회원 -->
+             <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
-			</sec:authorize>             
+         </sec:authorize>             
              
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
 
 
-		<!-- ======================== 로고 =========================== -->
+      <!-- ======================== 로고 =========================== -->
         <center>
-        	<div id="logo" style="width: 12rem">
+           <div id="logo" style="width: 12rem">
               <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
-	</nav>
+   </nav>
   </div><!-- container -->
       
 </header>
     
 <!-- ======================== 하단 메뉴 =========================== -->
-	
-	<div class="category shadow">
+   
+   <div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
@@ -556,7 +534,7 @@
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
 
-	<!-- ======================== 캐러셀 =========================== -->
+   <!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -597,8 +575,8 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
-	  <!-- ======= 장바구니 ======= -->
+   <main>
+     <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
@@ -608,15 +586,15 @@
           
           <!-- 장바구니에 있는 상품 표시 -->
             <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
-				로그인 후 사용 가능합니다.
+            로그인 후 사용 가능합니다.
             </sec:authorize>
    
-			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
-		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
-		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
-			  </c:forEach>
-			</sec:authorize>            
+         <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+           <c:forEach var="cart" items="${cartProductList}" >
+              <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
+              <img class="pt-1" src="${cart.path}" id="sideimg"/></a>         
+           </c:forEach>
+         </sec:authorize>            
 
           </div>
         </div>
@@ -655,102 +633,114 @@
            <!-- ========== 공지사항 ========== -->
            
   
-          <div class="board__container">
+           <!-- 문의사항 홈 -->
+        
             
-            
-            <div class="contents__table">
-              <nav id="navigation">
-                <p style="font-size: 24px; font-weight: bold;">고객센터</p>
-                <ul>
-                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold text-warning">공지사항<span>></span></a></li>
-                  <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
-                  <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
-                </ul>
-              </nav>
-              
-              <table style="position: relative;">
-                <p style="font-size: 30px; font-weight: bold;">문의</p>
-                <tr class="border-bottom">
-                  <th class="text-center">문의종류</th>
-                  <th class="text-center">제목</th>
-                  <th class="text-center">작성자</th>
-                  <th class="text-center">작성일자</th>
-                  <th class="text-center">조회</th>
-                  <th class="text-center">답변상태</th>
-                  <th></th>
-                </tr>
+        <div class="center">
+          <div class="center__container d-flex justify-content-center">
+            <nav id="navigation" class="pt-2">
+              <ul>
+                <p style="font-size: 20px; font-weight: bold;">고객센터</p>
+                <li><a href="${pageContext.request.contextPath}/board/noticeHome">공지사항<span>></span></a></li>
+                <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0 font-weight-bold">문의사항<span>></span></a></li>
+                <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
+              </ul>
+            </nav>
+            <div class="board__container ml-5">
+              <div class="board mb-5">
+                <p style="font-size: 30px; font-weight: bold;">문의사항</p>
+                <div class="board-title d-flex">
+                  <div class="type">문의종류</div>
+                  <div class="title">제목</div>
+                  <div class="writer">작성자</div>
+                  <div class="date">작성일</div>
+                  <div class="hit">조회</div>
+                  <div class="reply-state">답변상태</div>
+                  <div class="scope">공개여부</div>
+                  <div class="deleteBtn"></div>
+                  
+                </div>
                 <c:forEach var="inquiry" items="${BoardPaging}">
-	                <tr>
-	                  <td class="text-center">[${inquiry.sort}]</td>
-	                  <td class="text-center">    	
-                  		<c:if test="${inquiry.scope == '비공개'}">
-                  			<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
-								<i class="fa fa-lock"></i> ${inquiry.title}
-							</sec:authorize>
-							<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>
-							 	<sec:authentication property="principal.memberVO" var="member"/>
-								<c:if test="${member.id eq inquiry.member_id}">
-									<a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
-								</c:if>
-								<c:if test="${member.id ne inquiry.member_id}">
-									<c:choose>	 
-										<c:when test="${member.authList[1].authority eq 'ROLE_ADMIN' || member.authList[0].authority eq 'ROLE_ADMIN'}">
-											<a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
-										</c:when>
-										<c:otherwise>
-											<i class="fa fa-lock"></i> ${inquiry.title}
-										</c:otherwise>
-									</c:choose>
-								</c:if>
-                  			</sec:authorize>
-                  		</c:if> <%-- if 비공개 --%>
-                  		<c:if test="${inquiry.scope == '공개'}">
-                  			<a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
-                  		</c:if>         	
-	                  </td>
-	                  <td class="text-center">${inquiry.nickname}</td>
-	                  <td class="text-center">${inquiry.board_date}</td>
-	                  <td class="text-center complete">${inquiry.hit}</td>
-	                  <c:choose>
-	                  	<c:when test="${inquiry.count eq 0}">
-	                  	  <td class="text-center reply-state">답변대기</td>
-	                  	</c:when>
-						<c:otherwise>
-						  <td class="text-center reply-state">답변완료</td>
-						</c:otherwise>	                  
-	                  </c:choose>              
-	                </tr>
-                </c:forEach>
-                <tr class="border-top">
-                  <td colspan="5" class="text-center">
-		              <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
 
-		              </sec:authorize>
-			          <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-					    <a href="${pageContext.request.contextPath}/board/user/inquiry_write_view" class="btn btn-outline-secondary mt-3">문의글작성</a>
-					  </sec:authorize>                   
-                  </td>
-                </tr>
-              </table>
+                  <div class="board-content d-flex">
+                    <div class="content-type">[${inquiry.sort}]</div>
+                    <div class="content-title">
+                      <c:if test="${inquiry.scope == '비공개'}">
+                  			<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
+                            <i class="fa fa-lock"></i> ${inquiry.title}
+                          </sec:authorize>
+                          <sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>
+                            <sec:authentication property="principal.memberVO" var="member"/>
+                            <c:if test="${member.id eq inquiry.member_id}">
+                              <a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
+                            </c:if>
+                            <c:if test="${member.id ne inquiry.member_id}">
+                              <c:choose>	 
+                                <c:when test="${member.authList[1].authority eq 'ROLE_ADMIN' || member.authList[0].authority eq 'ROLE_ADMIN'}">
+                                  <a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
+                                </c:when>
+                                <c:otherwise>
+                                  <i class="fa fa-lock"></i> ${inquiry.title}
+                                </c:otherwise>
+                              </c:choose>
+                            </c:if>
+                          </sec:authorize>
+                          </c:if> <%-- if 비공개 --%>
+                          <c:if test="${inquiry.scope == '공개'}">
+                            <a href="${pageContext.request.contextPath}/board/user/inquiry_content_view/${inquiry.id}">${inquiry.title}</a>
+                          </c:if>
+                    </div>
+                    <div class="content-writer">${inquiry.nickname}</div>
+                    <div class="content-date">${inquiry.board_date}</div>
+                    <div class="content-hit">${inquiry.hit}</div>
+                    <c:choose>
+                        <c:when test="${inquiry.count eq 0}">
+                          <div class="text-center content-reply-state">답변대기</div>
+                        </c:when>
+                      <c:otherwise>
+                      <div class="text-center content-reply-state">답변완료</div>
+                      </c:otherwise>                     
+                     </c:choose> 
+            <div class="content-scope">${inquiry.scope}</div>                   
+            <div class="content-deleteBtn">
+               <a href="${pageContext.request.contextPath}/board/admin/inquiry_notice/${inquiry.id}" class="deleteButton"><img src="${pageContext.request.contextPath}/imgs/close_img.png" width="30px"/></a>
+            </div>                   
+                  </div>
+                   </c:forEach>
+
+                <div class="board-footer border-bottom"></div>
+                
+                <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+                   <div class="d-flex justify-content-center">
+                   <a href="${pageContext.request.contextPath}/board/user/inquiry_write_view" class="btn btn-outline-secondary mt-3">문의글작성</a></div>
+                 </sec:authorize> 
+              </div>
+              <div class="paging__container d-flex">
+                <c:if test="${pageMaker.pre}">
+         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+      </c:if>
+   
+      <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+      <c:forEach var="idx" begin="${pageMaker.startPage }"
+         end="${pageMaker.endPage }">
+         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
+      </c:forEach>
+   
+      <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+      </c:if>
+              </div>
             </div>
-            
           </div>
+        </div>            
+
+
+            
+        <!-- 문의사항 홈 끝 -->
           
-	          <!-- 공지사항 끝 -->
-		<c:if test="${pageMaker.pre}">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-		</c:if>
-	
-		<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
-		<c:forEach var="idx" begin="${pageMaker.startPage }"
-			end="${pageMaker.endPage }">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
-		</c:forEach>
-	
-		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
-		</c:if>
-	    
+             <!-- 공지사항 끝 -->
+      
+       
     </main>
     
     

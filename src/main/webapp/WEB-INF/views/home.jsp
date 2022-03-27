@@ -132,7 +132,6 @@
       /* 사이드바 */
       main {
         position: relative;
-        top: 0px;
       }
       .sidebar {
         margin-top: 10px;
@@ -215,7 +214,8 @@
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 900);
+            .animate({ top: position + currentPosition + "px" }, 1000);
+          console.log("currentPosition : " + currentPosition);
         });
       });
 
