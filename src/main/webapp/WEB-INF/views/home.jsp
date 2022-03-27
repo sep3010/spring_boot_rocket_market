@@ -30,7 +30,11 @@
 
     
 <style>
-
+	.card img {
+		max-width: 100%;
+		height: 230px;
+		
+	}
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -247,7 +251,6 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
             </div>
             
             <!-- 로그인을 안했다면 -->
@@ -521,15 +524,14 @@
           <h2 class="text-center pb-3" style="font-weight: bold">Best 인기 상품</h2>
 
         <div class="card-deck pb-5">
-          <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
+          <c:forEach var="best" items="${bestList}" varStatus="status" begin="0" end="3">
           <div class="card">
-             <c:forEach var="image" items="${newList.productImages}">
-             <a href=""><img src="${image.path}" class="card-img-top" alt="..." /></a>
-             </c:forEach>
+             <a href="${pageContext.request.contextPath}/product/productView/${best.id}">
+             <img src="${best.path}" class="card-img-top" alt="..." /></a>
             <div class="card-body pl-1" style="border: none;">
-              <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
+              <h6 class="card-title">[${best.brand}] ${best.name}</h6>
               <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
+              <div class="price"><fmt:formatNumber value="${best.price}" pattern="#,###"/>원
               </div>
               </p>
             </div><!-- card-body -->

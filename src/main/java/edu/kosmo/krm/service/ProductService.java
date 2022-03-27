@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kosmo.krm.joinVO.JoinBestProductVO;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.vo.ProductVO;
@@ -26,8 +27,8 @@ public interface ProductService {
 	public ProductVO getProductContent(ProductVO productVO);
 	
 	/*유빈*/
-	// 베스트상품목록 (판매수량이 많은 순)==============================
-	public List<ProductVO> getBestProductList(CriteriaP criteria);
+	// 베스트상품목록 (후기가 존재하고, 후기점수가 높은 순)==============================
+	public List<JoinBestProductVO> getBestProductList(CriteriaP criteria);
 
 	public int getBestProductTotal(); //개수
 	

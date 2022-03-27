@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import edu.kosmo.krm.joinVO.JoinBestProductVO;
 import edu.kosmo.krm.page.Criteria;
 import edu.kosmo.krm.page.CriteriaP;
 import edu.kosmo.krm.vo.ProductImageVO;
@@ -29,10 +30,8 @@ public interface ProductMapper {
 	public ProductVO getProduct(int id);//상품한개
 	
 	/*상품목록======================================================*/
-	// 베스트상품목록 (판매수량이 많은 순)
-	public List<ProductVO> getBestProductList(CriteriaP criteria);
-	
-	@Select("SELECT COUNT(*) FROM (SELECT product_id, SUM(quantity) AS quantity FROM product_sales GROUP BY product_id ORDER BY quantity DESC)")
+	// 베스트상품목록 (후기가 존재하고, 후기점수가 높은 순)
+	public List<JoinBestProductVO> getBestProductList(CriteriaP criteria);
 	public int getBestProductTotalCount(); //개수
 	
 	// 할인상품목록 (할인율이 제일 큰 순서로)

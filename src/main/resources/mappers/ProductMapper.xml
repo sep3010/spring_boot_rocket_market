@@ -107,27 +107,44 @@
       ]]>
 	</select>
 	
-	<!-- 베스트상품목록 페이지에서 정기배송상품 리스트와 해당상품 이미지 불러오기 -->
-	<select id="getBestProductList" parameterType="map"
-		resultMap="productMap">
-	  <![CDATA[
-            SELECT * FROM (
+	<!-- 베스트상품목록 페이지에서 상품정보와 해당상품 이미지 불러오기(후기등록이 되어있고, 점수별) -->
+	<select id="getBestProductList" resultType="edu.kosmo.krm.joinVO.JoinBestProductVO">
+	   <![CDATA[
+              SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
-                       SELECT * FROM product p 
-                        LEFT JOIN (SELECT id AS image_id,
-                        product_id, extension, name AS image_name,
-                        information_type, path FROM product_image  
-                        WHERE information_type = 'main') i
-                        ON p.id = i.product_id 
-                        LEFT JOIN (SELECT product_id, SUM(quantity) AS quantity
-                        FROM product_sales GROUP BY product_id ORDER BY quantity DESC) s
-                        ON p.id = s.product_id
-                        WHERE s.quantity IS NOT NULL
-                        ORDER BY s.quantity DESC 
+				 SELECT * FROM (SELECT * FROM product p 
+				   LEFT JOIN (SELECT id AS image_id,
+				 	product_id, extension, name AS image_name,
+					information_type, path FROM product_image  
+					WHERE information_type = 'main') i
+				   ON p.id = i.product_id
+				   LEFT JOIN (
+    				SELECT od.product_id AS score_product_id, AVG(b.score) AS product_score
+    				FROM order_detail od, order_detail_board odb, board b, member m
+    				WHERE od.id = odb.order_detail_id 
+    				AND odb.board_id = b.id
+    				AND b.member_id = m.id
+    				GROUP BY od.product_id) s
+				   ON p.id = s.score_product_id
+				   ORDER BY s.product_score DESC)
+				 WHERE score_product_id IS NOT NULL
               ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          	) WHERE RNUM > (#{pageNum}-1) * #{amount}
-      ]]>
+	   ]]>
 	</select>	
+	
+	<!-- 베스트상품목록 페이지에서 해당상품 개수 불러오기(후기등록이 되어있고, 점수별) -->
+	<select id="getBestProductTotalCount" resultType="int">
+	   <![CDATA[
+			SELECT COUNT(*) FROM(
+			    SELECT od.product_id AS score_product_id, AVG(b.score) AS product_score
+			    FROM order_detail od, order_detail_board odb, board b, member m
+			    WHERE od.id = odb.order_detail_id 
+			    AND odb.board_id = b.id
+			    AND b.member_id = m.id
+			    GROUP BY od.product_id)
+	   ]]>
+	</select>
 	
 	<!-- 할인상품목록 페이지에서 할인상품 리스트와 해당상품 이미지 불러오기 -->
 	<select id="getSaleProductList" parameterType="map"

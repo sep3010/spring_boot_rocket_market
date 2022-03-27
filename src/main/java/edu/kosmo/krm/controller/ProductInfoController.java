@@ -212,7 +212,7 @@ public class ProductInfoController {
 				e.printStackTrace();
 			}				
 		}
-		view.setViewName("/product/list");
+		view.setViewName("/product/bestList");
 		return view;
 	}
 
