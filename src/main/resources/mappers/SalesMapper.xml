@@ -6,18 +6,66 @@
 
 <mapper namespace="edu.kosmo.krm.mapper.SalesMapper">
 
-	<resultMap id="salesMap" type="edu.kosmo.krm.vo.ProductSalesVO">	
+	<resultMap id="productSalesMap" type="edu.kosmo.krm.vo.ProductSalesVO">	
 		<result property="product_id" column="product_id" />
 		<result property="quantity" column="quantity" />
 		<result property="sales_date" column="sales_date" />
 	</resultMap>
 	
+	<resultMap id="salesMap" type="edu.kosmo.krm.vo.SalesVO">	
+		<result property="sale_year" column="year" />
+		<result property="sale_month" column="month" />
+		<result property="sale_day" column="day" />
+		<result property="sum" column="sum" />
+	</resultMap>
 	
-	<select id="" resultMap="salesMap">
+	
+	<select id="getDailySales" resultMap="salesMap">
 		<![CDATA[
-			
+			SELECT 
+			    EXTRACT(DAY FROM mo.order_date) AS "day",
+			    NVL(SUM(mo.amount), 0) AS "sum"
+			FROM 
+			    member_order mo
+			WHERE 
+			    EXTRACT(YEAR FROM mo.order_date) = #{year} 
+			AND 
+			    EXTRACT(MONTH FROM mo.order_date) = #{month}
+			GROUP BY 
+			    EXTRACT(DAY FROM mo.order_date)
+			ORDER BY 
+			    EXTRACT(DAY FROM mo.order_date)
 		]]>
 	</select>	
 	
+	<select id="getMonthlySales" resultMap="salesMap">
+		<![CDATA[
+			SELECT
+			    EXTRACT(MONTH FROM mo.order_date) AS "month",
+			    NVL(SUM(mo.amount), 0) AS "sum"
+			FROM 
+			    member_order mo
+			WHERE 
+			    EXTRACT(YEAR FROM mo.order_date) = #{year} 
+			GROUP BY 
+			    EXTRACT(MONTH FROM mo.order_date)
+			ORDER BY 
+			     EXTRACT(MONTH FROM mo.order_date)
+		]]>
+	</select>
+	
+	<select id="getYearlySales" resultMap="salesMap">
+		<![CDATA[
+			SELECT
+			    EXTRACT(YEAR FROM mo.order_date) AS "year",
+			    NVL(SUM(mo.amount), 0) AS "sum"
+			FROM 
+			    member_order mo
+			GROUP BY 
+			    EXTRACT(YEAR FROM mo.order_date)
+			ORDER BY 
+			    EXTRACT(YEAR FROM mo.order_date)
+		]]>
+	</select>	
 
 </mapper> 

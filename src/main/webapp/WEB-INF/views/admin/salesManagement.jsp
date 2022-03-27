@@ -193,21 +193,74 @@
       xhr.setRequestHeader(header, token);
    });
    
+   let daySales = '${daySales}';
+   console.log("daySales : " + daySales);
+   let monthSales = '${monthSales}';
+   console.log("monthSales : " + monthSales);
+   let yearSales = '${yearSales}';
+   console.log("yearSales : " + yearSales);
+   
+   
+   google.charts.load('current', {'packages':['corechart']});
+   google.charts.setOnLoadCallback(drawChart);
+   
+   function check(){
+	   let year = $("#year").val();
+	   console.log(year);
+	   let month = $("#month").val();
+	   console.log(month);
+	   
+	   let checkValue = [
+		   if(year == "전체"){
+	    		 <c:forEach var="ySales" items="${yearSales}" varStatus="vs">
+		    		 
+			 				[${ySales.sale_year}, ${ySales.sum}],
+			 			<c:if test="${status.last}">
+			 				[${ySales.sale_year}, ${ySales.sum}]
+			 			</c:if>
+			 		
+	    		 </c:forEach>
+	    	 }
+		   
+	   ]
+	   
+	   console.log("checkValue : " + checkValue);
+	   
+   }
+   
 
-   $(document).ready(function(){      
-      
-      $(".productPopUp").on("click", function(event){
-         event.preventDefault();
-         
-         let popURL = $(this).attr("href");
-         console.log("popURL : " + popURL);
-         
-         let popUp = window.open(popURL, '상품 상세',
-               'top=20, left=300, width=800px, height=700px, scrollbars=yes');         
-      });
-            
-                       
-   }); //end ready()
+   function drawChart() {
+	  
+	   
+     var data = google.visualization.arrayToDataTable([
+    	 
+    	 ['Year', '합계(원)'],
+    	 <c:forEach var="sales" items="${daySales}" varStatus="vs">
+	 		<c:forEach var="sale" items="${sales}" varStatus="status">
+	 			<c:if test="${sale.sale_year == 2022 && sale.sale_month == 3}">
+	 				[${sale.sale_day}, ${sale.sum}],
+	 			</c:if>
+	 			<c:if test="${status.last}">
+	 				[${sale.sale_day}, ${sale.sum}]
+	 			</c:if>
+	 		</c:forEach>
+	   	</c:forEach>
+    	 
+     ]);
+
+     var options = {
+       title: '매출 차트',
+       curveType: 'function',
+       legend: { position: 'bottom' }
+     };
+
+     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+     chart.draw(data, options);
+   }
+   
+   
+
    
 </script>
 
@@ -286,6 +339,38 @@
 </header>
 
     <div class="pt-5 pb-5 mr-5 ml-5">
+    	<select name="year" id="year">
+    		<option value="전체">${currentYear - 5} ~ ${currentYear}년</option>
+    		<option value="${currentYear - 5}">${currentYear - 5}년</option>
+    		<option value="${currentYear - 4}">${currentYear - 4}년</option>
+    		<option value="${currentYear - 3}">${currentYear - 3}년</option>
+    		<option value="${currentYear - 2}">${currentYear - 2}년</option>
+    		<option value="${currentYear - 1}">${currentYear - 1}년</option>
+    		<option value="${currentYear}" selected="selected">${currentYear}년</option>
+    	</select>
+    	<select name="month" id="month">
+    		<option value="전체">1~12월</option>
+    		<option value="1">1월</option>
+    		<option value="2">2월</option>
+    		<option value="3" selected="selected">3월</option>
+    		<option value="4">4월</option>
+    		<option value="5">5월</option>
+    		<option value="6">6월</option>
+    		<option value="7">7월</option>
+    		<option value="8">8월</option>
+    		<option value="9">9월</option>
+    		<option value="10">10월</option>
+    		<option value="11">11월</option>
+    		<option value="12">12월</option>
+    	</select>
+    	<button id="select" onclick="ckeck()">확인</button>
+    	<p>${currentYear - 5} ~ ${currentYear}년을 선택하면 연도별 매출을 확인할 수 있습니다.</p>
+    	<p>연도를 선택하고, 1~12월을 선택하면 해당 연도의 월별 매출을 확인할 수 있습니다.</p>
+    	<p>연도를 선택하고, 월을 선택하면 해당 연도, 해당 월의 일별 매출을 확인할 수 있습니다.</p>
+  
+      	
+      	
+      	<div id="curve_chart" style="width: 900px; height: 500px"></div>
       	
       	
       	
