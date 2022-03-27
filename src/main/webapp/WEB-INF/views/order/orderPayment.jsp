@@ -618,7 +618,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                  
               </div>
      
-                <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount-1 }건</p>
+                <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount }건</p>
                 <div class="col-12 d-flex order-group pb-3">
 					<table width="950" cellpadding="0" cellspacing="0" class="product_table" style="border: none;">
 
