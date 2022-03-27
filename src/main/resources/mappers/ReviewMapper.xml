@@ -76,7 +76,7 @@
 	   <![CDATA[
 				SELECT count(*) FROM board B 
    						WHERE b.board_category_id = 3 
-   						AND b.member_id = 1
+   						AND b.member_id = #{id}
 	   ]]>
 	</select>
 	

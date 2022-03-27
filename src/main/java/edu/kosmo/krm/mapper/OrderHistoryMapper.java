@@ -25,7 +25,7 @@ public interface OrderHistoryMapper {
 	List<MemberOrderVO> getMemberOrderHistory(@Param("criteria") Criteria criteria, @Param("memberVO") MemberVO memberVO);
 	
 	// 회원 주문 상세 조회
-	List<MemberOrderVO> getMemberOrderDetail(@Param("order_id") long order_id, @Param("user_id") int user_id);
+	MemberOrderVO getMemberOrderDetail(@Param("order_id") long order_id, @Param("user_id") int user_id);
 	
 	// 주문 상세번호에 해당하는 상품 이름과 썸네일 이미지 조회
 	ProductVO getProductAndImage(OrderDetailBoardVO detailBoardVO);

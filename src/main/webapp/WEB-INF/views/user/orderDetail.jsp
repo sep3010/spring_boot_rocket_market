@@ -33,46 +33,45 @@
           
             <h2 class="pb-3" style="font-weight: bold;"> 주문 상세 내역 </h2>
             <table class="table table-bordered">
-              <c:forEach var="order" items="${orderDetail}" varStatus="vs">
-				<c:if test="${vs.first}">
+            <c:set var="order" value="${orderDetail}"/>
+				<tr>
+					<td>주문번호</td>
+					<td colspan="2">${order.order_id}</td>
+					<td>주문일자</td>
+					<td>${order.order_date}</td>
+					<td>배송상태</td>
+					<td td colspan="6">${order.status}</td>
+				</tr>
+				<c:forEach var="deliveryInfo" items="${order.delivery}">						
 					<tr>
-						<td>주문번호</td>
-						<td colspan="2">${order.order_id}</td>
-						<td>주문일자</td>
-						<td>${order.order_date}</td>
-						<td>배송상태</td>
-						<td td colspan="6">${order.status}</td>
+						<td>받는 사람</td>
+						<td colspan="2">${deliveryInfo.receiver}</td>
+						<td>연락처</td>
+						<td colspan="8">${delivery.phone}</td>
 					</tr>
-					<c:forEach var="deliveryInfo" items="${deliveryInfo}">						
-						<tr>
-							<td>받는 사람</td>
-							<td colspan="2">${deliveryInfo.receiver}</td>
-							<td>연락처</td>
-							<td colspan="8">${delivery.phone}</td>
-						</tr>
-						<tr>
-							<td>우편번호</td>
-							<td colspan="2">${delivery.postcode}</td>
-							<td>주소</td>
-							<td colspan="8">${delivery.address}</td>
-						</tr>
-						<tr>
-							<td>배송 메세지</td>
-							<td colspan="2">${deliveryInfo.message}</td>
-							<td>운송장번호</td>
-							<td colspan="8">${delivery.delivery_number}</td>
-						</tr>						
-					</c:forEach><%-- <c:forEach var="delivery"> --%>
 					<tr>
-						<td colspan="3">상품</td>
-						<td>할인율</td>
-						<td>가격</td>
-						<td>수량</td>
-            <td colspan="3">구매 후기</td>
+						<td>우편번호</td>
+						<td colspan="2">${delivery.postcode}</td>
+						<td>주소</td>
+						<td colspan="8">${delivery.address}</td>
 					</tr>
-				</c:if><%-- <c:if test="${vs.first}"> --%>
+					<tr>
+						<td>배송 메세지</td>
+						<td colspan="2">${deliveryInfo.message}</td>
+						<td>운송장번호</td>
+						<td colspan="8">${delivery.delivery_number}</td>
+					</tr>						
+				</c:forEach><%-- <c:forEach var="delivery"> --%>
+				<tr>
+					<td colspan="3">상품</td>
+					<td>할인율</td>
+					<td>가격</td>
+					<td>수량</td>
+           			<td colspan="3">구매 후기</td>
+				</tr>
+			
 				
-				<c:forEach var="detail" items="${order.orderDetails}">
+				<c:forEach var="detail" items="${order.orderDetails}" varStatus="vs">
 					<c:forEach var="product" items="${detail.products}">
 						<form:form action="${pageContext.request.contextPath}/user/review_write" method="post">
 							<tr>
@@ -86,11 +85,11 @@
 								<td>${product.price}</td>
 								<td>${detail.quantity}</td>
 								<c:if test="${not empty boardIds}">
-								<c:forEach var="board" items="${boardIds}" varStatus="status">	
+								<c:forEach var="board" items="${boardIds}" varStatus="status" begin="0" end="0">	
 									<c:choose>
-										 <c:when test="${orderDetail[vs.index].orderDetails[0].order_detail_id == boardIds[status.index].order_detail_id}">
+										 <c:when test="${orderDetail.orderDetails[vs.index].order_detail_id == boardIds[vs.index].order_detail_id}">
 										 	<td>
-												<a href="${pageContext.request.contextPath}/user/review_content/${boardIds[status.index].board_id}">후기 보기</a>
+												<a href="${pageContext.request.contextPath}/user/review_content/${boardIds[vs.index].board_id}">후기 보기</a>
 											</td>
 										 </c:when>
 										<c:otherwise>
@@ -124,7 +123,7 @@
 						<td td colspan="8"><fmt:formatNumber value="${order.amount}" pattern="#,###"/></td>
 					</tr>
 				</c:if><%-- <c:if test="${vs.last}"> --%>
-			</c:forEach><%-- <c:forEach var="order"> --%>
+			
             </table>
 
         </div><!-- container -->

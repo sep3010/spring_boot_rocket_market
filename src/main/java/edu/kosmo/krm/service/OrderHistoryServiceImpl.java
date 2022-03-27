@@ -30,9 +30,15 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 		log.info("getMemberOrderHistory()..");
 		return orderHistoryMapper.getMemberOrderHistory(criteria, memberVO);
 	}
-
+	/*
 	@Override
 	public List<MemberOrderVO> getMemberOrderDetail(long order_id, int user_id) {
+		log.info("getMemberOrderDetail()..");
+		return orderHistoryMapper.getMemberOrderDetail(order_id, user_id);
+	}
+	*/
+	@Override
+	public MemberOrderVO getMemberOrderDetail(long order_id, int user_id) {
 		log.info("getMemberOrderDetail()..");
 		return orderHistoryMapper.getMemberOrderDetail(order_id, user_id);
 	}

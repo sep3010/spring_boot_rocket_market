@@ -108,7 +108,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int getReviewBoardId(OrderDetailBoardVO detailBoardVO) {
-		log.info("getReviewBoardId()..==========" + detailBoardVO);
+		log.info("getReviewBoardId()..");
 		return reviewMapper.getReviewBoardId(detailBoardVO);
 	}
 
