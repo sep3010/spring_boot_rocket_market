@@ -309,10 +309,10 @@
           height: 35px;
           border: 1px solid lightgray;
           font-size: 20px;
-          color: dodgerblue;
+          color: black;
       }
       #pre:hover, #next:hover, #page_number:hover {
-          background: dodgerblue;
+          background: #eeddbe;
           color: #fff;
           transition: .3s;
       }
@@ -322,14 +322,10 @@
       }
       
       #next {
-        border-left: none;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
       }
-      #page_number {
-        border-left: none;
-		
-      }
+      
       
       /*상품 박스*/
       #product{

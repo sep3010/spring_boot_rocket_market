@@ -117,7 +117,7 @@
       padding: 10px;
     }
 
-    #navigation a:hover {
+    a:hover {
       color: orange;
       font-weight: bold;
 
@@ -204,6 +204,8 @@
         letter-spacing: 5px;
       }
       
+      
+      
 
 
       body {
@@ -213,7 +215,7 @@
         text-decoration: none !important;
         color: black;
       }
-      .center__container a:hover {
+      a:hover {
         color: orange;
         font-weight: bold;
       }
@@ -244,17 +246,17 @@
       
       .myPage-title {
         width: 940px;
-        border-bottom: 2px solid gray;
       }
       .list-items img {
         border-radius: 5px;
         margin-right: 10px;
       }
       .myPage-content {
+        border-top: 2px solid gray;      
         border-bottom: 1px solid lightgray;
       }
       
-  
+  	     
       
       
 
@@ -735,11 +737,11 @@
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>0 건</p>
+                <p>${orderCount} 건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>0 개</p>
+                <p>${couponCount} 개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -754,9 +756,9 @@
           <nav id="navigation" class="pt-2">
             <ul>
               <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-              <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/" class="border-top-0">쿠폰목록<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/user/orderhistory">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0 font-weight-bold">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
             </ul>
           </nav>
           
@@ -770,7 +772,7 @@
 			<c:forEach var="wishlist" items="${wishProductList}" >
               	<div class="list-items d-flex justify-content-between align-items-center p-3">
                 <div class="item-left d-flex">
-                  <img src="${wishlist.path}" width="80px">
+                  <img src="${wishlist.path}" width="80px" height="80px">
                   <div class="list-information">
                     <p style="font-size:20px;"><span style="font-weight: bold;">[${wishlist.brand}] ${wishlist.name}</span><br>
                       <span class="text-warning font-weight-bold mr-2">${wishlist.discount}%</span>
@@ -782,7 +784,7 @@
                   </div>
                 </div>
                 <div class="item-right pr-3">
-                  <a href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}">
+                  <a href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}" class="productDelete">
                     <img src="/imgs/close_img.png" alt="" width="35px">
                   </a>
                 </div>
@@ -791,6 +793,8 @@
               <!-- ↑↑↑↑↑↑↑↑↑↑ FOREACH-->
               
             </div>
+            
+            
           </div>
       </div>          
         
@@ -856,9 +860,13 @@ $(document).ready(function(){
 		$.ajax({
 			type: "DELETE",
 			url : $(this).attr("href"),
+			 beforeSend: function(xhr) {
+                 xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+             },
 			success : function(result){
 				console.log(result);
 				if(result == "SUCCESS"){
+					alert("삭제완료")
 					$(trObj).remove();	
 				}
 			},

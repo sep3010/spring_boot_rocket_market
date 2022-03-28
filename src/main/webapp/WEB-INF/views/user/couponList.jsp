@@ -493,8 +493,6 @@
      	$('.useState:contains(사용가능)').css("color", "dodgerblue");
         $('.useState:contains(사용불가)').css("color", "tomato");
 
-        $('#couponUnit').text($('.coupon').length);
-        $('#my-coupon').text($('.coupon').length);
         
         
      	
@@ -773,7 +771,7 @@
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p><span id="my-coupon"></span> 개</p>
+                <p>${couponCount} 개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -788,15 +786,15 @@
         <nav id="navigation" class="pt-2">
           <ul>
             <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-            <li><a href="">주문내역<span>></span></a></li>
-            <li><a href="" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="" class="border-top-0 font-weight-bold">쿠폰목록<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/orderhistory">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList"" class="border-top-0">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>"" class="border-top-0 font-weight-bold">쿠폰목록<span>></span></a></li>
           </ul>
         </nav>
 
         <div class="myPage__container pl-5">
           <div class="myPage-title pb-1">
-            <p style="font-size: 30px; font-weight: bold;">쿠폰목록 ( <span id="couponUnit"></span> )</p>
+            <p style="font-size: 30px; font-weight: bold;">쿠폰목록 ( <span id="couponUnit">${couponCount}</span> )</p>
           </div>
           <div class="row myPage-content d-flex">
 

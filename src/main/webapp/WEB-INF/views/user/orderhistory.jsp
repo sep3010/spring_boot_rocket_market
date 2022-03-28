@@ -153,7 +153,6 @@
     box-sizing: border-box;
     padding: 10px 0;
     color: gray;
-    border: 1px solid;
   }
   .history-content:last-child {
     border-bottom: 1px solid lightgray;
@@ -199,6 +198,45 @@
     width: 15%;
 
   }
+  
+        /* 페이징 스타일 */
+      .paging__container {
+          display: flex;
+          justify-content: center;
+
+      }
+      #pre, #next, .page_number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 35px;
+          height: 35px;
+          border: 1px solid lightgray;
+          font-size: 20px;
+          color: black;
+      }
+      #pre:hover, #next:hover, .page_number:hover {
+          background: #eeddbe;
+          color: #fff;
+          transition: .3s;
+      }
+      #pre {
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+      }
+      
+      #next {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+      .page_number {
+        color: black;
+      }
+      
+      .page_number:hover {
+        color: #fff;
+        background-color: #eeddbe;
+      }
       
       
 
@@ -679,11 +717,11 @@
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>0 건</p>
+                <p>${orderCount} 건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>0 개</p>
+                <p>${couponCount} 개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -700,10 +738,9 @@
             <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
             <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
             <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/" class="border-top-0">쿠폰목록<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
           </ul>
         </nav>
-
         <div class="myPage__container pl-5">
           <div class="myPage-title pb-1">
             <p style="font-size: 30px; font-weight: bold;">주문내역 ( <span id="wishUnit"></span> )</p>
@@ -740,7 +777,7 @@
 			            </c:forEach> 
               <div class="tds td-price"><fmt:formatNumber value="${order.amount}" pattern="#,###"/>원</div>
               <div class="tds td-state">${order.status}</div>
-              <div class="tds td-detail"><a href="${pageContext.request.contextPath}/user/orderDetail/${order.order_id}">상세 내역보기</a></div>
+              <div class="tds td-detail"><a href="${pageContext.request.contextPath}/user/orderDetail/${order.order_id}" class="orderDetail">상세 내역보기</a></div>
             </div>
             </c:forEach>
             
@@ -752,7 +789,7 @@
 		            «</a>
 		          </c:if>
 		          <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(idx)}" id="page_number">${idx}</a>
+		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(idx)}" class="page_number">${idx}</a>
 		          </c:forEach>
 		          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(pageMaker.endPage +1) }" id="next">
