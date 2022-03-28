@@ -89,6 +89,7 @@ public interface ProductMapper {
 	// 상품 정보 + 상품이미지
 	public List<ProductVO> getProductDetail(ProductVO productVO);
 	public List<ProductVO> getRecommendProductList(ProductVO productVO);
+	public JoinBestProductVO getProductScore(int id); //상품에 대한 후기점수
 	
 	
 	

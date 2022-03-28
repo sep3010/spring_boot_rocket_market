@@ -28,6 +28,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
 
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     
 <style>
 
@@ -682,7 +685,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>
@@ -755,8 +758,8 @@
             <ul>
               <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
               <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/" class="border-top-0">쿠폰목록<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>"  class="border-top-0">쿠폰목록<span>></span></a></li>
             </ul>
           </nav>
           
@@ -768,6 +771,7 @@
               
               <!-- ↓↓↓↓↓↓↓↓↓ foreach -->
 			<c:forEach var="wishlist" items="${wishProductList}" >
+			  <div>
               	<div class="list-items d-flex justify-content-between align-items-center p-3">
                 <div class="item-left d-flex">
                   <img src="${wishlist.path}" width="80px">
@@ -782,10 +786,13 @@
                   </div>
                 </div>
                 <div class="item-right pr-3">
-                  <a href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}">
+                  <a 
+                     class="productDelete"
+                     href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}">
                     <img src="/imgs/close_img.png" alt="" width="35px">
                   </a>
                 </div>
+              </div>  
               </div>
               </c:forEach>
               <!-- ↑↑↑↑↑↑↑↑↑↑ FOREACH-->
@@ -852,10 +859,16 @@ $(document).ready(function(){
 		console.log("ajax 호출 전");		
 		
 		let trObj = $(this).parent().parent();
+
+		
+		console.log(trObj);
 	
 		$.ajax({
 			type: "DELETE",
 			url : $(this).attr("href"),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+             },
 			success : function(result){
 				console.log(result);
 				if(result == "SUCCESS"){

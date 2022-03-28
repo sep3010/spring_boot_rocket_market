@@ -642,9 +642,7 @@
               <ul>
                 <p style="font-size: 20px; font-weight: bold;">고객센터</p>
                 <li><a href="${pageContext.request.contextPath}/board/noticeHome">공지사항<span>></span></a></li>
-                <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0 font-weight-bold">문의사항<span>></span></a></li>
-                <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
-              </ul>
+                <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0 font-weight-bold">문의사항<span>></span></a></li>              </ul>
             </nav>
             <div class="board__container ml-5">
               <div class="board mb-5">
@@ -717,17 +715,17 @@
               </div>
               <div class="paging__container d-flex">
                 <c:if test="${pageMaker.pre}">
-         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+         <a href="${pageContext.request.contextPath}/board/inquiryHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
       </c:if>
    
       <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
       <c:forEach var="idx" begin="${pageMaker.startPage }"
          end="${pageMaker.endPage }">
-         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
+         <a href="${pageContext.request.contextPath}/board/inquiryHome${pageMaker.makeQuery(idx)}">${idx}</a>
       </c:forEach>
    
       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-         <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+         <a href="${pageContext.request.contextPath}/board/inquiryHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
       </c:if>
               </div>
             </div>

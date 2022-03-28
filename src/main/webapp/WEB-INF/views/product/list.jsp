@@ -790,7 +790,11 @@ $(document).ready(function () {
 		  			  </c:when>
 		  			  <c:otherwise>
                         <div class="buttons d-flex justify-content-around" id="around_btn">
-                          <a class="btn btn-outline-danger"> 찜하기</a>                   		
+                          <form:form class="wishProduct" action="${pageContext.request.contextPath}/product/insertWish" method="POST">
+                            <input type="hidden" class="wishProduct_id" value="${product.id}"/>
+                            <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
+                            <input type="button" class="btn btn-outline-danger submitWishBtn" value="찜하기" style="width: 122px;">                         
+                          </form:form>                 		
                     	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  
 		  			  </c:otherwise>

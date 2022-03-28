@@ -359,10 +359,13 @@ public class ProductInfoController {
 		view.addObject("productInfo", productService.getProductInfo(productVO));//상품정보
 		view.addObject("productBoard", productBoardService.getProductBoardList(criteria,productVO));//상품후기
 		int reviewTotal = productBoardService.getProductBoardTotal(productVO);
+		view.addObject("reviewCount", reviewTotal); //후기갯수
+		view.addObject("productScore", productService.getProductScore(productVO.getId()));
 		view.addObject("pageMaker", new PageVO(criteria, reviewTotal));//상품후기페이징
 		view.addObject("productNum", productVO.getId());//상품번호
 		view.addObject("productBrand", Recommend.getBrand());//상품브랜드
 		view.addObject("recommendProduct",productService.getRecommendProduct(Recommend));	
+		
 		
 		if(principal != null) {
 			//사이드바 장바구니품목

@@ -122,7 +122,11 @@ public class ProductServiceImpl implements ProductService {
 		log.info("getRecommendProduct..");
 		return productMapper.getRecommendProductList(product);
 	}
-	
+	@Override
+	public JoinBestProductVO getProductScore(int id) {
+		log.info("getProductScore..");
+		return productMapper.getProductScore(id);
+	}
 
 	// 상품과 상품이미지 등록하기
 	@Override

@@ -572,7 +572,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 			  </c:when>
 		    </c:choose>
               <div class="card-body text-center p-0 pt-1">
-                <span id="stargrade"><a href=""><h6 class="p-0 pt-1">★ 5.0 (후기갯수)</h6></a></span>
+                <span id="stargrade"><a href=""><h6 class="p-0 pt-1">★ ${productScore.product_score} (${reviewCount})</h6></a></span>
               </div>
             </div> <!-- card 상품이미지 -->
         

@@ -226,5 +226,18 @@
         WHERE p.brand = #{brand} AND p.id NOT IN(#{id})
       ]]>
 	</select>
+	
+	<!-- 상품상세페이지에서 상품에대한 후기점수 가져오기 -->
+	<select id="getProductScore" resultType="edu.kosmo.krm.joinVO.JoinBestProductVO">
+	  <![CDATA[
+		SELECT od.product_id AS score_product_id, ROUND(AVG(b.score),2) AS product_score
+		FROM order_detail od, order_detail_board odb, board b, member m
+		WHERE od.id = odb.order_detail_id 
+		AND odb.board_id = b.id
+		AND b.member_id = m.id
+		AND od.product_id = #{id}
+		GROUP BY od.product_id
+      ]]>
+	</select>	
 
 </mapper>

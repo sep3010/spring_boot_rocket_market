@@ -190,6 +190,17 @@ public class OrderController {
 		
 		view.addObject("wishProductList", orderService.wishProductList(memberVO.getId()));
 
+		//사이드바 장바구니품목
+		try {
+			if(principal.getName() != null) {
+				MemberVO member = memberInfoService.getForCart(principal.getName());
+				log.info("회원번호" + member.getId());		
+				view.addObject("cartProductList", orderService.cartProductList(member.getId()));				
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		view.setViewName("/user/wishList");
 		return view;
 	}
@@ -210,9 +221,9 @@ public class OrderController {
 		return entity;	
 	}
 	
-	//장바구니 페이지에서 선택한 상품 삭제
+	//위시리스트 페이지에서 선택한 상품 삭제
 	@DeleteMapping("/user/wishList/{wishlist_id}")
-	public ResponseEntity<String> deleteProductInWishList(ModelAndView view, JoinWishProductListVO joinWishProductListVO) {
+	public ResponseEntity<String> deleteProductInWishList(@PathVariable("wishlist_id") int wishlist_id, ModelAndView view, JoinWishProductListVO joinWishProductListVO) {
 		
 		ResponseEntity<String> entity = null;
 		log.info("삭제할 상품의 위시리스트 번호" + joinWishProductListVO.getWishlist_id());
@@ -232,7 +243,8 @@ public class OrderController {
 	/* =================주문내역========================*/
 	// 주문 내역 리스트
 	@GetMapping("/user/orderhistory")
-	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, Criteria criteria, ModelAndView view) {
+	public ModelAndView orderhistory(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, 
+			Criteria criteria, Principal principal, ModelAndView view) {
 		log.info("orderhistory()..");
 		
 		// List 불러 오는 함수
@@ -249,6 +261,17 @@ public class OrderController {
 		view.addObject("pageMaker", new PageVO(criteria, total));
 		log.info("criteria:" + criteria);
 		log.info("total:" + total);
+		
+		//사이드바 장바구니품목
+		try {
+			if(principal.getName() != null) {
+				MemberVO member = memberInfoService.getForCart(principal.getName());
+				log.info("회원번호" + member.getId());		
+				view.addObject("cartProductList", orderService.cartProductList(member.getId()));				
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		view.setViewName("/user/orderhistory");
 		return view;

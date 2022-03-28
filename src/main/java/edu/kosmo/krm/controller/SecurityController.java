@@ -12,6 +12,7 @@ import edu.kosmo.krm.service.CouponService;
 import edu.kosmo.krm.service.MemberInfoService;
 import edu.kosmo.krm.service.MemberService;
 import edu.kosmo.krm.service.OrderHistoryService;
+import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +22,9 @@ public class SecurityController {
 	
 	@Autowired
 	private OrderHistoryService historyService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@Autowired
 	private MemberInfoService memberInfoService;
@@ -37,6 +41,17 @@ public class SecurityController {
 		log.info("username : " + username);
 		
 		MemberVO memberVO = memberInfoService.getUser(username);
+		
+		//사이드바 장바구니품목
+		try {
+			if(principal.getName() != null) {
+				MemberVO member = memberInfoService.getForCart(principal.getName());
+				log.info("회원번호" + member.getId());		
+				view.addObject("cartProductList", orderService.cartProductList(member.getId()));				
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		view.addObject("orderCount", historyService.getMemberOrderCount(memberVO.getId()));
 		view.addObject("couponCount", couponService.getMemberCouponCount(memberVO.getId()));
