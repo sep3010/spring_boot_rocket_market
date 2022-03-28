@@ -30,7 +30,7 @@
 
     
 <style>
-
+	  
 	  /* 상단 멤버 정보*/
       .myPage li a {
         color: black;
@@ -126,9 +126,15 @@
       list-style-type: none;
     }
     
+  .history-title {
+  	max-width: 100%;
+  }
+  .history-content {
   
+  	max-width: 100%;
+  }
   .ths {
-    width: 15%;
+    
     display: flex;
     border-top: 2px solid gray;
     border-bottom: 1px solid lightgray;
@@ -147,6 +153,7 @@
     box-sizing: border-box;
     padding: 10px 0;
     color: gray;
+    border: 1px solid;
   }
   .history-content:last-child {
     border-bottom: 1px solid lightgray;
@@ -721,7 +728,7 @@
 		                         <c:if test="${vars.last}">
 		                           <c:set var="product_name" value="${products.name}"/>
 		                           <c:set var="num" value="${vars.count - 1}"/>
-		                           <div class="tds td-product d-flex justify-content-center align-items-center">
+		                           <div class="tds td-product">
 		                             <c:out value="${product_name}"></c:out>  
 		                             <c:if test="${num > 0}">
 		                                외 <c:out value="${num}"></c:out>개

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace는 패키지 명 + 인터페이스명과 맞춰줘야한다. -->
+<mapper namespace="edu.kosmo.krm.mapper.CouponMapper">
+
+	
+	
+	<select id="getMemberCouponList"
+		resultType="edu.kosmo.krm.joinVO.JoinCoupon">
+   <![CDATA[
+            SELECT c.id as coupon_id, c.name as coupon_name, c.discount as discount, uc.issue_date, uc.member_id, uc.use_check 
+            FROM coupon c, user_coupon uc where c.id = uc.coupon_id and uc.member_id = #{member_id}
+      
+   
+   ]]>
+	</select>
+	
+	
+	
+</mapper>
