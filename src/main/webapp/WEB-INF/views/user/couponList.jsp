@@ -788,9 +788,9 @@
         <nav id="navigation" class="pt-2">
           <ul>
             <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-            <li><a href="">주문내역<span>></span></a></li>
-            <li><a href="" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="" class="border-top-0 font-weight-bold">쿠폰목록<span>></span></a></li>
+<li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
           </ul>
         </nav>
 

@@ -268,8 +268,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
-        position: absolute;
-        top:10px;
+        position: relative;
         right: 10px;
         float: right;
         z-index: 3;
@@ -281,8 +280,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       }
 
       #sideimg {
-        width: 80px;
-        height: 80px;
+        width: 80%;
+        height: 80%;
         position: relative;
       }
 
@@ -307,7 +306,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         width: 100px;
         height: 50px;
         background-color: #eeddbe;
-        border: 1px solid rgb(0 0 0 / 0%);
+        border: 1px solid rgb(255, 255, 255);
         border-radius: 10px;
         top: 20px;
       }
@@ -345,7 +344,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
           var position = $(window).scrollTop();
           $(".sidebar")
             .stop()
-            .animate({ top: position + currentPosition + "px" }, 900);
+            .animate({ top: position + currentPosition + "px" }, 1000);
         });
         
         
@@ -399,9 +398,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 
 <header>
    <!-- ======================== 배너 =========================== -->
-	<div>
-    	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
+   <div>
+       <nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
         </nav>
     </div>
 
@@ -423,9 +422,9 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             class="collapse navbar-collapse d-flex justify-content-between"
             id="navbarNavAltMarkup">
             <div class="navbar-nav" id="topmenu_left">
-              <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
-              <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-
+              <a class="nav-link" href="#">공지사항</a>
+              <a class="nav-link" href="#">문의</a>
+              <a class="nav-link" href="#">이벤트</a>
             </div>
             
             <!-- 로그인을 안했다면 -->
@@ -440,11 +439,10 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <!-- 로그인을 했다면 -->
          <sec:authorize access="isAuthenticated()">
          <div style="align-self:center">
-           ${userName}님 환영합니다.&nbsp;&nbsp;
+           ${userName }님 환영합니다.&nbsp;&nbsp;
          </div>
            <a 
            class="nav-link" 
-           type="button"
            onclick="document.getElementById('logout-form').submit();"
            >로그아웃</a>
            <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -562,6 +560,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <input
               id="pagebtn"
               type="button"
+              alt=""
               value="Top ↑"
               onclick="clickme()"
             />
@@ -621,19 +620,12 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
      
                 <p style="font-weight: bold; font-size:20px">주문상품 ${cartCount }건</p>
                 <div class="col-12 d-flex order-group pb-3">
-					<table class="table text-center" width="950" cellpadding="0" cellspacing="0" border="1" >
-					<tr>
-						<td>상품번호</td>		
-						<td>상품명</td>
-						<td>수량</td>
-						<td>가격</td>
-						<td>총금액</td>	
-						<td>총 할인가</td>	
-					</tr>
+					<table width="950" cellpadding="0" cellspacing="0" class="product_table" style="border: none;">
+
 					<c:forEach var="cart" items="${cartProductList}" >	
 						<tr>
 							<td>${cart.product_id}</td>
-							<td class="text-left pl-2"><img src="${cart.path}">[${cart.brand}]${cart.name}</td>
+							<td><img src="${cart.path}">[${cart.brand}]${cart.name}</td>
 							<td>${cart.quantity}</td>
 							<td><fmt:formatNumber value="${cart.price}" pattern="#,###"/>원</td>		
 							<c:set var="productTotalPrice" value="${cart.price *  cart.quantity}"/>
@@ -676,7 +668,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
 
                         <input type="number" id="inputPoint" Placeholder="사용할 금액을 입력하세요." value=0 min="0">
 						
-                        <div class="btn" id="applyPoint" style="height: 28px">적용</div>
+                        <div class="btn" id="applyPoint">적용</div>
 <!--                         <div class="btn" id="applyReset">적용 초기화</div> -->
                         
                       
@@ -706,22 +698,22 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
                 <div class=" money pt-5 pb-4">
                   <div class="d-flex">
                     <div class="mr-3">상품금액</div>  
-                    <div class="price product-price" id="productTotalAcount"><fmt:formatNumber value="${productTotalAcount}" pattern="#,###"/> 원</div>  
+                    <div class="price product-price" id="productTotalAcount">${productTotalAcount }</div>  
                   </div>
                   <div class="ml-1 mr-1">-</div>
                   <div class="d-flex">
                     <div class="mr-3">상품 할인금액</div>  
-                    <div class="price discount-fee" id="productDiscountPrice"><fmt:formatNumber value="${productDiscountPrice}" pattern="#,###"/> 원</div>
+                    <div class="price discount-fee" id="productDiscountPrice">${productDiscountPrice }</div>
                   </div>
                   <div class="ml-3 mr-3">+</div>
                   <div class="d-flex">
                     <div class="mr-3">배송비</div>  
-                    <div class="price delivery-fee" id="delivery-fee">3,000 원</div>
+                    <div class="price delivery-fee" id="delivery-fee">3000</div>
                   </div>
                   <div class="ml-3 mr-3">=</div>
                   <div class="d-flex">
-                    <div class="mr-3">주문금액</div>  
-                    <div class="price total-price" id="productDiscountAcount"> <fmt:formatNumber value="${productDiscountAcount + 3000}" pattern="#,###"/> 원</div>  
+                    <div class="mr-3">주문금액</div>   
+                    <div class="price total-price" id="productDiscountAcount">${productDiscountAcount + 3000}</div>  
                   </div>
 				</div> <!--container information-delivery-->
 

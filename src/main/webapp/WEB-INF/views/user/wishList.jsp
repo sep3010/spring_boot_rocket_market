@@ -735,11 +735,11 @@
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>0 건</p>
+                <p>${orderCount }건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>0 개</p>
+                <p>${couponCount }개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -754,9 +754,9 @@
           <nav id="navigation" class="pt-2">
             <ul>
               <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-              <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
             <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/" class="border-top-0">쿠폰목록<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
             </ul>
           </nav>
           
