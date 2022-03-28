@@ -96,7 +96,7 @@
 		<tr>
 			<td style="font-weight: bold">포장타입</td>
 			<td>${product.packaging}</td>
-			<td style="font-weight: bold"s>배송타입</td>
+			<td style="font-weight: bold">배송타입</td>
 			<td>${product.delivery_type}</td>
 		</tr>
 		<tr>
