@@ -30,7 +30,6 @@
     
     <style>
      /* ========== 공지사항 작성페이지 ========== */
-
       /* 공통사항 */
       a {
         text-decoration: none !important;
@@ -274,6 +273,17 @@
       .card-body{
         font-weight: bold;
       }
+       input[type="text"] {
+      	width: 100%;
+      	border: none;
+      }
+      textarea {
+      	width: 100%;
+      	height: 500px;
+      	resize: none;
+      	border: none;
+      	padding: 10px;
+      }
       
     </style>
 
@@ -468,7 +478,7 @@
     </div>
 
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-    
+    <main>
     	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -509,7 +519,7 @@
       </button>
     </div>
     
-    <main>
+    
 	  <!-- ======================== 사이드바 =========================== -->
 	
 	  <!-- ======= 장바구니 ======= -->

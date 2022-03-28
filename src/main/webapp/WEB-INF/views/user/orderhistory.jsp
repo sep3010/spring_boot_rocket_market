@@ -153,7 +153,6 @@
     box-sizing: border-box;
     padding: 10px 0;
     color: gray;
-    border: 1px solid;
   }
   .history-content:last-child {
     border-bottom: 1px solid lightgray;
@@ -199,6 +198,45 @@
     width: 15%;
 
   }
+  
+        /* 페이징 스타일 */
+      .paging__container {
+          display: flex;
+          justify-content: center;
+
+      }
+      #pre, #next, .page_number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 35px;
+          height: 35px;
+          border: 1px solid lightgray;
+          font-size: 20px;
+          color: black;
+      }
+      #pre:hover, #next:hover, .page_number:hover {
+          background: #eeddbe;
+          color: #fff;
+          transition: .3s;
+      }
+      #pre {
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+      }
+      
+      #next {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+      .page_number {
+        color: black;
+      }
+      
+      .page_number:hover {
+        color: #fff;
+        background-color: #eeddbe;
+      }
       
       
 
@@ -304,6 +342,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -444,7 +483,6 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
             </div>
             
             <!-- 로그인을 안했다면 -->
@@ -569,7 +607,7 @@
       </div>
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-
+<main>
 	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -611,7 +649,7 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -626,7 +664,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>
@@ -679,11 +717,11 @@
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>${orderCount }건</p>
+                <p>${orderCount} 건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>${couponCount }개</p>
+                <p>${couponCount} 개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -703,7 +741,6 @@
             <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
           </ul>
         </nav>
-
         <div class="myPage__container pl-5">
           <div class="myPage-title pb-1">
             <p style="font-size: 30px; font-weight: bold;">주문내역 ( <span id="wishUnit"></span> )</p>
@@ -740,27 +777,25 @@
 			            </c:forEach> 
               <div class="tds td-price"><fmt:formatNumber value="${order.amount}" pattern="#,###"/>원</div>
               <div class="tds td-state">${order.status}</div>
-              <div class="tds td-detail"><a href="${pageContext.request.contextPath}/user/orderDetail/${order.order_id}">상세 내역보기</a></div>
+              <div class="tds td-detail"><a href="${pageContext.request.contextPath}/user/orderDetail/${order.order_id}" class="orderDetail">상세 내역보기</a></div>
             </div>
             </c:forEach>
             
           </div>
 			<!-- 페이징번호 -->
 		      <div class="paging__container mb-5 d-flex justify-content-center mt-4">
-					<c:if test="${pageMaker.pre}">
-						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
-					</c:if>
-				
-					<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
-					<c:forEach var="idx" begin="${pageMaker.startPage }"
-						end="${pageMaker.endPage }">
-						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(idx)}">${idx}</a>
-					</c:forEach>
-				
-					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
-					</c:if>
-				</div>
+		          <c:if test="${pageMaker.pre}">
+		            <a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.startPage - 1) }" id="pre">
+		            «</a>
+		          </c:if>
+		          <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+		            <a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(idx)}" class="page_number">${idx}</a>
+		          </c:forEach>
+		          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+		            <a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.endPage +1) }" id="next">
+		            »</a>
+		          </c:if>
+		      </div>
 	      
 	      
         </div>

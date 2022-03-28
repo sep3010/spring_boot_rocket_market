@@ -587,6 +587,10 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
         <!-- 주문/결제페이지 작업중 -->
         
         <div class="order-payment__container mt-5 mb-5">
+
+
+
+          <div class="container mb-5  border-dark border-bottom">
           <nav>
             <ul class="d-flex justify-content-end">
               <li><a href="">01 장바구니&nbsp;&nbsp;></a></li>
@@ -594,10 +598,6 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
               <li><a href="">03 주문완료</a></li>
             </ul>
           </nav>
-
-
-
-          <div class="container mb-5  border-dark border-bottom">
             <div class="row information-delivery mb-3">
               <div class="col-md-6 col-sm-12 d-flex flex-column">
                 <p style="font-weight: bold; font-size:20px">배송정보(회원정보)</p>

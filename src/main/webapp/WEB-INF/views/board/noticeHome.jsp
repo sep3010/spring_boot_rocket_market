@@ -29,7 +29,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <style>
-      
+      main {
+      position: relative;
+      }
       body {
         min-width: 1400px;
       }
@@ -244,6 +246,7 @@
         float: right;
         z-index: 3;
       }
+
       #cartbox {
         width: 100px;
         background-color: #eeddbe;
@@ -299,6 +302,46 @@
       .card-body{
         font-weight: bold;
       }
+      
+      /* 페이징 스타일 */
+      .paging__container {
+          display: flex;
+          justify-content: center;
+
+      }
+      #pre, #next, .page_number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 35px;
+          height: 35px;
+          border: 1px solid lightgray;
+          font-size: 20px;
+          color: black;
+      }
+      #pre:hover, #next:hover, .page_number:hover {
+          background: #eeddbe;
+          color: #fff;
+          transition: .3s;
+      }
+      #pre {
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+      }
+      
+      #next {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+      .page_number {
+        color: black;
+      }
+      
+      .page_number:hover {
+        color: black;
+        background-color: #eeddbe;
+      }
+      
       
     </style>
     
@@ -532,7 +575,7 @@
       </div>
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-
+	<main>
 	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -574,7 +617,7 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -637,12 +680,19 @@
             <ul>
               <p style="font-size: 20px; font-weight: bold;">고객센터</p>
               <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold">공지사항<span>></span></a></li>
-              <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li> 
             </ul>
           </nav>
           <div class="board__container ml-5">
             <div class="board mb-5">
-              <p style="font-size: 30px; font-weight: bold;">공지사항</p>
+              <div class="d-flex justify-content-between">
+              	<p style="font-size: 30px; font-weight: bold;">공지사항</p>
+              <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
+			    <div class="text-center">
+			    	<a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
+			    </div>
+			  </sec:authorize>
+              </div> 
               <div class="board-title d-flex">
                 <div class="title">제목</div>
                 <div class="writer">작성자</div>
@@ -674,25 +724,21 @@
               
               
               <div class="board-footer border-bottom"></div>
-              <sec:authorize access="hasRole('ROLE_ADMIN')"><!-- 관리자 로그인시 -->
-			    <div class="text-center">
-			    	<a href="${pageContext.request.contextPath}/board/admin/notice_write_view" class="btn btn-outline-secondary mt-3">공지작성</a>
-			    </div>
-			  </sec:authorize>    
+                 
             </div>
             <div class="paging__container d-flex">
               <c:if test="${pageMaker.pre}">
-				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+<%-- 				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.startPage - 1) }" id="pre">«</a> --%>
 			  </c:if>
 	
 		<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
 			  <c:forEach var="idx" begin="${pageMaker.startPage }"
 			    	end="${pageMaker.endPage }">
-				  <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}">${idx}</a>
+				  <a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(idx)}" class="page_number">${idx}</a>
 			  </c:forEach>
 	
 			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+				<a href="${pageContext.request.contextPath}/board/noticeHome${pageMaker.makeQuery(pageMaker.endPage +1) }" id="next"> » </a>
 			</c:if>
             </div>
         </div>

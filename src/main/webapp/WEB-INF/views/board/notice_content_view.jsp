@@ -33,6 +33,10 @@
          /* ==========개별  공지사항 ========== */
 
       /* 공통사항 */
+      main {
+         position: relative;
+      }
+      
       a {
         text-decoration: none !important;
         color: black;
@@ -203,6 +207,7 @@
         float: right;
         z-index: 3;
       }
+
       #cartbox {
         width: 100px;
         background-color: #eeddbe;
@@ -453,8 +458,8 @@
     </div>
 
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-    
-    	<!-- ======================== 캐러셀 =========================== -->
+    <main>
+    <!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -494,7 +499,7 @@
       </button>
     </div>
     
-    <main>
+    
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">

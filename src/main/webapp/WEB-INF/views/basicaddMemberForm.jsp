@@ -250,11 +250,11 @@
           <h4>♥ 회원 가입 후 혜택을 누리세요! ♥</h4>
           
           <div class="card" id="joinbox">
-             <a href="${pageContext.request.contextPath}/addMemberForm"><img src="./imgs/public_join.png" class="card-img-top" alt="..." id="public_join"></a>
+             <a href="${pageContext.request.contextPath}/addMemberForm"><img src="./imgs/public_join.png" class="card-img-top" id="public_join"></a>
              <br/>
-             <a href="#"><img src="${pageContext.request.contextPath}/imgs/kakao_join.png" class="card-img-top" alt="..." id="kakao_join"></a>
-             <a href="#"><img src="${pageContext.request.contextPath}/imgs/naver_join.png" class="card-img-top" alt="..." id="naver_join"></a>
-             <a href="#"><img src="${pageContext.request.contextPath}/imgs/google_join.png" class="card-img-top" alt="..." id="google_join"></a>
+             <a href="/oauth2/authorization/kakao"><img src="${pageContext.request.contextPath}/imgs/kakao_join.png" class="card-img-top" id="kakao_join"></a>
+             <a href="#"><img src="${pageContext.request.contextPath}/imgs/naver_join.png" class="card-img-top" id="naver_join"></a>
+             <a href="/oauth2/authorization/google"><img src="${pageContext.request.contextPath}/imgs/google_join.png" class="card-img-top" id="google_join"></a>
           </div>
 
           <div><h5>기존 회원이시라면 ><a href="${pageContext.request.contextPath}/loginForm"> 로그인 하기</a></h5></div>

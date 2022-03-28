@@ -75,12 +75,13 @@ public class OrderController {
 	
 	@Autowired
 	private ReviewService reviewService;
+
+	@Autowired
+	private CouponService couponService;
 	
 	@Autowired
 	private OrderHistoryService historyService;
 	
-	@Autowired
-	private CouponService couponService;
 	
 	/*유빈*/
 	//장바구니에 상품넣기
@@ -195,6 +196,8 @@ public class OrderController {
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
 		log.info("회원번호" + memberVO.getId());
 		
+		view.addObject("orderCount", orderHistoryService.getMemberOrderCount(memberVO.getId()));
+		view.addObject("couponCount", couponService.getMemberCouponCount(memberVO.getId()));
 		view.addObject("wishProductList", orderService.wishProductList(memberVO.getId()));
 		view.addObject("orderCount", historyService.getMemberOrderCount(memberCustomDetails.getMemberVO().getId()));
 		view.addObject("couponCount", couponService.getMemberCouponCount(memberCustomDetails.getMemberVO().getId()));
@@ -264,7 +267,8 @@ public class OrderController {
 		view.addObject("orderList", join); 
 		view.addObject("count", join.size());
 		log.info("================memberVO().." + memberCustomDetails.getMemberVO());
-
+		view.addObject("orderCount", orderHistoryService.getMemberOrderCount(memberCustomDetails.getMemberVO().getId()));
+		view.addObject("couponCount", couponService.getMemberCouponCount(memberCustomDetails.getMemberVO().getId()));
 		int total = orderService.order_History_getTotal(memberCustomDetails.getMemberVO());
 		log.info("=============total: " + total);
 		view.addObject("pageMaker", new PageVO(criteria, total));

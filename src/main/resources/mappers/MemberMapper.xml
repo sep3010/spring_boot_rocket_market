@@ -38,7 +38,7 @@
    <insert id="insertMember">
    		<![CDATA[
 	      INSERT INTO member VALUES (MEMBER_SEQ.nextval, #{username}, #{password}, 
-	      #{nickname}, #{name}, #{phone}, #{postcode}, #{address}, #{birth}, '일반', #{email}, 0, null)
+	      #{nickname}, #{name}, #{phone}, #{postcode}, #{address}, #{birth}, '일반', #{email}, 2000, null)
 	   ]]>
    </insert>
    

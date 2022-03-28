@@ -29,8 +29,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	
+		
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -74,8 +73,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			log.info("id : " + id);
 			memberMapper.insertAuthority(id);
 			
-			memberVO = memberMapper.getMember(user_id);
-					
+			memberVO = memberMapper.getMember(user_id);			
 		}
 				
 		return new MemberCustomDetails(memberVO, oAuth2UserInfo);

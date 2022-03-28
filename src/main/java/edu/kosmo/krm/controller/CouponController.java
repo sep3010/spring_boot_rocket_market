@@ -68,7 +68,7 @@ public class CouponController {
 		log.info("couponList");
 		log.info("member_id(in couponList) : " + member_id);
 		
-		
+		view.addObject("couponCount", couponService.getMemberCouponCount(member_id));
 		view.addObject("orderCount", orderHistoryService.getMemberOrderCount(member_id));
 
 		view.addObject("coupon", couponService.getMemberCoupon(member_id));

@@ -120,7 +120,7 @@
       padding: 10px;
     }
 
-    #navigation a:hover {
+    a:hover {
       color: orange;
       font-weight: bold;
 
@@ -206,8 +206,6 @@
         color: #cc932a;
         letter-spacing: 5px;
       }
-      
-
 
       body {
         min-width: 1400px;
@@ -216,7 +214,7 @@
         text-decoration: none !important;
         color: black;
       }
-      .center__container a:hover {
+      a:hover {
         color: orange;
         font-weight: bold;
       }
@@ -247,17 +245,17 @@
       
       .myPage-title {
         width: 940px;
-        border-bottom: 2px solid gray;
       }
       .list-items img {
         border-radius: 5px;
         margin-right: 10px;
       }
       .myPage-content {
+        border-top: 2px solid gray;      
         border-bottom: 1px solid lightgray;
       }
       
-  
+  	     
       
       
 
@@ -363,10 +361,12 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:10px;
         right: 10px;
         float: right;
         z-index: 3;
       }
+
       #cartbox {
         width: 100px;
         background-color: #eeddbe;
@@ -518,7 +518,7 @@
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
 			<div style="align-self:center">
-			  <sec:authentication property="principal.memberVO.name"/>님 환영합니다.&nbsp;&nbsp;
+			  ${userName}님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
 			  class="nav-link" 
@@ -628,7 +628,7 @@
       </div>
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
-
+	<main>
 	<!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
@@ -670,7 +670,7 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	<main>
+	
 	  <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
@@ -733,16 +733,16 @@
           <div class="inner">
             <ul>
               <li class="shadow">
-                <p><sec:authentication property="principal.memberVO.name"/><br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
+                <p>${userName}<br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
                 <a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>${orderCount }건</p>
+                <p>${orderCount} 건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>${couponCount }개</p>
+                <p>${couponCount} 개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -757,9 +757,9 @@
           <nav id="navigation" class="pt-2">
             <ul>
               <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-              <li><a href="${pageContext.request.contextPath}/user/orderhistory" class="">주문내역<span>></span></a></li>
-              <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0 font-weight-bold">위시리스트<span>></span></a></li>
-              <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>"  class="border-top-0">쿠폰목록<span>></span></a></li>
+              <li><a href="${pageContext.request.contextPath}/user/orderhistory">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0 font-weight-bold">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
             </ul>
           </nav>
           
@@ -774,21 +774,19 @@
 			  <div>
               	<div class="list-items d-flex justify-content-between align-items-center p-3">
                 <div class="item-left d-flex">
-                  <img src="${wishlist.path}" width="80px">
+                  <img src="${wishlist.path}" width="80px" height="80px">
                   <div class="list-information">
                     <p style="font-size:20px;"><span style="font-weight: bold;">[${wishlist.brand}] ${wishlist.name}</span><br>
                       <span class="text-warning font-weight-bold mr-2">${wishlist.discount}%</span>
                		  <c:set var="productTotalPrice" value="${(wishlist.price * (1- (wishlist.discount/100)))}"/>
                       
-                      <span class="font-weight-bold mr-2">${wishlist.price}원</span>
-                      <span style="text-decoration: line-through; color: gray; font-weight: bold;"><fmt:formatNumber value="${productTotalPrice}" pattern="#,###"/>원</span>
+                      <span style="text-decoration: line-through; color: gray; font-weight: bold;">${wishlist.price}원</span>
+                      <span class="font-weight-bold mr-2"><fmt:formatNumber value="${productTotalPrice}" pattern="#,###"/>원</span>
                     </p>
                   </div>
                 </div>
                 <div class="item-right pr-3">
-                  <a 
-                     class="productDelete"
-                     href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}">
+                  <a href="${pageContext.request.contextPath}/user/wishList/${wishlist.wishlist_id}" class="productDelete">
                     <img src="/imgs/close_img.png" alt="" width="35px">
                   </a>
                 </div>
@@ -798,6 +796,8 @@
               <!-- ↑↑↑↑↑↑↑↑↑↑ FOREACH-->
               
             </div>
+            
+            
           </div>
       </div>          
         
@@ -872,6 +872,7 @@ $(document).ready(function(){
 			success : function(result){
 				console.log(result);
 				if(result == "SUCCESS"){
+					alert("삭제완료")
 					$(trObj).remove();	
 				}
 			},

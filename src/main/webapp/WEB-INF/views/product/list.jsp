@@ -64,7 +64,7 @@
             padding: 10px;
         }
         #product img {
-            border-radius: 10px;
+            border-radius: 5px;
         }
         #image-title{
             position: relative;
@@ -301,7 +301,7 @@
           justify-content: center;
 
       }
-      #pre, #next, #page_number {
+      #pre, #next, .page_number {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -309,10 +309,10 @@
           height: 35px;
           border: 1px solid lightgray;
           font-size: 20px;
-          color: dodgerblue;
+          color: black;
       }
-      #pre:hover, #next:hover, #page_number:hover {
-          background: dodgerblue;
+      #pre:hover, #next:hover, .page_number:hover {
+          background: #eeddbe;
           color: #fff;
           transition: .3s;
       }
@@ -322,16 +322,15 @@
       }
       
       #next {
-        border-left: none;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
       }
-      #page_number {
+      .page_number {
         color: black;
       }
       
-      #page_number:hover {
-        color: black;
+      .page_number:hover {
+     	color: #fff;
         background-color: #eeddbe;
       }
       
@@ -814,7 +813,7 @@ $(document).ready(function () {
             «</a>
           </c:if>
           <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(idx)}" id="page_number">${idx}</a>
+            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(idx)}" class="page_number">${idx}</a>
           </c:forEach>
           <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
             <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(pageMaker.endPage +1) }" id="next">

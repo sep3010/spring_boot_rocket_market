@@ -284,7 +284,7 @@
       <h2 style="font-weight: bold;"> 쿠폰관리 </h2>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/productManagement">상품목록</a></h5>&nbsp;&nbsp;&nbsp;
       <h5><a href="${pageContext.request.contextPath}/admin/memberList">회원 리스트</a></h5>
-      <h5><a href="${pageContext.request.contextPath}/admin/adminHome">매출관리</a></h5>
+      <h5><a href="${pageContext.request.contextPath}/admin/salesManagement">매출관리</a></h5>
       </div>
       
       

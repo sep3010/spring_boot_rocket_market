@@ -51,18 +51,15 @@ public class ReviewServiceImpl implements ReviewService {
 		int boardId = reviewMapper.getReviewBoardId(detailBoardVO);
 		log.info("boardId : " + boardId);
 		
-		if(files.length > 0) {
-			
+		if(files.length > 0) {		
 			BoardFileVO boardFileVO = new BoardFileVO();
 		
-			for (MultipartFile file : files) {
-				
+			for (MultipartFile file : files) {				
 				// 파일 형태 (예시: image/jpeg)
 				String extension = file.getContentType();
 				
 				// 기존 파일 이름
-				String originalName = file.getOriginalFilename();
-				
+				String originalName = file.getOriginalFilename();				
 				String uuid = UUID.randomUUID().toString().replace("-", "");
 				
 				// 기존에 저장된 파일과 중복된 이름으로 저장되는 것을 막기위한 처리
@@ -74,8 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
 				File saveFile = new File(savePath, fileName);
 				try {
 					file.transferTo(saveFile);
-					log.info("후기 사진 저장 성공");
-					
+					log.info("후기 사진 저장 성공");					
 					String imagePath = basePath + fileName; 
 					
 					boardFileVO.setBoard_id(boardId);
@@ -84,18 +80,13 @@ public class ReviewServiceImpl implements ReviewService {
 					boardFileVO.setPath(imagePath);
 					log.info("=========boardFileVO : " + boardFileVO);
 					
-					reviewMapper.insertReviewImages(boardFileVO);
-					
+					reviewMapper.insertReviewImages(boardFileVO);				
 				} catch (Exception e) {
 					log.info("후기 사진 저장 실패");
 					e.printStackTrace();
 				}
-				
-				
-			} // end foreach
-			
+			} // end foreach		
 		} // end if(files.length > 0)
-
 	}
 
 	@Override
