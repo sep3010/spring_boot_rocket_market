@@ -228,11 +228,12 @@
         position: relative;
         top: 0px;
       }
-      .sidebar {
+     .sidebar {
         margin-top: 10px;
         margin-right: 10px;
         width: 100px;
         position: absolute;
+        top:100px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -244,8 +245,8 @@
       }
 
       #sideimg {
-        width: 80%;
-        height: 80%;
+        width: 80px;
+        height: 80px;
         position: relative;
       }
 
@@ -328,6 +329,23 @@
       #page_number {
         border-left: none;
 		
+      }
+      
+      /*상품 박스*/
+      #product{
+         position: relative;
+      }
+      
+      #around_btn{
+        width: 255px;
+        position: absolute;
+        bottom: 20px;
+
+      }
+      
+      .product-information{
+        position: absolute;
+        bottom: 65px;
       }
 
 
@@ -455,13 +473,11 @@ $(document).ready(function () {
 <body>
 
     <header>
-      <div>
-        <nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)"
-            >배너 이벤트</a
-          >
+	<div>
+    	<nav class="navbar" id="topbanner">
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
-      </div>
+    </div>
 
       <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
@@ -483,7 +499,7 @@ $(document).ready(function () {
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
+
             </div>
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
@@ -501,6 +517,7 @@ $(document).ready(function () {
 			</div>
 			  <a 
 			  class="nav-link" 
+			  type="button"
 			  onclick="document.getElementById('logout-form').submit();"
 			  >로그아웃</a>
 			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
@@ -690,7 +707,7 @@ $(document).ready(function () {
               <c:forEach var="product" items="${productList}">
                  
                  <!-- 상품카드 정보 -->
-                <div id="product" class="col-sm-6 col-md-4 col-lg-3">
+                <div id="product" class="col-sm-6 col-md-4 col-lg-3" style="height: 392px;">
                   <a href="${pageContext.request.contextPath}/product/productView/${product.id}" id="image-title"><!-- 상품번호 넣어서 상품 상세 페이지로 이동 -->
 
                     <c:set var="discount" value="${product.discount}" scope="session"/>
@@ -714,7 +731,7 @@ $(document).ready(function () {
                         <h3><fmt:formatNumber value="${product.price}" pattern="#,###"/>원</h3>                   
                  </c:when>
                  <c:otherwise> <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
-                        <p class="cost text-muted" style="text-decoration: line-through">
+                        <p class="cost text-muted mb-1" style="text-decoration: line-through">
                           <fmt:formatNumber value="${product.price}" pattern="#,###"/>원
                         </p>
                         <h3>
@@ -729,13 +746,13 @@ $(document).ready(function () {
                   <sec:authorize access="isAnonymous()">
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger">찜하기</a>                   		
                     	  <a class="btn btn-outline-success opener">장바구니</a>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger"> 찜하기</a>                   		
                     	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  
@@ -746,21 +763,21 @@ $(document).ready(function () {
 		  		  <sec:authorize access="hasAuthority('ROLE_USER')">
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <form:form class="wishProduct" action="${pageContext.request.contextPath}/product/insertWish" method="POST">
                             <input type="hidden" class="wishProduct_id" value="${product.id}"/>
                             <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
-                            <input type="button" class="submitWishBtn" value="찜하기">                         
+                            <input type="button" class="btn btn-outline-danger submitWishBtn" value="찜하기" style="width: 122px;">                         
                           </form:form>
                           <form:form class="cartProduct" action="${pageContext.request.contextPath}/product/insertCart" method="POST">
                             <input type="hidden" class="cartProduct_id" value="${product.id}"/>
                             <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
-                            <input type="button" class="submitCartBtn" value="장바구니">                         
+                            <input type="button" class="btn btn-outline-success opener submitCartBtn" value="장바구니" style="width: 122px;">                         
                           </form:form>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger"> 찜하기</a>                   		
                     	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  

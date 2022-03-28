@@ -64,42 +64,45 @@
 <!-- 소은 -->
 <body>
 
-	<h1>상품상세</h1>
-	<table width="750" cellpadding="0" cellspacing="0" border="1">
+	<div class="container">
+
+
+	<h1 class="pt-5 pb-3" style="font-weight: bold">상품상세</h1>
+	<table class="table table-borderedr" width="750px" cellpadding="0" cellspacing="0">
 		<tr>
-			<td>상품번호</td>
+			<td style="font-weight: bold">상품번호</td>
 			<td>${product.id}</td>
-			<td>상품명</td>
+			<td style="font-weight: bold">상품명</td>
 			<td>${product.name}</td>
 		</tr>
 		<tr>
-			<td>브랜드</td>
+			<td style="font-weight: bold">브랜드</td>
 			<td>${product.brand}</td>
-			<td>상품종류</td>
+			<td style="font-weight: bold">상품종류</td>
 			<td>${product.type}</td>
 		</tr>
 		<tr>
-			<td>용량</td>
+			<td style="font-weight: bold">용량</td>
 			<td>${product.capacity}</td>
-			<td>판매단위</td>
+			<td style="font-weight: bold">판매단위</td>
 			<td>${product.unit}</td>
 		</tr>
 		<tr>
-			<td>가격</td>
+			<td style="font-weight: bold">가격</td>
 			<td>${product.price}</td>
-			<td>할인율</td>
+			<td style="font-weight: bold">할인율</td>
 			<td>${product.discount}%</td>
 		</tr>
 		<tr>
-			<td>포장타입</td>
+			<td style="font-weight: bold">포장타입</td>
 			<td>${product.packaging}</td>
-			<td>배송타입</td>
+			<td style="font-weight: bold"s>배송타입</td>
 			<td>${product.delivery_type}</td>
 		</tr>
 		<tr>
-			<td>재고량</td>
+			<td style="font-weight: bold">재고량</td>
 			<td>${product.stock}</td>
-			<td>판매상태</td>
+			<td style="font-weight: bold">판매상태</td>
 			<c:choose>
 			<c:when test="${product.enabled == 1}">
 				<td>판매중</td>
@@ -112,35 +115,36 @@
 		<c:forEach var="image" items="${product.productImages}">
 			<c:if test="${image.information_type == 'main'}">
 				<tr>
-					<td colspan="4">메인/썸네일 이미지</td>
+					<td colspan="4" style="font-weight: bold">메인/썸네일 이미지</td>
 				</tr>
 				<tr>	
-					<td colspan="4"><img src="${image.path}"></td>
+					<td class="text-center" colspan="4"><img src="${image.path}"></td>
 				</tr>
 			</c:if>
 			<c:if test="${image.information_type == 'info'}">
 				<tr>
-					<td colspan="4">상품정보 이미지</td>
+					<td colspan="4" style="font-weight: bold">상품정보 이미지</td>
 				</tr>	
 				<tr>	
-					<td colspan="4"><img src="${image.path}"></td>
+					<td class="text-center" colspan="4"><img src="${image.path}"></td>
 				</tr>
 			</c:if>
 			<c:if test="${image.information_type == 'detail'}">
 				<tr>
-					<td colspan="4">상품상세 이미지</td>
+					<td colspan="4" style="font-weight: bold">상품상세 이미지</td>
 				</tr>
 				<tr>	
-					<td colspan="4"><img src="${image.path}"></td>
+					<td class="text-center" colspan="4"><img src="${image.path}"></td>
 				</tr>
 			</c:if>
 
 		</c:forEach>
-		
-		
-	</table>	
-	<button id="modify">수정하기</button>
 
+	</table>
+
+	<button class="btn btn-outline-dark mt-3 mb-5" id="modify">수정하기</button>
+
+</div>
 	
 </body>
 </html>
