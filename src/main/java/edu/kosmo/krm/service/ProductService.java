@@ -53,8 +53,9 @@ public interface ProductService {
 	/*유빈*/
 	// 상품상세 ==================================================
 	public List<ProductVO> getProductInfo(ProductVO product); //상품상세내용 가져오기
-
 	public List<ProductVO> getRecommendProduct(ProductVO productVO); //동일브랜드 상품목록추천	
+	public JoinBestProductVO getProductScore(int id); //상품에 대한 후기점수
+	
 	
 	// 상품과 상품이미지 등록하기======================================
 	public void insertProductAndImage(ProductVO productVO, Map<String, MultipartFile> files, String savePath);
@@ -62,4 +63,5 @@ public interface ProductService {
 	// 상품과 상품이미지 수정하기
 	void updateProductAndImage(ProductVO productVO,Map<String, MultipartFile> files, String savePath);
 
+	
 }

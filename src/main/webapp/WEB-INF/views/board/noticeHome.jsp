@@ -638,7 +638,6 @@
               <p style="font-size: 20px; font-weight: bold;">고객센터</p>
               <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="font-weight-bold">공지사항<span>></span></a></li>
               <li><a href="${pageContext.request.contextPath}/board/inquiryHome" class="border-top-0">문의사항<span>></span></a></li>
-              <li><a href="${pageContext.request.contextPath}/board/noticeHome" class="border-top-0">이벤트<span>></span></a></li>
             </ul>
           </nav>
           <div class="board__container ml-5">

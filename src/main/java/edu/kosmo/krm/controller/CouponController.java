@@ -1,5 +1,7 @@
 package edu.kosmo.krm.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.kosmo.krm.service.CouponService;
+import edu.kosmo.krm.service.MemberInfoService;
 import edu.kosmo.krm.service.OrderHistoryService;
+import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.vo.CouponVO;
+import edu.kosmo.krm.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
 //용원 2022-02-27  22:00
@@ -20,6 +25,12 @@ public class CouponController {
 
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private MemberInfoService memberInfoService;	
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@Autowired
 	private OrderHistoryService orderHistoryService;
@@ -53,7 +64,7 @@ public class CouponController {
 		return view;
 	}
 	@GetMapping("/user/couponList/{member_id}")
-	public ModelAndView couponList(@PathVariable int member_id, ModelAndView view) {
+	public ModelAndView couponList(@PathVariable int member_id, Principal principal, ModelAndView view) {
 		log.info("couponList");
 		log.info("member_id(in couponList) : " + member_id);
 		
@@ -62,6 +73,18 @@ public class CouponController {
 
 		view.addObject("coupon", couponService.getMemberCoupon(member_id));
 		view.setViewName("/user/couponList");
+		
+		//사이드바 장바구니품목
+		try {
+			if(principal.getName() != null) {
+				MemberVO memberVO = memberInfoService.getForCart(principal.getName());
+				log.info("회원번호" + memberVO.getId());		
+				view.addObject("cartProductList", orderService.cartProductList(memberVO.getId()));				
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		
 		return view;
 		

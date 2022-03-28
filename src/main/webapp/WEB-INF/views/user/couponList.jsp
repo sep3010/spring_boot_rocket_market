@@ -534,7 +534,6 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
             </div>
             
             <!-- 로그인을 안했다면 -->
@@ -716,7 +715,7 @@
             </sec:authorize>
    
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" >
+			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
 		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
 			  </c:forEach>
@@ -788,9 +787,9 @@
         <nav id="navigation" class="pt-2">
           <ul>
             <p style="font-size: 20px; font-weight: bold;">마이페이지</p>
-<li><a href="${pageContext.request.contextPath}/user/orderhistory" class="font-weight-bold">주문내역<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0">위시리스트<span>></span></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="border-top-0">쿠폰목록<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/orderhistory">주문내역<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wishList" class="border-top-0" class="border-top-0">위시리스트<span>></span></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>"  class="border-top-0 font-weight-bold">쿠폰목록<span>></span></a></li>
           </ul>
         </nav>
 
