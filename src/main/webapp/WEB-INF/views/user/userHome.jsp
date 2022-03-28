@@ -614,7 +614,7 @@
               <img src="${pageContext.request.contextPath}/imgs/wishlist.png" alt="">
               <p>위시리스트</p>
           </a>
-          <a href="" class="myPage-items">
+          <a href="${pageContext.request.contextPath}/user/couponList/<sec:authentication property="principal.memberVO.id"/>" class="myPage-items">
               <img src="${pageContext.request.contextPath}/imgs/coupon.png" alt="">
               <p>쿠폰</p>
           </a>

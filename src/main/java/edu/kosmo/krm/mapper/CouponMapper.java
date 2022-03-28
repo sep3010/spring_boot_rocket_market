@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import edu.kosmo.krm.joinVO.JoinCoupon;
 import edu.kosmo.krm.vo.CouponVO;
 
 @Mapper
@@ -22,6 +23,9 @@ public interface CouponMapper {
 	public void insertCoupon(CouponVO couponVO);
 	
 	@Select("SELECT COUNT(*) FROM coupon c, user_coupon uc WHERE c.id = uc.coupon_id AND uc.member_id = #{user_id} AND uc.use_check = 1")
-	int getMemberCouponCount(int user_id);
+	public int getMemberCouponCount(int user_id);
+	
+	public List<JoinCoupon> getMemberCouponList(int member_id);
+	 
 
 }

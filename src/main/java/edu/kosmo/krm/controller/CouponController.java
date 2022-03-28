@@ -2,11 +2,13 @@ package edu.kosmo.krm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.kosmo.krm.service.CouponService;
+import edu.kosmo.krm.service.OrderHistoryService;
 import edu.kosmo.krm.vo.CouponVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +20,9 @@ public class CouponController {
 
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private OrderHistoryService orderHistoryService;
 
 	// admin - 쿠폰목록페이지
 	@GetMapping("/admin/couponManagement")
@@ -46,6 +51,20 @@ public class CouponController {
 		couponService.insertCoupon(couponVO);
 		view.setViewName("redirect:couponManagement");
 		return view;
+	}
+	@GetMapping("/user/couponList/{member_id}")
+	public ModelAndView couponList(@PathVariable int member_id, ModelAndView view) {
+		log.info("couponList");
+		log.info("member_id(in couponList) : " + member_id);
+		
+		
+		view.addObject("orderCount", orderHistoryService.getMemberOrderCount(member_id));
+
+		view.addObject("coupon", couponService.getMemberCoupon(member_id));
+		view.setViewName("/user/couponList");
+		
+		return view;
+		
 	}
 
 
