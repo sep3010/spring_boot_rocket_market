@@ -233,7 +233,7 @@
         margin-right: 10px;
         width: 100px;
         position: absolute;
-        top:10px;
+        top:100px;
         right: 10px;
         float: right;
         z-index: 3;
@@ -245,8 +245,8 @@
       }
 
       #sideimg {
-        width: 80%;
-        height: 80%;
+        width: 80px;
+        height: 80px;
         position: relative;
       }
 
@@ -342,12 +342,17 @@
       
       #around_btn{
         width: 255px;
-      position: absolute;
+        position: absolute;
         bottom: 20px;
 
       }
       
+      .product-information{
+        position: absolute;
+        bottom: 65px;
+      }
       
+          
       
    </style>
    
@@ -493,7 +498,6 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
             </div>
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
@@ -780,11 +784,11 @@
                     <c:set var="discountPercent" value="${product.discount}" scope="session"/>
                     <c:set var="discountPrice" value="${price * (1 - (discountPercent/100))}" scope="session"/>
                <c:choose>
-                 <c:when test="${discountPercent == 1}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
+                 <c:when test="${discountPercent == 0}"> <!-- 할인 하지 않는 제품일때 원가만 표시 -->
                         <h3><fmt:formatNumber value="${product.price}" pattern="#,###"/>원</h3>                   
                  </c:when>
                  <c:otherwise> <!-- 할인 하는 제품일때 원가,퍼센트,할인가표시 -->
-                        <p class="cost text-muted" style="text-decoration: line-through">
+                        <p class="cost text-muted mb-1" style="text-decoration: line-through">
                           <fmt:formatNumber value="${product.price}" pattern="#,###"/>원
                         </p>
                         <h3>
@@ -799,13 +803,13 @@
                   <sec:authorize access="isAnonymous()">
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger">찜하기</a>                   		
                     	  <a class="btn btn-outline-success opener">장바구니</a>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger"> 찜하기</a>                   		
                     	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  
@@ -816,21 +820,21 @@
 		  		  <sec:authorize access="hasAuthority('ROLE_USER')">
 	    			<c:choose>
 	      			  <c:when test="${product.stock > 0}">
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <form:form class="wishProduct" action="${pageContext.request.contextPath}/product/insertWish" method="POST">
                             <input type="hidden" class="wishProduct_id" value="${product.id}"/>
                             <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
-                            <input type="button" class="submitWishBtn" value="찜하기">                         
+                            <input type="button" class="btn btn-outline-danger submitWishBtn" value="찜하기" style="width: 122px;">                             
                           </form:form>
                           <form:form class="cartProduct" action="${pageContext.request.contextPath}/product/insertCart" method="POST">
                             <input type="hidden" class="cartProduct_id" value="${product.id}"/>
                             <input type="hidden" class="member_id" value="<sec:authentication property="principal.memberVO.id"/>"/>
-                            <input type="button" class="submitCartBtn" value="장바구니">                         
+                            <input type="button" class="btn btn-outline-success opener submitCartBtn" value="장바구니" style="width: 122px;">                         
                           </form:form>
                   		</div>           	
 		  			  </c:when>
 		  			  <c:otherwise>
-                        <div class="buttons d-flex justify-content-around">
+                        <div class="buttons d-flex justify-content-around" id="around_btn">
                           <a class="btn btn-outline-danger"> 찜하기</a>                   		
                     	  <a class="btn btn-outline-ordinary opener disabled">품절</a>
                   		</div>		  			  

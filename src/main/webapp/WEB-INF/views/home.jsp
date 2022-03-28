@@ -150,8 +150,8 @@
       }
 
       #sideimg {
-        width: 80%;
-        height: 80%;
+        width: 80px;
+        height: 80px;
         position: relative;
       }
       
@@ -436,7 +436,7 @@
 			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
 			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
 		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
-		        <img class="pt-1" src="${cart.path}" id="sideimg"/></a>			
+		        <img class="pt-1" src="${cart.path}" id="sideimg" /></a>			
 			  </c:forEach>
 			</sec:authorize>            
 

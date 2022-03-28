@@ -297,8 +297,8 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
       }
 
       #sideimg {
-        width: 80%;
-        height: 80%;
+        width: 80px;
+        height: 80px;
         position: relative;
       }
 
@@ -438,7 +438,7 @@ href="${pageContext.request.contextPath}/imgs/logo.png" />
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
+
             </div>
             
             <!-- 로그인을 안했다면 -->
