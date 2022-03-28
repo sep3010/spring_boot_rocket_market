@@ -42,27 +42,27 @@
 					<td>배송상태</td>
 					<td td colspan="6">${order.status}</td>
 				</tr>
-				<c:forEach var="deliveryInfo" items="${order.delivery}">						
+				<c:forEach var="deliveryInfo" items="${deliveryInfo}">						
 					<tr>
 						<td>받는 사람</td>
 						<td colspan="2">${deliveryInfo.receiver}</td>
 						<td>연락처</td>
-						<td colspan="8">${delivery.phone}</td>
+						<td colspan="8">${deliveryInfo.phone}</td>
 					</tr>
 					<tr>
 						<td>우편번호</td>
-						<td colspan="2">${delivery.postcode}</td>
+						<td colspan="2">${deliveryInfo.postcode}</td>
 						<td>주소</td>
-						<td colspan="8">${delivery.address}</td>
+						<td colspan="8">${deliveryInfo.address}</td>
 					</tr>
 					<tr>
 						<td>배송 메세지</td>
 						<td colspan="2">${deliveryInfo.message}</td>
 						<td>운송장번호</td>
-						<td colspan="8">${delivery.delivery_number}</td>
+						<td colspan="8">${deliveryInfo.delivery_number}</td>
 					</tr>						
 				</c:forEach><%-- <c:forEach var="delivery"> --%>
-				<tr>
+ 				<tr>
 					<td colspan="3">상품</td>
 					<td>할인율</td>
 					<td>가격</td>
@@ -117,13 +117,12 @@
 						</form:form>				
 					</c:forEach><%-- <c:forEach var="product"> --%>
 				</c:forEach><%-- <c:forEach var="detail"> --%>
-				<c:if test="${vs.last}">
+
 					<tr>
 						<td>총 가격</td>
-						<td td colspan="8"><fmt:formatNumber value="${order.amount}" pattern="#,###"/></td>
+						<td td colspan="8"><fmt:formatNumber value="${order.amount}" pattern="#,###"/>원</td>
 					</tr>
-				</c:if><%-- <c:if test="${vs.last}"> --%>
-			
+	
             </table>
 
         </div><!-- container -->

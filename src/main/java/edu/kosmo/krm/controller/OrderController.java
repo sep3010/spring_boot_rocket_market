@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import edu.kosmo.krm.page.Criteria;
+import edu.kosmo.krm.service.CouponService;
 import edu.kosmo.krm.service.MemberInfoService;
 import edu.kosmo.krm.service.OrderService;
 import edu.kosmo.krm.service.ProductService;
@@ -74,6 +75,12 @@ public class OrderController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private OrderHistoryService historyService;
+	
+	@Autowired
+	private CouponService couponService;
 	
 	/*유빈*/
 	//장바구니에 상품넣기
@@ -183,13 +190,14 @@ public class OrderController {
 	//위시리스트 ==========================================================
 	//위시리스트 페이지로 이동
 	@GetMapping("/user/wishList")
-	public ModelAndView wishList(ModelAndView view, Principal principal) {
+	public ModelAndView wishList(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, ModelAndView view, Principal principal) {
 		log.info(principal.getName() + "님의 장바구니입니다.");//아이디 username가져오기
 		MemberVO memberVO = memberInfoService.getForCart(principal.getName());
 		log.info("회원번호" + memberVO.getId());
 		
 		view.addObject("wishProductList", orderService.wishProductList(memberVO.getId()));
-
+		view.addObject("orderCount", historyService.getMemberOrderCount(memberCustomDetails.getMemberVO().getId()));
+		view.addObject("couponCount", couponService.getMemberCouponCount(memberCustomDetails.getMemberVO().getId()));
 		view.setViewName("/user/wishList");
 		return view;
 	}
@@ -250,6 +258,11 @@ public class OrderController {
 		log.info("criteria:" + criteria);
 		log.info("total:" + total);
 		
+		view.addObject("orderCount", historyService.getMemberOrderCount(memberCustomDetails.getMemberVO().getId()));
+		view.addObject("couponCount", couponService.getMemberCouponCount(memberCustomDetails.getMemberVO().getId()));
+		
+		
+		
 		view.setViewName("/user/orderhistory");
 		return view;
 	}
@@ -282,14 +295,14 @@ public class OrderController {
 	@GetMapping("/user/orderDetail/{order_id}")
 	public ModelAndView orderDetail(@AuthenticationPrincipal MemberCustomDetails memberCustomDetails, 
 			ModelAndView view, MemberOrderVO memberOrderVO) {
-		log.info("orderDetail()..");
-		log.info("memberOrderVO() : " + memberOrderVO);
+
+		
 		MemberOrderVO orderDetail = orderHistoryService.getMemberOrderDetail(memberOrderVO.getOrder_id(), memberCustomDetails.getMemberVO().getId());
 		List<DeliveryVO> deliveryInfo = orderHistoryService.getDeliveryInfo(memberOrderVO.getOrder_id()); 
-		
+		log.info("==========memberOrderVO()========== : " + memberOrderVO);
 		view.addObject("orderDetail", orderDetail);
 		view.addObject("deliveryInfo", deliveryInfo);
-		log.info("-----------orderDetail : " + orderDetail);
+		
 		
 		List<OrderDetailVO> orderDetailVOs = new ArrayList<OrderDetailVO>();
 		
@@ -320,36 +333,52 @@ public class OrderController {
 		orderService.insertOrderInfo(paymentInfoVO);
 
 		// OrderDetailVO (주문 상세)에 넣는 것
-				
 		String memberid = paymentInfoVO.getMember_id();
 		int member_id = Integer.valueOf(memberid); 
 		List<CartVO> cartProductCount = orderService.getCartInfo(member_id);
 		log.info("카트에 담긴 상품 종류" + cartProductCount);
 		
+		String orderid = paymentInfoVO.getMerchantid();
+		Long order_id = Long.valueOf(orderid); 
+
+		
+		
 		// member_id로 카트 가져오는 코드
-	    for (CartVO cart : cartProductCount) {
-			String orderid = paymentInfoVO.getMerchantid();
-			Long order_id = Long.valueOf(orderid); 
+		if(cartProductCount.size() == 0) {
 			OrderDetailVO orderDetailVO = new OrderDetailVO();
-		
-			log.info("cart" + cart.getProduct_id());
-
-	    	CartVO cartVO = new CartVO();
-
-	    	int product_id = cart.getProduct_id();
-	    	int quantity = cart.getQuantity();
-		    
-	    	cartVO.setId(product_id);
-	    	cartVO.setQuantity(quantity);
-	    	
-	    	orderDetailVO.setProduct_id(product_id);
-	    	orderDetailVO.setQuantity(quantity);
-			orderDetailVO.setOrder_id(order_id);
-			
+			int product_idOne = Integer.valueOf(paymentInfoVO.getProductid());
+			Long order_idOne = Long.valueOf(paymentInfoVO.getMerchantid());
+			orderDetailVO.setProduct_id(product_idOne);
+			orderDetailVO.setOrder_id(order_idOne);
+			orderDetailVO.setQuantity(1);
 			orderService.insertOrderDetailInfo(orderDetailVO);
-			orderService.deleteCart(member_id);
-	    }
+			
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + orderDetailVO);
+			
+		}else {
+			// member_id로 카트 가져오는 코드
+		    for (CartVO cart : cartProductCount) {
+
+				OrderDetailVO orderDetailVO = new OrderDetailVO();
+				log.info("cart" + cart.getProduct_id());
+	
+		    	CartVO cartVO = new CartVO();
+	
+		    	int product_id = cart.getProduct_id();
+		    	int quantity = cart.getQuantity();
+			    
+		    	cartVO.setId(product_id);
+		    	cartVO.setQuantity(quantity);
+		    	
+		    	orderDetailVO.setProduct_id(product_id);
+		    	orderDetailVO.setQuantity(quantity);
+				orderDetailVO.setOrder_id(order_id);
+				
+				orderService.insertOrderDetailInfo(orderDetailVO);
+				orderService.deleteCart(member_id);
+		    }
 		
+		}
 		
 		// 쿠폰 포인트와 포인트 넣는 것
 		memberInfoService.updatePoint(paymentInfoVO);

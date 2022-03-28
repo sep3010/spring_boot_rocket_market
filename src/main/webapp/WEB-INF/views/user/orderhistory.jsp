@@ -315,8 +315,8 @@
       }
 
       #sideimg {
-        width: 80px;
-        height: 80px;
+        width: 80%;
+        height: 80%;
         position: relative;
       }
 
@@ -420,7 +420,7 @@
 	<!-- ======================== 배너 =========================== -->
 	<div>
     	<nav class="navbar" id="topbanner">
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
+          <a class="navbar-brand" href="#" style="color: rgb(90, 69, 42)">배너 이벤트</a>
         </nav>
     </div>
 
@@ -444,7 +444,7 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-
+              <a class="nav-link" href="#">이벤트</a>
             </div>
             
             <!-- 로그인을 안했다면 -->
@@ -679,11 +679,11 @@
               </li>
               <li class="shadow">
                 <p>주문/배송</p>
-                <p>0 건</p>
+                <p>${orderCount }건</p>
               </li>
               <li class="shadow">
                 <p>쿠폰</p>
-                <p>0 개</p>
+                <p>${couponCount }개</p>
               </li>
               <li class="shadow">
                 <p>적립금</p>
@@ -747,18 +747,20 @@
           </div>
 			<!-- 페이징번호 -->
 		      <div class="paging__container mb-5 d-flex justify-content-center mt-4">
-		          <c:if test="${pageMaker.pre}">
-		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(pageMaker.startPage - 1) }" id="pre">
-		            «</a>
-		          </c:if>
-		          <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(idx)}" id="page_number">${idx}</a>
-		          </c:forEach>
-		          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-		            <a href="${pageContext.request.contextPath}/${pageName}${pageMaker.makeQuery(pageMaker.endPage +1) }" id="next">
-		            »</a>
-		          </c:if>
-		      </div>
+					<c:if test="${pageMaker.pre}">
+						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.startPage - 1) }">«</a>
+					</c:if>
+				
+					<!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+					<c:forEach var="idx" begin="${pageMaker.startPage }"
+						end="${pageMaker.endPage }">
+						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(idx)}">${idx}</a>
+					</c:forEach>
+				
+					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+						<a href="${pageContext.request.contextPath}/user/orderhistory${pageMaker.makeQuery(pageMaker.endPage +1) }"> » </a>
+					</c:if>
+				</div>
 	      
 	      
         </div>

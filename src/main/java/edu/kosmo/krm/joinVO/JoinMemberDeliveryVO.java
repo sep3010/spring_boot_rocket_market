@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 public class JoinMemberDeliveryVO {
 
-	private int postcode;
+	private String postcode;
 	private String address;
 	private String phone;
 	private String message;
