@@ -193,7 +193,7 @@
       xhr.setRequestHeader(header, token);
    });
    
-   $(document).ready(function() {
+   
 
    
 	   let daySales = '${daySales}';
@@ -203,64 +203,64 @@
 	   let yearSales = '${yearSales}';
 	   console.log("yearSales : " + yearSales);
 	   
-	   $("#select").on('click', function(){
-		   
-		   google.charts.load('current', {'packages':['line']});
-		   google.charts.setOnLoadCallback(drawChart);
-		
-			function drawChart() {
-				let year = $("#year").val();
-				console.log(year);
-				let month = $("#month").val();
-				console.log(month);
-				
-				let chartData;
-				let size;
-				if(year == '전체'){
-					chartDate = '${yearSales}'; 
-					
-				}
-				else if(month == '전체'){
-					chartDate = '${monthSales}';
-				}
-				else{
-					chartDate = '${daySales}';
-				}
-				console.log(chartDate);
-				console.log(size);
+	 
+	   google.charts.load('current', {'packages':['line']});
+	   google.charts.setOnLoadCallback(drawChart);
+	
+		function drawChart() {
+			let year = $("#year").val();
+			console.log(year);
+			let month = $("#month").val();
+			console.log(month);
 			
-				  var data = new google.visualization.DataTable();
-				  data.addColumn('number', '일');
-				  data.addColumn('number', month + '월');
-				  
-				  <c:forEach var="sales" items="${daySales}" varStatus="vs">
-			 		<c:forEach var="sale" items="${sales}" varStatus="status">
-			 			<c:if test="${sale.sale_year == 2022 && sale.sale_month == 3}">
-			 			 data.addRows([[${sale.sale_day}, ${sale.sum}]]);
-			 			</c:if>
-			 		</c:forEach>
-			   	  </c:forEach>
-				  
-
-			
-				  var options = {
-				    chart: {
-				      title: '매출 관리',
-				      curveType: 'function',
-			          legend: { position: 'bottom' }
-				    },
-				    width: 900,
-				    height: 500
-				  };
+			let chartData;
+			let size;
+			if(year == '전체'){
+				chartDate = '${yearSales}'; 
 				
-				  var chart = new google.charts.Line(document.getElementById('curve_chart'));
-				
-				  chart.draw(data, google.charts.Line.convertOptions(options));
 			}
+			else if(month == '전체'){
+				chartDate = '${monthSales}';
+			}
+			else{
+				chartDate = '${daySales}';
+			}
+			console.log(chartDate);
+			console.log(size);
 		
-	   }) // end #select onclick
+			  var data = new google.visualization.DataTable();
+			  data.addColumn('number', '일');
+			  data.addColumn('number', '3월');
+			  
+			  <c:forEach var="sales" items="${daySales}" varStatus="vs">
+		 		<c:forEach var="sale" items="${sales}" varStatus="status">
+		 			<c:if test="${sale.sale_year == 2022 && sale.sale_month == 3}">
+		 			 data.addRows([[${sale.sale_day}, ${sale.sum}]]);
+		 			</c:if>
+		 		</c:forEach>
+		   	  </c:forEach>
+			  
+	
+		
+			  var options = {
+			    chart: {
+			      title: '2022년 3월 매출 관리',
+			      curveType: 'function',
+		          legend: { position: 'bottom' },
+			    },
+			    width: 900,
+			    height: 500,
+			    colors: ['#e0440e'] // 차트 선 색 바꾸기
+			  };
+			
+			  var chart = new google.charts.Line(document.getElementById('curve_chart'));
+			
+			  chart.draw(data, google.charts.Line.convertOptions(options));
+		}
+
+	   
    
-   }); // end ready
+  
 
    
 </script>
@@ -338,7 +338,7 @@
   </div><!-- container -->
       
 </header>
-
+	<!-- 
     <div class="pt-5 pb-5 mr-5 ml-5">
     	<select name="year" id="year">
     		<option value="전체">${currentYear - 5} ~ ${currentYear}년</option>
@@ -368,7 +368,7 @@
     	<p>${currentYear - 5} ~ ${currentYear}년을 선택하면 연도별 매출을 확인할 수 있습니다.</p>
     	<p>연도를 선택하고, 1~12월을 선택하면 해당 연도의 월별 매출을 확인할 수 있습니다.</p>
     	<p>연도를 선택하고, 월을 선택하면 해당 연도, 해당 월의 일별 매출을 확인할 수 있습니다.</p>
-  
+  		 -->
   
       	
       	
