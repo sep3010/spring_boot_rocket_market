@@ -272,8 +272,8 @@
                     <p class="mt-3">쿠폰관리</p>
                 </div>
             </a>
-            <a href="">
-                <div class="admin__box ">
+            <a href="${pageContext.request.contextPath}/admin/salesManagement">
+                <div class="admin__box">
                     <img src="${pageContext.request.contextPath}/adminlogo/order_logo.png" alt="" width="150">
                     <p class="mt-3">매출관리</p>
                 </div>
