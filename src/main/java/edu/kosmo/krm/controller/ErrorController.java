@@ -34,7 +34,7 @@ public class ErrorController {
     public String error403(HttpServletRequest request, HttpServletResponse response) {
         log.info("error 403");
         log.info("=====request : " + request);
-        return "error/404";
+        return "error/403";
     }
 
     @RequestMapping("/error/405")

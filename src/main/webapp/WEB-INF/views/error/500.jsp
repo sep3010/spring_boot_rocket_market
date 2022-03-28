@@ -12,7 +12,7 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 />
-<title>error 404</title>
+<title>error 500</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -43,10 +43,9 @@
 
 	<div class="container text-center mt-5">
 
-	<h1>404 ERROR</h1>
+	<h1>500 ERROR</h1>
 	------------------
-	<h3>Page Not Found</h3>
-	
+	<h3>Server Error</h3>
 
 	</div>
 	
