@@ -24,6 +24,7 @@
    <link rel="shortcut icon" type="image/x-icon" 
    href="${pageContext.request.contextPath}/imgs/logo.png" />
 
+
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -543,7 +544,7 @@
           <!-- ======================== 로고 =========================== -->
           <center>
             <div id="logo" style="width: 12rem">
-                <a href="${pageContext.request.contextPath}/">< src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
+                <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
           </center>
         </nav>

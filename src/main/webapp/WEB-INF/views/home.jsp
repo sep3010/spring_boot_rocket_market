@@ -31,11 +31,11 @@
 
     
 <style>
-	.card img {
-		max-width: 100%;
-		height: 230px;
-		
-	}
+   .card img {
+      max-width: 100%;
+      height: 230px;
+      
+   }
       #topmenu_left,
       #topmenu_right {
         font-weight: bold;
@@ -226,14 +226,14 @@
 <body>
 
 <header>
-	<!-- ======================== 배너 =========================== -->
-	<div>
-    	<nav class="navbar" id="topbanner">
+   <!-- ======================== 배너 =========================== -->
+   <div>
+       <nav class="navbar" id="topbanner">
           <a class="navbar-brand" href="${pageContext.request.contextPath}/basicaddMemberForm" style="color: rgb(90, 69, 42)"> 🤎 회원가입 혜택이 팡팡팡! 🤎 </a>
         </nav>
     </div>
 
-	<!-- ======================== 상단 메뉴 =========================== -->
+   <!-- ======================== 상단 메뉴 =========================== -->
     <div class="container pb-2">
         <nav class="navbar navbar-expand-md navbar-light">
           <button
@@ -265,51 +265,51 @@
              
  
             <!-- 로그인을 했다면 -->
-			<sec:authorize access="isAuthenticated()">
-			<div style="align-self:center">
-			  ${userName}님 환영합니다.&nbsp;&nbsp;
-			</div>
-			  <a 
-			  class="nav-link" 
-			  type="button"
-			  onclick="document.getElementById('logout-form').submit();"
-			  >로그아웃</a>
-			  <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
-				  <input type="hidden"/>
-			  </form:form>
-			  
-			  <!-- 관리자 -->
-				<sec:authorize access="hasRole('ROLE_ADMIN')">					
-					<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
-             		<a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
-                </sec:authorize>				
-			  <!-- 회원 -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-			    	<a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
-              		<a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+         <sec:authorize access="isAuthenticated()">
+         <div style="align-self:center">
+           ${userName}님 환영합니다.&nbsp;&nbsp;
+         </div>
+           <a 
+           class="nav-link" 
+           type="button"
+           onclick="document.getElementById('logout-form').submit();"
+           >로그아웃</a>
+           <form:form id="logout-form" action="${pageContext.request.contextPath}/logout" method="POST">
+              <input type="hidden"/>
+           </form:form>
+           
+           <!-- 관리자 -->
+            <sec:authorize access="hasRole('ROLE_ADMIN')">               
+               <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminHome">관리자홈</a>
+                   <a class="nav-link" href="${pageContext.request.contextPath}/admin/productManagement">상품관리</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/memberList">회원관리</a>
+                </sec:authorize>            
+           <!-- 회원 -->
+             <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/userHome">마이페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/wishList">위시리스트</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user/cart">장바구니</a>
                 </sec:authorize>
-			</sec:authorize>             
+         </sec:authorize>             
              
             </div><!-- <div class="navbar-nav" id="topmenu_right"> -->
         </div><!-- collapse navbar-collapse -->
 
 
-		<!-- ======================== 로고 =========================== -->
+      <!-- ======================== 로고 =========================== -->
         <center>
-        	<div id="logo" style="width: 12rem">
+           <div id="logo" style="width: 12rem">
               <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/imgs/locketlogo.png" class="card-img-top"/></a>
             </div>
         </center>
-	</nav>
+   </nav>
   </div><!-- container -->
       
 </header>
     
 <!-- ======================== 하단 메뉴 =========================== -->
-	
-	<div class="category shadow">
+   
+   <div class="category shadow">
       <div class="container d-flex justify-content-between">
         <div class="dropdown">
           <div class="text-center">
@@ -378,7 +378,7 @@
     </div>
     <!-- ======================== 여기까지 헤더 (동일)=========================== -->
 <main>
-	<!-- ======================== 캐러셀 =========================== -->
+   <!-- ======================== 캐러셀 =========================== -->
     <div
       id="carouselExampleInterval"
       class="carousel slide"
@@ -419,8 +419,8 @@
     </div>
     
     <!-- ======================== 사이드바 =========================== -->
-	
-	  <!-- ======= 장바구니 ======= -->
+   
+     <!-- ======= 장바구니 ======= -->
       <div class="sidebar">
         <div id="cartbox">
           <div class="text-center pt-2" id="sidetitle">
@@ -430,15 +430,15 @@
           
           <!-- 장바구니에 있는 상품 표시 -->
             <sec:authorize access="isAnonymous()"><!-- 비로그인시 -->
-				로그인 후 사용 가능합니다.
+            로그인 후 사용 가능합니다.
             </sec:authorize>
    
-			<sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
-			  <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
-		        <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
-		        <img class="pt-1" src="${cart.path}" id="sideimg" /></a>			
-			  </c:forEach>
-			</sec:authorize>            
+         <sec:authorize access="isAuthenticated()"><!-- 로그인시 -->
+           <c:forEach var="cart" items="${cartProductList}" varStatus="status" begin="0" end="2">
+              <a href="${pageContext.request.contextPath}/product/productView/${cart.product_id}">
+              <img class="pt-1" src="${cart.path}" id="sideimg" /></a>         
+           </c:forEach>
+         </sec:authorize>            
 
           </div>
         </div>
@@ -473,10 +473,10 @@
         </div>
       </div>
       
-	
-	      
+   
+         
 
-	  <!-- ======================== 메인페이지 상품표시 =========================== -->
+     <!-- ======================== 메인페이지 상품표시 =========================== -->
       <div class="container pt-5">
 
         <h2 class="text-center pb-3" style="font-weight: bold">오늘의 할인</h2>
@@ -484,7 +484,7 @@
         <div class="card-deck pb-5">
           <c:forEach var="discount" items="${discountList}" varStatus="status" begin="0" end="3">
           <div class="card">
-          	<c:forEach var="image" items="${discount.productImages}">
+             <c:forEach var="image" items="${discount.productImages}">
              <a href="${pageContext.request.contextPath}/product/productView/${discount.id}">
              <img src="${image.path}" class="card-img-top" alt="..." /></a>
              </c:forEach>
@@ -492,14 +492,14 @@
               <h6 class="card-title">[${discount.brand}]${discount.name}</h6>
               <p class="card-text">
               <div class="price"><span class="rate text-danger">${discount.discount}% </span>
-              <fmt:formatNumber value="${discount.price}" pattern="#,###"/>원
+              <fmt:formatNumber value="${discount.price * ((100 - discount.discount)/100)}" pattern="#,###"/>원
               </div>
               </p>
             </div><!-- card-body -->
           </div><!-- card -->
           </c:forEach>
           </div> <!-- card-deck -->
-          	
+             
 
 
         <h2 class="text-center pb-3" style="font-weight: bold">새로 나왔어요!</h2>
@@ -507,19 +507,21 @@
         <div class="card-deck pb-5">
           <c:forEach var="newList" items="${newList}" varStatus="status" begin="0" end="3">
           <div class="card">
-          	<c:forEach var="image" items="${newList.productImages}">
+             <c:forEach var="image" items="${newList.productImages}">
              <a href="${pageContext.request.contextPath}/product/productView/${newList.id}">
              <img src="${image.path}" class="card-img-top" alt="..." /></a>
              </c:forEach>
             <div class="card-body pl-1" style="border: none;">
               <h6 class="card-title">[${newList.brand}] ${newList.name}</h6>
               <p class="card-text">
-              <div class="price"><fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
+              <div class="price">
+              
+              <fmt:formatNumber value="${newList.price}" pattern="#,###"/>원
               </div>
               </p>
             </div><!-- card-body -->
           </div><!-- card -->
-          </c:forEach>	
+          </c:forEach>   
           </div> <!-- card-deck -->
          
 
@@ -538,7 +540,7 @@
               </p>
             </div><!-- card-body -->
           </div><!-- card -->
-          </c:forEach>	
+          </c:forEach>   
           </div> <!-- card-deck --> 
          </div> <!-- container -->
          
@@ -547,7 +549,7 @@
     
     
     <!-- ======================== 하단 메뉴 (푸터 동일) =========================== -->
-	<hr class="m-0" />
+   <hr class="m-0" />
     <div class="container">
       <footer class="pt-0">
         <nav class="navbar navbar-expand-lg navbar-light">
