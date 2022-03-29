@@ -235,7 +235,7 @@
                 AND
                         M.ID = #{id }
                 AND
-                        USE_CHECK = 0                        
+                        USE_CHECK = 1                        
         			
 		]]>
 	</select>

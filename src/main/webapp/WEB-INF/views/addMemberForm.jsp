@@ -139,9 +139,6 @@
 			else if (userId.search(/\s/) !== -1) {
 				alert("공백입력이 있습니다.");
 			}
-			else if (regExp.test(userId)) {
-				alert("아이디는 영문과 숫자입력만 가능합니다.");
-			}
 			else {
 
 				let data = {
