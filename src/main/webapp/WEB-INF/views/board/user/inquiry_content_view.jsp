@@ -387,7 +387,6 @@
             <div class="navbar-nav" id="topmenu_left">
               <a class="nav-link" href="${pageContext.request.contextPath}/board/noticeHome">공지사항</a>
               <a class="nav-link" href="${pageContext.request.contextPath}/board/inquiryHome">문의</a>
-              <a class="nav-link" href="#">이벤트</a>
             </div>
             <!-- 로그인을 안했다면 -->
             <div class="navbar-nav" id="topmenu_right">
@@ -401,7 +400,7 @@
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
 			<div style="align-self:center">
-			  ${userName }님 환영합니다.&nbsp;&nbsp;
+			  <sec:authentication property="principal.memberVO.nickname"/>님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
 			  class="nav-link" 

@@ -252,7 +252,7 @@
 
 					<!-- 로그인을 했다면 -->
 					<sec:authorize access="isAuthenticated()">
-						<div style="align-self: center">${userName }님
+						<div style="align-self: center"><sec:authentication property="principal.memberVO.nickname"/>님
 							환영합니다.&nbsp;&nbsp;</div>
 						<a class="nav-link" type="button"
 							onclick="document.getElementById('logout-form').submit();">로그아웃</a>

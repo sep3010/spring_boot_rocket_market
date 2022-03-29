@@ -24,8 +24,12 @@
     <title>ROCKET MARKET :: 신속배송 후기작성</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/imgs/logo.png" />
-
-
+	<style type="text/css">
+		textarea {
+			resize: none;
+		}
+	</style>
+	
 <script type="text/javascript">
 	//csrf
 	var token = $("meta[name='_csrf']").attr("content");

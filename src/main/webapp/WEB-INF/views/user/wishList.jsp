@@ -518,7 +518,7 @@
             <!-- 로그인을 했다면 -->
 			<sec:authorize access="isAuthenticated()">
 			<div style="align-self:center">
-			  ${userName}님 환영합니다.&nbsp;&nbsp;
+			  <sec:authentication property="principal.memberVO.nickname"/>님 환영합니다.&nbsp;&nbsp;
 			</div>
 			  <a 
 			  class="nav-link" 
@@ -733,7 +733,7 @@
           <div class="inner">
             <ul>
               <li class="shadow">
-                <p>${userName}<br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
+                <p><sec:authentication property="principal.memberVO.nickname"/>님<br><span style="color: orange; font-weight: bold;">환영합니다</span></p>
                 <a href="${pageContext.request.contextPath}/user/userUpdateForm">회원 정보 수정</a>
               </li>
               <li class="shadow">
